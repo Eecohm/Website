@@ -21,6 +21,7 @@
     transition: transform 0.3s ease, opacity 0.3s ease; /* Interactive transitions */
   }
   
+  
   /* Hover effects */
   .square-box:hover {
     transform: translateY(-10px); /* Lift effect */
