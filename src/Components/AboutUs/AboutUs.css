@@ -2,6 +2,7 @@
 .aboutus-main {
     height: 100vh;
     width: 100vw;
+    background-color: white;
     display: flex; /* Enable flexbox */
     align-items: center; /* Center horizontally */
     

@@ -42,6 +42,7 @@ const ContactUs = () => {
       <ContactForm />
 
       <SocialMedia />
+      <p> @2025 All Rights Reserved Eecohm</p>
     </div>
   );
 };

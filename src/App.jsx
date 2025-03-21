@@ -1,25 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import Navbar from './Components/NavBar/Navbar';
 import Hero from './Components/Hero/Hero';
-import Programs  from './Components/Programs/Programs';
+import Programs from './Components/Programs/Programs';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Testimonials from './Components/Testemonials/Testomonial';
 import ContactUs from './Components/ContactUs/ContactUs';
 import SocialButtons from './Components/SocialMediaButtons/SocialButtons';
 import './App.css';
+
+const ScrollToSection = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const sectionId = pathname === '/' ? 'hero' : pathname.substring(1); // Remove leading '/' for id
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [pathname]);
+
+  return null; // This component only handles scrolling, no UI
+};
+
 const App = () => {
   return (
-      <>
-      <div className='Home'>
+    <Router>
+      <div className="Home">
         <Navbar />
-        < SocialButtons />
-        <Hero />
-        <Programs /> 
-        <AboutUs />
-        <Testimonials />
-        <ContactUs />
+        <SocialButtons />
+        <ScrollToSection />
+        <section id="hero">
+          <Hero />
+        </section>
+        <section id="programs">
+          <Programs />
+        </section>
+        <section id="about-us">
+          <AboutUs />
+        </section>
+        <section id="testimonials">
+          <Testimonials />
+        </section>
+        <section id="contact-us">
+          <ContactUs />
+        </section>
       </div>
-      </>
+    </Router>
   );
 };
 

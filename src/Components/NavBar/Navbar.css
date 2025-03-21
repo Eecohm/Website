@@ -12,6 +12,9 @@ nav {
   z-index: 10;
   transition: background 0.3s ease, padding 0.3s ease; /* Smooth transition */
 }
+.close-btn-li{
+  display: none;
+}
 
 nav.scrolled {
   background: #fdfdfd;
@@ -57,7 +60,9 @@ nav.scrolled {
     display: block; /* Show hamburger on mobile */
   }
   
-
+  .close-btn-li{
+    display: block;
+  }
   .nav-menu {
     position: fixed;
     height: 5vh;
@@ -103,6 +108,13 @@ nav.scrolled {
 }
 
 @media (max-width: 480px) {
+  .close-btn-li{
+    display: block;
+  }
+  .close-btn-li button{
+    height: 5vh;
+    width: 5vh;
+  }
   
   .nav-menu li {
     font-size: 1.2rem; /* Smaller text on very small screens */
