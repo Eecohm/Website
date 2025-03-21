@@ -53,7 +53,7 @@
   }
   
   /* Optional: Responsive adjustments */
-  @media (max-width: 600px) {
+  @media (max-width: 480px) {
     .social-button {
       width: 40px;
       height: 40px;
@@ -61,5 +61,14 @@
     .social-button svg {
       width: 24px;
       height: 24px;
+    }
+    .social-buttons-container {
+      position: fixed;
+      bottom: 100px;
+      right: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1000; /* Ensures it stays above other content */
     }
   }

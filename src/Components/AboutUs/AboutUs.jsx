@@ -49,7 +49,7 @@ const AboutUs = () => {
         imageSrc={sampleImage}
         altText="Sample Image"
       />
-        <div className="square-box-container" style={{ width: "50%" }}>
+        <div className="square-box-container-1">
         <SquareBox 
         imageSrc={one}
         backgroundColor="#79222a" // Deep purple
@@ -94,11 +94,9 @@ const AboutUs = () => {
         </div>
         <div className="about-us-text">
         <h2 ref={titleRef} className="title">About Us</h2>
-        <p>Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. 
+        <p id='about-us-id'>Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. 
         </p>
-        <p>Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. 
-        Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. 
-        </p>
+        
         
         </div>
     </div>

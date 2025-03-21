@@ -1,4 +1,7 @@
 /* Programs.css */
+.programs-section{
+  background-color: #f7f7f7;
+}
 .programs {
   width: 100vw; /* Container takes full viewport width */
   overflow-x: auto; /* Enable horizontal scrolling */

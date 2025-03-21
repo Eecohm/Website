@@ -56,9 +56,11 @@ nav.scrolled {
   .hamburger {
     display: block; /* Show hamburger on mobile */
   }
+  
 
   .nav-menu {
     position: fixed;
+    height: 5vh;
     top: 0;
     right: -100%; /* Hidden off-screen initially */
     width: 70%;
@@ -91,6 +93,7 @@ nav.scrolled {
   }
 
   nav.scrolled {
+    height: 8vh;
     padding: 10px 5%; /* Less padding on mobile when scrolled */
   }
 
@@ -100,6 +103,7 @@ nav.scrolled {
 }
 
 @media (max-width: 480px) {
+  
   .nav-menu li {
     font-size: 1.2rem; /* Smaller text on very small screens */
   }

@@ -1,11 +1,13 @@
 /* CourseCard.css */
 .course-card {
-    width: 30vw; /* Base width */
-    height: 65vh; /* Base height */
+    width: 30vw; 
+    height: 65vh; 
     max-width: 450px;
-    max-height: 650px; /* Maximum height */
+    max-height: 650px;
+    min-width: 350px;
+    min-height: 550px; /* Maximum height */
     background-color: #ffffff;
-    margin: 1.5rem; /* Adjusted from 3vw for better consistency */
+    margin: 0.5rem; /* Adjusted from 3vw for better consistency */
     border-radius: 25px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 
                 0 6px 6px rgba(0, 0, 0, 0.1); /* Beautiful shadow effect */
@@ -72,10 +74,12 @@
   /* Responsive design */
   @media (max-width: 768px) {
     .course-card {
-      width: 45vw;
-      height: 50vh;
+      width: 90vw; /* Base width */
+      height: 65vh;
+
       margin: 1rem;
     }
+    
     
     .course-title {
       font-size: 1.25rem;
@@ -88,16 +92,28 @@
   
   @media (max-width: 480px) {
     .course-card {
-      width: 80vw;
-      height: 45vh;
+      width: 30vw;
+      height: 35vh;
+      min-width: 200px;
+      min-height: 200px;
       margin: 0.75rem;
+    }
+    .course-image {
+      height: 110%;
+      min-height: 15px;
+    }
+    .course-content{
+      height: 30%;
+      max-height: 50px;
     }
     
     .course-title {
       font-size: 1.1rem;
+      margin-top: 50px;
     }
     
     .course-description {
       font-size: 0.85rem;
+      display: none;
     }
   }
