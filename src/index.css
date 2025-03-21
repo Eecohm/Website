@@ -70,3 +70,11 @@ body {
 .second-page {
   min-height: 100vh; /* Ensure there's enough scroll space */
 }
+
+
+@media (max-width: 480px) {
+  .btn {
+    font-size: 1rem;
+    padding: 8px 20px;
+  }
+}

@@ -58,7 +58,9 @@ const Programs = () => {
 
   return (
     <section className="programs-section">
-      <h2 ref={titleRef} className="title">OUR COURSES</h2>
+      <header>
+        <h2 ref={titleRef} className="title">OUR COURSES</h2>
+      </header>
       <div className="programs" ref={scrollRef}>
         <div className="course-card-container">
           <CourseCard
