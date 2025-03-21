@@ -15,5 +15,4 @@ const CourseCard = ({ courseName, description, photo }) => {
     </div>
   );
 };
-
 export default CourseCard;

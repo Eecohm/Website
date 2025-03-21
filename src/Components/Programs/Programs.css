@@ -1,36 +1,35 @@
 /* Programs.css */
 .programs {
-    width: 100vw; /* Container takes full viewport width */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: hidden; /* Prevent vertical scrolling */
-    padding: 1rem 0; /* Single padding declaration */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
-    white-space: nowrap; /* Prevent wrapping */
-    background-color: rgba(223, 190, 0, 0.5);
-    margin-bottom: 5vh;
+  width: 100vw; /* Container takes full viewport width */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Prevent vertical scrolling */
+  padding: 1rem 0; /* Single padding declaration */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+  white-space: nowrap; /* Prevent wrapping */
+  background-color: rgba(223, 190, 0, 0.5);
+  margin-bottom: 5vh;
 }
 
 .programs::-webkit-scrollbar {
-    height: 8px;
+  height: 8px;
 }
 
 .programs::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 .programs::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
+  background: #888;
+  border-radius: 4px;
 }
 
 .programs::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 
 .course-card-container {
-    width: 160vw; /* Wider than viewport for scrolling content */
-    display: flex;
-    gap: 1rem; /* Space between cards */
-    padding: 0 1rem;
+  width: 160vw; /* Wider than viewport for scrolling content */
+  display: flex;
+  gap: 1rem; /* Space between cards */
+  padding: 0 1rem;
 }
-

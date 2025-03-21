@@ -36,11 +36,37 @@ body {
   outline: 0;
 }
 
-.title{
+/* SecondPage.css */
+.title {
   font-size: 10vh;
   font-family: 'Times New Roman', Times, serif;
   display: flex;
-  justify-self: center;
+  justify-content: center; /* Changed from justify-self to justify-content */
   margin-top: 8vh;
   margin-bottom: 2vh;
+  opacity: 0; /* Start hidden */
+  transform: translateY(30px); /* Start below */
+  transition: opacity 0.1s ease-out; /* Smooth transition for initial state */
+}
+
+/* Animation class triggered by Intersection Observer */
+.title.animate-title {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Keyframes for the animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: Container styling */
+.second-page {
+  min-height: 100vh; /* Ensure there's enough scroll space */
 }

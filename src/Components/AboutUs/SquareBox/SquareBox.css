@@ -1,0 +1,56 @@
+.square-box {
+    position: relative;
+    width: 10vh; /* Fixed square size */
+    height: 10vh;
+    background-color: #4a2c5e; /* Custom background color (deep purple) */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), /* Deep elevated shadow */
+               0 10px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 10px; /* Slightly rounded corners */
+    overflow: hidden; /* Keeps graphic within bounds */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    cursor: pointer; /* Indicates interactivity */
+  }
+  
+  .square-graphic {
+    width: 70%; /* Graphic takes up 70% of box */
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the graphic */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Interactive transitions */
+  }
+  
+  /* Hover effects */
+  .square-box:hover {
+    transform: translateY(-10px); /* Lift effect */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), /* Deeper shadow on hover */
+               0 15px 30px rgba(0, 0, 0, 0.4);
+  }
+  
+  .square-box:hover .square-graphic {
+    transform: translate(-50%, -50%) scale(1.1); /* Scale up graphic */
+    opacity: 0.9; /* Slight fade effect */
+  }
+  
+  /* Optional: Active state (click) */
+  .square-box:active {
+    transform: translateY(-5px); /* Slight press down */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
+               0 8px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .square-box {
+      width: 200px;
+      height: 200px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .square-box {
+      width: 150px;
+      height: 150px;
+    }
+  }
