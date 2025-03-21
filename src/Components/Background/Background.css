@@ -1,0 +1,26 @@
+.main-text{
+    position: relative;
+    height: 100vh;
+    display: flex;
+    color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.main-text > p{
+    text-align: center;
+    margin: 0;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.main-text > h1{
+    margin: 0;
+}
+
+.shadow{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: brown;
+    opacity: 30%;
+}
