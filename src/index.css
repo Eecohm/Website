@@ -35,3 +35,12 @@ body {
   border: 0;
   outline: 0;
 }
+
+.title{
+  font-size: 10vh;
+  font-family: 'Times New Roman', Times, serif;
+  display: flex;
+  justify-self: center;
+  margin-top: 8vh;
+  margin-bottom: 2vh;
+}

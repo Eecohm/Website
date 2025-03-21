@@ -1,0 +1,103 @@
+/* CourseCard.css */
+.course-card {
+    width: 30vw; /* Base width */
+    height: 65vh; /* Base height */
+    max-width: 450px;
+    max-height: 650px; /* Maximum height */
+    background-color: #ffffff;
+    margin: 1.5rem; /* Adjusted from 3vw for better consistency */
+    border-radius: 25px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 
+                0 6px 6px rgba(0, 0, 0, 0.1); /* Beautiful shadow effect */
+    overflow: hidden; /* Keeps content within rounded corners */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Hover effect */
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 
+                0 8px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .course-image-container {
+    width: 100%;
+    height: 60%; /* Takes up 60% of card height */
+    overflow: hidden;
+  }
+  
+  .course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Automatically fits image while maintaining aspect ratio */
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .course-card:hover .course-image {
+    transform: scale(1.05); /* Subtle zoom effect on hover */
+  }
+  
+  .course-content {
+    padding: 1.5rem;
+    flex-grow: 1; /* Allows content to fill remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .course-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: normal; /* Allows text to wrap (default, but explicitly set) */
+    overflow-wrap: break-word; /* Breaks words if necessary */
+    word-break: break-word; /* Alternative for broader browser support */
+}
+  
+  .course-description {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.4;
+    white-space: normal; /* Allows text to wrap (default, but explicitly set) */
+    overflow-wrap: break-word; /* Breaks words if necessary */
+    word-break: break-word; /* Alternative for broader browser support */
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .course-card {
+      width: 45vw;
+      height: 50vh;
+      margin: 1rem;
+    }
+    
+    .course-title {
+      font-size: 1.25rem;
+    }
+    
+    .course-description {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .course-card {
+      width: 80vw;
+      height: 45vh;
+      margin: 0.75rem;
+    }
+    
+    .course-title {
+      font-size: 1.1rem;
+    }
+    
+    .course-description {
+      font-size: 0.85rem;
+    }
+  }
