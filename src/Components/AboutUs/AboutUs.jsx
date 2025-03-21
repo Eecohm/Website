@@ -96,10 +96,10 @@ const AboutUs = () => {
         <h2 ref={titleRef} className="title">About Us</h2>
         <p>Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. 
         </p>
-        <p>Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted
+        <p>Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. 
+        Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. 
         </p>
-        <p>Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted. Our company was founded in 2010 by a group of passionate individuals who wanted.
-        </p>
+        
         </div>
     </div>
 

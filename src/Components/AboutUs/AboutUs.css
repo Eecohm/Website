@@ -26,7 +26,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5vw;
   }
 
 .title {
@@ -81,7 +80,9 @@
   margin: 3vh;
   margin-top: 1vh;
   text-align: justify;
+  overflow: hidden;
 }
+
 .round-image-container {
   position: relative;
   width: 300px; /* Adjust size as needed */
