@@ -1,4 +1,40 @@
 /* AboutUs.css */
+
+.quote-display {
+  margin-top: 1vh;
+  width: 100%;
+  text-align: center;
+  color: #333;
+  font-size: 1.2rem;
+  opacity: 0; /* Hidden by default */
+  max-height: 0; /* Collapsed by default */
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease; /* Smooth transition */
+}
+
+.quote-display p {
+  margin: 0;
+  padding: 0.5vh 0;
+}
+
+/* Show quote when there's content */
+.about-us-pictures .quote-display:not(:empty) {
+  opacity: 1;
+  max-height: 50px; /* Adjust based on your quote height */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .quote-display {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quote-display {
+    font-size: 0.9rem;
+  }
+}
 .aboutus-main {
     height: 100vh;
     width: 100vw;
