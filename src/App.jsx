@@ -3,6 +3,7 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import Navbar from './Components/NavBar/Navbar';
 import Hero from './Components/Hero/Hero';
 import Programs from './Components/Programs/Programs';
+import School from './Components/School/School';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Testimonials from './Components/Testemonials/Testomonial';
 import ContactUs from './Components/ContactUs/ContactUs';
@@ -35,6 +36,9 @@ const App = () => {
         </section>
         <section id="programs">
           <Programs />
+        </section>
+        <section id="school">
+          <School />
         </section>
         <section id="about-us">
           <AboutUs />

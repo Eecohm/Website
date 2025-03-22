@@ -46,14 +46,17 @@ const Navbar = () => {
           <Link to="/programs" onClick={closeMobileMenu}>Program</Link>
         </li>
         <li>
-          <Link to="/about-us" onClick={closeMobileMenu}>About Us</Link>
+          <Link to="/school" onClick={closeMobileMenu}>School</Link>
+        </li>
+        <li>
+          <Link to="/about-us" onClick={closeMobileMenu}>About</Link>
         </li>
         <li>
           <Link to="/testimonials" onClick={closeMobileMenu}>Testimonials</Link>
         </li>
         <li>
           <Link to="/contact-us" onClick={closeMobileMenu}>
-            <button className="btn">Contact Us</button>
+            <button className="btn">Contact</button>
           </Link>
         </li>
       </ul>
