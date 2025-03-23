@@ -8,6 +8,7 @@ import AboutUs from './Components/AboutUs/AboutUs';
 import Testimonials from './Components/Testemonials/Testomonial';
 import ContactUs from './Components/ContactUs/ContactUs';
 import SocialButtons from './Components/SocialMediaButtons/SocialButtons';
+import NoticeBoard from './Components/Notice/Notice';
 import './App.css';
 
 const ScrollToSection = () => {
@@ -29,6 +30,7 @@ const App = () => {
     <Router>
       <div className="Home">
         <Navbar />
+        <NoticeBoard />
         <SocialButtons />
         <ScrollToSection />
         <section id="hero">

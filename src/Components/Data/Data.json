@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "School Holiday",
+    "date": "March 25, 2025",
+    "description": "School will be closed for Spring Break from March 25-30.",
+    "image": "/images/Screenshot 2025-03-03 113245.png"
+  },
+  {
+    "id": 2,
+    "title": "School anualasdf",
+    "date": "April 1, 2025",
+    "description": "Quarterly parent-teacher meeting scheduled in the main hall. Quarterly parent-teacher meeting scheduled in the main hall. Quarterly parent-teacher meeting scheduled in the main hall. Quarterly parent-teacher meeting scheduled in the main hall. adsfasdfjaosdijf;",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  },
+  {
+    "id": 4,
+    "title": "Parent Meeting",
+    "date": "April 1, 2025",
+    "description": "Quarterly parent-teacher meeting scheduled in the main hall. Quarterly parent-teacher meeting scheduled in the main hall. Quarterly parent-teacher meeting scheduled in the main hall. Quarterly parent-teacher meeting scheduled in the main hall.",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  }
+]
