@@ -4,12 +4,15 @@ import TeamMember from './TeamMember';
 import './MeetTheTeam.css';
 import bibek from '../../../assets/Images/bibek.jpg'
 import aalok from '../../../assets/Images/aalok.jpg'
-
+import nirmal from '../../../assets/Images/nirmal.png'
+import sumanu from '../../../assets/Images/sumanu.png'
+import sumans from '../../../assets/Images/sumans.png'
+import primila from '../../../assets/Images/pramila.png'
 const teamMembers = [
   {
     name: 'AALOK KARKI',
     role: 'Chief Executive Officer',
-    bio: 'With Great power comes great responsibility',
+    bio: 'A visionary CEO driving innovation and growth.',
     quote: '“Leadership is about inspiring others to achieve greatness.”',
     image: aalok,
     social: {
@@ -21,7 +24,7 @@ const teamMembers = [
   {
     name: 'BIBEK NEPAL',
     role: 'Operational Executive',
-    bio: 'Loves designing intuitive experiences.',
+    bio: 'A strategic Operational Executive ensuring efficiency and excellence.',
     quote: '“Efficiency is doing things right; effectiveness is doing the right things.”',
     image: bibek,
     social: {
@@ -33,9 +36,9 @@ const teamMembers = [
   {
     name: 'SUMAN SHRESTHA',
     role: 'Finance Executive',
-    bio: 'Keeps the team on track and smiling.',
-    quote: '“A budget is telling your money where to go instead of wondering where it went.”',
-    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150',
+    bio: 'A strategic Finance Executive ensuring financial stability and growth.',
+    quote: 'A strategic Finance Executive ensuring financial stability and growth.',
+    image: sumans,
     social: {
       facebook: 'https://www.facebook.com/redfuzz',
       phone: '9817932424',
@@ -45,9 +48,9 @@ const teamMembers = [
   {
     name: 'SUMAN UPRETY',
     role: 'Marketing Executive',
-    bio: 'Keeps the team on track and smiling.',
+    bio: 'A dynamic Marketing Executive driving brand awareness and engagement.',
     quote: '“Marketing is telling the world you’re a rock star.”',
-    image: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=150',
+    image: sumanu,
     social: {
       facebook: 'https://www.facebook.com/suman.narine',
       phone: '9818489385',
@@ -57,9 +60,9 @@ const teamMembers = [
   {
     name: 'PRAMILA BAJGAIN',
     role: 'Academic Executive',
-    bio: 'Keeps the team on track and smiling.',
+    bio: 'A dedicated Academic Executive fostering excellence in education.',
     quote: '“Education is the most powerful weapon you can use to change the world.”',
-    image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150',
+    image: primila,
     social: {
       facebook: 'https://www.facebook.com/pramila.bajgain',
       phone: '9842656772',
@@ -69,9 +72,9 @@ const teamMembers = [
   {
     name: 'NIRMAL KHANAL',
     role: 'Operational Coordinator',
-    bio: 'Keeps the team on track and smiling.',
+    bio: 'An efficient Operational Coordinator streamlining processes for success.',
     quote: '“Coordination is the key to seamless success.”',
-    image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150',
+    image: nirmal,
     social: {
       facebook: 'https://facebook.com/reechakhawas',
       phone: '9829726461',
@@ -81,7 +84,7 @@ const teamMembers = [
   {
     name: 'JANARDHAN SHARMA',
     role: 'Operating Officer',
-    bio: 'Keeps the team on track and smiling.',
+    bio: 'A proactive Operation Officer optimizing workflows.',
     quote: '“Good project management turns vision into reality.”',
     image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
@@ -93,7 +96,7 @@ const teamMembers = [
   {
     name: 'PRITAM KOIRALA',
     role: 'Finance Officer',
-    bio: 'Keeps the team on track and smiling.',
+    bio: 'A meticulous Finance Officer managing budgets and financial health.',
     quote: '“Success is the sum of small efforts, repeated day in and day out.”',
     image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
