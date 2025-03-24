@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Programs.css';
 import CourseCard from './Course/CourseCard';
-import program_1 from '../../assets/Images/program_1.png';
+import css from '../../assets/Images/css.png';
+import csimg from '../../assets/Images/cs.png';
 import program_2 from '../../assets/Images/program_2.png';
 import program_3 from '../../assets/Images/program_3.png';
 // Example chef icon (replace with your own PNG URL)
@@ -71,7 +72,7 @@ const Programs = () => {
     {
       courseName: "+2 with Advance Diploma in Computer Science",
       description: "This program equips future software developers, network administrators, and IT professionals with essential practical and theoretical skills.",
-      photo: program_3,
+      photo: csimg,
       duration: "2 years",
       keyFeatures: [
         "The +2 Advance Diploma in Computer Science is a two-year program designed for students.",
@@ -139,7 +140,7 @@ const Programs = () => {
     {
       courseName: "+2 with Computer Science",
       description: "This program blends computer science with business education for a comprehensive learning experience.",
-      photo: program_3,
+      photo: css,
       duration: "2 years",
       keyFeatures: [
         "Business fundamentals help students understand IT project management and operations.",

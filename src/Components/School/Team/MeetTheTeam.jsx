@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import TeamHeader from './TeamHeader';
 import TeamMember from './TeamMember';
 import './MeetTheTeam.css';
+import bibek from '../../../assets/Images/bibek.jpg'
+import aalok from '../../../assets/Images/aalok.jpg'
 
 const teamMembers = [
   {
@@ -9,7 +11,7 @@ const teamMembers = [
     role: 'Chief Executive Officer',
     bio: 'With Great power comes great responsibility',
     quote: '“Leadership is about inspiring others to achieve greatness.”',
-    image: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150',
+    image: aalok,
     social: {
       facebook: 'https://www.facebook.com/aalok.karkinepali',
       phone: '9842646392',
@@ -21,7 +23,7 @@ const teamMembers = [
     role: 'Operational Executive',
     bio: 'Loves designing intuitive experiences.',
     quote: '“Efficiency is doing things right; effectiveness is doing the right things.”',
-    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150',
+    image: bibek,
     social: {
       facebook: 'https://www.facebook.com/bibek.nepal.779',
       phone: '9861760481',

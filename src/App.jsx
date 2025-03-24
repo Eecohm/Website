@@ -9,6 +9,7 @@ import Testimonials from './Components/Testemonials/Testomonial';
 import ContactUs from './Components/ContactUs/ContactUs';
 import SocialButtons from './Components/SocialMediaButtons/SocialButtons';
 import NoticeBoard from './Components/Notice/Notice';
+import AnimatedCards from './Components/Moto/AnimatedCards';
 import './App.css';
 
 const ScrollToSection = () => {
@@ -45,6 +46,7 @@ const App = () => {
         <section id="about-us">
           <AboutUs />
         </section>
+        <AnimatedCards />
         <section id="testimonials">
           <Testimonials />
         </section>
