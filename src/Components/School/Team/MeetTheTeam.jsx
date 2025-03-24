@@ -96,7 +96,7 @@ const teamMembers = [
     image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
       facebook: 'https://www.facebook.com/pritam0110',
-      phone: '9701430110',
+      phone: '9801430110',
       mail: 'pritamkoirala@gmail.com',
     },
   },
