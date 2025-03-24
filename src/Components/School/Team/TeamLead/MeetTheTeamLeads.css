@@ -13,14 +13,12 @@
   flex-direction: column;
   align-items: center;
   animation: pulseBackground 10s infinite ease-in-out;
-  /* Hide scrollbar for Firefox */
   scrollbar-width: none;
-  /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 .meet-the-team-leads::-webkit-scrollbar {
-  display: none; /* Hide vertical scrollbar in Webkit browsers */
+  display: none;
 }
 
 /* Container for both slideshows */
@@ -67,7 +65,7 @@
 /* Expanded card */
 .team-lead-card.selected {
   width: 800px;
-  height: 600px;
+  height: 600px; /* Default height, will be overridden in mobile */
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(128, 0, 0, 0.4);
   transform: scale(1.03);
@@ -129,10 +127,11 @@
   padding: 20px;
   position: static;
   background: #fff;
-  height: calc(100% - 300px);
+  height: calc(100% - 300px); /* Default height, adjusted in mobile */
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* Changed from space-between to allow natural flow */
   border-radius: 0 0 15px 15px;
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
 .team-lead-info h3 {
@@ -159,8 +158,8 @@
   font-size: 1rem;
   color: #666;
   margin: 10px 0;
-  flex-grow: 1;
   line-height: 1.5;
+  text-align: left; /* Improve readability for longer text */
 }
 
 /* Background shapes */
@@ -278,7 +277,8 @@
 
   .team-lead-card.selected {
     width: 500px;
-    height: 400px;
+    height: auto; /* Allow dynamic height */
+    max-height: 80vh; /* Limit to viewport height */
   }
 
   .team-lead-card.selected .team-lead-image {
@@ -286,7 +286,8 @@
   }
 
   .team-lead-card.selected .team-lead-info {
-    height: calc(100% - 200px);
+    height: auto; /* Allow content to dictate height */
+    min-height: calc(100% - 200px); /* Ensure it takes remaining space */
   }
 
   .team-lead-info h3 {
@@ -337,12 +338,11 @@
     flex-direction: row;
     justify-content: flex-start;
     overflow-x: auto;
-    /* Hide scrollbar for Firefox */
     scrollbar-width: none;
   }
 
   .team-leads-slideshow::-webkit-scrollbar {
-    display: none; /* Hide horizontal scrollbar in Webkit browsers */
+    display: none;
   }
 
   .team-lead-card {
@@ -351,8 +351,14 @@
   }
 
   .team-lead-card.selected {
-    width: 300px;
-    height: 350px;
+    width: 90vw; /* Wider to fit content comfortably */
+    height: auto; /* Dynamic height based on content */
+    max-height: 90vh; /* Limit to viewport height */
+    position: fixed; /* Ensure it overlays properly */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.03); /* Center and scale */
+    z-index: 1000; /* Ensure it’s above other elements */
   }
 
   .team-lead-card.selected .team-lead-image {
@@ -360,7 +366,10 @@
   }
 
   .team-lead-card.selected .team-lead-info {
-    height: calc(100% - 150px);
+    height: auto; /* Let content dictate height */
+    min-height: calc(100% - 150px); /* Minimum height to fill remaining space */
+    padding: 15px; /* Slightly less padding for compactness */
+    overflow-y: auto; /* Scroll if bio is too long */
   }
 
   .team-lead-info h3 {
