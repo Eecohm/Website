@@ -6,8 +6,7 @@ const AnimatedCards = () => {
   const [clickedCard, setClickedCard] = useState(null);
 
   const handleClick = (card) => {
-    setClickedCard(card);
-    setTimeout(() => setClickedCard(null), 600);
+    setClickedCard(clickedCard === card ? null : card); // Toggle click state
   };
 
   return (

@@ -1,15 +1,16 @@
 /* Container for the cards */
 .cards-container {
     display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
     justify-content: center;
-    gap: 1.5rem;
-    padding: 1.5rem;
+    gap: clamp(1rem, 2vw, 1.5rem); /* Responsive gap */
+    padding: clamp(1rem, 3vw, 1.5rem); /* Responsive padding */
 }
 
 /* Base styles for all cards */
 .card {
-    width: 12rem;
-    height: 14rem;
+    width: clamp(8rem, 25vw, 12rem); /* Scales between 8rem and 12rem */
+    height: clamp(10rem, 30vw, 14rem); /* Scales between 10rem and 14rem */
     border-radius: 0.75rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -54,28 +55,35 @@
     z-index: -1;
 }
 
-/* Hover effects with wave animation */
-.card:nth-child(1):hover::before {
-    height: 450%; /* Full height */
-    background: linear-gradient(0deg, #4a90e2, #357abd);
-    animation: wave 3s infinite ease-in-out;
+/* Hover effects with wave animation - disabled on mobile */
+@media (min-width: 768px) {
+    .card:nth-child(1):hover::before {
+        height: 400%; /* Adjusted to 95% */
+        background: linear-gradient(0deg, #4a90e2, #357abd);
+        animation: wave 3s infinite ease-in-out;
+    }
+
+    .card:nth-child(2):hover::before {
+        height: 400%;
+        background: linear-gradient(0deg, #50c878, #3d9a5e);
+        animation: wave 3s infinite ease-in;
+    }
+
+    .card:nth-child(3):hover::before {
+        height: 400%;
+        background: linear-gradient(0deg, #f7b733, #e09b2d);
+        animation: wave 3s infinite ease-in-out;
+    }
+
+    .card:hover {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    .card:hover .card-icon {
+        transform: scale(1.1);
+    }
 }
-
-
-.card:nth-child(2):hover::before {
-    height: 450%;
-    background: linear-gradient(0deg, #50c878, #3d9a5e);
-    animation: wave 3s infinite ease-in;
-}
-
-
-.card:nth-child(3):hover::before {
-    height: 450%;
-    background: linear-gradient(0deg, #f7b733, #e09b2d);
-    animation: wave 3s infinite ease-in-out;
-}
-
-
 
 /* Click animation class */
 .card.clicked {
@@ -87,97 +95,128 @@
 .card .star-1 {
     position: absolute;
     color: rgba(255, 215, 0, 0.5);
-    font-size: 12px;
+    font-size: clamp(8px, 2vw, 12px);
     animation: floatStars 3s infinite ease-in-out;
 }
 
 .card .dot-1 {
     position: absolute;
     color: rgba(0, 0, 0, 0.3);
-    font-size: 8px;
+    font-size: clamp(6px, 1.5vw, 8px);
     animation: floatDots 4s infinite ease-in-out reverse;
 }
 
 .card .star-2 {
     position: absolute;
     color: rgba(255, 215, 0, 0.4);
-    font-size: 10px;
+    font-size: clamp(7px, 1.8vw, 10px);
     animation: floatStars 5s infinite ease-in-out;
 }
 
 .card .dot-2 {
     position: absolute;
-    width: 6px;
-    height: 6px;
+    width: clamp(4px, 1vw, 6px);
+    height: clamp(4px, 1vw, 6px);
     background: rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     animation: floatDots 3.5s infinite ease-in-out;
 }
 
-/* Hover effects */
-.card:hover {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    color: white;
-}
-
 /* Wave animation keyframes with smoother curves */
 @keyframes wave {
     0% { 
-        clip-path: ellipse(90% 10% at 50% 95%); /* Starts at 95% height */
+        clip-path: ellipse(90% 10% at 50% 95%);
     }
     50% { 
-        clip-path: ellipse(95% 15% at 50% 90%); /* Minimum 90% height */
+        clip-path: ellipse(95% 15% at 50% 90%);
     }
     100% { 
-        clip-path: ellipse(90% 10% at 50% 95%); /* Back to 95% height */
+        clip-path: ellipse(90% 10% at 50% 95%);
     }
 }
 
 @keyframes waveSecondary {
     0% { 
-        clip-path: ellipse(85% 8% at 50% 97%); /* Starts at 97% height */
+        clip-path: ellipse(85% 8% at 50% 97%);
     }
     50% { 
-        clip-path: ellipse(90% 12% at 50% 93%); /* Minimum 93% height */
+        clip-path: ellipse(90% 12% at 50% 93%);
     }
     100% { 
-        clip-path: ellipse(85% 8% at 50% 97%); /* Back to 97% height */
+        clip-path: ellipse(85% 8% at 50% 97%);
     }
 }
 
 /* Animation keyframes for stars and dots */
 @keyframes floatStars {
     0% { transform: translate(20px, 20px) rotate(0deg); }
-    50% { transform: translate(80px, 90px) rotate(180deg); }
+    50% { transform: translate(clamp(60px, 15vw, 80px), clamp(70px, 18vw, 90px)) rotate(180deg); }
     100% { transform: translate(20px, 20px) rotate(360deg); }
 }
 
 @keyframes floatDots {
-    0% { transform: translate(30px, 100px); }
-    50% { transform: translate(70px, 30px); }
-    100% { transform: translate(30px, 100px); }
+    0% { transform: translate(30px, clamp(80px, 20vw, 100px)); }
+    50% { transform: translate(clamp(50px, 12vw, 70px), 30px); }
+    100% { transform: translate(30px, clamp(80px, 20vw, 100px)); }
 }
 
 /* Icon styling */
 .card-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: clamp(0.5rem, 2vw, 1rem);
     transition: transform 0.3s ease;
     position: relative;
     z-index: 1;
 }
 
-.card:hover .card-icon {
-    transform: scale(1.1);
-}
-
 /* Title styling */
 .card-title {
-    font-size: 1.75rem;
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
     font-weight: bold;
     font-family: Arial, sans-serif;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     transition: color 0.5s ease;
     position: relative;
     z-index: 1;
+}
+
+/* Media queries for mobile */
+@media (max-width: 767px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        margin-bottom: 1rem; /* Space between stacked cards */
+    }
+
+    /* Disable hover effects on mobile, use click instead */
+    .card.clicked::before {
+        height: 400%;
+    }
+
+    .card:nth-child(1).clicked::before {
+        background: linear-gradient(0deg, #4a90e2, #357abd);
+        animation: wave 3s infinite ease-in-out;
+    }
+
+    .card:nth-child(2).clicked::before {
+        background: linear-gradient(0deg, #50c878, #3d9a5e);
+        animation: wave 3s infinite ease-in;
+    }
+
+    .card:nth-child(3).clicked::before {
+        background: linear-gradient(0deg, #f7b733, #e09b2d);
+        animation: wave 3s infinite ease-in-out;
+    }
+
+    .card.clicked {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    .card.clicked .card-icon {
+        transform: scale(1.1);
+    }
 }
