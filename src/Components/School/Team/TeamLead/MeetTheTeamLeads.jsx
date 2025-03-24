@@ -45,8 +45,8 @@ const teamLeads = [
     "image": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=200"
   },
   {
-    "name": "STEM and Robotics Student Clubs",
-    "bio": "The STEM and Robotics Student Clubs provide a collaborative space for students interested in science, technology, engineering, and mathematics. These clubs encourage hands-on experimentation, group projects, and competitions to enhance problem-solving skills. Students develop teamwork and leadership abilities while working on innovative technology-based projects.",
+    "name": "STEM and Student Clubs",
+    "bio": "The STEM and Student Clubs provide a collaborative space for students interested in science, technology, engineering, and mathematics. These clubs encourage hands-on experimentation, group projects, and competitions to enhance problem-solving skills. Students develop teamwork and leadership abilities while working on innovative technology-based projects.",
     "image": "https://images.pexels.com/photos/3184431/pexels-photo-3184431.jpeg?auto=compress&cs=tinysrgb&w=200"
   },
   {
