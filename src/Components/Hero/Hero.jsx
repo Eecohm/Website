@@ -12,7 +12,7 @@ function Hero() {
           Learn . Grow . Innovate
         </h4>
         <p className="animate-text">
-          A school is a place where students come to learn, grow, and develop important life skills. It serves as a foundation for education, shaping young minds with knowledge in subjects like math, science, literature, and history. Beyond academics, schools also foster social interactions, teamwork, and discipline, helping students build confidence and character. Teachers play a vital role in guiding and inspiring students, creating an environment that encourages curiosity and creativity.
+          Eecohm School of Excellence is a top-tier educational establishment that provides comprehensive education from Pre-school till High School Diploma. Our dynamic environment fosters intellectual, artistic, and physical growth in students, with an emphasis on academic excellence and skill-based education.
         </p>
         <button className="btn animate-text">Explore More</button>
       </div>

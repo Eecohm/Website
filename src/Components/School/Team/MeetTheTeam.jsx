@@ -6,89 +6,97 @@ import './MeetTheTeam.css';
 const teamMembers = [
   {
     name: 'AALOK KARKI',
-    role: 'CEO',
-    bio: 'Passionate about coding and coffee.',
-    image: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150', // Professional male portrait
+    role: 'Chief Executive Officer',
+    bio: 'With Great power comes great responsibility',
+    quote: '“Leadership is about inspiring others to achieve greatness.”',
+    image: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
-      facebook: 'https://facebook.com/aalokkarki',
-      phone: 'tel:+1234567890',
-      mail: 'mailto:aalok.karki@example.com',
-    },
-  },
-  {
-    name: 'PRAMILA BAJGAIN',
-    role: 'UI/UX Designer',
-    bio: 'Loves designing intuitive experiences.',
-    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150', // Creative female portrait
-    social: {
-      facebook: 'https://facebook.com/pramilabajgain',
-      phone: 'tel:+1234567891',
-      mail: 'mailto:pramila.bajgain@example.com',
+      facebook: 'https://www.facebook.com/aalok.karkinepali',
+      phone: '9842646392',
+      mail: 'eecohm.ceo@gmail.com',
     },
   },
   {
     name: 'BIBEK NEPAL',
-    role: 'Project Manager',
-    bio: 'Keeps the team on track and smiling.',
-    image: 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=150', // Male with confident look
+    role: 'Operational Executive',
+    bio: 'Loves designing intuitive experiences.',
+    quote: '“Efficiency is doing things right; effectiveness is doing the right things.”',
+    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
-      facebook: 'https://facebook.com/bibeknepal',
-      phone: 'tel:+1234567892',
-      mail: 'mailto:bibek.nepal@example.com',
-    },
-  },
-  {
-    name: 'NIRMAL NIROULA',
-    role: 'Project Manager',
-    bio: 'Keeps the team on track and smiling.',
-    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150', // Male in professional setting
-    social: {
-      facebook: 'https://facebook.com/nirmalnirola',
-      phone: 'tel:+1234567893',
-      mail: 'mailto:nirmal.nirola@example.com',
+      facebook: 'https://www.facebook.com/bibek.nepal.779',
+      phone: '9861760481',
+      mail: 'eecohm.coordinator@gmail.com',
     },
   },
   {
     name: 'SUMAN SHRESTHA',
-    role: 'Project Manager',
+    role: 'Finance Executive',
     bio: 'Keeps the team on track and smiling.',
-    image: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=150', // Female with friendly vibe
+    quote: '“A budget is telling your money where to go instead of wondering where it went.”',
+    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
-      facebook: 'https://facebook.com/sumanshrestha',
-      phone: 'tel:+1234567894',
-      mail: 'mailto:suman.shrestha@example.com',
+      facebook: 'https://www.facebook.com/redfuzz',
+      phone: '9817932424',
+      mail: 'eecohm.finance@gmail.com',
     },
   },
   {
-    name: 'PRITAM KOIRALA',
-    role: 'Project Manager',
+    name: 'SUMAN UPRETY',
+    role: 'Marketing Executive',
     bio: 'Keeps the team on track and smiling.',
-    image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150', // Male with serious expression
+    quote: '“Marketing is telling the world you’re a rock star.”',
+    image: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
-      facebook: 'https://facebook.com/pritamkoirala',
-      phone: 'tel:+1234567895',
-      mail: 'mailto:pritam.koirala@example.com',
+      facebook: 'https://www.facebook.com/suman.narine',
+      phone: '9818489385',
+      mail: 'upretysuman9@gmail.com',
     },
   },
   {
-    name: 'REECHA KHAWAS',
-    role: 'Project Manager',
+    name: 'PRAMILA BAJGAIN',
+    role: 'Academic Executive',
     bio: 'Keeps the team on track and smiling.',
-    image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150', // Female with professional look
+    quote: '“Education is the most powerful weapon you can use to change the world.”',
+    image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150',
+    social: {
+      facebook: 'https://www.facebook.com/pramila.bajgain',
+      phone: '9842656772',
+      mail: 'pramilab283@gmail.com',
+    },
+  },
+  {
+    name: 'NIRMAL KHANAL',
+    role: 'Operational Coordinator',
+    bio: 'Keeps the team on track and smiling.',
+    quote: '“Coordination is the key to seamless success.”',
+    image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
       facebook: 'https://facebook.com/reechakhawas',
-      phone: 'tel:+1234567896',
-      mail: 'mailto:reecha.khawas@example.com',
+      phone: '9829726461',
+      mail: 'eecohm@gmail.com',
     },
   },
   {
     name: 'JANARDHAN SHARMA',
-    role: 'Project Manager',
+    role: 'Operating Officer',
     bio: 'Keeps the team on track and smiling.',
-    image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150', // Male in business attire
+    quote: '“Good project management turns vision into reality.”',
+    image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
     social: {
       facebook: 'https://facebook.com/janardhansharma',
-      phone: 'tel:+1234567897',
+      phone: '9815908872',
+      mail: 'mailto:janardhan.sharma@example.com',
+    },
+  },
+  {
+    name: 'PRITAM KOIRALA',
+    role: 'Finance Officer',
+    bio: 'Keeps the team on track and smiling.',
+    quote: '“Success is the sum of small efforts, repeated day in and day out.”',
+    image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
+    social: {
+      facebook: 'https://www.facebook.com/pritam0110',
+      phone: '9701430110',
       mail: 'mailto:janardhan.sharma@example.com',
     },
   },

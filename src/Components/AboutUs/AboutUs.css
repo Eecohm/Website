@@ -67,8 +67,8 @@
     align-items: center;
   }
   .about-us-text{
-    height: 80vh;
-    width: 48vw;
+    height: 100vh;
+    width: 58vw;
     margin-right: 4vw;
     border-radius: 20px;
     display: flex;
@@ -130,6 +130,12 @@
       display: flex;
       justify-content: space-between;
     }
+    .first{
+      display: none;
+    }
+    .second{
+      display: none;
+    }
   }
   
   @media (max-width: 480px) {
@@ -140,6 +146,12 @@
     }
     .about-us-text{
       width: 80vw;
+    }
+    .first{
+      display: none;
+    }
+    .second{
+      display: none;
     }
     .about-us-text > p{
       width: 80vw;
@@ -251,6 +263,12 @@
     width: 200px;
     height: 200px;
   }
+  .first{
+    display: none;
+  }
+  .second{
+    display: none;
+  }
   
 }
 
@@ -264,6 +282,12 @@
     font-size: small;
     padding: 0;
     margin: 0;
+  }
+  .first{
+    display: none;
+  }
+  .second{
+    display: none;
   }
 }
 

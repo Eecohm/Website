@@ -1,7 +1,6 @@
 import React from 'react';
-import { FaFacebook, FaPhone, FaEnvelope } from 'react-icons/fa';
 
-function TeamLeadCard({ name, role, bio, image, social, isSelected, onSelect }) {
+function TeamLeadCard({ name, role, bio, image, isSelected, onSelect }) {
   return (
     <div
       className={`team-lead-card ${isSelected ? 'selected' : ''}`}
@@ -14,6 +13,7 @@ function TeamLeadCard({ name, role, bio, image, social, isSelected, onSelect }) 
         <h3>{name}</h3>
         {isSelected && (
           <>
+            {role && <p className="role">{role}</p>}
             <p className="bio">{bio}</p>
           </>
         )}

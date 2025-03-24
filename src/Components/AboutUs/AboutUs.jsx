@@ -139,8 +139,13 @@ const AboutUs = () => {
       <div className="about-us-text">
         <h2 ref={titleRef} className="title">About Us</h2>
         <p id="about-us-id">
-          Our company was founded in 2010 by a group of passionate individuals
-          who wanted...
+        In 2015, Eastern Empire College Of Hotel Management was born with a bold vision to redefine education in the hotel and hospitality industry. What started as a single program, the Diploma in Hotel Management (DHM), quickly gained momentum, attracting ambitious students eager to build their careers in hospitality. With a strong foundation in practical learning and academic excellence, the institution soon expanded, introducing +2 level programs, including the Advanced Diploma in Hotel Management (ADHM), Advanced Diploma in Computer Science (ADCS), and Business Studies. As demand for quality education across multiple disciplines increased, EECOHM recognized the need to evolve.
+        </p>
+        <p id="about-us-id" className='first' >
+        By 2025, EECOHM took its biggest leap yet, transforming into EECOHM School of Excellence. No longer just a college, it became a comprehensive institution, offering programs from Pre-Group (PG) levels to Advanced Diplomas, ensuring students could begin their educational journey from the ground up and emerge as professionals ready to take on the world.
+        </p>
+        <p id="about-us-id" className='second'>
+        This evolution within 10 years marked as a benchmark that cemented EECOHM’s place as a leader in academic excellence, skill development, and industry readiness. From its humble beginnings to a School of Excellence, EECOHM remains committed to shaping the future of education and empowering the next generation of professionals.
         </p>
       </div>
     </div>
