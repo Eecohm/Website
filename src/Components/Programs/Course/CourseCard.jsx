@@ -1,7 +1,7 @@
 import React from 'react';
 import './CourseCard.css';
 
-const CourseCard = ({ courseName, description, photo, duration, keyFeatures, targetedAudience, isExpanded, onExpand, onClose }) => {
+const CourseCard = ({ courseName, description, photo, duration, keyFeatures, targetedAudience, isExpanded, onExpand, onClose, icon }) => {
   return (
     <div 
       className={`course-card ${isExpanded ? 'expanded' : ''}`}
@@ -9,6 +9,11 @@ const CourseCard = ({ courseName, description, photo, duration, keyFeatures, tar
     >
       <div className="course-image-container">
         <img src={photo} alt={courseName} className="course-image" />
+        {!isExpanded && (
+          <div className="icon-overlay">
+            <img src={icon} alt={`${courseName} icon`} className="course-icon" />
+          </div>
+        )}
       </div>
       <div className="course-content">
         <h2 className="course-title">{courseName}</h2>

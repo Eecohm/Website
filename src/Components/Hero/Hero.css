@@ -2,7 +2,7 @@
   width: 100%;
   background-size: cover;
   min-height: 100vh;
-  background-image: linear-gradient(rgba(226, 190, 190, 0.5), rgba(156, 28, 28, 0.9)), url('../../assets/Images/Home.jpg');
+  background-image: linear-gradient(rgba(226, 190, 190, 0.5), rgba(156, 28, 28, 0.9)), url('../../assets/Images/Home.svg');
   background-position: center;
   /* background-attachment: fixed;  */
   color: rgb(250, 250, 250);

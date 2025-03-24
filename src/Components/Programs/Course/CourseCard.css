@@ -41,6 +41,7 @@
   height: 60%;
   overflow: hidden;
   transition: height 0.3s ease;
+  position: relative;
 }
 
 .course-card.expanded .course-image-container {
@@ -60,6 +61,29 @@
   transform: scale(1.05);
 }
 
+/* Icon overlay styles */
+.icon-overlay {
+  position: absolute;
+  bottom: -240px; /* Start below the image, matching the icon height */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: bottom 0.4s ease-in-out, opacity 0.4s ease-in-out; /* Smooth slide and fade */
+}
+
+.course-card:hover:not(.expanded) .icon-overlay {
+  bottom: 50%; /* Move to center vertically */
+  transform: translateX(-50%) translateY(50%); /* Adjust for centering */
+  opacity: 1;
+}
+
+.course-icon {
+  width: 240px; /* 3x the original 80px */
+  height: 240px;
+  object-fit: contain; /* Preserve PNG transparency */
+}
+
+/* Content styles */
 .course-content {
   padding: 1.5rem;
   flex-grow: 1;
@@ -73,46 +97,46 @@
 }
 
 .course-title {
-  margin: 0 0 0.3rem 0; /* Reduced from 0.5rem */
+  margin: 0 0 0.3rem 0;
   font-size: 1.5rem;
   color: #333;
   font-weight: 600;
-  line-height: 1.1; /* Reduced from 1.2 */
+  line-height: 1.1;
   white-space: normal;
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
 .course-description {
-  margin: 0 0 0.5rem 0; /* Reduced from 1rem */
+  margin: 0 0 0.5rem 0;
   font-size: 1rem;
   color: #666;
-  line-height: 1.2; /* Reduced from 1.4 */
+  line-height: 1.2;
   white-space: normal;
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
 .course-duration {
-  margin: 0 0 0.5rem 0; /* Reduced from 1rem */
+  margin: 0 0 0.5rem 0;
   font-size: 1.2rem;
   color: #444;
   font-weight: 500;
-  line-height: 1.2; /* Added to reduce spacing */
+  line-height: 1.2;
 }
 
 .course-key-features,
 .course-targeted-audience {
-  margin-bottom: 1rem; /* Reduced from 1.5rem */
+  margin-bottom: 1rem;
 }
 
 .course-key-features h4,
 .course-targeted-audience h4 {
   font-size: 1.2rem;
   color: #333;
-  margin: 0 0 0.3rem 0; /* Reduced from 0.5rem */
+  margin: 0 0 0.3rem 0;
   font-weight: 600;
-  line-height: 1.2; /* Added to reduce spacing */
+  line-height: 1.2;
 }
 
 .course-key-features ul,
@@ -122,12 +146,12 @@
   margin: 0;
   font-size: 1rem;
   color: #666;
-  line-height: 1.3; /* Reduced from 1.6 */
+  line-height: 1.3;
 }
 
 .course-key-features li,
 .course-targeted-audience li {
-  margin-bottom: 0.2rem; /* Reduced from 0.5rem */
+  margin-bottom: 0.2rem;
 }
 
 .close-button {
@@ -193,6 +217,15 @@
   .course-targeted-audience li {
     margin-bottom: 0.2rem;
   }
+
+  .course-icon {
+    width: 180px; /* 3x the original 60px */
+    height: 180px;
+  }
+
+  .icon-overlay {
+    bottom: -180px; /* Adjust for larger icon */
+  }
 }
 
 @media (max-width: 480px) {
@@ -256,5 +289,14 @@
   .course-key-features li,
   .course-targeted-audience li {
     margin-bottom: 0.2rem;
+  }
+
+  .course-icon {
+    width: 150px; /* 3x the original 50px */
+    height: 150px;
+  }
+
+  .icon-overlay {
+    bottom: -150px; /* Adjust for larger icon */
   }
 }

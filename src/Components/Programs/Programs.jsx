@@ -4,7 +4,14 @@ import CourseCard from './Course/CourseCard';
 import program_1 from '../../assets/Images/program_1.png';
 import program_2 from '../../assets/Images/program_2.png';
 import program_3 from '../../assets/Images/program_3.png';
-
+// Example chef icon (replace with your own PNG URL)
+import adhm from '../../assets/Icons/adhm-icon.svg'; 
+import hm from '../../assets/Icons/hm-icon.svg'; 
+import cs from '../../assets/Icons/cs-icon.svg'; 
+import bs from '../../assets/Icons/bs-icon.svg'; 
+import adcs from '../../assets/Icons/adcs-icon.svg'; 
+import dhm from '../../assets/Icons/dhm-icon.svg'; 
+import school from '../../assets/Icons/school-icon.svg'; 
 const Programs = () => {
   const scrollRef = useRef(null);
   const titleRef = useRef(null);
@@ -63,18 +70,19 @@ const Programs = () => {
   const courses = [
     {
       courseName: "+2 with Advance Diploma in Computer Science",
-      description: "This program equips future software developers, network administrators, and IT professionals with essential practical and theoritical skills. ",
+      description: "This program equips future software developers, network administrators, and IT professionals with essential practical and theoretical skills.",
       photo: program_3,
       duration: "2 years",
       keyFeatures: [
         "The +2 Advance Diploma in Computer Science is a two-year program designed for students.",
-        "Aspiring to build a strong foundation in computer science and IT-related fields. ",
+        "Aspiring to build a strong foundation in computer science and IT-related fields.",
         "Dual Certification NEB + Advanced Diploma in Computer Science.",
-        "Industry Relevant Curriculum which  covers all the industry standard technologies.",
-        "Web Hands on Learning through practical sessions, projects, and internships.",
+        "Industry Relevant Curriculum which covers all the industry standard technologies.",
+        "Web Hands-on Learning through practical sessions, projects, and internships.",
         "Career Oriented Approach which prepares students for higher education and IT careers.",
-        "Inculdes networking, programming with different langugages (C++, Python, SQL )."],
-      targetedAudience: [],
+        "Includes networking, programming with different languages (C++, Python, SQL).",
+      ],
+      icon: adcs, // Example computer icon
     },
     {
       courseName: "+2 with Advance Diploma in Hotel Management",
@@ -82,11 +90,12 @@ const Programs = () => {
       photo: program_2,
       duration: "2 years",
       keyFeatures: [
-        "Dual certification, combining: NEB, Certification UK-Accredite Diploma.",
+        "Dual certification, combining: NEB, Certification UK-Accredited Diploma.",
         "Practical training and internship opportunities in reputed hotels.",
         "Job opportunities in Nepal and internationally.",
-        "Industry releveant skills to excel in global hospitality industry."
+        "Industry relevant skills to excel in global hospitality industry.",
       ],
+      icon: adhm, // Chef icon for hotel management
     },
     {
       courseName: "Diploma in Hotel Management (DHM)",
@@ -97,59 +106,61 @@ const Programs = () => {
         "Industry Focused Curriculum with practical training",
         "Internship placement in top hotels and restaurants",
         "Experienced Faculty with real-world industry expertise.",
-        "Opportunities for Certification and skill development workshops."],
+        "Opportunities for Certification and skill development workshops.",
+      ],
+      icon: dhm, // Chef icon for hotel management
     },
     {
       courseName: "+2 with Business Studies",
-      description: "This program equips students with foundational business knowledge and critical thinking skills essential for modern commerce. It integrates practical training in management, finance, and marketing to prepare students for diverse career paths.",
+      description: "This program equips students with foundational business knowledge and critical thinking skills essential for modern commerce.",
       photo: program_3,
       duration: "2 years",
       keyFeatures: [
         "Business fundamentals are taught through real-world case studies and projects.",
         "Finance basics include budgeting, investment analysis, and financial planning skills.",
         "Marketing strategies cover digital marketing, branding, and consumer behavior analysis.",
-        "Entrepreneurship encourages innovative thinking and business startup development Graduates are prepared for leadership roles in hotels through a structured NEB curriculum. skills."
+        "Entrepreneurship encourages innovative thinking and business startup development.",
       ],
-      targetedAudience: ["Business aspirants", "Young entrepreneurs", "High school students"],
+      icon: bs, // Example business icon
     },
     {
       courseName: "+2 with Hotel Management",
-      description: "This course introduces students to the hospitality industry with a focus on practical skills. It combines business management principles with hands-on training in hotel operations and customer service.",
+      description: "This course introduces students to the hospitality industry with a focus on practical skills.",
       photo: program_3,
       duration: "2 years",
       keyFeatures: [
         "Business fundamentals provide a strong base for managing hospitality enterprises effectively.",
         "Finance basics teach cost management, revenue tracking, and budgeting for hotels.",
         "Marketing strategies include promoting tourism and enhancing guest experience techniques.",
-        "Entrepreneurship fosters skills to launch and operate successful hospitality ventures."
+        "Entrepreneurship fosters skills to launch and operate successful hospitality ventures.",
       ],
-      targetedAudience: ["Business aspirants", "Young entrepreneurs", "High school students"],
+      icon: hm, // Chef icon for hotel management
     },
     {
       courseName: "+2 with Computer Science",
-      description: "This program blends computer science with business education for a comprehensive learning experience. Students gain technical expertise in programming and systems alongside management and marketing knowledge.",
+      description: "This program blends computer science with business education for a comprehensive learning experience.",
       photo: program_3,
       duration: "2 years",
       keyFeatures: [
         "Business fundamentals help students understand IT project management and operations.",
         "Finance basics cover budgeting for tech projects and resource allocation strategies.",
         "Marketing strategies teach promoting software products and digital services effectively.",
-        "Entrepreneurship develops skills to create innovative tech startups and solutions."
+        "Entrepreneurship develops skills to create innovative tech startups and solutions.",
       ],
-      targetedAudience: ["Business aspirants", "Young entrepreneurs", "High school students"],
+      icon: cs, // Example computer icon
     },
     {
       courseName: "Pre-School to Secondary",
-      description: "This program offers a complete educational journey from pre-school to secondary levels. It emphasizes holistic development through academics, skills, and extracurricular activities for young learners.",
+      description: "This program offers a complete educational journey from pre-school to secondary levels.",
       photo: program_3,
       duration: "10 years",
       keyFeatures: [
         "Holistic education integrates academics with emotional and social development skills.",
         "Skill development focuses on critical thinking, creativity, and practical abilities.",
         "Academic foundation ensures strong proficiency in core subjects like math and science.",
-        "Extracurriculars encourage participation in sports, arts, and leadership activities."
+        "Extracurriculars encourage participation in sports, arts, and leadership activities.",
       ],
-      targetedAudience: ["Young learners", "Parents seeking quality education", "Future scholars"],
+      icon: school, // Example education icon
     },
   ];
 

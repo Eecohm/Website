@@ -14,7 +14,7 @@ function Hero() {
         <p className="animate-text">
           Eecohm School of Excellence is a top-tier educational establishment that provides comprehensive education from Pre-school till High School Diploma. Our dynamic environment fosters intellectual, artistic, and physical growth in students, with an emphasis on academic excellence and skill-based education.
         </p>
-        <button className="btn animate-text">Explore More</button>
+        <button className="btn animate-text">Log In</button>
       </div>
     </div>
   );
