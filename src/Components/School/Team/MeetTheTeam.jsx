@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import TeamHeader from './TeamHeader';
 import TeamMember from './TeamMember';
 import './MeetTheTeam.css';
@@ -97,16 +97,51 @@ const teamMembers = [
     social: {
       facebook: 'https://www.facebook.com/pritam0110',
       phone: '9701430110',
-      mail: 'mailto:janardhan.sharma@example.com',
+      mail: 'pritamkoirala@gmail.com',
     },
   },
 ];
 
 function MeetTheTeam() {
+  const teamMembersRef = useRef(null);
+
+  useEffect(() => {
+    const teamMembersContainer = teamMembersRef.current;
+
+    const handleWheel = (e) => {
+      e.preventDefault(); // Prevent default vertical page scroll
+
+      const scrollSpeed = 100; // Adjust scroll speed (pixels per wheel tick)
+      const currentScroll = teamMembersContainer.scrollLeft;
+      const maxScroll = teamMembersContainer.scrollWidth - teamMembersContainer.clientWidth;
+      let newScroll = currentScroll + e.deltaY * scrollSpeed;
+
+      // Clamp the scroll position to prevent overscrolling
+      newScroll = Math.max(0, Math.min(newScroll, maxScroll));
+
+      // Smoothly scroll to the new position
+      teamMembersContainer.scrollTo({
+        left: newScroll,
+        behavior: 'smooth',
+      });
+    };
+
+    if (teamMembersContainer) {
+      teamMembersContainer.addEventListener('wheel', handleWheel, { passive: false });
+    }
+
+    // Cleanup event listener on unmount
+    return () => {
+      if (teamMembersContainer) {
+        teamMembersContainer.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, []);
+
   return (
     <section className="meet-the-team">
       <TeamHeader />
-      <div className="team-members">
+      <div className="team-members" ref={teamMembersRef}>
         {teamMembers.map((member, index) => (
           <TeamMember key={index} {...member} />
         ))}

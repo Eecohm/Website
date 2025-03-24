@@ -6,10 +6,10 @@
   text-align: center;
   color: #333;
   font-size: 1.2rem;
-  opacity: 0; /* Hidden by default */
-  max-height: 0; /* Collapsed by default */
+  opacity: 0;
+  max-height: 0;
   overflow: hidden;
-  transition: opacity 0.3s ease, max-height 0.3s ease; /* Smooth transition */
+  transition: opacity 0.3s ease, max-height 0.3s ease;
 }
 
 .quote-display p {
@@ -17,172 +17,106 @@
   padding: 0.5vh 0;
 }
 
-/* Show quote when there's content */
 .about-us-pictures .quote-display:not(:empty) {
   opacity: 1;
-  max-height: 50px; /* Adjust based on your quote height */
+  max-height: 50px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .quote-display {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .quote-display {
-    font-size: 0.9rem;
-  }
-}
 .aboutus-main {
-    height: 100vh;
-    width: 100vw;
-    background-color: white;
-    display: flex; /* Enable flexbox */
-    align-items: center; /* Center horizontally */
-    
-  }
-  .square-box-container{
-    margin-top: 3vh;
-    width: 30vw;
-    display: flex;
-    justify-content: space-between;
-  }
-  .square-box-container-1{
-    margin-top: 3vh;
-    width: 25vw;
-    display: flex;
-    justify-content: space-between;
-  }
-  
- .about-us-pictures {
-    height: 80vh;
-    width: 48vw;
-    margin-left: 4vw;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .about-us-text{
-    height: 100vh;
-    width: 58vw;
-    margin-right: 4vw;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  width: 100vw;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 20px; /* Add padding for spacing */
+}
+
+.square-box-container {
+  margin-top: 3vh;
+  width: 30vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.square-box-container-1 {
+  margin-top: 3vh;
+  width: 25vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.about-us-pictures {
+  height: 80vh;
+  width: 48vw;
+  margin-left: 4vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-us-text {
+  width: 58vw;
+  margin-right: 4vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Add padding for better spacing */
+}
 
 .title {
-    font-size: 10vh; /* Same as Programs */
-    font-family: 'Times New Roman', Times, serif; /* Same as Programs */
-    display: flex; /* Same as Programs */
-    justify-content: center; /* Same as Programs */
-    margin-top: 8vh; /* Same as Programs */
-    margin-bottom: 2vh; /* Same as Programs */
-    opacity: 0; /* Start hidden for animation */
-    transform: translateY(30px); /* Start below for animation */
-    transition: opacity 0.1s ease-out; /* Smooth initial state */
-    color: #333; /* Added for contrast, same as Programs enhancement */
-    text-align: center; /* Added for consistency, same as Programs enhancement */
-  }
-  
-  .title.animate-title {
-    animation: fadeInUp 0.8s ease-out forwards; /* Same animation as Programs */
-  }
-  
-  /* Animation keyframes */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Responsive adjustments (same as Programs) */
-  @media (max-width: 768px) {
-    .title {
-      font-size: 6vh;
-      margin-top: 6vh;
-      margin-bottom: 1.5vh;
-    }
-    .aboutus-main{
-      display: flex;
-      flex-direction: column;
-    }
-    .square-box-container{
-      margin-top: 3vh;
-      width: 80vw;
-      display: flex;
-      justify-content: space-between;
-    }
-    .square-box-container-1{
-      margin-top: 3vh;
-      width: 60vw;
-      display: flex;
-      justify-content: space-between;
-    }
-    .first{
-      display: none;
-    }
-    .second{
-      display: none;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .title {
-      font-size: 4vh;
-      margin-top: 4vh;
-      margin-bottom: 1vh;
-    }
-    .about-us-text{
-      width: 80vw;
-    }
-    .first{
-      display: none;
-    }
-    .second{
-      display: none;
-    }
-    .about-us-text > p{
-      width: 80vw;
-      margin: 0;
-      font-size: 2px;
-    }
-  }
+  font-size: 10vh;
+  font-family: 'Times New Roman', Times, serif;
+  display: flex;
+  justify-content: center;
+  margin-top: 8vh;
+  margin-bottom: 2vh;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.1s ease-out;
+  color: #333;
+  text-align: center;
+}
 
-.about-us-text > p{
+.title.animate-title {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-us-text > p {
   font-size: larger;
   margin: 3vh;
   margin-top: 1vh;
   text-align: justify;
-  overflow: hidden;
 }
 
 .round-image-container {
   position: relative;
-  width: 300px; /* Adjust size as needed */
+  width: 300px;
   height: 300px;
-  border-radius: 50%; /* Makes it round */
+  border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Shadow */
-  border: 5px solid #ffffff; /* White border */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border: 5px solid #ffffff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .round-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures image fills the circle */
+  object-fit: cover;
   display: block;
 }
 
@@ -192,20 +126,19 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
-  opacity: 0; /* Hidden by default */
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
   transition: opacity 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Graphics: Animated circles */
 .graphic-circle {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  transform: scale(0); /* Start scaled down */
+  transform: scale(0);
   transition: transform 0.3s ease;
 }
 
@@ -230,21 +163,19 @@
   left: 70%;
 }
 
-/* Hover effects */
 .round-image-container:hover {
-  transform: scale(1.05); /* Slight scale up */
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 .round-image-container:hover .hover-graphics {
-  opacity: 1; /* Show graphics */
+  opacity: 1;
 }
 
 .round-image-container:hover .graphic-circle {
-  transform: scale(1); /* Grow to full size */
+  transform: scale(1);
 }
 
-/* Optional: Staggered animation for graphics */
 .round-image-container:hover .graphic-1 {
   transition-delay: 0.1s;
 }
@@ -259,35 +190,105 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .quote-display {
+    font-size: 1rem;
+  }
+
+  .title {
+    font-size: 6vh;
+    margin-top: 6vh;
+    margin-bottom: 1.5vh;
+  }
+
+  .aboutus-main {
+    flex-direction: column;
+    height: auto; /* Allow height to adjust to content */
+    padding: 10px;
+  }
+
+  .square-box-container {
+    width: 80vw;
+  }
+
+  .square-box-container-1 {
+    width: 60vw;
+  }
+
+  .about-us-pictures {
+    width: 80vw;
+    height: auto; /* Adjust height to content */
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .about-us-text {
+    width: 80vw;
+    height: auto; /* Allow height to grow with content */
+    margin-right: 0;
+  }
+
+  .about-us-text > p {
+    font-size: 1rem; /* Readable size */
+    margin: 1vh 0;
+  }
+
   .round-image-container {
     width: 200px;
     height: 200px;
   }
-  .first{
-    display: none;
+
+  .first,
+  .second {
+    display: none; /* Keep hidden as per your original design */
   }
-  .second{
-    display: none;
-  }
-  
 }
 
 @media (max-width: 480px) {
+  .quote-display {
+    font-size: 0.9rem;
+  }
+
+  .title {
+    font-size: 4vh;
+    margin-top: 4vh;
+    margin-bottom: 1vh;
+  }
+
+  .aboutus-main {
+    padding: 5px;
+  }
+
+  .about-us-pictures {
+    width: 90vw;
+    height: auto;
+  }
+
+  .about-us-text {
+    width: 90vw;
+    height: auto;
+  }
+
+  .about-us-text > p {
+    font-size: 0.9rem; /* Readable size for mobile */
+    margin: 1vh 0;
+    padding: 0 10px; /* Add padding for better readability */
+  }
+
   .round-image-container {
     width: 150px;
     height: 150px;
   }
-  .about-us-text p {
-    color: black;
-    font-size: small;
-    padding: 0;
-    margin: 0;
+
+  .square-box-container {
+    width: 90vw;
   }
-  .first{
-    display: none;
+
+  .square-box-container-1 {
+    width: 70vw;
   }
-  .second{
+
+  .first,
+  .second {
     display: none;
   }
 }
-

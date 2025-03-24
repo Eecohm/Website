@@ -3,6 +3,7 @@
   padding: 40px 20px;
   background: linear-gradient(135deg, #fff, #f8e1e1);
   text-align: center;
+  overflow-y: auto; /* Allow vertical scrolling for the section if needed */
 }
 
 /* Header styles */
@@ -32,12 +33,16 @@
   max-width: 1200px;
   margin: 0 auto;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-behavior: smooth;
   scrollbar-width: none; /* Hide scrollbar in Firefox */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+  padding: 10px 0;
 }
 
+/* Hide scrollbar in Webkit browsers */
 .team-members::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in Webkit browsers */
+  display: none;
 }
 
 /* Team member card */
@@ -47,10 +52,11 @@
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-width: 250px; /* Fixed width for consistency */
-  height: 400px; /* Fixed height for flip animation */
+  min-width: 250px;
+  height: 400px;
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .team-member-card:hover {
@@ -87,7 +93,7 @@
 }
 
 .card-back {
-  background: #800000; /* Bright maroon for back */
+  background: #800000;
   color: #fff;
   transform: rotateY(180deg);
   display: flex;

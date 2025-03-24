@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { FaFacebook, FaPhone, FaEnvelope } from 'react-icons/fa';
-import './MeetTheTeam.css'; // Ensure CSS is imported here if separate
+import './MeetTheTeam.css';
 
 function TeamMember({ name, role, bio, quote, image, social }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const handleFlip = () => {
+  const handleFlip = (e) => {
+    e.stopPropagation(); // Prevent flip click from triggering scroll
     setIsFlipped(!isFlipped);
   };
 
@@ -37,7 +38,7 @@ function TeamMember({ name, role, bio, quote, image, social }) {
             <p>{quote}</p>
             <br />
             <br />
-                <FaPhone /> 
+            <FaPhone />
             <p>{social.phone}</p>
           </div>
         </div>
