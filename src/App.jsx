@@ -10,6 +10,7 @@ import ContactUs from './Components/ContactUs/ContactUs';
 import SocialButtons from './Components/SocialMediaButtons/SocialButtons';
 import NoticeBoard from './Components/Notice/Notice';
 import AnimatedCards from './Components/Moto/AnimatedCards';
+import PopupModal from './Components/PopModel/PopupModal';
 import './App.css';
 
 const ScrollToSection = () => {
@@ -32,6 +33,7 @@ const App = () => {
       <div className="Home">
         <Navbar />
         <NoticeBoard />
+        <PopupModal />
         <SocialButtons />
         <ScrollToSection />
         <section id="hero">

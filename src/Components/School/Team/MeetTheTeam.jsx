@@ -8,6 +8,7 @@ import nirmal from '../../../assets/Images/nirmal.png'
 import sumanu from '../../../assets/Images/sumanu.png'
 import sumans from '../../../assets/Images/sumans.png'
 import primila from '../../../assets/Images/pramila.png'
+import pritam from '../../../assets/Images/pritam.png'
 const teamMembers = [
   {
     name: 'AALOK KARKI',
@@ -98,7 +99,7 @@ const teamMembers = [
     role: 'Finance Officer',
     bio: 'A meticulous Finance Officer managing budgets and financial health.',
     quote: '“Success is the sum of small efforts, repeated day in and day out.”',
-    image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
+    image: pritam,
     social: {
       facebook: 'https://www.facebook.com/pritam0110',
       phone: '9801430110',
