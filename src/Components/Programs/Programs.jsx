@@ -11,7 +11,8 @@ import hm from '../../assets/Icons/hm-icon.svg';
 import cs from '../../assets/Icons/cs-icon.svg'; 
 import bs from '../../assets/Icons/bs-icon.svg'; 
 import adcs from '../../assets/Icons/adcs-icon.svg'; 
-import dhm from '../../assets/Icons/dhm-icon.svg'; 
+import dhm from '../../assets/Icons/dhm-icon.svg';
+import dhmi from '../../assets/Images/adhm.jpg'; 
 import school from '../../assets/Icons/school-icon.svg'; 
 const Programs = () => {
   const scrollRef = useRef(null);
@@ -101,7 +102,7 @@ const Programs = () => {
     {
       courseName: "Diploma in Hotel Management (DHM)",
       description: "A great starting point for a rewarding career in one of the largest and most dynamic industries in the world ensuring students gain international-standard hospitality skills.",
-      photo: program_3,
+      photo: dhmi,
       duration: "1 year",
       keyFeatures: [
         "Industry Focused Curriculum with practical training",

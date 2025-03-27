@@ -6,7 +6,7 @@
   max-height: 650px;
   min-width: 350px;
   min-height: 550px;
-  background: #ffffff;  /* Fully opaque background */
+  background: #ffffff; /* Fully opaque background */
   border-radius: 25px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
   margin: 0.5rem;
@@ -16,23 +16,27 @@
   flex-direction: column;
   position: relative;
   cursor: pointer;
-  /* Removed background animation for opaque look */
 }
 
-/* Expanded Course Card Styles for Desktop */
+/* Expanded Course Card Styles */
 .course-card.expanded {
   width: 95vw;
   height: 80vh;
   max-width: 1200px;
-  max-height: 1200px;
-  z-index: 10;
+  max-height: calc(100vh - 20px); /* Avoid iPhone notch/status bar overlap */
+  z-index: 9999; /* Super high to ensure it’s on top */
   position: fixed;
   top: 50%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%); /* iOS-friendly transform */
   transform: translate(-50%, -50%);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
-  flex-direction: row; /* Layout: image on left, content on right */
+  flex-direction: row; /* Image on left, content on right */
+  -webkit-backface-visibility: hidden; /* Prevent iOS rendering glitches */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  -webkit-box-sizing: border-box; /* Ensure sizing consistency */
+  box-sizing: border-box;
 }
 
 /* Hover effect for non-expanded state */
@@ -101,8 +105,8 @@
 
 .course-card.expanded .course-content {
   width: 60%; /* 60% width for content on right side */
-  justify-content: center;  /* Vertically center all content */
-  align-items: flex-start;  /* Keep left alignment horizontally */
+  justify-content: center; /* Vertically center all content */
+  align-items: flex-start; /* Keep left alignment horizontally */
   padding: 2rem;
 }
 
@@ -113,8 +117,8 @@
   color: #800000; /* Maroon */
   font-weight: 600;
   line-height: 1.1;
-  white-space: normal;        /* Allow title to wrap */
-  overflow-wrap: break-word;  /* Ensure long words break as needed */
+  white-space: normal; /* Allow title to wrap */
+  overflow-wrap: break-word; /* Ensure long words break as needed */
 }
 
 .course-description {
@@ -122,8 +126,8 @@
   font-size: 1rem;
   color: #333;
   line-height: 1.2;
-  white-space: normal;        /* Allow text to wrap */
-  overflow-wrap: break-word;  /* Break long words if necessary */
+  white-space: normal; /* Allow text to wrap */
+  overflow-wrap: break-waord; /* Break long words if necessary */
 }
 
 .course-duration {
@@ -195,7 +199,13 @@
   .course-card.expanded {
     width: 90vw;
     height: 80vh;
+    max-height: calc(100vh - 20px); /* Consistent with iPhone fix */
+    z-index: 9999; /* Keep it on top */
     flex-direction: column; /* Stack content vertically in mobile */
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-backface-visibility: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .course-card.expanded .course-image-container {
@@ -263,6 +273,12 @@
   .course-card.expanded {
     width: 95vw;
     height: 70vh;
+    max-height: calc(100vh - 20px); /* Consistent with iPhone fix */
+    z-index: 9999; /* Ensure top layer */
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-backface-visibility: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .course-card.expanded .course-image-container {
@@ -325,4 +341,11 @@
   .icon-overlay {
     bottom: -150px;
   }
+}
+
+/* Ensure body doesn’t interfere */
+body {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
