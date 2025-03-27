@@ -1,3 +1,4 @@
+/* General Course Card Styles */
 .course-card {
   width: 30vw;
   height: 65vh;
@@ -5,23 +6,25 @@
   max-height: 650px;
   min-width: 350px;
   min-height: 550px;
-  background-color: #ffffff;
-  margin: 0.5rem;
+  background: #ffffff;  /* Fully opaque background */
   border-radius: 25px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+  margin: 0.5rem;
   overflow: hidden;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   position: relative;
   cursor: pointer;
+  /* Removed background animation for opaque look */
 }
 
+/* Expanded Course Card Styles for Desktop */
 .course-card.expanded {
-  width: 80vw;
+  width: 95vw;
   height: 80vh;
-  max-width: 800px;
-  max-height: 800px;
+  max-width: 1200px;
+  max-height: 1200px;
   z-index: 10;
   position: fixed;
   top: 50%;
@@ -29,26 +32,30 @@
   transform: translate(-50%, -50%);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
+  flex-direction: row; /* Layout: image on left, content on right */
 }
 
+/* Hover effect for non-expanded state */
 .course-card:hover:not(.expanded) {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Course Image Container */
 .course-image-container {
   width: 100%;
   height: 60%;
   overflow: hidden;
-  transition: height 0.3s ease;
   position: relative;
+  transition: all 0.3s ease;
 }
 
 .course-card.expanded .course-image-container {
-  height: 40%;
-  max-height: 400px;
+  width: 40%; /* 40% width for image on left side */
+  height: 100%;
 }
 
+/* Course Image */
 .course-image {
   width: 100%;
   height: 100%;
@@ -64,26 +71,26 @@
 /* Icon overlay styles */
 .icon-overlay {
   position: absolute;
-  bottom: -240px; /* Start below the image, matching the icon height */
+  bottom: -240px;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
-  transition: bottom 0.4s ease-in-out, opacity 0.4s ease-in-out; /* Smooth slide and fade */
+  transition: bottom 0.4s ease-in-out, opacity 0.4s ease-in-out;
 }
 
 .course-card:hover:not(.expanded) .icon-overlay {
-  bottom: 50%; /* Move to center vertically */
-  transform: translateX(-50%) translateY(50%); /* Adjust for centering */
+  bottom: 50%;
+  transform: translateX(-50%) translateY(50%);
   opacity: 1;
 }
 
 .course-icon {
-  width: 240px; /* 3x the original 80px */
+  width: 240px;
   height: 240px;
-  object-fit: contain; /* Preserve PNG transparency */
+  object-fit: contain;
 }
 
-/* Content styles */
+/* Course Content */
 .course-content {
   padding: 1.5rem;
   flex-grow: 1;
@@ -93,28 +100,30 @@
 }
 
 .course-card.expanded .course-content {
-  justify-content: flex-start;
+  width: 60%; /* 60% width for content on right side */
+  justify-content: center;  /* Vertically center all content */
+  align-items: flex-start;  /* Keep left alignment horizontally */
+  padding: 2rem;
 }
 
+/* Typography and Theme Colors */
 .course-title {
   margin: 0 0 0.3rem 0;
   font-size: 1.5rem;
-  color: #333;
+  color: #800000; /* Maroon */
   font-weight: 600;
   line-height: 1.1;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  white-space: normal;        /* Allow title to wrap */
+  overflow-wrap: break-word;  /* Ensure long words break as needed */
 }
 
 .course-description {
   margin: 0 0 0.5rem 0;
   font-size: 1rem;
-  color: #666;
+  color: #333;
   line-height: 1.2;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  white-space: normal;        /* Allow text to wrap */
+  overflow-wrap: break-word;  /* Break long words if necessary */
 }
 
 .course-duration {
@@ -133,7 +142,7 @@
 .course-key-features h4,
 .course-targeted-audience h4 {
   font-size: 1.2rem;
-  color: #333;
+  color: #FFD700; /* Yellow */
   margin: 0 0 0.3rem 0;
   font-weight: 600;
   line-height: 1.2;
@@ -154,34 +163,28 @@
   margin-bottom: 0.2rem;
 }
 
-.close-button {
+/* Close Button */
+.close-course-button {
   position: absolute;
   top: 10px;
   right: 10px;
   padding: 0.5rem 1rem;
-  background-color: #ff0000;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  transform: translateY(-100%);
-  opacity: 0;
-  pointer-events: none;
-  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  background-color: #800000; /* Maroon */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.close-button:hover {
-  background-color: #f4f800;
+.close-course-button:hover {
+  background-color: #FFD700; /* Yellow */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.course-card.expanded .close-button {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Responsive design */
+/* Responsive Design */
 @media (max-width: 768px) {
   .course-card {
     width: 90vw;
@@ -192,11 +195,20 @@
   .course-card.expanded {
     width: 90vw;
     height: 80vh;
+    flex-direction: column; /* Stack content vertically in mobile */
   }
 
   .course-card.expanded .course-image-container {
+    width: 100%;
     height: 35%;
     max-height: 300px;
+  }
+
+  .course-card.expanded .course-content {
+    width: 100%;
+    padding: 1rem;
+    justify-content: center;
+    align-items: flex-start;
   }
 
   .course-title {
@@ -207,6 +219,8 @@
   .course-description {
     font-size: 0.9rem;
     line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .course-duration,
@@ -228,12 +242,12 @@
   }
 
   .course-icon {
-    width: 180px; /* 3x the original 60px */
+    width: 180px;
     height: 180px;
   }
 
   .icon-overlay {
-    bottom: -180px; /* Adjust for larger icon */
+    bottom: -180px;
   }
 }
 
@@ -252,6 +266,7 @@
   }
 
   .course-card.expanded .course-image-container {
+    width: 100%;
     height: 30%;
     max-height: 200px;
   }
@@ -262,8 +277,8 @@
   }
 
   .course-content {
-    height: 30%;
-    max-height: 50px;
+    height: auto;
+    max-height: none;
   }
 
   .course-title {
@@ -275,6 +290,8 @@
   .course-description {
     font-size: 0.85rem;
     line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: break-word;
     display: none;
   }
 
@@ -301,11 +318,11 @@
   }
 
   .course-icon {
-    width: 150px; /* 3x the original 50px */
+    width: 150px;
     height: 150px;
   }
 
   .icon-overlay {
-    bottom: -150px; /* Adjust for larger icon */
+    bottom: -150px;
   }
 }

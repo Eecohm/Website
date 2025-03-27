@@ -34,7 +34,7 @@ const CourseCard = ({ courseName, description, photo, duration, keyFeatures, tar
       </div>
       {isExpanded && (
         <button 
-          className="close-button" 
+          className="close-course-button" 
           onClick={(e) => {
             e.stopPropagation();
             onClose();
