@@ -159,17 +159,26 @@
   top: 10px;
   right: 10px;
   padding: 0.5rem 1rem;
-  background-color: #ff4444;
+  background-color: #ff0000;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s ease;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
 }
 
 .close-button:hover {
-  background-color: #cc0000;
+  background-color: #f4f800;
+}
+
+.course-card.expanded .close-button {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Responsive design */
