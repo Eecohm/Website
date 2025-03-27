@@ -7,6 +7,7 @@ import aalok from '../../../assets/Images/aalok.jpg'
 import nirmal from '../../../assets/Images/nirmal.png'
 import sumanu from '../../../assets/Images/sumanu.png'
 import sumans from '../../../assets/Images/sumans.png'
+import janardhan from '../../../assets/Images/janardhan.png'
 import primila from '../../../assets/Images/pramila.png'
 import pritam from '../../../assets/Images/pritam.png'
 const teamMembers = [
@@ -87,7 +88,7 @@ const teamMembers = [
     role: 'Operating Officer',
     bio: 'A proactive Operation Officer optimizing workflows.',
     quote: '“Good project management turns vision into reality.”',
-    image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=150',
+    image: janardhan,
     social: {
       facebook: 'https://facebook.com/janardhansharma',
       phone: '9815908872',
@@ -106,6 +107,7 @@ const teamMembers = [
       mail: 'pritamkoirala@gmail.com',
     },
   },
+  
 ];
 
 function MeetTheTeam() {

@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import './Testomonial.css';
+import pranil from '../../assets/Images/CHOUHAN.png'
 
 const testimonialsData = [
   {
-    photo: 'https://randomuser.me/api/portraits/men/32.jpg',
-    name: 'John Doe',
-    description: 'CEO @ TechCorp',
-    review: 'This product changed the way we work. Absolutely fantastic! This product changed the way we work. Absolutely fantastic!',
+    photo: pranil,
+    name: 'Pranil Chauhan',
+    description: 'Branch Executive @ Aussie Education Nepal',
+    review: 'As a faculty member at EECOHM College, I am committed to bridging the gap between theoretical learning and real-world business applications. Through practical classes, I equip students with essential soft skills and provide hands-on entrepreneurial experiences that prepare them for the dynamic world of business. My goal is to nurture future leaders by fostering critical thinking, creativity, and a problem-solving mindset. At EECOHM, we don’t just teach business—we create opportunities for students to experience it firsthand.',
     stars: 5,
   },
   {
     photo: 'https://randomuser.me/api/portraits/women/44.jpg',
     name: 'Jane Smith',
     description: 'CTO @ InnovateX',
-    review: 'A game-changer in the industry. Highly recommended!. A game-changer in the industry. Highly recommended!. A game-changer in the industry. Highly recommended!. ',
+    review: 'Having dedicated four years to teaching English at EECOHM School of Excellence, I can confidently say that it is a truly rewarding environment for both educators and students. The supportive management fosters open communication, ensuring that any concerns are promptly addressed, while the competitive remuneration reflects their commitment to valuing staff. This positive atmosphere directly enhances my teaching experience, allowing me to bring enthusiasm and energy into the classroom. When a teacher is fulfilled, that joy radiates to the students, sparking their curiosity and fostering a genuine love for learning. EECOHM is a place where excellence in education thrives—for teachers and students alike',
     stars: 4,
   },
   {

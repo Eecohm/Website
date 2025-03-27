@@ -5,6 +5,7 @@ import css from '../../assets/Images/css.png';
 import csimg from '../../assets/Images/cs.png';
 import program_2 from '../../assets/Images/program_2.png';
 import program_3 from '../../assets/Images/program_3.png';
+import hmimgs from '../../assets/Images/hmimgs.png';
 // Example chef icon (replace with your own PNG URL)
 import adhm from '../../assets/Icons/adhm-icon.svg'; 
 import hm from '../../assets/Icons/hm-icon.svg'; 
@@ -12,8 +13,9 @@ import cs from '../../assets/Icons/cs-icon.svg';
 import bs from '../../assets/Icons/bs-icon.svg'; 
 import adcs from '../../assets/Icons/adcs-icon.svg'; 
 import dhm from '../../assets/Icons/dhm-icon.svg';
-import dhmi from '../../assets/Images/adhm.jpg'; 
+import dhmi from '../../assets/Images/adhm.jpg';
 import school from '../../assets/Icons/school-icon.svg'; 
+import preschool from '../../assets/Images/preschool.png';
 const Programs = () => {
   const scrollRef = useRef(null);
   const titleRef = useRef(null);
@@ -76,7 +78,6 @@ const Programs = () => {
       photo: csimg,
       duration: "2 years",
       keyFeatures: [
-        "The +2 Advance Diploma in Computer Science is a two-year program designed for students.",
         "Aspiring to build a strong foundation in computer science and IT-related fields.",
         "Dual Certification NEB + Advanced Diploma in Computer Science.",
         "Industry Relevant Curriculum which covers all the industry standard technologies.",
@@ -115,7 +116,7 @@ const Programs = () => {
     {
       courseName: "+2 with Business Studies",
       description: "This program equips students with foundational business knowledge and critical thinking skills essential for modern commerce.",
-      photo: program_3,
+      photo:  program_3,
       duration: "2 years",
       keyFeatures: [
         "Business fundamentals are taught through real-world case studies and projects.",
@@ -128,7 +129,7 @@ const Programs = () => {
     {
       courseName: "+2 with Hotel Management",
       description: "This course introduces students to the hospitality industry with a focus on practical skills.",
-      photo: program_3,
+      photo: hmimgs,
       duration: "2 years",
       keyFeatures: [
         "Business fundamentals provide a strong base for managing hospitality enterprises effectively.",
@@ -154,7 +155,7 @@ const Programs = () => {
     {
       courseName: "Pre-School to Secondary",
       description: "This program offers a complete educational journey from pre-school to secondary levels.",
-      photo: program_3,
+      photo: preschool,
       duration: "10 years",
       keyFeatures: [
         "Holistic education integrates academics with emotional and social development skills.",
