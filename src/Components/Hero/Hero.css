@@ -32,7 +32,7 @@
 .hero-text > h4 {
   margin: 2vh 0;
   font-size: 3vh;
-  text-decoration: underline;
+  color: yellow;
 }
 
 .hero-text > p {
