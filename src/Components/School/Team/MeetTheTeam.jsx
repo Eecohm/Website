@@ -84,7 +84,7 @@ const teamMembers = [
     },
   },
   {
-    name: 'JANARDHAN SHARMA',
+    name: 'JANARDAN DAHAL',
     role: 'Operating Officer',
     bio: 'A proactive Operation Officer optimizing workflows.',
     quote: '“Good project management turns vision into reality.”',

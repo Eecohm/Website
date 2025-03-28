@@ -65,12 +65,12 @@
 /* Expanded card */
 .team-lead-card.selected {
   width: 800px;
-  height: 600px; /* Default height, will be overridden in mobile */
+  height: auto; /* Allow height to adjust to content */
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(128, 0, 0, 0.4);
   transform: scale(1.03);
   z-index: 1000;
-  position: relative;
+  position: relative; /* Keep it in the flow, not floating */
 }
 
 /* Show info when selected */
@@ -127,11 +127,12 @@
   padding: 20px;
   position: static;
   background: #fff;
-  height: calc(100% - 300px); /* Default height, adjusted in mobile */
+  height: auto; /* Allow height to adjust to content */
   flex-direction: column;
-  justify-content: flex-start; /* Changed from space-between to allow natural flow */
+  justify-content: flex-start; /* Allow natural flow */
   border-radius: 0 0 15px 15px;
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  overflow-wrap: break-word; /* Ensure text wraps */
+  word-wrap: break-word; /* Legacy support for text wrapping */
 }
 
 .team-lead-info h3 {
@@ -159,7 +160,9 @@
   color: #666;
   margin: 10px 0;
   line-height: 1.5;
-  text-align: left; /* Improve readability for longer text */
+  text-align: center; /* Improve readability for longer text */
+  overflow-wrap: break-word; /* Ensure text wraps */
+  word-wrap: break-word; /* Legacy support for text wrapping */
 }
 
 /* Background shapes */
@@ -278,7 +281,6 @@
   .team-lead-card.selected {
     width: 500px;
     height: auto; /* Allow dynamic height */
-    max-height: 80vh; /* Limit to viewport height */
   }
 
   .team-lead-card.selected .team-lead-image {
@@ -287,7 +289,7 @@
 
   .team-lead-card.selected .team-lead-info {
     height: auto; /* Allow content to dictate height */
-    min-height: calc(100% - 200px); /* Ensure it takes remaining space */
+    padding: 20px;
   }
 
   .team-lead-info h3 {
@@ -353,11 +355,8 @@
   .team-lead-card.selected {
     width: 90vw; /* Wider to fit content comfortably */
     height: auto; /* Dynamic height based on content */
-    max-height: 90vh; /* Limit to viewport height */
-    position: fixed; /* Ensure it overlays properly */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.03); /* Center and scale */
+    position: relative; /* Keep it in the flow, not floating */
+    transform: scale(1.03); /* Scale without repositioning */
     z-index: 1000; /* Ensure it’s above other elements */
   }
 
@@ -367,9 +366,9 @@
 
   .team-lead-card.selected .team-lead-info {
     height: auto; /* Let content dictate height */
-    min-height: calc(100% - 150px); /* Minimum height to fill remaining space */
     padding: 15px; /* Slightly less padding for compactness */
-    overflow-y: auto; /* Scroll if bio is too long */
+    overflow-wrap: break-word; /* Ensure text wraps */
+    word-wrap: break-word; /* Legacy support for text wrapping */
   }
 
   .team-lead-info h3 {
