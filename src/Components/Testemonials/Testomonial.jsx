@@ -23,7 +23,7 @@ const testimonialsData = [
     photo: sadiksya,
     name: 'Sadikshya Khadka',
     description: 'Executive Vice President (EVP) at Bahradashi Jaycees',
-    review: 'Great experience, excellent support team! Great experience, excellent support team! Great experience, excellent support team! Great experience, excellent support team!',
+    review: 'Great experience, excellent support team!',
     stars: 5,
   },
   {
