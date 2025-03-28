@@ -12,8 +12,8 @@ const testimonialsData = [
   },
   {
     photo: 'https://randomuser.me/api/portraits/women/44.jpg',
-    name: 'Jane Smith',
-    description: 'CTO @ InnovateX',
+    name: 'Arpan Khatiwada',
+    description: 'Branch Executive @ BEES International Education Service',
     review: 'Having dedicated four years to teaching English at EECOHM School of Excellence, I can confidently say that it is a truly rewarding environment for both educators and students. The supportive management fosters open communication, ensuring that any concerns are promptly addressed, while the competitive remuneration reflects their commitment to valuing staff. This positive atmosphere directly enhances my teaching experience, allowing me to bring enthusiasm and energy into the classroom. When a teacher is fulfilled, that joy radiates to the students, sparking their curiosity and fostering a genuine love for learning. EECOHM is a place where excellence in education thrives—for teachers and students alike',
     stars: 4,
   },
