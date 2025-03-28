@@ -31,8 +31,8 @@
   
   .close-board-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     border: none;
     background: none;
     font-size: 24px;
@@ -125,15 +125,18 @@
   .notice-description {
     margin: 0;
     font-size: 1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Limits to 3 lines in normal state */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    display: -webkit-box; /* Required for -webkit-line-clamp */
+    -webkit-line-clamp: 3; /* Limits to 3 lines */
+    -webkit-box-orient: vertical; /* Required for -webkit-line-clamp */
+    overflow: hidden; /* Hides overflow content */
+    line-clamp: 3; /* Standard property for modern browsers */
   }
   
   .notice-card.expanded .notice-description {
-    display: block; /* Shows full text when expanded */
-    -webkit-line-clamp: unset;
+    display: block; /* Show full text, disable line clamping */
+    -webkit-line-clamp: none; /* Remove line limit (Webkit) */
+    line-clamp: none; /* Remove line limit (Standard) */
+    overflow: visible; /* Ensure all text is visible */
   }
   
   /* Responsive adjustments */

@@ -6,7 +6,7 @@
   max-height: 650px;
   min-width: 350px;
   min-height: 550px;
-  background: #ffffff; /* Fully opaque background */
+  background: #ffffff;
   border-radius: 25px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
   margin: 0.5rem;
@@ -23,19 +23,19 @@
   width: 95vw;
   height: 80vh;
   max-width: 1200px;
-  max-height: calc(100vh - 20px); /* Avoid iPhone notch/status bar overlap */
-  z-index: 9999; /* High z-index to ensure it’s on top */
+  max-height: calc(100vh - 20px);
+  z-index: 9999;
   position: fixed;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%) translateZ(0); /* Force stacking context on iOS */
-  transform: translate(-50%, -50%) translateZ(0); /* Ensure top layer */
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
-  flex-direction: row; /* Image on left, content on right */
-  -webkit-backface-visibility: hidden; /* Prevent iOS rendering glitches */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  -webkit-box-sizing: border-box; /* Ensure sizing consistency */
+  flex-direction: row;
+  -webkit-backface-visibility: hidden;
+  -webkit-overflow-scrolling: touch;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -47,9 +47,7 @@
 
 /* Course Image Container */
 .course-image-container {
-  
-   
-width: 100%;
+  width: 100%;
   height: 60%;
   overflow: hidden;
   position: relative;
@@ -57,7 +55,7 @@ width: 100%;
 }
 
 .course-card.expanded .course-image-container {
-  width: 40%; /* 40% width for image on left side */
+  width: 40%;
   height: 100%;
 }
 
@@ -106,21 +104,23 @@ width: 100%;
 }
 
 .course-card.expanded .course-content {
-  width: 60%; /* 60% width for content on right side */
-  justify-content: center; /* Vertically center all content */
-  align-items: flex-start; /* Keep left alignment horizontally */
+  width: 60%;
+  justify-content: center;
+  align-items: flex-start;
   padding: 2rem;
+  height: auto; /* Allow natural growth */
+  overflow: visible; /* Prevent clipping */
 }
 
 /* Typography and Theme Colors */
 .course-title {
   margin: 0 0 0.3rem 0;
   font-size: 1.5rem;
-  color: #800000; /* Maroon */
+  color: #800000;
   font-weight: 600;
   line-height: 1.1;
-  white-space: normal; /* Allow title to wrap */
-  overflow-wrap: break-word; /* Ensure long words break as needed */
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .course-description {
@@ -128,8 +128,8 @@ width: 100%;
   font-size: 1rem;
   color: #333;
   line-height: 1.2;
-  white-space: normal; /* Allow text to wrap */
-  overflow-wrap: break-word; /* Corrected typo: break-word instead of break-waord */
+  white-space: normal;
+  overflow-wrap: break-word; /* Fixed typo from break-waord */
 }
 
 .course-duration {
@@ -138,6 +138,8 @@ width: 100%;
   color: #444;
   font-weight: 500;
   line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .course-key-features,
@@ -148,10 +150,12 @@ width: 100%;
 .course-key-features h4,
 .course-targeted-audience h4 {
   font-size: 1.2rem;
-  color: #FFD700; /* Yellow */
+  color: #FFD700;
   margin: 0 0 0.3rem 0;
   font-weight: 600;
   line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .course-key-features ul,
@@ -162,6 +166,8 @@ width: 100%;
   font-size: 1rem;
   color: #666;
   line-height: 1.3;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .course-key-features li,
@@ -180,13 +186,13 @@ width: 100%;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  background-color: #800000; /* Maroon */
+  background-color: #800000;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .close-course-button:hover {
-  background-color: #FFD700; /* Yellow */
+  background-color: #FFD700;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
@@ -201,11 +207,11 @@ width: 100%;
   .course-card.expanded {
     width: 90vw;
     height: 80vh;
-    max-height: calc(100vh - 20px); /* Consistent with iPhone fix */
-    z-index: 9999; /* Keep it on top */
-    flex-direction: column; /* Stack content vertically in mobile */
-    -webkit-transform: translate(-50%, -50%) translateZ(0); /* Force stacking context on iOS */
-    transform: translate(-50%, -50%) translateZ(0);
+    max-height: calc(100vh - 20px);
+    z-index: 9999;
+    flex-direction: column;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     -webkit-backface-visibility: hidden;
     -webkit-overflow-scrolling: touch;
   }
@@ -219,13 +225,18 @@ width: 100%;
   .course-card.expanded .course-content {
     width: 100%;
     padding: 1rem;
-    justify-content: center;
+    justify-content: flex-start; /* Start from top */
     align-items: flex-start;
+    height: auto; /* Allow natural growth */
+    min-height: 65%; /* Take remaining space but can grow */
+    overflow: visible; /* Prevent clipping */
   }
 
   .course-title {
     font-size: 1.25rem;
     line-height: 1.1;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .course-description {
@@ -233,6 +244,7 @@ width: 100%;
     line-height: 1.2;
     white-space: normal;
     overflow-wrap: break-word;
+    overflow: visible;
   }
 
   .course-duration,
@@ -240,12 +252,16 @@ width: 100%;
   .course-targeted-audience h4 {
     font-size: 1.1rem;
     line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .course-key-features ul,
   .course-targeted-audience ul {
     font-size: 0.9rem;
     line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .course-key-features li,
@@ -275,11 +291,12 @@ width: 100%;
   .course-card.expanded {
     width: 95vw;
     height: 70vh;
-    max-height: calc(100vh - 20px); /* Consistent with iPhone fix */
-    z-index: 9999; /* Ensure top layer */
-    -webkit-transform: translate(-50%, -50%) translateZ(0); /* Force stacking context on iOS */
-    transform: translate(-50%, -50%) translateZ(0);
+    max-height: calc(100vh - 20px);
+    z-index: 9999;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -294,27 +311,30 @@ width: 100%;
     min-height: 15px;
   }
 
-  .course-content {
-    height: auto;
-    max-height: none;
+  .course-card.expanded .course-content {
+    width: 100%;
+    padding: 1rem;
+    justify-content: flex-start; /* Start from top */
+    align-items: flex-start;
+    height: auto; /* Allow natural growth */
+    min-height: 70%; /* Take remaining space but can grow */
+    overflow: visible; /* Prevent clipping */
   }
 
   .course-title {
     font-size: 1.1rem;
-    margin-top: 50px;
+    margin-top: 10px; /* Reduced from 50px */
     line-height: 1.1;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .course-description {
-    font-size: 0.85rem;
+    font-size: 0.5rem;
     line-height: 1.2;
     white-space: normal;
     overflow-wrap: break-word;
-    display: none;
-  }
-
-  .course-card.expanded .course-description {
-    display: block;
+    overflow: visible;
   }
 
   .course-duration,
@@ -322,12 +342,16 @@ width: 100%;
   .course-targeted-audience h4 {
     font-size: 1rem;
     line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .course-key-features ul,
   .course-targeted-audience ul {
     font-size: 0.85rem;
     line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .course-key-features li,
@@ -343,22 +367,4 @@ width: 100%;
   .icon-overlay {
     bottom: -150px;
   }
-}
-
-/* iOS-specific fix for z-index issue */
-@media only screen and (-webkit-min-device-pixel-ratio: 1) and (max-device-width: 1024px) {
-  .course-card.expanded {
-    z-index: 10000; /* Even higher z-index for iOS */
-    -webkit-transform: translate(-50%, -50%) translateZ(0); /* Ensure stacking context */
-    transform: translate(-50%, -50%) translateZ(0);
-    -webkit-transform-style: preserve-3d; /* Force 3D rendering on iOS */
-    transform-style: preserve-3d;
-  }
-}
-
-/* Ensure body doesn’t interfere */
-body {
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
