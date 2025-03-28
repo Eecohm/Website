@@ -1,8 +1,9 @@
+// Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../../assets/vite.svg'; // Ensure this path is correct
-import { FaBars, FaTimes } from 'react-icons/fa'; // For hamburger menu
-import { Link } from 'react-router-dom'; // Import Link for routing
+import logo from '../../assets/vite.svg';
+import { FaBars } from 'react-icons/fa'; // Only need FaBars now
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,8 +11,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 50);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -22,7 +22,7 @@ const Navbar = () => {
   };
 
   const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false); // Close menu when a link is clicked
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -30,15 +30,14 @@ const Navbar = () => {
       <Link to="/" onClick={closeMobileMenu}>
         <img src={logo} alt="Logo" className="logo" />
       </Link>
+      
+      {/* Hamburger button */}
       <div className="hamburger" onClick={toggleMobileMenu}>
-        {isMobileMenuOpen ? <FaTimes size={25} /> : <FaBars size={25} />}
+        <FaBars size={25} />
       </div>
+
+      {/* Mobile menu */}
       <ul className={isMobileMenuOpen ? 'nav-menu active' : 'nav-menu'}>
-        <li className="close-btn-li">
-          <button className="close-button" onClick={toggleMobileMenu}>
-            X
-          </button>
-        </li>
         <li>
           <Link to="/" onClick={closeMobileMenu}>Home</Link>
         </li>
@@ -60,6 +59,13 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
+
+      {/* Close button - separate from menu */}
+      {isMobileMenuOpen && (
+        <button className="close-btn" onClick={toggleMobileMenu}>
+          X
+        </button>
+      )}
     </nav>
   );
 };
