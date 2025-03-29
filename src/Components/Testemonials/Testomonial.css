@@ -38,6 +38,7 @@
   flex-direction: column;
   text-align: left;
   height: 100%;
+  margin: 0;
   justify-content: center;
   margin-left: 1vw;
 }
@@ -51,14 +52,12 @@
 .testimonial-description {
   font-size: 1rem;
   color: #666;
-  margin: 5px 0;
 }
 
 .testimonial-review {
   font-style: italic;
   color: #444;
-  margin: 15px 0;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
 }
 
 .testimonial-stars {

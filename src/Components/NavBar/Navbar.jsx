@@ -1,7 +1,7 @@
 // Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../../assets/vite.svg';
+import logo from '../../assets/logo.svg';
 import { FaBars } from 'react-icons/fa'; // Only need FaBars now
 import { Link } from 'react-router-dom';
 
