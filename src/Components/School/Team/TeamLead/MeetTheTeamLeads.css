@@ -65,7 +65,7 @@
 /* Expanded card */
 .team-lead-card.selected {
   width: 800px;
-  height: auto; /* Allow height to adjust to content */
+  height: 600px; /* Allow height to adjust to content */
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(128, 0, 0, 0.4);
   transform: scale(1.03);
@@ -97,7 +97,7 @@
 }
 
 .team-lead-card.selected .team-lead-image {
-  height: 300px;
+  height: 400px;
   border-radius: 15px 15px 0 0;
   border-bottom: 4px solid #800000;
 }
@@ -280,7 +280,7 @@
 
   .team-lead-card.selected {
     width: 500px;
-    height: auto; /* Allow dynamic height */
+    height: 400px/* Allow dynamic height */
   }
 
   .team-lead-card.selected .team-lead-image {
@@ -339,7 +339,7 @@
   .team-leads-slideshow {
     flex-direction: row;
     justify-content: flex-start;
-    overflow-x: auto;
+    overflow-x: 1000;
     scrollbar-width: none;
   }
 
@@ -353,8 +353,8 @@
   }
 
   .team-lead-card.selected {
-    width: 90vw; /* Wider to fit content comfortably */
-    height: auto; /* Dynamic height based on content */
+    width: 100vw; /* Wider to fit content comfortably */
+    height: 60vh; /* Dynamic height based on content */
     position: relative; /* Keep it in the flow, not floating */
     transform: scale(1.03); /* Scale without repositioning */
     z-index: 1000; /* Ensure it’s above other elements */
@@ -365,10 +365,10 @@
   }
 
   .team-lead-card.selected .team-lead-info {
-    height: auto; /* Let content dictate height */
-    padding: 15px; /* Slightly less padding for compactness */
-    overflow-wrap: break-word; /* Ensure text wraps */
-    word-wrap: break-word; /* Legacy support for text wrapping */
+    margin-top: 10px;
+    height: auto;
+    max-height: 600px;
+    max-width: 80%;
   }
 
   .team-lead-info h3 {

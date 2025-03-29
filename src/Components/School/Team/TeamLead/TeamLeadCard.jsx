@@ -12,10 +12,10 @@ function TeamLeadCard({ name, role, bio, image, isSelected, onSelect }) {
       <div className="team-lead-info">
         <h3>{name}</h3>
         {isSelected && (
-          <>
+          <div className="team-lead-details">
             {role && <p className="role">{role}</p>}
             <p className="bio">{bio}</p>
-          </>
+          </div>
         )}
       </div>
     </div>

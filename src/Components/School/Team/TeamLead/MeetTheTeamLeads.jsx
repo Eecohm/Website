@@ -69,8 +69,7 @@ const teamLeads = [
     "bio": "The Kids’ Pool Room and Play Area is a specially designed space for young children to engage in fun and safe activities. The mini pool allows them to enjoy water play under supervision, while the play area is filled with interactive games and learning tools. This environment helps in early childhood development by fostering motor skills, social interaction, and creativity.",
     "image": "https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&w=200"
   }
-]
-;
+];
 
 function MeetTheTeamLeads() {
   const [selectedLead, setSelectedLead] = useState(null);
