@@ -63,7 +63,7 @@ const teamMembers = [
     name: 'PRAMILA BAJGAIN',
     role: 'Academic Executive',
     bio: 'A dedicated Academic Executive fostering excellence in education.',
-    quote: '“Education is the most powerful weapon you can use to change the world.”',
+    quote: '“Empowering young minds driven for the stars, driven by passion and purpose.”',
     image: primila,
     social: {
       facebook: 'https://www.facebook.com/pramila.bajgain',
