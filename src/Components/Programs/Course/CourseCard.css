@@ -83,9 +83,10 @@
 }
 
 .course-card:hover:not(.expanded) .icon-overlay {
-  bottom: 50%;
-  transform: translateX(-50%) translateY(50%);
+  bottom: 60%; /* Moves slightly higher */
+  transform: translateX(-50%) translateY(60%) scale(6.3); /* Increases size */
   opacity: 1;
+  transition: all 0.3s ease-in-out;
 }
 
 .course-icon {
