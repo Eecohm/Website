@@ -19,7 +19,7 @@ const teamMembers = [
     image: aalok,
     social: {
       facebook: 'https://www.facebook.com/aalok.karkinepali',
-      phone: '9842646392',
+      phone: '9852646392',
       mail: 'eecohm.ceo@gmail.com',
     },
   },
