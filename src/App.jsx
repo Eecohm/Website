@@ -32,8 +32,6 @@ const App = () => {
     <Router>
       <div className="Home">
         <Navbar />
-        <NoticeBoard />
-        <PopupModal />
         <SocialButtons />
         <ScrollToSection />
         <section id="hero">

@@ -5,7 +5,13 @@ import arpan from '../../assets/Images/arpanksharma.png'
 import sandhya from '../../assets/Images/sandhya.png'
 import sadiksya from '../../assets/Images/sadikshya.png'
 const testimonialsData = [
-  
+  {
+    photo: pranil,
+    name: 'Pranil Chauhan',
+    description: 'CEO @ Next Gen Learners',
+    review: 'As a faculty member at EECOHM College, I am committed to bridging the gap between theoretical learning and real-world business applications. Through practical classes, I equip students with essential soft skills and provide hands-on entrepreneurial experiences that prepare them for the dynamic world of business. My goal is to nurture future leaders by fostering critical thinking, creativity, and a problem-solving mindset. At EECOHM, we don’t just teach business—we create opportunities for students to experience it firsthand.',
+    stars: 5,
+  },
   {
     photo: arpan,
     name: 'Arpan Khatiwada',
@@ -25,13 +31,6 @@ const testimonialsData = [
     name: 'Sandhya Mukhiya',
     description: 'Front Office, HM (former Student)',
     review: 'Studying at EECOHM College has been a truly rewarding experience, and I am incredibly grateful for the opportunity. The Advanced Diploma in Hospitality Management (ADHM) program offered a perfect balance of theory and hands-on learning, which laid a strong foundation for my career. I am deeply thankful for the continuous support and guidance from my teachers and mentors, who motivated me and helped me stay focused on my goals. My internship at Hotel Kingsbury allowed me to apply what I learned, and I’m honored to have been offered a full-time position in the Front Office Department. The transition from intern to employee has been both exciting and fulfilling, and I am grateful for the chance to continue growing and refining my skills in the hospitality industry.',
-    stars: 5,
-  },
-  {
-    photo: pranil,
-    name: 'Pranil Chauhan',
-    description: 'Faculty of Business',
-    review: 'As a faculty member at EECOHM College, I am committed to bridging the gap between theoretical learning and real-world business applications. Through practical classes, I equip students with essential soft skills and provide hands-on entrepreneurial experiences that prepare them for the dynamic world of business. My goal is to nurture future leaders by fostering critical thinking, creativity, and a problem-solving mindset. At EECOHM, we don’t just teach business—we create opportunities for students to experience it firsthand.',
     stars: 5,
   },
 ];
