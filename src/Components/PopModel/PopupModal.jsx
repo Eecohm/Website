@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './PopupModal.css'; // We'll create this CSS file next
-import img from '../../assets/Images/python.png'
+import img from '../../../src/assets/Images/python.png'
 const PopupModal = () => {
   const [isVisible, setIsVisible] = useState(false);
 
