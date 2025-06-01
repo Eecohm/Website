@@ -1,0 +1,272 @@
+/* Main container */
+.feedback-form-container {
+  min-height: 90vh;
+  width: 85vw;
+  margin-top: 10vh;
+  margin-left: 15vw;
+  background-color: #333; /* Matches NavBar dark theme */
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form heading */
+.form-heading {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* Feedback form */
+.feedback-form {
+  max-width: 1000px;
+  width: 90%;
+  background-color: #020202; /* Secondary dark color */
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Matches NavBar shadow */
+}
+
+/* Form section */
+.form-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #000000;
+  border-radius: 6px;
+  border: 1px solid #444;
+}
+
+/* Section title */
+.section-title {
+  font-size: 1.4rem;
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #d1d5db; /* Light gray accent */
+  padding-bottom: 0.5rem;
+}
+
+/* Form row */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Input group */
+.input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Full-width input group */
+.input-group.full-width {
+  flex: 0 0 100%;
+}
+
+/* Form label */
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #d1d5db; /* Light gray for contrast */
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Form input, select, and textarea */
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #555;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  background-color: #051f2e; /* Darker input background */
+  color: #ffffff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #d1d5db; /* Light gray accent */
+  box-shadow: 0 0 5px rgba(209, 213, 219, 0.5);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Student search container */
+.student-search-container {
+  position: relative;
+}
+
+/* Student dropdown */
+.student-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #1c2526;
+  border: 1px solid #444;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Student option */
+.student-option {
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.student-option:hover {
+  background-color: #2c2c2c;
+}
+
+/* Student name and details */
+.student-name {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.student-details {
+  color: #d1d5db;
+  font-size: 0.85rem;
+}
+
+/* Checkbox group */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  padding-top: 1.5rem; /* Align with other inputs */
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-input {
+  margin-right: 0.5rem;
+  accent-color: #d1d5db; /* Light gray for checkbox */
+}
+
+.checkbox-text {
+  color: #d1d5db;
+  font-size: 1rem;
+}
+
+/* Submit button */
+.submit-button {
+  display: block;
+  width: 50%;
+  padding: 0.75rem;
+  background-color: #00474d; /* Secondary dark color */
+  color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #2c2c2c;
+  transform: translateY(-1px);
+}
+
+.submit-button:disabled {
+  background-color: #444;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .feedback-form-container {
+    width: 95vw;
+    padding: 1rem;
+  }
+
+  .feedback-form {
+    width: 95%;
+    padding: 1.25rem;
+  }
+
+  .form-heading {
+    font-size: 1.6rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .feedback-form-container {
+    margin-left: 0;
+    width: 100vw;
+    min-height: 100vh;
+    margin-top: 10vh;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .input-group {
+    min-width: 100%;
+  }
+
+  .form-heading {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+  }
+
+  .form-input {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .submit-button {
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .feedback-form-container {
+    padding: 0.75rem;
+  }
+
+  .feedback-form {
+    padding: 1rem;
+  }
+
+  .form-section {
+    padding: 0.75rem;
+  }
+
+  .form-heading {
+    font-size: 1.4rem;
+  }
+}
