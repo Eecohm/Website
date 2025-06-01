@@ -1,0 +1,178 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 15vw;
+  right: 0;
+  height: 10vh;
+  background-color: black;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1100;
+}
+
+.topbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.school-name {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #ffffff;
+}
+
+.topbar-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topbar-info span {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+.settings-container {
+  position: relative;
+}
+
+.settings-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #d1d5db;
+}
+
+.settings-menu {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: #101f29;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  min-width: 120px;
+}
+
+.settings-item {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.settings-item:hover {
+  background-color: #000000;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 15vw;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.navbar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.navbar-logo {
+  width: 100px;
+  height: 100px;
+  background-color: #ffffff;
+  border-radius: 10%;
+  object-fit: contain;
+}
+
+.navbar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.navbar-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.navbar-item:hover {
+  background-color: #1a2b38;
+}
+
+.navbar-icon {
+  margin-right: 15px;
+  font-size: 1.2rem;
+  color: #d1d5db;
+}
+
+.navbar-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+  color: #d1d5db;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    transform: translateX(-100%);
+    width: 200px;
+  }
+
+  .navbar.open {
+    transform: translateX(0);
+  }
+
+  .navbar-toggle {
+    display: block;
+  }
+
+  .topbar {
+    left: 0;
+  }
+
+  .topbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .topbar-info {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar {
+    transform: translateX(0);
+  }
+}

@@ -1,0 +1,109 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color:#1a1a1a;
+}
+
+.login-box {
+  background-color: #2a2a2a;
+  padding: 40px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  animation: rgb-glow 4s ease-in-out infinite;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 10px #f72c2c;
+}
+
+.login-box h2 {
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  color: #ffffff;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.neon-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+}
+
+.neon-input:focus {
+  animation: none;
+  border: 2px solid #ffd900;
+  box-shadow: 0 0 10px #f7e92c;
+}
+
+.input-error {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ff0000 !important;
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000 !important;
+  animation: none;
+}
+
+.checkbox-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.checkbox-group label {
+  color: #ffffff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group input {
+  margin-right: 5px;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.neon-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.neon-button:hover {
+  animation: none;
+  border: 2px solid #ffd900;
+  box-shadow: 0 0 10px #f7e92c;
+}
+.forgot-password {
+  display: block;
+  margin-top: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+}

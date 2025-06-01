@@ -1,0 +1,11 @@
+.dashboard{
+    background-color:#333 ;
+    margin-top: 10vh;
+    margin-left: 15vw;
+    height: 90vh;
+    width: 85vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
