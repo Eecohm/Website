@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Hero.css';
 
 function Hero() {
@@ -14,12 +15,12 @@ function Hero() {
         <p className="animate-text">
           Eecohm School of Excellence is a top-tier educational establishment that provides comprehensive education from Pre-school till High School Diploma. Our dynamic environment fosters intellectual, artistic, and physical growth in students, with an emphasis on academic excellence and skill-based education.
         </p>
-        <link to="/login">
-        <button className="login-btn">Log In</button>
-        </link>
-        <link to="/register">
-        <button className="register-btn">Register</button>
-        </link>
+        <Link to="/login">
+          <button className="login-btn">Log In</button>
+        </Link>
+        <Link to="/register">
+          <button className="register-btn">Register</button>
+        </Link>
       </div>
     </div>
   );
