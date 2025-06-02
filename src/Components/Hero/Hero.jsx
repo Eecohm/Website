@@ -18,8 +18,8 @@ function Hero() {
         <Link to="/login">
           <button className="login-btn">Log In</button>
         </Link>
-        <Link to="/register">
-          <button className="register-btn">Register</button>
+        <Link to="/signup">
+          <button className="register-btn">Sign Up</button>
         </Link>
       </div>
     </div>

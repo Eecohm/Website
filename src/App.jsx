@@ -8,6 +8,7 @@ import Reports from './Components/App/Reports/Reports';
 import MonthlyFeedbackForm from './Components/App/Reports/MontlyFeedBackEntry/MontlyFeedBackEntry';
 import './App.css';
 import RoundImage from './Components/AboutUs/RoundImage/RoundImage';
+import SignUpForm from './Components/App/Login/Signup';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/reports" element={<Reports />} />
         <Route path='/enter-feedback' element={<MonthlyFeedbackForm />} />
+        <Route path='/signup' element={<SignUpForm />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </Router>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './Login.css';
 
@@ -10,9 +10,33 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
 
+  // Load saved credentials from localStorage on component mount
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail');
+    const savedPassword = localStorage.getItem('savedPassword');
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
+    
+    if (savedEmail && savedPassword && savedRememberMe) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true);
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    // Save or clear credentials based on rememberMe
+    if (rememberMe) {
+      localStorage.setItem('savedEmail', email);
+      localStorage.setItem('savedPassword', password);
+      localStorage.setItem('rememberMe', 'true');
+    } else {
+      localStorage.removeItem('savedEmail');
+      localStorage.removeItem('savedPassword');
+      localStorage.setItem('rememberMe', 'false');
+    }
 
     try {
       // const response = await fetch('http://192.168.1.100/api/user/login/', {
@@ -87,4 +111,5 @@ const LoginForm = () => {
     </div>
   );
 };
+
 export default LoginForm;

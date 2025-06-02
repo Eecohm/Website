@@ -10,8 +10,8 @@ const MonthlyFeedbackForm = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     student: "",
-    student_id: "", // Renamed from selectedStudentId to match serializer
-    class_id: "", // Renamed from selectedClass to store class ID
+    student_id: "",
+    class_id: "", 
     month: "",
     year: "",
     appearance: "",
