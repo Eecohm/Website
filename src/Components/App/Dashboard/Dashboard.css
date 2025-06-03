@@ -1,11 +1,78 @@
-.dashboard{
-    background-color:#333 ;
-    margin-top: 10vh;
-    margin-left: 15vw;
-    height: 90vh;
-    width: 85vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
+.dashboard {
+  background-color: #333;
+  margin-top: 10vh; /* Matches topbar height */
+  margin-left: 15vw; /* Matches navbar width */
+  height: 90vh;
+  width: 85vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.alert {
+  position: fixed;
+  top: 10vh; /* Places alert below topbar (10vh height) */
+  left: 15vw; /* Aligns with dashboard, respecting navbar width */
+  width: 85vw; /* Matches dashboard width */
+  background-color: #f8d7da;
+  border-bottom: 4px solid #dc3545;
+  z-index: 1050; /* Below topbar (1100), above navbar (1000) */
+  padding: 40px 0; /* Increased padding for larger appearance */
+}
+
+.alert-content {
+  max-width: 1600px; /* Increased for larger alert */
+  margin: 0 auto;
+  padding: 0 40px; /* Increased padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.alert-symbol {
+  font-size: 64px; /* Larger symbol */
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+.alert-content p {
+  margin: 0 0 25px 0;
+  font-size: 24px; /* Larger text */
+  color: #721c24;
+  font-weight: 600; /* Bolder text */
+}
+
+.alert-buttons {
+  display: flex;
+  gap: 25px; /* Larger gap */
+}
+
+.alert-content button {
+  padding: 14px 28px; /* Larger buttons */
+  border: none;
+  border-radius: 8px; /* Slightly larger radius */
+  cursor: pointer;
+  font-size: 20px; /* Larger font */
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.alert-content button:first-of-type {
+  background-color: #dc3545;
+  color: white;
+}
+
+.alert-content button:first-of-type:hover {
+  background-color: #c82333;
+}
+
+.alert-content button:last-of-type {
+  background-color: #6c757d;
+  color: white;
+}
+
+.alert-content button:last-of-type:hover {
+  background-color: #5a6268;
 }

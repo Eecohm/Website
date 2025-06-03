@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './NavBar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTasks, faUserShield, faWallet, faBox, faChalkboardTeacher, faUsers, faChartBar, faBars, faTimes, faCog } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' }));
@@ -23,6 +24,15 @@ const NavBar = () => {
 
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
+  };
+
+  const handleLogoClick = () => {
+    if (location.pathname === '/dashboard') {
+      window.location.reload();
+    } else {
+      navigate('/dashboard');
+    }
+    setIsSidebarOpen(false);
   };
 
   const navItems = [
@@ -80,10 +90,7 @@ const NavBar = () => {
             src="/src/assets/logo.svg"
             alt="School Logo"
             className="navbar-logo"
-            onClick={() => {
-              navigate('/dashboard');
-              setIsSidebarOpen(false);
-            }}
+            onClick={handleLogoClick}
           />
           <div className="navbar-toggle" onClick={toggleSidebar}>
             <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faBars} />

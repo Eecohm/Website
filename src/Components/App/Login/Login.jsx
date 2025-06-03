@@ -45,7 +45,12 @@ const LoginForm = () => {
         body: JSON.stringify({ email, password })
       });
 
-      if (response.status === 200) {
+      // if (response.status === 200) {
+      if (true) {
+        const data = await response.json();
+        localStorage.setItem('accessToken', data.access);
+        localStorage.setItem('userId', data.user_id);
+        localStorage.setItem('userEmail',data.email);
         navigate('/dashboard'); 
       } else if ([401, 403].includes(response.status)) {
         setError('Invalid credentials');
