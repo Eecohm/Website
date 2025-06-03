@@ -1,0 +1,84 @@
+.construction-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  overflow: hidden;
+}
+
+.construction-content {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.construction-title {
+  font-size: 2.5rem;
+  color: #ff6f61;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.construction-message {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.construction-animation {
+  position: relative;
+  height: 100px;
+}
+
+.crane {
+  width: 50px;
+  height: 50px;
+  background: url('https://img.icons8.com/ios-filled/50/000000/crane.png') no-repeat center;
+  background-size: contain;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: craneMove 3s ease-in-out infinite;
+}
+
+.building {
+  width: 100px;
+  height: 60px;
+  background: url('https://img.icons8.com/ios-filled/50/000000/building.png') no-repeat center;
+  background-size: contain;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  animation: buildUp 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes craneMove {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-20px); }
+}
+
+@keyframes buildUp {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+}
+
+@media (max-width: 600px) {
+  .construction-title {
+    font-size: 2rem;
+  }
+  .construction-message {
+    font-size: 1rem;
+  }
+}

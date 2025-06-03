@@ -9,7 +9,8 @@ import MonthlyFeedbackForm from './Components/App/Reports/MontlyFeedBackEntry/Mo
 import './App.css';
 import RoundImage from './Components/AboutUs/RoundImage/RoundImage';
 import SignUpForm from './Components/App/Login/Signup';
-
+import StudentTable from './Components/App/Students/Students';
+import UnderConstruction from './Components/App/UnderConstruction';
 const App = () => {
   return (
     <Router basename="/">
@@ -21,7 +22,8 @@ const App = () => {
         <Route path="/reports" element={<Reports />} />
         <Route path='/enter-feedback' element={<MonthlyFeedbackForm />} />
         <Route path='/signup' element={<SignUpForm />} />
-        <Route path="*" element={<div>404 - Page Not Found</div>} />
+        <Route path='/students' element={<StudentTable />} />
+        <Route path="*" element={<UnderConstruction />} />
       </Routes>
     </Router>
   );

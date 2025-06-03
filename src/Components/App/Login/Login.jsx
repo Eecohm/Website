@@ -39,14 +39,13 @@ const LoginForm = () => {
     }
 
     try {
-      // const response = await fetch('http://192.168.1.100/api/user/login/', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, password })
-      // });
+      const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
 
-      // if (response.status === 200) {
-      if (true) {
+      if (response.status === 200) {
         navigate('/dashboard'); 
       } else if ([401, 403].includes(response.status)) {
         setError('Invalid credentials');
