@@ -37,7 +37,7 @@ const LoginForm = () => {
       localStorage.removeItem('savedPassword');
       localStorage.setItem('rememberMe', 'false');
     }
-
+    //adding a comment
     try {
       // const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
       //   method: 'POST',
