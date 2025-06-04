@@ -79,20 +79,35 @@ const SignUpForm = () => {
         setErrors({ api: 'Network error. Please try again.' });
       }
     } else {
-      // Simulate OTP verification (replace with actual API call)
-      setErrors({});
-      alert('Form submitted successfully!');
-      setFormData({ email: '', password: '', confirmPassword: '', role: '', otp: '' });
-      setIsOtpSent(false);
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/verify-otp/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: formData.email,
+            otp: formData.otp,
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          setErrors({ api: data.message || 'Invalid OTP' });
+          return;
+        }
+        alert('Form submitted successfully!');
+        setFormData({ email: '', password: '', confirmPassword: '', role: '', otp: '' });
+        setIsOtpSent(false);
+      } catch (error) {
+        setErrors({ api: 'Error verifying OTP. Please try again.' });
+      }
     }
   };
 
   return (
-    <div className="signup-container">
-      <form onSubmit={handleSubmit} className="signup-form">
-        <h2>Sign Up</h2>
+    <div className="signUpContainer">
+      <form onSubmit={handleSubmit} className="signUpForm">
+        <h2>Register</h2>
         
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -106,9 +121,9 @@ const SignUpForm = () => {
           {errors.email && <span className="error">{errors.email}</span>}
         </div>
 
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="password">Password</label>
-          <div className="password-wrapper">
+          <div className="passwordWrapper">
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
@@ -120,7 +135,7 @@ const SignUpForm = () => {
             />
             <button
               type="button"
-              className="toggle-password"
+              className="togglePassword"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? 'Hide' : 'Show'}
@@ -129,9 +144,9 @@ const SignUpForm = () => {
           {errors.password && <span className="error">{errors.password}</span>}
         </div>
 
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="confirmPassword">Confirm Password</label>
-          <div className="password-wrapper">
+          <div className="passwordWrapper">
             <input
               type={showConfirmPassword ? 'text' : 'password'}
               id="confirmPassword"
@@ -143,7 +158,7 @@ const SignUpForm = () => {
             />
             <button
               type="button"
-              className="toggle-password"
+              className="togglePassword"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? 'Hide' : 'Show'}
@@ -154,7 +169,7 @@ const SignUpForm = () => {
           )}
         </div>
 
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="role">Role</label>
           <select
             id="role"
@@ -173,7 +188,7 @@ const SignUpForm = () => {
         </div>
 
         {isOtpSent && (
-          <div className="form-group">
+          <div className="formGroup">
             <label htmlFor="otp">OTP</label>
             <input
               type="text"
@@ -191,7 +206,7 @@ const SignUpForm = () => {
 
         {errors.api && <span className="error">{errors.api}</span>}
 
-        <button type="submit" className="submit-btn">
+        <button type="submit" className="submitBtn">
           {isOtpSent ? 'Verify OTP' : 'Send OTP'}
         </button>
       </form>

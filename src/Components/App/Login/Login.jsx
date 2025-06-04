@@ -37,16 +37,15 @@ const LoginForm = () => {
       localStorage.removeItem('savedPassword');
       localStorage.setItem('rememberMe', 'false');
     }
-    //adding a comment
-    try {
-      // const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, password })
-      // });
 
-      // if (response.status === 200) {
-      if (true) {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (response.status === 200) {
         const data = await response.json();
         localStorage.setItem('accessToken', data.access);
         localStorage.setItem('userId', data.user_id);

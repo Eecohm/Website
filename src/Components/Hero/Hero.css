@@ -26,7 +26,15 @@
   border-radius: 5px;
   margin-left: 10px;
   color:  rgb(0, 0, 0);
+  background-color: white;
 }
+.register-btn:hover{
+  background-color: white;
+}
+.login-btn:hover{
+  background: none;
+}
+
 
 .hero-text {
   text-align: center;

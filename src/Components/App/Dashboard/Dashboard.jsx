@@ -57,20 +57,20 @@ const Dashboard = () => {
     <>
       <NavBar />
       {showAlert && (
-        <div className="alert">
-          <div className="alert-content">
-            <span className="alert-symbol">⚠️</span>
+        <div className={styles.alert}>
+          <div className={styles.alert-content}>
+            <span className={styles.alert-symbol}>⚠️</span>
             <p>
               <strong>Action Required:</strong> You haven't completed your registration. Please complete it to unlock all functionalities.
             </p>
-            <div className="alert-buttons">
+            <div className={styles.alert-buttons}>
               <button onClick={handleNavigate}>Complete Registration</button>
               <button onClick={handleCloseAlert}>Dismiss</button>
             </div>
           </div>
         </div>
       )}
-      <div className="dashboard">
+      <div className={styles.dashboard}>
         <h1>Welcome to the Dashboard</h1>
       </div>
     </>
