@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import classes from './Signup.module.css';
+import './Signup.css';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -103,7 +103,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className={`${classes.signUpContainer}`}>
+    <div className="signUpContainer">
       <form onSubmit={handleSubmit} className="signUpForm">
         <h2>Register</h2>
         
