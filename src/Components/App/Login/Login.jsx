@@ -39,7 +39,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
+      const response = await fetch('https://bishamsinchiury.com.np/api/user/login/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

@@ -18,7 +18,7 @@ const Dashboard = () => {
           return;
         }
 
-        const response = await fetch('http://127.0.0.1:8000/api/user/user/', {
+        const response = await fetch('https://bishamsinchiury.com.np/api/user/user/', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

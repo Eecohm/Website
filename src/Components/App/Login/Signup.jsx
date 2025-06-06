@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Signup.css';
+import classes from './Signup.module.css';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -57,7 +57,7 @@ const SignUpForm = () => {
     }
     if (!isOtpSent) {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/user/register/', {
+        const response = await fetch('https://bishamsinchiury.com.np/api/user/register/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -80,7 +80,7 @@ const SignUpForm = () => {
       }
     } else {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/verify-otp/', {
+        const response = await fetch('https://bishamsinchiury.com.np/api/verify-otp/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -103,7 +103,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="signUpContainer">
+    <div className={`${classes.signUpContainer}`}>
       <form onSubmit={handleSubmit} className="signUpForm">
         <h2>Register</h2>
         

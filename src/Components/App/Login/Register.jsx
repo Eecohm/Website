@@ -192,7 +192,7 @@ const StudentForm = ({ navigate }) => {
     }
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://127.0.0.1:8000/api/student/', {
+      const response = await fetch('https://bishamsinchiury.com.np/api/student/', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
@@ -304,7 +304,7 @@ const TeacherForm = ({ navigate }) => {
     }
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://127.0.0.1:8000/api/teacher/', {
+      const response = await fetch('https://bishamsinchiury.com.np/api/teacher/', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
@@ -361,7 +361,7 @@ const GuardianForm = ({ navigate }) => {
     }
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://127.0.0.1:8000/api/guardian/', {
+      const response = await fetch('https://bishamsinchiury.com.np/api/guardian/', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
@@ -407,7 +407,7 @@ const EmployeeForm = ({ navigate }) => {
     }
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://127.0.0.1:8000/api/employee/', {
+      const response = await fetch('https://bishamsinchiury.com.np/api/employee/', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
@@ -472,7 +472,7 @@ const OwnerForm = ({ navigate }) => {
     }
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://127.0.0.1:8000/api/owner/', {
+      const response = await fetch('https://bishamsinchiury.com.np/api/owner/', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
@@ -523,7 +523,7 @@ const Register = () => {
           navigate('/login');
           return;
         }
-        const response = await fetch('http://127.0.0.1:8000/api/user/user/', {
+        const response = await fetch('https://bishamsinchiury.com.np/api/user/user/', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
