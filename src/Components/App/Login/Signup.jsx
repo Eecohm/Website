@@ -80,7 +80,7 @@ const SignUpForm = () => {
       }
     } else {
       try {
-        const response = await fetch('https://bishamsinchiury.com.np/api/verify/', {
+        const response = await fetch('https://bishamsinchiury.com.np/api/user/verify/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
