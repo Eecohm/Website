@@ -58,13 +58,16 @@
 
 .togglePassword {
   position: absolute;
-  right: 10px;
-  top: 50%;
+  right: 5px;
+  top: 5%;
+  height: 30px;
+  padding: 0%;
+  width: 50px;
   transform: translateY(-50%);
-  background: none;
   border: none;
   color: #00adb5;
   cursor: pointer;
+  background-color: rgb(2, 129, 12);
   font-size: 0.9rem;
 }
 
@@ -78,7 +81,7 @@
 .submitBtn {
   width: 100%;
   padding: 0.75rem;
-  background: #00adb5;
+  background: #008d10;
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -88,5 +91,5 @@
 }
 
 .submitBtn:hover {
-  background: #008c93;
+  background: #006e93;
 }
