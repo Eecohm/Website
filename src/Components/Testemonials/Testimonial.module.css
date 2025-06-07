@@ -1,4 +1,4 @@
-.testimonials-container {
+.testimonialsContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,7 +8,7 @@
   background-color: #850303;
 }
 
-.testimonial-card {
+.testimonialCard {
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -19,10 +19,10 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  animation: slideIn 0.5s ease-in-out; /* Applied every time due to key change */
+  animation: slideIn 0.5s ease-in-out;
 }
 
-.testimonial-photo {
+.testimonialPhoto {
   width: 15vw;
   height: 15vw;
   border-radius: 50%;
@@ -32,7 +32,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.testimonial-text-div {
+.testimonialTextDiv {
   display: flex;
   width: 70%;
   flex-direction: column;
@@ -43,24 +43,24 @@
   margin-left: 1vw;
 }
 
-.testimonial-name {
+.testimonialName {
   font-size: 1.5rem;
   margin: 10px 0;
   color: #333;
 }
 
-.testimonial-description {
+.testimonialDescription {
   font-size: 1rem;
   color: #666;
 }
 
-.testimonial-review {
+.testimonialReview {
   font-style: italic;
   color: #444;
   font-size: 0.7rem;
 }
 
-.testimonial-stars {
+.testimonialStars {
   font-size: 1.5rem;
   color: #f5a623;
 }
@@ -87,18 +87,18 @@
   transform: translateY(-50%) scale(1.1);
 }
 
-.left-arrow {
+.leftArrow {
   left: 20px;
 }
 
-.right-arrow {
+.rightArrow {
   right: 20px;
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(20px); /* Slide up from below */
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -106,42 +106,38 @@
   }
 }
 
-/* Optional: Responsive adjustments */
 @media (max-width: 480px) {
-  .testimonial-card {
+  .testimonialCard {
     width: 100%;
     height: 60vh;
     padding: 20px;
     display: flex;
     flex-direction: column;
   }
-  .testimonial-photo{
+  .testimonialPhoto {
     height: 20vh;
     width: 20vh;
     margin-top: 5vh;
-    margin-bottom: 0
+    margin-bottom: 0;
   }
-  .testimonial-name{
+  .testimonialName {
     font-size: 1.1rem;
     margin-bottom: 0;
     text-align: center;
   }
-  .testimonial-description{
+  .testimonialDescription {
     font-size: 0.8rem;
     margin: 0;
     padding: 0;
-
     text-align: center;
     margin-bottom: 5px;
-    
   }
-  .testimonial-review{
+  .testimonialReview {
     font-size: 0.5rem;
     margin: 0;
     text-align: center;
-    
   }
-  .testimonial-stars{
+  .testimonialStars {
     text-align: center;
   }
   .arrow {

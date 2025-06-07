@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './School.css';
+import styles from './School.module.css';
 import image_1 from '../../assets/Images/program_1.png';
 import image_2 from '../../assets/Images/program_2.png';
 import image_3 from '../../assets/Images/program_1.png';
@@ -16,7 +16,7 @@ const images = [
 function ImageSlideshow() {
 
   return (
-    <div className="school-main-div">
+    <div className={styles.schoolMainDiv}>
       <TeamLeadCard />
       <MeetTheTeam />
     </div>

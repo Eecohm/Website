@@ -1,27 +1,27 @@
 import React from 'react';
-import './CourseCard.css';
+import styles from './CourseCard.module.css';
 
 const CourseCard = ({ courseName, description, photo, duration, keyFeatures, targetedAudience, isExpanded, onExpand, onClose, icon }) => {
   return (
     <div 
-      className={`course-card ${isExpanded ? 'expanded' : ''}`}
+      className={`${styles.courseCard} ${isExpanded ? styles.expanded : ''}`}
       onClick={!isExpanded ? () => onExpand() : undefined}
     >
-      <div className="course-image-container">
-        <img src={photo} alt={courseName} className="course-image" />
+      <div className={styles.courseImageContainer}>
+        <img src={photo} alt={courseName} className={styles.courseImage} />
         {!isExpanded && (
-          <div className="icon-overlay">
-            <img src={icon} alt={`${courseName} icon`} className="course-icon" />
+          <div className={styles.iconOverlay}>
+            <img src={icon} alt={`${courseName} icon`} className={styles.courseIcon} />
           </div>
         )}
       </div>
-      <div className="course-content">
-        <h2 className="course-title">{courseName}</h2>
-        <p className="course-description">{description}</p>
+      <div className={styles.courseContent}>
+        <h2 className={styles.courseTitle}>{courseName}</h2>
+        <p className={styles.courseDescription}>{description}</p>
         {isExpanded && (
           <>
-            <h4 className="course-duration">Duration: {duration}</h4>
-            <div className="course-key-features">
+            <h4 className={styles.courseDuration}>Duration: {duration}</h4>
+            <div className={styles.courseKeyFeatures}>
               <h4>Key Features</h4>
               <ul>
                 {keyFeatures.map((feature, index) => (
@@ -34,7 +34,7 @@ const CourseCard = ({ courseName, description, photo, duration, keyFeatures, tar
       </div>
       {isExpanded && (
         <button 
-          className="close-course-button" 
+          className={styles.closeCourseButton} 
           onClick={(e) => {
             e.stopPropagation();
             onClose();

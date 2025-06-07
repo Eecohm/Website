@@ -1,10 +1,11 @@
-/* Programs.css */
-.programs-section{
+.programs-section {
   background-color: #f7f7f7;
 }
+
 .programs::-webkit-scrollbar {
   display: none;
 }
+
 .programs {
   width: 100vw; /* Container takes full viewport width */
   overflow-x: auto; /* Enable horizontal scrolling */
@@ -38,4 +39,8 @@
   display: flex;
   gap: 1rem; /* Space between cards */
   padding: 0 1rem;
+}
+
+.animate-title {
+  /* Add your animation styles here if needed */
 }

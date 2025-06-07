@@ -1,5 +1,5 @@
 /* General Course Card Styles */
-.course-card {
+.courseCard {
   width: 30vw;
   height: 65vh;
   max-width: 450px;
@@ -19,7 +19,7 @@
 }
 
 /* Expanded Course Card Styles */
-.course-card.expanded {
+.courseCard.expanded {
   width: 95vw;
   height: 80vh;
   max-width: 1200px;
@@ -40,13 +40,13 @@
 }
 
 /* Hover effect for non-expanded state */
-.course-card:hover:not(.expanded) {
+.courseCard:hover:not(.expanded) {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Course Image Container */
-.course-image-container {
+.courseImageContainer {
   width: 100%;
   height: 60%;
   overflow: hidden;
@@ -54,13 +54,13 @@
   transition: all 0.3s ease;
 }
 
-.course-card.expanded .course-image-container {
+.courseCard.expanded .courseImageContainer {
   width: 40%;
   height: 100%;
 }
 
 /* Course Image */
-.course-image {
+.courseImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -68,12 +68,12 @@
   transition: transform 0.3s ease;
 }
 
-.course-card:hover:not(.expanded) .course-image {
+.courseCard:hover:not(.expanded) .courseImage {
   transform: scale(1.05);
 }
 
 /* Icon overlay styles */
-.icon-overlay {
+.iconOverlay {
   position: absolute;
   bottom: -240px;
   left: 50%;
@@ -82,22 +82,21 @@
   transition: bottom 0.4s ease-in-out, opacity 0.4s ease-in-out;
 }
 
-.course-card:hover:not(.expanded) .icon-overlay {
-  bottom: 60%; /* Moves slightly higher */
-  transform: translateX(-50%) translateY(60%) scale(6.3); /* Increases size */
+.courseCard:hover:not(.expanded) .iconOverlay {
+  bottom: 60%;
+  transform: translateX(-50%) translateY(60%) scale(6.3);
   opacity: 1;
   transition: all 0.3s ease-in-out;
 }
-/*just a comment*/
 
-.course-icon {
+.courseIcon {
   width: 200px;
   height: 20px;
   object-fit: contain;
 }
 
 /* Course Content */
-.course-content {
+.courseContent {
   padding: 1.5rem;
   flex-grow: 1;
   display: flex;
@@ -105,17 +104,17 @@
   justify-content: center;
 }
 
-.course-card.expanded .course-content {
+.courseCard.expanded .courseContent {
   width: 60%;
   justify-content: center;
   align-items: flex-start;
   padding: 2rem;
-  height: auto; /* Allow natural growth */
-  overflow: visible; /* Prevent clipping */
+  height: auto;
+  overflow: visible;
 }
 
 /* Typography and Theme Colors */
-.course-title {
+.courseTitle {
   margin: 0 0 0.3rem 0;
   font-size: 1.5rem;
   color: #800000;
@@ -125,16 +124,16 @@
   overflow-wrap: break-word;
 }
 
-.course-description {
+.courseDescription {
   margin: 0 0 0.5rem 0;
   font-size: 1rem;
   color: #333;
   line-height: 1.2;
   white-space: normal;
-  overflow-wrap: break-word; /* Fixed typo from break-waord */
+  overflow-wrap: break-word;
 }
 
-.course-duration {
+.courseDuration {
   margin: 0 0 0.5rem 0;
   font-size: 1.2rem;
   color: #444;
@@ -144,13 +143,13 @@
   overflow-wrap: break-word;
 }
 
-.course-key-features,
-.course-targeted-audience {
+.courseKeyFeatures,
+.courseTargetedAudience {
   margin-bottom: 1rem;
 }
 
-.course-key-features h4,
-.course-targeted-audience h4 {
+.courseKeyFeatures h4,
+.courseTargetedAudience h4 {
   font-size: 1.2rem;
   color: #FFD700;
   margin: 0 0 0.3rem 0;
@@ -160,8 +159,8 @@
   overflow-wrap: break-word;
 }
 
-.course-key-features ul,
-.course-targeted-audience ul {
+.courseKeyFeatures ul,
+.courseTargetedAudience ul {
   list-style-type: disc;
   padding-left: 1.5rem;
   margin: 0;
@@ -172,13 +171,13 @@
   overflow-wrap: break-word;
 }
 
-.course-key-features li,
-.course-targeted-audience li {
+.courseKeyFeatures li,
+.courseTargetedAudience li {
   margin-bottom: 0.2rem;
 }
 
 /* Close Button */
-.close-course-button {
+.closeCourseButton {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -193,20 +192,20 @@
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.close-course-button:hover {
+.closeCourseButton:hover {
   background-color: #FFD700;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .course-card {
+  .courseCard {
     width: 90vw;
     height: 65vh;
     margin: 1rem;
   }
 
-  .course-card.expanded {
+  .courseCard.expanded {
     width: 90vw;
     height: 80vh;
     max-height: calc(100vh - 20px);
@@ -218,30 +217,30 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  .course-card.expanded .course-image-container {
+  .courseCard.expanded .courseImageContainer {
     width: 100%;
     height: 35%;
     max-height: 300px;
   }
 
-  .course-card.expanded .course-content {
+  .courseCard.expanded .courseContent {
     width: 100%;
     padding: 1rem;
-    justify-content: flex-start; /* Start from top */
+    justify-content: flex-start;
     align-items: flex-start;
-    height: auto; /* Allow natural growth */
-    min-height: 65%; /* Take remaining space but can grow */
-    overflow: visible; /* Prevent clipping */
+    height: auto;
+    min-height: 65%;
+    overflow: visible;
   }
 
-  .course-title {
+  .courseTitle {
     font-size: 1.25rem;
     line-height: 1.1;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .course-description {
+  .courseDescription {
     font-size: 0.9rem;
     line-height: 1.2;
     white-space: normal;
@@ -249,40 +248,40 @@
     overflow: visible;
   }
 
-  .course-duration,
-  .course-key-features h4,
-  .course-targeted-audience h4 {
+  .courseDuration,
+  .courseKeyFeatures h4,
+  .courseTargetedAudience h4 {
     font-size: 1.1rem;
     line-height: 1.2;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .course-key-features ul,
-  .course-targeted-audience ul {
+  .courseKeyFeatures ul,
+  .courseTargetedAudience ul {
     font-size: 0.9rem;
     line-height: 1.3;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .course-key-features li,
-  .course-targeted-audience li {
+  .courseKeyFeatures li,
+  .courseTargetedAudience li {
     margin-bottom: 0.2rem;
   }
 
-  .course-icon {
+  .courseIcon {
     width: 150px;
     height: 150px;
   }
 
-  .icon-overlay {
+  .iconOverlay {
     bottom: -180px;
   }
 }
 
 @media (max-width: 480px) {
-  .course-card {
+  .courseCard {
     width: 30vw;
     height: 35vh;
     min-width: 200px;
@@ -290,7 +289,7 @@
     margin: 0.75rem;
   }
 
-  .course-card.expanded {
+  .courseCard.expanded {
     width: 95vw;
     height: 70vh;
     max-height: calc(100vh - 20px);
@@ -302,36 +301,36 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  .course-card.expanded .course-image-container {
+  .courseCard.expanded .courseImageContainer {
     width: 100%;
     height: 30%;
     max-height: 200px;
   }
 
-  .course-image {
+  .courseImage {
     height: 110%;
     min-height: 15px;
   }
 
-  .course-card.expanded .course-content {
+  .courseCard.expanded .courseContent {
     width: 100%;
     padding: 1rem;
-    justify-content: flex-start; /* Start from top */
+    justify-content: flex-start;
     align-items: flex-start;
-    height: auto; /* Allow natural growth */
-    min-height: 70%; /* Take remaining space but can grow */
-    overflow: visible; /* Prevent clipping */
+    height: auto;
+    min-height: 70%;
+    overflow: visible;
   }
 
-  .course-title {
+  .courseTitle {
     font-size: 1.1rem;
-    margin-top: 10px; /* Reduced from 50px */
+    margin-top: 10px;
     line-height: 1.1;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .course-description {
+  .courseDescription {
     font-size: 0.5rem;
     line-height: 1.2;
     white-space: normal;
@@ -339,34 +338,34 @@
     overflow: visible;
   }
 
-  .course-duration,
-  .course-key-features h4,
-  .course-targeted-audience h4 {
+  .courseDuration,
+  .courseKeyFeatures h4,
+  .courseTargetedAudience h4 {
     font-size: 1rem;
     line-height: 1.2;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .course-key-features ul,
-  .course-targeted-audience ul {
+  .courseKeyFeatures ul,
+  .courseTargetedAudience ul {
     font-size: 0.85rem;
     line-height: 1.3;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .course-key-features li,
-  .course-targeted-audience li {
+  .courseKeyFeatures li,
+  .courseTargetedAudience li {
     margin-bottom: 0.2rem;
   }
 
-  .course-icon {
+  .courseIcon {
     width: 120px;
     height: 120px;
   }
 
-  .icon-overlay {
+  .iconOverlay {
     bottom: -150px;
   }
 }

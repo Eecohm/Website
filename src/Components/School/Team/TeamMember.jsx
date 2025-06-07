@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaFacebook, FaPhone, FaEnvelope } from 'react-icons/fa';
-import './MeetTheTeam.css';
+import styles from './MeetTheTeam.module.css';
 
 function TeamMember({ name, role, bio, quote, image, social }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -11,18 +11,18 @@ function TeamMember({ name, role, bio, quote, image, social }) {
   };
 
   return (
-    <div className="team-member-card" onClick={handleFlip}>
-      <div className={`card-inner ${isFlipped ? 'flipped' : ''}`}>
+    <div className={styles.teamMemberCard} onClick={handleFlip}>
+      <div className={`${styles.cardInner} ${isFlipped ? styles.cardInnerFlipped : ''}`}>
         {/* Front Side */}
-        <div className="card-front">
-          <div className="team-member-image">
+        <div className={styles.cardFront}>
+          <div className={styles.teamMemberImage}>
             <img src={image} alt={name} />
           </div>
-          <div className="team-member-info">
+          <div className={styles.teamMemberInfo}>
             <h3>{name}</h3>
-            <p className="role">{role}</p>
-            <p className="bio">{bio}</p>
-            <div className="social-icons">
+            <p className={styles.role}>{role}</p>
+            <p className={styles.bio}>{bio}</p>
+            <div className={styles.socialIcons}>
               <a href={social.facebook} target="_blank" rel="noopener noreferrer">
                 <FaFacebook />
               </a>
@@ -33,8 +33,8 @@ function TeamMember({ name, role, bio, quote, image, social }) {
           </div>
         </div>
         {/* Back Side */}
-        <div className="card-back">
-          <div className="team-member-quote">
+        <div className={styles.cardBack}>
+          <div className={styles.teamMemberQuote}>
             <p>{quote}</p>
             <br />
             <br />

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import './Testomonial.css';
-import pranil from '../../assets/Images/CHOUHAN.png'
-import arpan from '../../assets/Images/arpanksharma.png'
-import sandhya from '../../assets/Images/sandhya.png'
-import sadiksya from '../../assets/Images/sadikshya.png'
+import styles from './Testimonial.module.css';
+import pranil from '../../assets/Images/CHOUHAN.png';
+import arpan from '../../assets/Images/arpanksharma.png';
+import sandhya from '../../assets/Images/sandhya.png';
+import sadiksya from '../../assets/Images/sadikshya.png';
+
 const testimonialsData = [
   {
     photo: pranil,
@@ -51,27 +52,26 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="testimonials-container">
-      <button className="arrow left-arrow" onClick={prevTestimonial}>
+    <div className={styles.testimonialsContainer}>
+      <button className={`${styles.arrow} ${styles.leftArrow}`} onClick={prevTestimonial}>
         ❮
       </button>
       <div
-        className="testimonial-card"
-        key={currentIndex} // Forces re-render to retrigger animation
+        className={styles.testimonialCard}
+        key={currentIndex}
       >
         <img
           src={testimonialsData[currentIndex].photo}
           alt={testimonialsData[currentIndex].name}
-          className="testimonial-photo"
+          className={styles.testimonialPhoto}
         />
-        <div className="testimonial-text-div">
-          <h3 className="testimonial-name">{testimonialsData[currentIndex].name}</h3>
-          <p className="testimonial-description">
-
+        <div className={styles.testimonialTextDiv}>
+          <h3 className={styles.testimonialName}>{testimonialsData[currentIndex].name}</h3>
+          <p className={styles.testimonialDescription}>
             {testimonialsData[currentIndex].description}
           </p>
-          <p className="testimonial-review">"{testimonialsData[currentIndex].review}"</p>
-          <div className="testimonial-stars">
+          <p className={styles.testimonialReview}>"{testimonialsData[currentIndex].review}"</p>
+          <div className={styles.testimonialStars}>
             {Array(testimonialsData[currentIndex].stars)
               .fill('★')
               .join('')}
@@ -81,7 +81,7 @@ const Testimonials = () => {
           </div>
         </div>
       </div>
-      <button className="arrow right-arrow" onClick={nextTestimonial}>
+      <button className={`${styles.arrow} ${styles.rightArrow}`} onClick={nextTestimonial}>
         ❯
       </button>
     </div>

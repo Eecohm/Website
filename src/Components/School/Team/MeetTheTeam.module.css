@@ -1,5 +1,5 @@
 /* Main section container */
-.meet-the-team {
+.meetTheTeam {
   padding: 40px 20px;
   background: linear-gradient(135deg, #fff, #f8e1e1);
   text-align: center;
@@ -7,25 +7,25 @@
 }
 
 /* Header styles */
-.team-header {
+.teamHeader {
   margin-bottom: 40px;
 }
 
-.team-header h2 {
+.teamHeader h2 {
   font-size: 2.5rem;
   color: #800000;
   margin: 0;
   animation: fadeIn 1s ease-in-out;
 }
 
-.team-header p {
+.teamHeader p {
   font-size: 1.2rem;
   color: #555;
   margin-top: 10px;
 }
 
 /* Team members container */
-.team-members {
+.teamMembers {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -41,12 +41,12 @@
 }
 
 /* Hide scrollbar in Webkit browsers */
-.team-members::-webkit-scrollbar {
+.teamMembers::-webkit-scrollbar {
   display: none;
 }
 
 /* Team member card */
-.team-member-card {
+.teamMemberCard {
   background: #fff;
   border-radius: 15px;
   overflow: hidden;
@@ -59,13 +59,13 @@
   flex-shrink: 0;
 }
 
-.team-member-card:hover {
+.teamMemberCard:hover {
   transform: translateY(-10px);
   box-shadow: 0 6px 20px rgba(128, 0, 0, 0.2);
 }
 
 /* Card inner (for flip effect) */
-.card-inner {
+.cardInner {
   position: relative;
   width: 100%;
   height: 100%;
@@ -73,13 +73,13 @@
   transition: transform 0.6s ease-in-out;
 }
 
-.card-inner.flipped {
+.cardInnerFlipped {
   transform: rotateY(180deg);
 }
 
 /* Front and back sides */
-.card-front,
-.card-back {
+.cardFront,
+.cardBack {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -88,11 +88,11 @@
   overflow: hidden;
 }
 
-.card-front {
+.cardFront {
   background: #fff;
 }
 
-.card-back {
+.cardBack {
   background: #800000;
   color: #fff;
   transform: rotateY(180deg);
@@ -103,49 +103,49 @@
 }
 
 /* Image styling */
-.team-member-image {
+.teamMemberImage {
   width: 100%;
   height: 200px;
   overflow: hidden;
 }
 
-.team-member-image img {
+.teamMemberImage img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.team-member-card:hover .team-member-image img {
+.teamMemberCard:hover .teamMemberImage img {
   transform: scale(1.1);
 }
 
 /* Info section */
-.team-member-info {
+.teamMemberInfo {
   padding: 10px;
   text-align: center;
 }
 
-.team-member-info h3 {
+.teamMemberInfo h3 {
   font-size: 1.5rem;
   color: #800000;
   margin: 0;
 }
 
-.team-member-info .role {
+.teamMemberInfo .role {
   font-size: 1rem;
   color: #666;
   margin: 5px 0;
 }
 
-.team-member-info .bio {
+.teamMemberInfo .bio {
   font-size: 0.9rem;
   color: #888;
   margin: 10px 0;
 }
 
 /* Quote on back */
-.team-member-quote p {
+.teamMemberQuote p {
   font-size: 1.1rem;
   font-style: italic;
   margin: 0;
@@ -153,20 +153,20 @@
 }
 
 /* Social icons */
-.social-icons {
+.socialIcons {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-top: 15px;
 }
 
-.social-icons a {
+.socialIcons a {
   color: #800000;
   font-size: 1.5rem;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.social-icons a:hover {
+.socialIcons a:hover {
   color: #b30000;
   transform: scale(1.2);
 }
@@ -185,85 +185,83 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .team-header h2 {
+  .teamHeader h2 {
     font-size: 2rem;
   }
 
-  .team-header p {
+  .teamHeader p {
     font-size: 1rem;
   }
 
-  .team-members {
+  .teamMembers {
     flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: auto;
   }
 
-  .team-member-card {
+  .teamMemberCard {
     min-width: 200px;
     height: 350px;
   }
 
-  .team-member-image {
+  .teamMemberImage {
     height: 150px;
   }
 
-  .team-member-info h3 {
+  .teamMemberInfo h3 {
     font-size: 1.3rem;
   }
 
-  .team-member-quote p {
+  .teamMemberQuote p {
     font-size: 1rem;
   }
 
-  .social-icons a {
+  .socialIcons a {
     font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .team-header h2 {
+  .teamHeader h2 {
     font-size: 1.5rem;
   }
 
-  .team-header p {
+  .teamHeader p {
     font-size: 0.9rem;
   }
 
-  .team-members {
+  .teamMembers {
     flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: auto;
   }
 
-  .team-member-card {
+  .teamMemberCard {
     width: 200px;
     min-width: 180px;
     height: 310px;
   }
 
-  .team-member-image {
+  .teamMemberImage {
     height: 170px;
   }
 
-  
-
-  .team-member-info h3 {
+  .teamMemberInfo h3 {
     font-size: 1rem;
     margin: 0;
   }
 
-  .team-member-info .role {
+  .teamMemberInfo .role {
     font-size: 0.9rem;
     margin: 0;
   }
 
-  .team-member-info .bio {
+  .teamMemberInfo .bio {
     font-size: 0.8rem;
     margin: 0;
   }
 
-  .team-member-quote p {
+  .teamMemberQuote p {
     font-size: 0.9rem;
   }
 }

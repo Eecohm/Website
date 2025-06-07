@@ -1,5 +1,4 @@
-/* NoticeBoard.css */
-.notice-board-container {
+.noticeBoardContainer {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +12,7 @@
   padding: 1rem;
 }
 
-.notice-board {
+.noticeBoard {
   position: relative;
   background: rgb(255, 255, 255);
   border-radius: 8px;
@@ -25,11 +24,11 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.notice-board::-webkit-scrollbar {
+.noticeBoard::-webkit-scrollbar {
   display: none;
 }
 
-.close-board-btn {
+.closeBoardBtn {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -43,42 +42,42 @@
   line-height: 24px;
 }
 
-.notice-board-title {
+.noticeBoardTitle {
   margin: 0 0 1.5rem;
   text-align: center;
 }
 
-.notices-container {
+.noticesContainer {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-.notice-card {
+.noticeCard {
   background: #f5f5f5;
   border-radius: 4px;
   padding: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  height: 300px; /* Fixed height for non-expanded state */
+  height: 300px;
   width: 100%;
   overflow: hidden;
-  display: flex; /* Flexbox to manage content layout */
+  display: flex;
   flex-direction: column;
 }
 
-.notice-card.expanded {
+.noticeCard.expanded {
   z-index: 1001;
   background: white;
   padding: 1.5rem;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  height: auto; /* Expands to content size */
-  max-height: 80vh; /* Prevents it from getting too tall */
-  overflow-y: auto; /* Adds scrollbar if content is too long */
+  height: auto;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
-.close-card-btn {
+.closeCardBtn {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -92,14 +91,14 @@
   line-height: 24px;
 }
 
-.notice-card-content {
+.noticeCardContent {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex-grow: 1; /* Allows content to take available space */
+  flex-grow: 1;
 }
 
-.notice-title {
+.noticeTitle {
   margin: 0;
   font-size: 1.2rem;
   white-space: nowrap;
@@ -107,28 +106,28 @@
   text-overflow: ellipsis;
 }
 
-.notice-date {
+.noticeDate {
   margin: 0;
   color: #666;
   font-size: 0.9rem;
 }
 
-.notice-image {
+.noticeImage {
   width: 100%;
-  max-height: 180px; /* Limits image height in non-expanded state */
-  object-fit: contain; /* Ensures full image is visible without cropping */
+  max-height: 180px;
+  object-fit: contain;
   border-radius: 4px;
 }
 
-.notice-card.expanded .notice-image {
-  width: auto; /* Allows natural width */
-  max-width: 100%; /* Prevents overflow beyond card width */
-  height: auto; /* Scales height naturally */
-  max-height: 50vh; /* Limits height in expanded state */
-  object-fit: contain; /* Ensures full image visibility */
+.noticeCard.expanded .noticeImage {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 50vh;
+  object-fit: contain;
 }
 
-.notice-description {
+.noticeDescription {
   margin: 0;
   font-size: 1rem;
   display: -webkit-box;
@@ -138,41 +137,40 @@
   line-clamp: 3;
 }
 
-.notice-card.expanded .notice-description {
+.noticeCard.expanded .noticeDescription {
   display: block;
   -webkit-line-clamp: none;
   line-clamp: none;
   overflow: visible;
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
-  .notice-board {
+  .noticeBoard {
     padding: 1rem;
     max-width: 100%;
   }
 
-  .notice-card {
-    height: 250px; /* Slightly smaller on mobile */
+  .noticeCard {
+    height: 250px;
   }
 
-  .notice-card.expanded {
+  .noticeCard.expanded {
     padding: 1.2rem;
   }
 
-  .notice-title {
+  .noticeTitle {
     font-size: 1rem;
   }
 
-  .notice-description {
+  .noticeDescription {
     font-size: 0.9rem;
   }
 
-  .notice-image {
-    max-height: 120px; /* Smaller max height for non-expanded mobile */
+  .noticeImage {
+    max-height: 120px;
   }
 
-  .notice-card.expanded .notice-image {
-    max-height: 40vh; /* Adjusted for smaller screens */
+  .noticeCard.expanded .noticeImage {
+    max-height: 40vh;
   }
 }

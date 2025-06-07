@@ -6,7 +6,7 @@ import Register from './Components/App/Login/Register';
 import DashBoard from './Components/App/Dashboard/Dashboard';
 import Reports from './Components/App/Reports/Reports';
 import MonthlyFeedbackForm from './Components/App/Reports/MontlyFeedBackEntry/MontlyFeedBackEntry';
-import './App.css';
+import styles from './App.module.css';
 import RoundImage from './Components/AboutUs/RoundImage/RoundImage';
 import SignUpForm from './Components/App/Login/Signup';
 import StudentTable from './Components/App/Students/Students';

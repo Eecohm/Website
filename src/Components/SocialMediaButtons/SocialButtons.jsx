@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaFacebookMessenger, FaWhatsapp } from 'react-icons/fa';
-import './SocialButtons.css';
+import styles from './SocialButtons.module.css';
 
 const SocialButtons = () => {
   const handleFacebookClick = () => {
@@ -16,11 +16,11 @@ const SocialButtons = () => {
   };
 
   return (
-    <div className="social-buttons-container">
-      <button className="social-button facebook" onClick={handleFacebookClick}>
+    <div className={styles.socialButtonsContainer}>
+      <button className={`${styles.socialButton} ${styles.facebook}`} onClick={handleFacebookClick}>
         <FaFacebookMessenger size={30} />
       </button>
-      <button className="social-button whatsapp" onClick={handleWhatsappClick}>
+      <button className={`${styles.socialButton} ${styles.whatsapp}`} onClick={handleWhatsappClick}>
         <FaWhatsapp size={30} />
       </button>
     </div>

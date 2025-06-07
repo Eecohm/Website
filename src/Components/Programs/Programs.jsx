@@ -1,12 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './Programs.css';
+import styles from './Programs.module.css';
 import CourseCard from './Course/CourseCard';
 import css from '../../assets/Images/css.png';
 import csimg from '../../assets/Images/cs.png';
 import program_2 from '../../assets/Images/program_2.png';
 import program_3 from '../../assets/Images/program_3.png';
 import hmimgs from '../../assets/Images/hmimgs.png';
-// Example chef icon (replace with your own PNG URL)
 import adhm from '../../assets/Icons/adhm-icon.svg'; 
 import hm from '../../assets/Icons/hm-icon.svg'; 
 import cs from '../../assets/Icons/cs-icon.svg'; 
@@ -16,6 +15,7 @@ import dhm from '../../assets/Icons/dhm-icon.svg';
 import dhmi from '../../assets/Images/adhm.jpg';
 import school from '../../assets/Icons/school-icon.svg'; 
 import preschool from '../../assets/Images/preschool.png';
+
 const Programs = () => {
   const scrollRef = useRef(null);
   const titleRef = useRef(null);
@@ -44,7 +44,7 @@ const Programs = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-title');
+            entry.target.classList.add(styles['animate-title']);
             observer.unobserve(entry.target);
           }
         });
@@ -85,7 +85,7 @@ const Programs = () => {
         "Career Oriented Approach which prepares students for higher education and IT careers.",
         "Includes networking, programming with different languages (C++, Python, SQL).",
       ],
-      icon: adcs, // Example computer icon
+      icon: adcs,
     },
     {
       courseName: "+2 with Advance Diploma in Hotel Management",
@@ -98,7 +98,7 @@ const Programs = () => {
         "Job opportunities in Nepal and internationally.",
         "Industry relevant skills to excel in global hospitality industry.",
       ],
-      icon: adhm, // Chef icon for hotel management
+      icon: adhm,
     },
     {
       courseName: "Diploma in Hotel Management (DHM)",
@@ -111,12 +111,12 @@ const Programs = () => {
         "Experienced Faculty with real-world industry expertise.",
         "Opportunities for Certification and skill development workshops.",
       ],
-      icon: dhm, // Chef icon for hotel management
+      icon: dhm,
     },
     {
       courseName: "+2 with Business Studies",
       description: "This program equips students with foundational business knowledge and critical thinking skills essential for modern commerce.",
-      photo:  program_3,
+      photo: program_3,
       duration: "2 years",
       keyFeatures: [
         "Business fundamentals are taught through real-world case studies and projects.",
@@ -124,7 +124,7 @@ const Programs = () => {
         "Marketing strategies cover digital marketing, branding, and consumer behavior analysis.",
         "Entrepreneurship encourages innovative thinking and business startup development.",
       ],
-      icon: bs, // Example business icon
+      icon: bs,
     },
     {
       courseName: "+2 with Hotel Management",
@@ -137,7 +137,7 @@ const Programs = () => {
         "Marketing strategies include promoting tourism and enhancing guest experience techniques.",
         "Entrepreneurship fosters skills to launch and operate successful hospitality ventures.",
       ],
-      icon: hm, // Chef icon for hotel management
+      icon: hm,
     },
     {
       courseName: "+2 with Computer Science",
@@ -150,7 +150,7 @@ const Programs = () => {
         "Marketing strategies teach promoting software products and digital services effectively.",
         "Entrepreneurship develops skills to create innovative tech startups and solutions.",
       ],
-      icon: cs, // Example computer icon
+      icon: cs,
     },
     {
       courseName: "Pre-School to Secondary",
@@ -163,17 +163,17 @@ const Programs = () => {
         "Academic foundation ensures strong proficiency in core subjects like math and science.",
         "Extracurriculars encourage participation in sports, arts, and leadership activities.",
       ],
-      icon: school, // Example education icon
+      icon: school,
     },
   ];
 
   return (
-    <section className="programs-section">
+    <section className={styles['programs-section']}>
       <header>
-        <h2 ref={titleRef} className="title">OUR COURSES</h2>
+        <h2 ref={titleRef} className={styles.title}>OUR COURSES</h2>
       </header>
-      <div className="programs" ref={scrollRef}>
-        <div className="course-card-container">
+      <div className={styles.programs} ref={scrollRef}>
+        <div className={styles['course-card-container']}>
           {courses.map((course, index) => (
             <CourseCard
               key={index}
