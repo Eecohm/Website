@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './AboutUs.css';
+import styles from './AboutUs.module.css';
 import RoundImage from './RoundImage/RoundImage';
 import SquareBox from './SquareBox/SquareBox';
 import sampleImage from '../../assets/Images/program_3.png';
@@ -41,7 +41,7 @@ const AboutUs = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-title');
+            entry.target.classList.add(styles.animateTitle);
             observer.unobserve(entry.target);
           }
         });
@@ -61,10 +61,10 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <div className="aboutus-main">
-      <div className="about-us-pictures">
+    <div className={styles.aboutUsMain}>
+      <div className={styles.aboutUsPictures}>
         <RoundImage imageSrc={sampleImage} altText="Sample Image" />
-        <div className="square-box-container-1">
+        <div className={styles.squareBoxContainer1}>
           <SquareBox
             id="1"
             imageSrc={one}
@@ -90,14 +90,14 @@ const AboutUs = () => {
             onClick={handleBoxClick}
           />
         </div>
-        {/* Quote display for square-box-container-1 */}
-        <div className="quote-display">
+        {/* Quote display for squareBoxContainer1 */}
+        <div className={styles.quoteDisplay}>
           {activeQuote && quotes[activeQuote] && activeQuote <= 4 ? (
             <p>{quotes[activeQuote]}</p>
           ) : null}
         </div>
 
-        <div className="square-box-container">
+        <div className={styles.squareBoxContainer}>
           <SquareBox
             id="5"
             imageSrc={five}
@@ -129,23 +129,23 @@ const AboutUs = () => {
             onClick={handleBoxClick}
           />
         </div>
-        {/* Quote display for square-box-container */}
-        <div className="quote-display">
+        {/* Quote display for squareBoxContainer */}
+        <div className={styles.quoteDisplay}>
           {activeQuote && quotes[activeQuote] && activeQuote > 4 ? (
             <p>{quotes[activeQuote]}</p>
           ) : null}
         </div>
       </div>
-      <div className="about-us-text">
-        <h2 ref={titleRef} className="title">About Us</h2>
+      <div className={styles.aboutUsText}>
+        <h2 ref={titleRef} className={styles.title}>About Us</h2>
         <p id="about-us-id">
-        In 2015, Eastern Empire College Of Hotel Management was born with a bold vision to redefine education in the hotel and hospitality industry. What started as a single program, the Diploma in Hotel Management (DHM), quickly gained momentum, attracting ambitious students eager to build their careers in hospitality. With a strong foundation in practical learning and academic excellence, the institution soon expanded, introducing +2 level programs, including the Advanced Diploma in Hotel Management (ADHM), Advanced Diploma in Computer Science (ADCS), and Business Studies. As demand for quality education across multiple disciplines increased, EECOHM recognized the need to evolve.
+          In 2015, Eastern Empire College Of Hotel Management was born with a bold vision to redefine education in the hotel and hospitality industry. What started as a single program, the Diploma in Hotel Management (DHM), quickly gained momentum, attracting ambitious students eager to build their careers in hospitality. With a strong foundation in practical learning and academic excellence, the institution soon expanded, introducing +2 level programs, including the Advanced Diploma in Hotel Management (ADHM), Advanced Diploma in Computer Science (ADCS), and Business Studies. As demand for quality education across multiple disciplines increased, EECOHM recognized the need to evolve.
         </p>
-        <p id="about-us-id" className='first' >
-        By 2025, EECOHM took its biggest leap yet, transforming into EECOHM School of Excellence. No longer just a college, it became a comprehensive institution, offering programs from Pre-Group (PG) levels to Advanced Diplomas, ensuring students could begin their educational journey from the ground up and emerge as professionals ready to take on the world.
+        <p id="about-us-id" className={styles.first}>
+          By 2025, EECOHM took its biggest leap yet, transforming into EECOHM School of Excellence. No longer just a college, it became a comprehensive institution, offering programs from Pre-Group (PG) levels to Advanced Diplomas, ensuring students could begin their educational journey from the ground up and emerge as professionals ready to take on the world.
         </p>
-        <p id="about-us-id" className='second'>
-        This evolution within 10 years marked as a benchmark that cemented EECOHM’s place as a leader in academic excellence, skill development, and industry readiness. From its humble beginnings to a School of Excellence, EECOHM remains committed to shaping the future of education and empowering the next generation of professionals.
+        <p id="about-us-id" className={styles.second}>
+          This evolution within 10 years marked as a benchmark that cemented EECOHM’s place as a leader in academic excellence, skill development, and industry readiness. From its humble beginnings to a School of Excellence, EECOHM remains committed to shaping the future of education and empowering the next generation of professionals.
         </p>
       </div>
     </div>

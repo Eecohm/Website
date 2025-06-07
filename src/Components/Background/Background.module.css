@@ -1,0 +1,40 @@
+.mainText {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .mainText > p {
+    text-align: center;
+    margin: 0;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+  .mainText > h1 {
+    margin: 0;
+  }
+  
+  .mainText > h2 {
+    margin: 0.5rem 0;
+    text-align: center;
+    font-size: 1.5rem; /* Slightly smaller than h1 */
+  }
+  
+  .shadow {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(165, 42, 42, 0.3); /* Brown with 30% opacity */
+    z-index: 0; /* Ensure shadow is behind text */
+  }
+  
+  /* Ensure text is above shadow */
+  .mainText > * {
+    position: relative;
+    z-index: 1;
+  }

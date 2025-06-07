@@ -1,18 +1,21 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ScrollToSection = () => {
-  const { pathname } = useLocation();
+  const { hash } = useLocation();
 
   useEffect(() => {
-    const sectionId = pathname === '/' ? 'hero' : pathname.substring(1);
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+    if (hash) {
+      const element = document.getElementById(hash.replace('#', ''));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [pathname]);
+  }, [hash]);
 
-  return null; 
+  return null;
 };
 
 export default ScrollToSection;

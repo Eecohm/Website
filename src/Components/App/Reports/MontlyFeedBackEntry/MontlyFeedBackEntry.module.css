@@ -1,5 +1,5 @@
 /* Main container */
-.feedback-form-container {
+.feedbackFormContainer {
   min-height: 90vh;
   width: 85vw;
   margin-top: 10vh;
@@ -14,7 +14,7 @@
 }
 
 /* Form heading */
-.form-heading {
+.formHeading {
   text-align: center;
   color: #ffffff;
   font-size: 1.8rem;
@@ -23,7 +23,7 @@
 }
 
 /* Feedback form */
-.feedback-form {
+.feedbackForm {
   max-width: 1000px;
   width: 90%;
   background-color: #020202; /* Secondary dark color */
@@ -33,7 +33,7 @@
 }
 
 /* Form section */
-.form-section {
+.formSection {
   margin-bottom: 2rem;
   padding: 1rem;
   background-color: #000000;
@@ -42,7 +42,7 @@
 }
 
 /* Section title */
-.section-title {
+.sectionTitle {
   font-size: 1.4rem;
   color: #ffffff;
   font-weight: 600;
@@ -52,7 +52,7 @@
 }
 
 /* Form row */
-.form-row {
+.formRow {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -60,18 +60,18 @@
 }
 
 /* Input group */
-.input-group {
+.inputGroup {
   flex: 1;
   min-width: 200px;
 }
 
 /* Full-width input group */
-.input-group.full-width {
+.inputGroup.fullWidth {
   flex: 0 0 100%;
 }
 
 /* Form label */
-.form-label {
+.formLabel {
   display: block;
   font-weight: 600;
   color: #d1d5db; /* Light gray for contrast */
@@ -80,7 +80,7 @@
 }
 
 /* Form input, select, and textarea */
-.form-input {
+.formInput {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #555;
@@ -91,24 +91,24 @@
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.form-input:focus {
+.formInput:focus {
   outline: none;
   border-color: #d1d5db; /* Light gray accent */
   box-shadow: 0 0 5px rgba(209, 213, 219, 0.5);
 }
 
-.form-textarea {
+.formTextarea {
   resize: vertical;
   min-height: 80px;
 }
 
 /* Student search container */
-.student-search-container {
+.studentSearchContainer {
   position: relative;
 }
 
 /* Student dropdown */
-.student-dropdown {
+.studentDropdown {
   position: absolute;
   top: 100%;
   left: 0;
@@ -123,52 +123,52 @@
 }
 
 /* Student option */
-.student-option {
+.studentOption {
   padding: 0.75rem;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.student-option:hover {
+.studentOption:hover {
   background-color: #2c2c2c;
 }
 
 /* Student name and details */
-.student-name {
+.studentName {
   color: #ffffff;
   font-weight: 500;
 }
 
-.student-details {
+.studentDetails {
   color: #d1d5db;
   font-size: 0.85rem;
 }
 
 /* Checkbox group */
-.checkbox-group {
+.checkboxGroup {
   display: flex;
   align-items: center;
   padding-top: 1.5rem; /* Align with other inputs */
 }
 
-.checkbox-label {
+.checkboxLabel {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.checkbox-input {
+.checkboxInput {
   margin-right: 0.5rem;
   accent-color: #d1d5db; /* Light gray for checkbox */
 }
 
-.checkbox-text {
+.checkboxText {
   color: #d1d5db;
   font-size: 1rem;
 }
 
 /* Submit button */
-.submit-button {
+.submitButton {
   display: block;
   width: 50%;
   padding: 0.75rem;
@@ -182,12 +182,12 @@
   transition: background-color 0.3s, transform 0.1s;
 }
 
-.submit-button:hover:not(:disabled) {
+.submitButton:hover:not(:disabled) {
   background-color: #2c2c2c;
   transform: translateY(-1px);
 }
 
-.submit-button:disabled {
+.submitButton:disabled {
   background-color: #444;
   cursor: not-allowed;
   opacity: 0.7;
@@ -195,78 +195,78 @@
 
 /* Responsive design */
 @media (max-width: 1024px) {
-  .feedback-form-container {
+  .feedbackFormContainer {
     width: 95vw;
     padding: 1rem;
   }
 
-  .feedback-form {
+  .feedbackForm {
     width: 95%;
     padding: 1.25rem;
   }
 
-  .form-heading {
+  .formHeading {
     font-size: 1.6rem;
   }
 
-  .section-title {
+  .sectionTitle {
     font-size: 1.3rem;
   }
 }
 
 @media (max-width: 768px) {
-  .feedback-form-container {
+  .feedbackFormContainer {
     margin-left: 0;
     width: 100vw;
     min-height: 100vh;
     margin-top: 10vh;
   }
 
-  .form-row {
+  .formRow {
     flex-direction: column;
   }
 
-  .input-group {
+  .inputGroup {
     min-width: 100%;
   }
 
-  .form-heading {
+  .formHeading {
     font-size: 1.5rem;
   }
 
-  .section-title {
+  .sectionTitle {
     font-size: 1.2rem;
   }
 
-  .form-label {
+  .formLabel {
     font-size: 0.9rem;
   }
 
-  .form-input {
+  .formInput {
     font-size: 0.9rem;
     padding: 0.6rem;
   }
 
-  .submit-button {
+  .submitButton {
     font-size: 0.95rem;
     padding: 0.6rem;
   }
 }
 
 @media (max-width: 480px) {
-  .feedback-form-container {
+  .feedbackFormContainer {
     padding: 0.75rem;
   }
 
-  .feedback-form {
+  .feedbackForm {
     padding: 1rem;
   }
 
-  .form-section {
+  .formSection {
     padding: 0.75rem;
   }
 
-  .form-heading {
+  .formHeading {
     font-size: 1.4rem;
   }
 }

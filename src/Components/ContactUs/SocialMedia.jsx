@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaTwitter, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'; // Import specific icons
+import styles from './ContactUs.module.css';
 
 const socialLinks = [
   { name: 'Twitter', icon: <FaTwitter />, url: 'https://twitter.com/example' },
@@ -10,16 +11,16 @@ const socialLinks = [
 
 const SocialMedia = () => {
   return (
-    <div className="social-media-container">
+    <div className={styles.socialMediaContainer}>
       <h3>Follow Us</h3>
-      <div className="social-links">
+      <div className={styles.socialLinks}>
         {socialLinks.map((link, index) => (
           <a
             key={link.name}
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="social-link"
+            className={styles.socialLink}
             style={{ animationDelay: `${0.2 * (index + 1)}s` }}
           >
             {link.icon}

@@ -1,4 +1,4 @@
-.construction-container {
+.constructionContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-.construction-content {
+.constructionContent {
   text-align: center;
   padding: 20px;
   background: rgba(255, 255, 255, 0.95);
@@ -17,21 +17,21 @@
   animation: fadeIn 1s ease-in-out;
 }
 
-.construction-title {
+.constructionTitle {
   font-size: 2.5rem;
   color: #ff6f61;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.construction-message {
+.constructionMessage {
   font-size: 1.2rem;
   color: #333;
   margin-bottom: 30px;
   line-height: 1.6;
 }
 
-.construction-animation {
+.constructionAnimation {
   position: relative;
   height: 100px;
 }
@@ -75,10 +75,10 @@
 }
 
 @media (max-width: 600px) {
-  .construction-title {
+  .constructionTitle {
     font-size: 2rem;
   }
-  .construction-message {
+  .constructionMessage {
     font-size: 1rem;
   }
 }

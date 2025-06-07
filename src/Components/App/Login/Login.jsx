@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import './Login.css';
+import styles from './Login.module.css';
 
 const LoginForm = () => {
   const navigate = useNavigate(); 
@@ -10,7 +10,6 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
 
-  // Load saved credentials from localStorage on component mount
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
     const savedPassword = localStorage.getItem('savedPassword');
@@ -27,7 +26,6 @@ const LoginForm = () => {
     e.preventDefault();
     setError('');
 
-    // Save or clear credentials based on rememberMe
     if (rememberMe) {
       localStorage.setItem('savedEmail', email);
       localStorage.setItem('savedPassword', password);
@@ -49,7 +47,7 @@ const LoginForm = () => {
         const data = await response.json();
         localStorage.setItem('accessToken', data.access);
         localStorage.setItem('userId', data.user_id);
-        localStorage.setItem('userEmail',data.email);
+        localStorage.setItem('userEmail', data.email);
         navigate('/dashboard'); 
       } else if ([401, 403].includes(response.status)) {
         setError('Invalid credentials');
@@ -62,33 +60,35 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
+    <div className={styles.loginContainer}>
+      <div className={styles.loginBox}>
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={error ? 'input-error' : 'neon-input'}
+              className={error ? styles.inputError : styles.neonInput}
               required
             />
           </div>
-          <div className="input-group">
+
+          <div className={styles.inputGroup}>
             <label htmlFor="password">Password</label>
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={error ? 'input-error' : 'neon-input'}
+              className={error ? styles.inputError : styles.neonInput}
               required
             />
           </div>
-          <div className="checkbox-group">
+
+          <div className={styles.checkboxGroup}>
             <label>
               <input
                 type="checkbox"
@@ -106,9 +106,16 @@ const LoginForm = () => {
               Remember Me
             </label>
           </div>
-          {error && <div className="error-message">{error}</div>}
-          <button type="submit" className="login-button neon-button">Login</button>
-          <a href="/forgot-password" className="forgot-password">Forgot Password?</a>
+
+          {error && <div className={styles.errorMessage}>{error}</div>}
+
+          <button type="submit" className={`${styles.loginButton} ${styles.neonButton}`}>
+            Login
+          </button>
+
+          <a href="/forgot-password" className={styles.forgotPassword}>
+            Forgot Password?
+          </a>
         </form>
       </div>
     </div>

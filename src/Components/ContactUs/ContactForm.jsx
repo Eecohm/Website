@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
+import styles from './ContactUs.module.css';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -70,13 +71,13 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="contact-form-container">
+    <div className={styles.contactFormContainer}>
       {submitted ? (
-        <p className="form-success">Thank you! We've sent you a confirmation email and we'll get back to you soon.</p>
+        <p className={styles.formSuccess}>Thank you! We've sent you a confirmation email and we'll get back to you soon.</p>
       ) : error ? (
-        <p className="form-error">{error}</p>
+        <p className={styles.formError}>{error}</p>
       ) : (
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form className={styles.contactForm} onSubmit={handleSubmit}>
           <input
             type="text"
             name="name"
@@ -100,7 +101,7 @@ const ContactForm = () => {
             onChange={handleChange}
             required
           />
-          <button type="submit" className="submit-button">
+          <button type="submit" className={styles.submitButton}>
             Send Message
           </button>
         </form>

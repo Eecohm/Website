@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Signup.css';
+import styles from './Signup.module.css'; // Changed to SCSS module
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -103,30 +103,28 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="signUpContainer">
-      <form onSubmit={handleSubmit} className="signUpForm">
+    <div className={styles.signUpContainer}>
+      <form onSubmit={handleSubmit} className={styles.signUpForm}>
         <h2>Register</h2>
-        
-        <div className="formGroup">
+
+        <div className={styles.formGroup}>
           <label htmlFor="email">Email</label>
           <input
             type="email"
-            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
             required
           />
-          {errors.email && <span className="error">{errors.email}</span>}
+          {errors.email && <span className={styles.error}>{errors.email}</span>}
         </div>
 
-        <div className="formGroup">
+        <div className={styles.formGroup}>
           <label htmlFor="password">Password</label>
-          <div className="passwordWrapper">
+          <div className={styles.passwordWrapper}>
             <input
               type={showPassword ? 'text' : 'password'}
-              id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -135,21 +133,20 @@ const SignUpForm = () => {
             />
             <button
               type="button"
-              className="togglePassword"
+              className={styles.togglePassword}
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
-          {errors.password && <span className="error">{errors.password}</span>}
+          {errors.password && <span className={styles.error}>{errors.password}</span>}
         </div>
 
-        <div className="formGroup">
+        <div className={styles.formGroup}>
           <label htmlFor="confirmPassword">Confirm Password</label>
-          <div className="passwordWrapper">
+          <div className={styles.passwordWrapper}>
             <input
               type={showConfirmPassword ? 'text' : 'password'}
-              id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -158,21 +155,20 @@ const SignUpForm = () => {
             />
             <button
               type="button"
-              className="togglePassword"
+              className={styles.togglePassword}
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? 'Hide' : 'Show'}
             </button>
           </div>
           {errors.confirmPassword && (
-            <span className="error">{errors.confirmPassword}</span>
+            <span className={styles.error}>{errors.confirmPassword}</span>
           )}
         </div>
 
-        <div className="formGroup">
+        <div className={styles.formGroup}>
           <label htmlFor="role">Role</label>
           <select
-            id="role"
             name="role"
             value={formData.role}
             onChange={handleChange}
@@ -184,15 +180,14 @@ const SignUpForm = () => {
               </option>
             ))}
           </select>
-          {errors.role && <span className="error">{errors.role}</span>}
+          {errors.role && <span className={styles.error}>{errors.role}</span>}
         </div>
 
         {isOtpSent && (
-          <div className="formGroup">
+          <div className={styles.formGroup}>
             <label htmlFor="otp">OTP</label>
             <input
               type="text"
-              id="otp"
               name="otp"
               value={formData.otp}
               onChange={handleChange}
@@ -200,13 +195,13 @@ const SignUpForm = () => {
               maxLength="6"
               required
             />
-            {errors.otp && <span className="error">{errors.otp}</span>}
+            {errors.otp && <span className={styles.error}>{errors.otp}</span>}
           </div>
         )}
 
-        {errors.api && <span className="error">{errors.api}</span>}
+        {errors.api && <span className={styles.error}>{errors.api}</span>}
 
-        <button type="submit" className="submitBtn">
+        <button type="submit" className={styles.submitBtn}>
           {isOtpSent ? 'Verify OTP' : 'Send OTP'}
         </button>
       </form>

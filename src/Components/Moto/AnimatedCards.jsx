@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaBook, FaLeaf, FaLightbulb } from 'react-icons/fa';
-import './AnimatedCards.css';
+import styles from './AnimatedCards.module.css';
 
 const AnimatedCards = () => {
   const [clickedCard, setClickedCard] = useState(null);
@@ -10,44 +10,44 @@ const AnimatedCards = () => {
   };
 
   return (
-    <div className="cards-container">
+    <div className={styles.cardsContainer}>
       {/* Card 1: Learn */}
       <div
-        className={`card ${clickedCard === 'learn' ? 'clicked' : ''}`}
+        className={`${styles.card} ${clickedCard === 'learn' ? styles.clicked : ''}`}
         onClick={() => handleClick('learn')}
       >
-        <FaBook className="card-icon" />
-        <h3 className="card-title">LEARN</h3>
-        <span className="star-1">★</span>
-        <span className="dot-1">•</span>
-        <span className="star-2">★</span>
-        <span className="dot-2"></span>
+        <FaBook className={styles.cardIcon} />
+        <h3 className={styles.cardTitle}>LEARN</h3>
+        <span className={styles.star1}>★</span>
+        <span className={styles.dot1}>•</span>
+        <span className={styles.star2}>★</span>
+        <span className={styles.dot2}></span>
       </div>
 
       {/* Card 2: Grow */}
       <div
-        className={`card ${clickedCard === 'grow' ? 'clicked' : ''}`}
+        className={`${styles.card} ${clickedCard === 'grow' ? styles.clicked : ''}`}
         onClick={() => handleClick('grow')}
       >
-        <FaLeaf className="card-icon" />
-        <h3 className="card-title">GROW</h3>
-        <span className="star-1">★</span>
-        <span className="dot-1">•</span>
-        <span className="star-2">★</span>
-        <span className="dot-2"></span>
+        <FaLeaf className={styles.cardIcon} />
+        <h3 className={styles.cardTitle}>GROW</h3>
+        <span className={styles.star1}>★</span>
+        <span className={styles.dot1}>•</span>
+        <span className={styles.star2}>★</span>
+        <span className={styles.dot2}></span>
       </div>
 
       {/* Card 3: Innovate */}
       <div
-        className={`card ${clickedCard === 'innovate' ? 'clicked' : ''}`}
+        className={`${styles.card} ${clickedCard === 'innovate' ? styles.clicked : ''}`}
         onClick={() => handleClick('innovate')}
       >
-        <FaLightbulb className="card-icon" />
-        <h3 className="card-title">INNOVATE</h3>
-        <span className="star-1">★</span>
-        <span className="dot-1">•</span>
-        <span className="star-2">★</span>
-        <span className="dot-2"></span>
+        <FaLightbulb className={styles.cardIcon} />
+        <h3 className={styles.cardTitle}>INNOVATE</h3>
+        <span className={styles.star1}>★</span>
+        <span className={styles.dot1}>•</span>
+        <span className={styles.star2}>★</span>
+        <span className={styles.dot2}></span>
       </div>
     </div>
   );

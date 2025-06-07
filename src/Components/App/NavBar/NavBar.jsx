@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './NavBar.css';
+import styles from './NavBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTasks, faUserShield, faWallet, faBox, faChalkboardTeacher, faUsers, faChartBar, faBars, faTimes, faCog } from '@fortawesome/free-solid-svg-icons';
 
@@ -55,21 +55,21 @@ const NavBar = () => {
 
   return (
     <>
-      <header className="topbar">
-        <div className="topbar-content">
-          <h1 className="school-name">EECOHM Foundation</h1>
-          <div className="topbar-info">
+      <header className={styles.topBar}>
+        <div className={styles.topBarContent}>
+          <h1 className={styles.schoolName}>EECOHM Foundation</h1>
+          <div className={styles.topBarInfo}>
             <span>{today}</span>
             <span>{currentTime}</span>
             <span>Contact: 023-546392</span>
-            <div className="settings-container">
-              <FontAwesomeIcon icon={faCog} className="settings-icon" onClick={toggleSettings} />
+            <div className={styles.settingsContainer}>
+              <FontAwesomeIcon icon={faCog} className={styles.settingsIcon} onClick={toggleSettings} />
               {isSettingsOpen && (
-                <ul className="settings-menu">
+                <ul className={styles.settingsMenu}>
                   {settingsItems.map((item, index) => (
                     <li
                       key={index}
-                      className="settings-item"
+                      className={styles.settingsItem}
                       onClick={() => {
                         navigate(item.path);
                         setIsSettingsOpen(false);
@@ -84,29 +84,29 @@ const NavBar = () => {
           </div>
         </div>
       </header>
-      <nav className={`navbar ${isSidebarOpen ? 'open' : ''}`}>
-        <div className="navbar-header">
+      <nav className={`${styles.navBar} ${isSidebarOpen ? styles.open : ''}`}>
+        <div className={styles.navBarHeader}>
           <img
             src="/src/assets/logo.svg"
             alt="School Logo"
-            className="navbar-logo"
+            className={styles.navBarLogo}
             onClick={handleLogoClick}
           />
-          <div className="navbar-toggle" onClick={toggleSidebar}>
+          <div className={styles.navBarToggle} onClick={toggleSidebar}>
             <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faBars} />
           </div>
         </div>
-        <ul className="navbar-menu">
+        <ul className={styles.navBarMenu}>
           {navItems.map((item, index) => (
             <li
               key={index}
-              className="navbar-item"
+              className={styles.navBarItem}
               onClick={() => {
                 navigate(item.path);
                 setIsSidebarOpen(false);
               }}
             >
-              <FontAwesomeIcon icon={item.icon} className="navbar-icon" />
+              <FontAwesomeIcon icon={item.icon} className={styles.navBarIcon} />
               <span>{item.name}</span>
             </li>
           ))}

@@ -1,8 +1,7 @@
-// Navbar.jsx
 import React, { useState, useEffect } from 'react';
-import './Navbar.css';
+import styles from './Navbar.module.css';
 import logo from '../../assets/logo.svg';
-import { FaBars } from 'react-icons/fa'; // Only need FaBars now
+import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -26,43 +25,43 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`container ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`container ${isScrolled ? styles.navScrolled : ''}`}>
       <Link to="/" onClick={closeMobileMenu}>
-        <img src={logo} alt="Logo" className="logo" />
+        <img src={logo} alt="Logo" className={styles.logoName} />
       </Link>
       
       {/* Hamburger button */}
-      <div className="hamburger" onClick={toggleMobileMenu}>
+      <div className={styles.hamburgerIcon} onClick={toggleMobileMenu}>
         <FaBars size={25} />
       </div>
 
       {/* Mobile menu */}
-      <ul className={isMobileMenuOpen ? 'nav-menu active' : 'nav-menu'}>
+      <ul className={`${styles.navMenu} ${isMobileMenuOpen ? styles.navMenuActive : ''}`}>
         <li>
           <Link to="/" onClick={closeMobileMenu}>Home</Link>
         </li>
         <li>
-          <Link to="/programs" onClick={closeMobileMenu}>Program</Link>
+          <Link to="#programs" onClick={closeMobileMenu}>Program</Link>
         </li>
         <li>
-          <Link to="/school" onClick={closeMobileMenu}>School</Link>
+          <Link to="#school" onClick={closeMobileMenu}>School</Link>
         </li>
         <li>
-          <Link to="/about-us" onClick={closeMobileMenu}>About</Link>
+          <Link to="#about-us" onClick={closeMobileMenu}>About</Link>
         </li>
         <li>
-          <Link to="/testimonials" onClick={closeMobileMenu}>Testimonials</Link>
+          <Link to="#testimonials" onClick={closeMobileMenu}>Testimonials</Link>
         </li>
         <li>
-          <Link to="/contact-us" onClick={closeMobileMenu}>
-            <button className="btn">Contact</button>
+          <Link to="#contact-us" onClick={closeMobileMenu}>
+            <button className={styles.navBtn}>Contact</button>
           </Link>
         </li>
       </ul>
 
       {/* Close button - separate from menu */}
       {isMobileMenuOpen && (
-        <button className="close-btn" onClick={toggleMobileMenu}>
+        <button className={styles.closeBtn} onClick={toggleMobileMenu}>
           X
         </button>
       )}

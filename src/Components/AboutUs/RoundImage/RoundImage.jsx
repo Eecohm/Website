@@ -1,15 +1,15 @@
 import React from 'react';
-import './RoundImage.css';
+import styles from './RoundImage.module.css';
 
 const RoundImage = ({ imageSrc, altText }) => {
   return (
-    <div className="round-image-container">
-      <img src={imageSrc} alt={altText} className="round-image" />
-      <div className="hover-graphics">
+    <div className={styles.roundImageContainer}>
+      <img src={imageSrc} alt={altText} className={styles.roundImage} />
+      <div className={styles.hoverGraphics}>
         {/* Graphics content */}
-        <div className="graphic-circle graphic-1"></div>
-        <div className="graphic-circle graphic-2"></div>
-        <div className="graphic-circle graphic-3"></div>
+        <div className={`${styles.graphicCircle} ${styles.graphic1}`}></div>
+        <div className={`${styles.graphicCircle} ${styles.graphic2}`}></div>
+        <div className={`${styles.graphicCircle} ${styles.graphic3}`}></div>
       </div>
     </div>
   );

@@ -4,13 +4,13 @@
   min-height: 100vh;
   background-image: linear-gradient(rgba(226, 190, 190, 0.5), rgba(156, 28, 28, 0.9)), url('../../assets/Images/Home.jpg');
   background-position: center;
-  /* background-attachment: fixed;  */
   color: rgb(250, 250, 250);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.login-btn{
+
+.loginBtn {
   height: 8vh;
   width: 20vh;
   margin-right: 10px;
@@ -19,24 +19,26 @@
   color: rgb(238, 255, 0);
   border-radius: 5px;
 }
-.register-btn{
+
+.registerBtn {
   height: 8vh;
   width: 20vh;
   border: 3px solid white;
   border-radius: 5px;
   margin-left: 10px;
-  color:  rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
   background-color: white;
 }
-.register-btn:hover{
+
+.registerBtn:hover {
   background-color: white;
 }
-.login-btn:hover{
+
+.loginBtn:hover {
   background: none;
 }
 
-
-.hero-text {
+.heroText {
   text-align: center;
   max-width: 90%;
   max-height: 80vh; /* Increased to fit content better on smaller screens */
@@ -45,22 +47,23 @@
   color: white;
   overflow-y: auto; /* Allows scrolling if content overflows on small screens */
 }
-.hero-text::-webkit-scrollbar {
+
+.heroText::-webkit-scrollbar {
   display: none;
 }
 
-.hero-text > h1 {
+.heroText > h1 {
   font-size: 8vh; /* Responsive with viewport height */
   margin-top: 25vh;
 }
 
-.hero-text > h4 {
+.heroText > h4 {
   margin: 2vh 0;
   font-size: 3vh;
   color: yellow;
 }
 
-.hero-text > p {
+.heroText > p {
   margin: 2vh 0 2vh 0;
   font-size: larger;
   line-height: 1.5;
@@ -68,34 +71,28 @@
   justify-self: center;
 }
 
-.btn:hover {
-  background: #8b0a0a; /* Darker shade on hover */
-  transform: scale(1.1); /* Scale up on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+.heroText > button.animateText {
+  animation-delay: 0.8s;
 }
 
 /* Animation styles */
-.animate-text {
+.animateText {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
 /* Staggered delays for each element */
-.hero-text > h1.animate-text {
+.heroText > h1.animateText {
   animation-delay: 0.2s;
 }
 
-.hero-text > h4.animate-text {
+.heroText > h4.animateText {
   animation-delay: 0.4s;
 }
 
-.hero-text > p.animate-text {
+.heroText > p.animateText {
   animation-delay: 0.6s;
-}
-
-.hero-text > button.animate-text {
-  animation-delay: 0.8s;
 }
 
 /* Keyframes for fade-in and slide-up animation */
@@ -116,30 +113,27 @@
     height: 100vh; /* Slightly shorter for tablets */
   }
 
-  .hero-text {
+  .heroText {
     margin-top: 25vh;
     max-width: 95%;
     padding: 15px;
   }
 
-  .hero-text > h1 {
+  .heroText > h1 {
     font-size: 6vh;
     margin-top: 0;
   }
 
-  .hero-text > h4 {
+  .heroText > h4 {
     font-size: 2.5vh;
     margin: 1.5vh 0;
   }
 
-  .hero-text > p {
+  .heroText > p {
     font-size: 1rem; /* Standard size for readability */
     margin: 3vh 0;
     max-width: 90vw;
   }
-
-
-
 }
 
 @media (max-width: 480px) { /* Mobile view */
@@ -148,28 +142,29 @@
     background-attachment: scroll; /* Fixed background can be glitchy on mobile */
   }
 
-  .hero-text {
+  .heroText {
     max-width: 100%;
     padding: 10px;
     border-radius: 20px; /* Slightly smaller radius */
   }
 
-  .hero-text > h1 {
+  .heroText > h1 {
     font-size: 4vh; /* Much smaller for mobile */
   }
 
-  .hero-text > h4 {
+  .heroText > h4 {
     font-size: 2vh;
     margin: 1vh 0;
   }
 
-  .hero-text > p {
+  .heroText > p {
     font-size: 0.9rem; /* Smaller text */
     margin: 2vh 0;
     padding: 0 10px; /* Extra padding for edges */
   }
 
-  .btn {
+  .loginBtn,
+  .registerBtn {
     padding: 8px 15px;
     font-size: 0.9rem;
   }

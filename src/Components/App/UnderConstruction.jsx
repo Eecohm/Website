@@ -1,17 +1,17 @@
 import React from 'react';
-import './UnderConstruction.css';
+import styles from './UnderConstruction.module.css';
 
 const UnderConstruction = () => {
   return (
-    <div className="construction-container">
-      <div className="construction-content">
-        <h1 className="construction-title">🚧 Site Under Construction 🚧</h1>
-        <p className="construction-message">
+    <div className={styles.constructionContainer}>
+      <div className={styles.constructionContent}>
+        <h1 className={styles.constructionTitle}>🚧 Site Under Construction 🚧</h1>
+        <p className={styles.constructionMessage}>
           We're working hard to bring you an amazing experience! Please check back soon.
         </p>
-        <div className="construction-animation">
-          <div className="crane"></div>
-          <div className="building"></div>
+        <div className={styles.constructionAnimation}>
+          <div className={styles.crane}></div>
+          <div className={styles.building}></div>
         </div>
       </div>
     </div>

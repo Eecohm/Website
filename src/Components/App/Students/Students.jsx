@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import NavBar from '../NavBar/NavBar';
-import './Students.css';
+import styles from './Students.module.css';
 import debounce from 'lodash/debounce';
 
 const StudentTable = () => {
@@ -118,71 +118,71 @@ const StudentTable = () => {
   return (
     <>
       <NavBar />
-      <div className="student-table-container">
-        <div className="filter-container">
+      <div className={styles.studentTableContainer}>
+        <div className={styles.filterContainer}>
           <input
             type="text"
             placeholder="Search by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
+            className={styles.searchInput}
           />
           <select
             value={genderFilter}
             onChange={(e) => setGenderFilter(e.target.value)}
-            className="filter-select"
+            className={styles.filterSelect}
           >
             <option value="">All Genders</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
-          <div className="class-range">
+          <div className={styles.classRange}>
             <input
               type="text"
               placeholder="Class From"
               value={classFrom}
               onChange={(e) => setClassFrom(e.target.value)}
-              className="filter-input"
+              className={styles.filterInput}
             />
             <input
               type="text"
               placeholder="Class To"
               value={classTo}
               onChange={(e) => setClassTo(e.target.value)}
-              className="filter-input"
+              className={styles.filterInput}
             />
           </div>
-          <div className="rollno-range">
+          <div className={styles.rollNoRange}>
             <input
               type="number"
               placeholder="Roll No From"
               value={rollNoFrom}
               onChange={(e) => setRollNoFrom(e.target.value)}
-              className="filter-input"
+              className={styles.filterInput}
             />
             <input
               type="number"
               placeholder="Roll No To"
               value={rollNoTo}
               onChange={(e) => setRollNoTo(e.target.value)}
-              className="filter-input"
+              className={styles.filterInput}
             />
           </div>
-          <button className="add-student-button" onClick={handleAddStudent}>
+          <button className={styles.addStudentButton} onClick={handleAddStudent}>
             Add Student
           </button>
           <button
-            className="show-data-button"
+            className={styles.showDataButton}
             onClick={handleShowData}
             disabled={!isFilterApplied}
           >
             Show Data
           </button>
         </div>
-        {loading && <div className="status-message">Loading...</div>}
-        {error && <div className="status-message">Error: {error}</div>}
-        <table className="student-table">
+        {loading && <div className={styles.statusMessage}>Loading...</div>}
+        {error && <div className={styles.statusMessage}>Error: {error}</div>}
+        <table className={styles.studentTable}>
           <thead>
             <tr>
               <th onClick={() => handleSort('full_name')}>
@@ -211,24 +211,24 @@ const StudentTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="no-data">No students found</td>
+                <td colSpan="4" className={styles.noData}>No students found</td>
               </tr>
             )}
           </tbody>
         </table>
         {selectedStudent && (
-          <div className="student-card">
-            <div className="card-content">
+          <div className={styles.studentCard}>
+            <div className={styles.cardContent}>
               <h2>{selectedStudent.full_name}</h2>
               <p>Gender: {selectedStudent.gender}</p>
               <p>Class: {selectedStudent.grade.name || 'N/A'}</p>
               <p>Roll No: {selectedStudent.rollno}</p>
-              <div className="card-buttons">
-                <button className="action-button show-data" onClick={() => handleAction('Show Data')}>Show Data</button>
-                <button className="action-button reports" onClick={() => handleAction('Reports')}>Reports</button>
-                <button className="action-button accounts" onClick={() => handleAction('Accounts')}>Accounts</button>
-                <button className="action-button others" onClick={() => handleAction('Others')}>Others</button>
-                <button className="action-button close" onClick={closeCard}>Close</button>
+              <div className={styles.cardButtons}>
+                <button className={`${styles.actionButton} ${styles.showData}`} onClick={() => handleAction('Show Data')}>Show Data</button>
+                <button className={`${styles.actionButton} ${styles.reports}`} onClick={() => handleAction('Reports')}>Reports</button>
+                <button className={`${styles.actionButton} ${styles.accounts}`} onClick={() => handleAction('Accounts')}>Accounts</button>
+                <button className={`${styles.actionButton} ${styles.others}`} onClick={() => handleAction('Others')}>Others</button>
+                <button className={`${styles.actionButton} ${styles.close}`} onClick={closeCard}>Close</button>
               </div>
             </div>
           </div>

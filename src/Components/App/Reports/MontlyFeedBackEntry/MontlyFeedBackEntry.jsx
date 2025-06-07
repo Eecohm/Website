@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./MontlyFeedBackEntry.css";
+import styles from "./MontlyFeedBackEntry.module.css";
 import NavBar from "../../NavBar/NavBar";
 
 const MonthlyFeedbackForm = () => {
@@ -11,7 +11,7 @@ const MonthlyFeedbackForm = () => {
   const [formData, setFormData] = useState({
     student: "",
     student_id: "",
-    class_id: "", 
+    class_id: "",
     month: "",
     year: "",
     appearance: "",
@@ -237,20 +237,20 @@ const MonthlyFeedbackForm = () => {
   return (
     <>
         <NavBar />
-        <div className="feedback-form-container">
-          <h1 className="form-heading">Monthly Feedback Form</h1>
+        <div className={styles.feedbackFormContainer}>
+          <h1 className={styles.formHeading}>Monthly Feedback Form</h1>
 
-          <form onSubmit={handleSubmit} className="feedback-form">
+          <form onSubmit={handleSubmit} className={styles.feedbackForm}>
             {/* Student Selection Section */}
-            <div className="form-section">
-              <h2 className="section-title">Student Information</h2>
-              <div className="form-row">
-                <div className="input-group">
-                  <label htmlFor="class_id" className="form-label">
+            <div className={styles.formSection}>
+              <h2 className={styles.sectionTitle}>Student Information</h2>
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="class_id" className={styles.formLabel}>
                     Class:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="class_id"
                     id="class_id"
                     value={formData.class_id}
@@ -266,13 +266,13 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group student-search-group">
-                  <label htmlFor="student" className="form-label">
+                <div className={`${styles.inputGroup} student-search-group`}>
+                  <label htmlFor="student" className={styles.formLabel}>
                     Student Name:
                   </label>
-                  <div className="student-search-container">
+                  <div className={styles.studentSearchContainer}>
                     <input
-                      className="form-input"
+                      className={styles.formInput}
                       type="text"
                       name="student"
                       id="student"
@@ -284,18 +284,18 @@ const MonthlyFeedbackForm = () => {
                       disabled={!formData.class_id} // Disable until class is selected
                     />
                     {showStudentDropdown && filteredStudents.length > 0 && (
-                      <div className="student-dropdown">
+                      <div className={styles.studentDropdown}>
                         {filteredStudents.slice(0, 10).map((student) => (
                           <div
                             key={student.id}
-                            className="student-option"
+                            className={styles.studentOption}
                             onClick={() => selectStudent(student)}
                           >
-                            <div className="student-name">
+                            <div className={styles.studentName}>
                               {student.firstname} {student.middlename || ""}{" "}
                               {student.lastname}
                             </div>
-                            <div className="student-details">
+                            <div className={styles.studentDetails}>
                               Roll: {student.rollno} | Class: {student.student_class.grade} - {student.student_class.section}
                             </div>
                           </div>
@@ -306,13 +306,13 @@ const MonthlyFeedbackForm = () => {
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="input-group">
-                  <label htmlFor="month" className="form-label">
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="month" className={styles.formLabel}>
                     Month:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="month"
                     id="month"
                     value={formData.month}
@@ -328,12 +328,12 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group">
-                  <label htmlFor="year" className="form-label">
+                <div className={styles.inputGroup}>
+                  <label htmlFor="year" className={styles.formLabel}>
                     Year (B.S.):
                   </label>
                   <input
-                    className="form-input"
+                    className={styles.formInput}
                     type="number"
                     name="year"
                     id="year"
@@ -349,15 +349,15 @@ const MonthlyFeedbackForm = () => {
             </div>
 
             {/* Grooming & Behaviour Section */}
-            <div className="form-section">
-              <h2 className="section-title">Grooming & Behaviour</h2>
-              <div className="form-row">
-                <div className="input-group">
-                  <label htmlFor="appearance" className="form-label">
+            <div className={styles.formSection}>
+              <h2 className={styles.sectionTitle}>Grooming & Behaviour</h2>
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="appearance" className={styles.formLabel}>
                     Appearance:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="appearance"
                     id="appearance"
                     value={formData.appearance}
@@ -373,12 +373,12 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group">
-                  <label htmlFor="punctuality" className="form-label">
+                <div className={styles.inputGroup}>
+                  <label htmlFor="punctuality" className={styles.formLabel}>
                     Punctuality:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="punctuality"
                     id="punctuality"
                     value={formData.punctuality}
@@ -395,16 +395,16 @@ const MonthlyFeedbackForm = () => {
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="input-group">
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
                   <label
                     htmlFor="interaction_with_peers_and_teachers"
-                    className="form-label"
+                    className={styles.formLabel}
                   >
                     Interaction with Peers & Teachers:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="interaction_with_peers_and_teachers"
                     id="interaction_with_peers_and_teachers"
                     value={formData.interaction_with_peers_and_teachers}
@@ -420,15 +420,15 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group">
+                <div className={styles.inputGroup}>
                   <label
                     htmlFor="confidence_and_communication"
-                    className="form-label"
+                    className={styles.formLabel}
                   >
                     Confidence & Communication:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="confidence_and_communication"
                     id="confidence_and_communication"
                     value={formData.confidence_and_communication}
@@ -447,15 +447,15 @@ const MonthlyFeedbackForm = () => {
             </div>
 
             {/* Class Tasks & Participation Section */}
-            <div className="form-section">
-              <h2 className="section-title">Class Tasks & Participation</h2>
-              <div className="form-row">
-                <div className="input-group">
-                  <label htmlFor="classwork_completion" className="form-label">
+            <div className={styles.formSection}>
+              <h2 className={styles.sectionTitle}>Class Tasks & Participation</h2>
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="classwork_completion" className={styles.formLabel}>
                     Classwork Completion:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="classwork_completion"
                     id="classwork_completion"
                     value={formData.classwork_completion}
@@ -471,15 +471,15 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group">
+                <div className={styles.inputGroup}>
                   <label
                     htmlFor="group_work_participation"
-                    className="form-label"
+                    className={styles.formLabel}
                   >
                     Group Work Participation:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="group_work_participation"
                     id="group_work_participation"
                     value={formData.group_work_participation}
@@ -496,16 +496,16 @@ const MonthlyFeedbackForm = () => {
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="input-group">
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
                   <label
                     htmlFor="listening_and_following_instructions"
-                    className="form-label"
+                    className={styles.formLabel}
                   >
                     Listening & Following Instructions:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="listening_and_following_instructions"
                     id="listening_and_following_instructions"
                     value={formData.listening_and_following_instructions}
@@ -524,15 +524,15 @@ const MonthlyFeedbackForm = () => {
             </div>
 
             {/* Home Task Section */}
-            <div className="form-section">
-              <h2 className="section-title">Home Task</h2>
-              <div className="form-row">
-                <div className="input-group">
-                  <label htmlFor="homework_submission" className="form-label">
+            <div className={styles.formSection}>
+              <h2 className={styles.sectionTitle}>Home Task</h2>
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="homework_submission" className={styles.formLabel}>
                     Homework Submission:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="homework_submission"
                     id="homework_submission"
                     value={formData.homework_submission}
@@ -548,31 +548,31 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group checkbox-group">
-                  <label className="checkbox-label">
+                <div className={styles.checkboxGroup}>
+                  <label className={styles.checkboxLabel}>
                     <input
                       type="checkbox"
                       name="parents_involvement"
                       checked={formData.parents_involvement}
                       onChange={handleInputChange}
-                      className="checkbox-input"
+                      className={styles.checkboxInput}
                     />
-                    <span className="checkbox-text">Parents Involvement</span>
+                    <span className={styles.checkboxText}>Parents Involvement</span>
                   </label>
                 </div>
               </div>
             </div>
 
             {/* Extracurricular & Skills Development Section */}
-            <div className="form-section">
-              <h2 className="section-title">Extracurricular & Skills Development</h2>
-              <div className="form-row">
-                <div className="input-group">
-                  <label htmlFor="handwriting" className="form-label">
+            <div className={styles.formSection}>
+              <h2 className={styles.sectionTitle}>Extracurricular & Skills Development</h2>
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="handwriting" className={styles.formLabel}>
                     Handwriting:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="handwriting"
                     id="handwriting"
                     value={formData.handwriting}
@@ -588,15 +588,15 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group">
+                <div className={styles.inputGroup}>
                   <label
                     htmlFor="maintenance_of_books_and_copies"
-                    className="form-label"
+                    className={styles.formLabel}
                   >
                     Maintenance of Books & Copies:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="maintenance_of_books_and_copies"
                     id="maintenance_of_books_and_copies"
                     value={formData.maintenance_of_books_and_copies}
@@ -613,16 +613,16 @@ const MonthlyFeedbackForm = () => {
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="input-group">
+              <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
                   <label
                     htmlFor="leadership_and_initiative"
-                    className="form-label"
+                    className={styles.formLabel}
                   >
                     Leadership & Initiative:
                   </label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     name="leadership_and_initiative"
                     id="leadership_and_initiative"
                     value={formData.leadership_and_initiative}
@@ -638,32 +638,32 @@ const MonthlyFeedbackForm = () => {
                   </select>
                 </div>
 
-                <div className="input-group checkbox-group">
-                  <label className="checkbox-label">
+                <div className={styles.checkboxGroup}>
+                  <label className={styles.checkboxLabel}>
                     <input
                       type="checkbox"
                       name="involvement_in_school_activities"
                       checked={formData.involvement_in_school_activities}
                       onChange={handleInputChange}
-                      className="checkbox-input"
+                      className={styles.checkboxInput}
                     />
-                    <span className="checkbox-text">
+                    <span className={styles.checkboxText}>
                       Involvement in School Activities
                     </span>
                   </label>
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="input-group full-width">
+              <div className={styles.formRow}>
+                <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
                   <label
                     htmlFor="special_talents_observed"
-                    className="form-label"
+                    className={styles.formLabel}
                   >
                     Special Talents Observed:
                   </label>
                   <textarea
-                    className="form-input form-textarea"
+                    className={`${styles.formInput} ${styles.formTextarea}`}
                     name="special_talents_observed"
                     id="special_talents_observed"
                     value={formData.special_talents_observed}
@@ -676,17 +676,17 @@ const MonthlyFeedbackForm = () => {
             </div>
 
             {/* Teacher's Observation & Monthly Summary Section */}
-            <div className="form-section">
-              <h2 className="section-title">
+            <div className={styles.formSection}>
+              <h2 className={styles.sectionTitle}>
                 Teacher's Observation & Monthly Summary
               </h2>
-              <div className="form-row">
-                <div className="input-group full-width">
-                  <label htmlFor="areas_of_improvement" className="form-label">
+              <div className={styles.formRow}>
+                <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                  <label htmlFor="areas_of_improvement" className={styles.formLabel}>
                     Areas of Improvement:
                   </label>
                   <textarea
-                    className="form-input form-textarea"
+                    className={`${styles.formInput} ${styles.formTextarea}`}
                     name="areas_of_improvement"
                     id="areas_of_improvement"
                     value={formData.areas_of_improvement}
@@ -697,13 +697,13 @@ const MonthlyFeedbackForm = () => {
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="input-group full-width">
-                  <label htmlFor="goals_for_next_month" className="form-label">
+              <div className={styles.formRow}>
+                <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                  <label htmlFor="goals_for_next_month" className={styles.formLabel}>
                     Goals for Next Month:
                   </label>
                   <textarea
-                    className="form-input form-textarea"
+                    className={`${styles.formInput} ${styles.formTextarea}`}
                     name="goals_for_next_month"
                     id="goals_for_next_month"
                     value={formData.goals_for_next_month}
@@ -715,7 +715,7 @@ const MonthlyFeedbackForm = () => {
               </div>
             </div>
 
-            <button type="submit" className="submit-button" disabled={loading}>
+            <button type="submit" className={styles.submitButton} disabled={loading}>
               {loading ? "Submitting..." : "Submit Monthly Feedback"}
             </button>
           </form>

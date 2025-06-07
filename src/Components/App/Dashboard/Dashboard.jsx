@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Dashboard.css';
+import styles from './Dashboard.module.css';
 import NavBar from '../NavBar/NavBar';
 
 const Dashboard = () => {
@@ -10,14 +10,15 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchKycStatus = async () => {
-      try {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          console.error('No access token found');
-          navigate('/login');
-          return;
-        }
+      const token = localStorage.getItem('accessToken');
 
+      if (!token) {
+        console.warn('Access token missing');
+        navigate('/login');
+        return;
+      }
+
+      try {
         const response = await fetch('https://bishamsinchiury.com.np/api/user/user/', {
           method: 'GET',
           headers: {
@@ -26,17 +27,14 @@ const Dashboard = () => {
           },
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
         setKycStatus(data.kyc_status);
-        if (data.kyc_status !== true) {
-          setShowAlert(true);
-        }
+
+        if (!data.kyc_status) setShowAlert(true);
       } catch (error) {
-        console.error('Error fetching KYC status:', error);
+        console.error('Failed to fetch KYC status:', error);
         navigate('/dashboard');
       }
     };
@@ -45,8 +43,8 @@ const Dashboard = () => {
   }, [navigate]);
 
   const handleNavigate = () => {
-    navigate('/register');
     setShowAlert(false);
+    navigate('/register');
   };
 
   const handleCloseAlert = () => {
@@ -56,21 +54,33 @@ const Dashboard = () => {
   return (
     <>
       <NavBar />
+
       {showAlert && (
-        <div className="alert">
-          <div className="alert-content">
-            <span className="alert-symbol">⚠️</span>
-            <p>
+        <div className={styles.alert}>
+          <div className={styles.alertContent}>
+            <span className={styles.alertSymbol}>⚠️</span>
+            <p className={styles.alertText}>
               <strong>Action Required:</strong> You haven't completed your registration. Please complete it to unlock all functionalities.
             </p>
-            <div className="alert-buttons">
-              <button onClick={handleNavigate}>Complete Registration</button>
-              <button onClick={handleCloseAlert}>Dismiss</button>
+            <div className={styles.alertButtons}>
+              <button
+                className={`${styles.button} ${styles.completeButton}`}
+                onClick={handleNavigate}
+              >
+                Complete Registration
+              </button>
+              <button
+                className={`${styles.button} ${styles.dismissButton}`}
+                onClick={handleCloseAlert}
+              >
+                Dismiss
+              </button>
             </div>
           </div>
         </div>
       )}
-      <div className="dashboard">
+
+      <div className={styles.dashboard}>
         <h1>Welcome to the Dashboard</h1>
       </div>
     </>

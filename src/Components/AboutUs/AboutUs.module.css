@@ -1,6 +1,4 @@
-/* AboutUs.css */
-
-.quote-display {
+.quoteDisplay {
   margin-top: 1vh;
   width: 100%;
   text-align: center;
@@ -12,17 +10,17 @@
   transition: opacity 0.3s ease, max-height 0.3s ease;
 }
 
-.quote-display p {
+.quoteDisplay p {
   margin: 0;
   padding: 0.5vh 0;
 }
 
-.about-us-pictures .quote-display:not(:empty) {
+.aboutUsPictures .quoteDisplay:not(:empty) {
   opacity: 1;
   max-height: 50px;
 }
 
-.aboutus-main {
+.aboutUsMain {
   width: 100vw;
   background-color: white;
   display: flex;
@@ -30,21 +28,21 @@
   padding: 20px; /* Add padding for spacing */
 }
 
-.square-box-container {
+.squareBoxContainer {
   margin-top: 3vh;
   width: 30vw;
   display: flex;
   justify-content: space-between;
 }
 
-.square-box-container-1 {
+.squareBoxContainer1 {
   margin-top: 3vh;
   width: 25vw;
   display: flex;
   justify-content: space-between;
 }
 
-.about-us-pictures {
+.aboutUsPictures {
   height: 80vh;
   width: 48vw;
   margin-left: 4vw;
@@ -55,7 +53,7 @@
   align-items: center;
 }
 
-.about-us-text {
+.aboutUsText {
   width: 58vw;
   margin-right: 4vw;
   border-radius: 20px;
@@ -95,102 +93,16 @@
   }
 }
 
-.about-us-text > p {
+.aboutUsText > p {
   font-size: larger;
   margin: 3vh;
   margin-top: 1vh;
   text-align: justify;
 }
 
-.round-image-container {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  border: 5px solid #ffffff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.round-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.hover-graphics {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.graphic-circle {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  transform: scale(0);
-  transition: transform 0.3s ease;
-}
-
-.graphic-1 {
-  width: 40px;
-  height: 40px;
-  top: 20%;
-  left: 20%;
-}
-
-.graphic-2 {
-  width: 60px;
-  height: 60px;
-  top: 60%;
-  left: 30%;
-}
-
-.graphic-3 {
-  width: 30px;
-  height: 30px;
-  top: 40%;
-  left: 70%;
-}
-
-.round-image-container:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-}
-
-.round-image-container:hover .hover-graphics {
-  opacity: 1;
-}
-
-.round-image-container:hover .graphic-circle {
-  transform: scale(1);
-}
-
-.round-image-container:hover .graphic-1 {
-  transition-delay: 0.1s;
-}
-
-.round-image-container:hover .graphic-2 {
-  transition-delay: 0.2s;
-}
-
-.round-image-container:hover .graphic-3 {
-  transition-delay: 0.3s;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .quote-display {
+  .quoteDisplay {
     font-size: 1rem;
   }
 
@@ -200,41 +112,36 @@
     margin-bottom: 1.5vh;
   }
 
-  .aboutus-main {
+  .aboutUsMain {
     flex-direction: column;
     height: auto; /* Allow height to adjust to content */
     padding: 10px;
   }
 
-  .square-box-container {
+  .squareBoxContainer {
     width: 80vw;
   }
 
-  .square-box-container-1 {
+  .squareBoxContainer1 {
     width: 60vw;
   }
 
-  .about-us-pictures {
+  .aboutUsPictures {
     width: 80vw;
     height: auto; /* Adjust height to content */
     margin-left: 0;
     margin-bottom: 20px;
   }
 
-  .about-us-text {
+  .aboutUsText {
     width: 80vw;
     height: auto; /* Allow height to grow with content */
     margin-right: 0;
   }
 
-  .about-us-text > p {
+  .aboutUsText > p {
     font-size: 1rem; /* Readable size */
     margin: 1vh 0;
-  }
-
-  .round-image-container {
-    width: 200px;
-    height: 200px;
   }
 
   .first,
@@ -244,7 +151,7 @@
 }
 
 @media (max-width: 480px) {
-  .quote-display {
+  .quoteDisplay {
     font-size: 0.9rem;
   }
 
@@ -254,36 +161,31 @@
     margin-bottom: 1vh;
   }
 
-  .aboutus-main {
+  .aboutUsMain {
     padding: 5px;
   }
 
-  .about-us-pictures {
+  .aboutUsPictures {
     width: 90vw;
     height: auto;
   }
 
-  .about-us-text {
+  .aboutUsText {
     width: 90vw;
     height: auto;
   }
 
-  .about-us-text > p {
+  .aboutUsText > p {
     font-size: 0.9rem; /* Readable size for mobile */
     margin: 1vh 0;
     padding: 0 10px; /* Add padding for better readability */
   }
 
-  .round-image-container {
-    width: 150px;
-    height: 150px;
-  }
-
-  .square-box-container {
+  .squareBoxContainer {
     width: 90vw;
   }
 
-  .square-box-container-1 {
+  .squareBoxContainer1 {
     width: 70vw;
   }
 

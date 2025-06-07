@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Register.css';
+import styles from './Register.module.css';
 import NavBar from '../NavBar/NavBar';
 
 // Reusable Form Components
 const PersonalDetailForm = ({ formData, setFormData }) => (
-  <div className="form-section">
+  <div className={styles.formSection}>
     <h3>Personal Details</h3>
-    <div className="form-grid">
+    <div className={styles.formGrid}>
       <div>
         <label>Full Name *</label>
         <input
@@ -53,9 +53,9 @@ const PersonalDetailForm = ({ formData, setFormData }) => (
 );
 
 const AddressDetailForm = ({ formData, setFormData }) => (
-  <div className="form-section">
+  <div className={styles.formSection}>
     <h3>Address Details</h3>
-    <div className="form-grid">
+    <div className={styles.formGrid}>
       <div>
         <label>Country *</label>
         <input
@@ -106,9 +106,9 @@ const AddressDetailForm = ({ formData, setFormData }) => (
 );
 
 const ContactDetailForm = ({ formData, setFormData }) => (
-  <div className="form-section">
+  <div className={styles.formSection}>
     <h3>Contact Details</h3>
-    <div className="form-grid">
+    <div className={styles.formGrid}>
       <div>
         <label>Phone *</label>
         <input
@@ -140,9 +140,9 @@ const ContactDetailForm = ({ formData, setFormData }) => (
 );
 
 const DocumentDetailForm = ({ formData, setFormData }) => (
-  <div className="form-section">
+  <div className={styles.formSection}>
     <h3>Document Details</h3>
-    <div className="form-grid">
+    <div className={styles.formGrid}>
       <div>
         <label>Nagarikta Number *</label>
         <input
@@ -205,13 +205,13 @@ const StudentForm = ({ navigate }) => {
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
       <h2>Student Registration</h2>
       <PersonalDetailForm formData={formData} setFormData={setFormData} />
       <AddressDetailForm formData={formData} setFormData={setFormData} />
-      <div className="form-section">
+      <div className={styles.formSection}>
         <h3>Student Details</h3>
-        <div className="form-grid">
+        <div className={styles.formGrid}>
           <div>
             <label>Mother's Name *</label>
             <input
@@ -317,15 +317,15 @@ const TeacherForm = ({ navigate }) => {
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
       <h2>Teacher Registration</h2>
       <PersonalDetailForm formData={formData} setFormData={setFormData} />
       <AddressDetailForm formData={formData} setFormData={setFormData} />
       <ContactDetailForm formData={formData} setFormData={setFormData} />
       <DocumentDetailForm formData={formData} setFormData={setFormData} />
-      <div className="form-section">
+      <div className={styles.formSection}>
         <h3>Teacher Details</h3>
-        <div className="form-grid">
+        <div className={styles.formGrid}>
           <div>
             <label>Subject *</label>
             <input
@@ -374,13 +374,13 @@ const GuardianForm = ({ navigate }) => {
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
       <h2>Guardian Registration</h2>
       <PersonalDetailForm formData={formData} setFormData={setFormData} />
       <ContactDetailForm formData={formData} setFormData={setFormData} />
-      <div className="form-section">
+      <div className={styles.formSection}>
         <h3>Guardian Details</h3>
-        <div className="form-grid">
+        <div className={styles.formGrid}>
           <div>
             <label>Relation to Student *</label>
             <input
@@ -396,7 +396,6 @@ const GuardianForm = ({ navigate }) => {
     </form>
   );
 };
-
 const EmployeeForm = ({ navigate }) => {
   const [formData, setFormData] = useState({});
   const handleSubmit = async (e) => {
@@ -420,15 +419,15 @@ const EmployeeForm = ({ navigate }) => {
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
       <h2>Employee Registration</h2>
       <PersonalDetailForm formData={formData} setFormData={setFormData} />
       <AddressDetailForm formData={formData} setFormData={setFormData} />
       <ContactDetailForm formData={formData} setFormData={setFormData} />
       <DocumentDetailForm formData={formData} setFormData={setFormData} />
-      <div className="form-section">
+      <div className={styles.formSection}>
         <h3>Employee Details</h3>
-        <div className="form-grid">
+        <div className={styles.formGrid}>
           <div>
             <label>Position *</label>
             <input
@@ -485,15 +484,15 @@ const OwnerForm = ({ navigate }) => {
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
       <h2>Owner Registration</h2>
       <PersonalDetailForm formData={formData} setFormData={setFormData} />
       <AddressDetailForm formData={formData} setFormData={setFormData} />
       <ContactDetailForm formData={formData} setFormData={setFormData} />
       <DocumentDetailForm formData={formData} setFormData={setFormData} />
-      <div className="form-section">
+      <div className={styles.formSection}>
         <h3>Owner Details</h3>
-        <div className="form-grid">
+        <div className={styles.formGrid}>
           <div>
             <label>Institution Name *</label>
             <input
@@ -542,7 +541,7 @@ const Register = () => {
     fetchUserData();
   }, [navigate]);
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className={styles.loading}>Loading...</div>;
 
   let FormComponent;
   switch (role) {
@@ -565,8 +564,8 @@ const Register = () => {
       return (
         <>
           <NavBar />
-          <div className="registration-form">
-            <div className="form-container">
+          <div className={styles.registrationForm}>
+            <div className={styles.formContainer}>
               <h2>Error</h2>
               <p>Invalid or unset role. Please contact support.</p>
             </div>
@@ -578,7 +577,7 @@ const Register = () => {
   return (
     <>
       <NavBar />
-      <div className="registration-form">
+      <div className={styles.registrationForm}>
         <FormComponent navigate={navigate} />
       </div>
     </>
