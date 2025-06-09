@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import styles from './Login.module.css';
+import { useBaseUrl } from '../../../BaseUrlContext';
 
 const LoginForm = () => {
+  const baseUrl = useBaseUrl();
   const navigate = useNavigate(); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,7 +39,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await fetch('https://bishamsinchiury.com.np/api/user/login/', {
+      const response = await fetch(`${baseUrl}/user/login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

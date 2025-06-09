@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Components/App/Login/Login';
 import Home from './Routs/HomeRouts';
-import Register from './Components/App/Login/Register';
+import Register from './Components/App/Login/Register/Register';
 import DashBoard from './Components/App/Dashboard/Dashboard';
 import Reports from './Components/App/Reports/Reports';
 import MonthlyFeedbackForm from './Components/App/Reports/MontlyFeedBackEntry/MontlyFeedBackEntry';
@@ -11,8 +11,11 @@ import RoundImage from './Components/AboutUs/RoundImage/RoundImage';
 import SignUpForm from './Components/App/Login/Signup';
 import StudentTable from './Components/App/Students/Students';
 import UnderConstruction from './Components/App/UnderConstruction';
+import { BaseUrlContext } from './BaseUrlContext';
 const App = () => {
+  const baseUrl = 'http://127.0.0.1:8000/api';
   return (
+    <BaseUrlContext.Provider value={baseUrl}>
     <Router basename="/">
       <Routes>
         <Route path="/" element={<Home />} />
@@ -26,6 +29,7 @@ const App = () => {
         <Route path="*" element={<UnderConstruction />} />
       </Routes>
     </Router>
+    </BaseUrlContext.Provider>
   );
 };
 
