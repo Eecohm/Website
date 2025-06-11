@@ -13,7 +13,7 @@ import StudentTable from './Components/App/Students/Students';
 import UnderConstruction from './Components/App/UnderConstruction';
 import { BaseUrlContext } from './BaseUrlContext';
 const App = () => {
-  const baseUrl = 'http://127.0.0.1:8000/api';
+  const baseUrl = 'https://bishamsinchiury.com.np/api';
   return (
     <BaseUrlContext.Provider value={baseUrl}>
     <Router basename="/">
