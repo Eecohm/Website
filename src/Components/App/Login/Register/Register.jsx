@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 import NavBar from '../../NavBar/NavBar';
 import { useBaseUrl } from '../../../../BaseUrlContext';
-import { AuthContext } from './AuthContext';
 import StudentForm from './StudentForm';
 import TeacherForm from './TeacherForm';
 import GuardianForm from './GuardianForm';
