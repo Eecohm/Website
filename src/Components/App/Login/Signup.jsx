@@ -3,6 +3,7 @@ import styles from './Signup.module.css'; // Changed to SCSS module
 import { useBaseUrl } from '../../../BaseUrlContext';
 
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -52,6 +53,8 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -100,6 +103,8 @@ const SignUpForm = () => {
         setIsOtpSent(false);
       } catch (error) {
         setErrors({ api: 'Error verifying OTP. Please try again.' });
+      } finally {
+        setIsLoading(false);
       }
     }
   };

@@ -7,13 +7,14 @@ import DashBoard from './Components/App/Dashboard/Dashboard';
 import Reports from './Components/App/Reports/Reports';
 import MonthlyFeedbackForm from './Components/App/Reports/MontlyFeedBackEntry/MontlyFeedBackEntry';
 import styles from './App.module.css';
+import Admin from './Components/App/Admin/Admin'
 import RoundImage from './Components/AboutUs/RoundImage/RoundImage';
 import SignUpForm from './Components/App/Login/Signup';
 import StudentTable from './Components/App/Students/Students';
 import UnderConstruction from './Components/App/UnderConstruction';
 import { BaseUrlContext } from './BaseUrlContext';
 const App = () => {
-  const baseUrl = 'https://bishamsinchiury.com.np/api';
+  const baseUrl = 'http://127.0.0.1:8000/api';
   return (
     <BaseUrlContext.Provider value={baseUrl}>
     <Router basename="/">
@@ -26,6 +27,7 @@ const App = () => {
         <Route path='/enter-feedback' element={<MonthlyFeedbackForm />} />
         <Route path='/signup' element={<SignUpForm />} />
         <Route path='/students' element={<StudentTable />} />
+        <Route path='/admin' element={<Admin />} />
         <Route path="*" element={<UnderConstruction />} />
       </Routes>
     </Router>
