@@ -5,6 +5,7 @@ import { useBaseUrl } from '../../../BaseUrlContext';
 
 const LoginForm = () => {
   const baseUrl = useBaseUrl();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,6 +28,8 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    if (isLoading) return;
+    setIsLoading(true);
 
     if (rememberMe) {
       localStorage.setItem('savedEmail', email);
@@ -58,7 +61,10 @@ const LoginForm = () => {
       }
     } catch (err) {
       setError('Network error. Please check your connection.');
+    } finally {
+      setIsLoading(false)
     }
+
   };
 
   return (
@@ -111,7 +117,7 @@ const LoginForm = () => {
 
           {error && <div className={styles.errorMessage}>{error}</div>}
 
-          <button type="submit" className={`${styles.loginButton} ${styles.neonButton}`}>
+          <button type="submit" className={`${styles.loginButton} ${styles.neonButton}`}  disabled={isLoading}>
             Login
           </button>
 
