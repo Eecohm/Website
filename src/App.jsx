@@ -16,7 +16,7 @@ import UnderConstruction from './Components/App/UnderConstruction';
 import { BaseUrlContext } from './BaseUrlContext';
 import AuthProvider from './Components/App/Login/Auth/AuthProvider';
 const App = () => {
-  const baseUrl = 'https://bishamsinchiury.com.np/api';
+  const baseUrl = 'http://127.0.0.1:8000/api';
   return (
     <AuthProvider>
     <BaseUrlContext.Provider value={baseUrl}>
@@ -41,8 +41,4 @@ const App = () => {
 };
 
 export default App;
-<<<<<<< HEAD
-// Sugita
-=======
 //Bibek Bishwokarma
->>>>>>> 5e56b8ec65b5806ba283db700dd7e7858b073b07

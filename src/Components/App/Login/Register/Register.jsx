@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 import NavBar from '../../NavBar/NavBar';
 import { useBaseUrl } from '../../../../BaseUrlContext';
+import { useAuth } from '../Auth/AuthContext';
 import StudentForm from './StudentForm';
 import TeacherForm from './TeacherForm';
 import GuardianForm from './GuardianForm';
@@ -12,23 +13,22 @@ import OwnerForm from './OwnerForm';
 const Register = () => {
   const baseUrl = useBaseUrl();
   const [role, setRole] = useState(null);
-  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { token } = useAuth()
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const storedToken = localStorage.getItem('accessToken');
-        if (!storedToken) {
+        if (!token) {
           navigate('/login');
           return;
         }
-        setToken(storedToken);
+        setToken(token);
         const response = await fetch(`${baseUrl}/user/user/`, {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${storedToken}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
