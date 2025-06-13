@@ -1,13 +1,12 @@
 /* Main container */
 .feedbackFormContainer {
   min-height: 90vh;
-  width: 85vw;
+  min-width: 85vw;
   margin-top: 10vh;
   margin-left: 15vw;
   background-color: #333; /* Matches NavBar dark theme */
   color: #ffffff;
   font-family: 'Arial', sans-serif;
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,18 +16,18 @@
 .formHeading {
   text-align: center;
   color: #ffffff;
-  font-size: 1.8rem;
+  font-size: 2.8rem;
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin: 1rem;
 }
 
 /* Feedback form */
 .feedbackForm {
-  max-width: 1000px;
-  width: 90%;
-  background-color: #020202; /* Secondary dark color */
+  width: 100%;
+  background-color: #333; /* Secondary dark color */
   border-radius: 8px;
   padding: 1.5rem;
+
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Matches NavBar shadow */
 }
 
@@ -81,7 +80,8 @@
 
 /* Form input, select, and textarea */
 .formInput {
-  width: 100%;
+  width: 80%;
+  height: 60px;
   padding: 0.75rem;
   border: 1px solid #555;
   border-radius: 5px;
