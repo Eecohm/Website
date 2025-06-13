@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Dashboard.module.css';
 import NavBar from '../NavBar/NavBar';
+import { useAuth } from '../Login/Auth/AuthContext';
+import { useBaseUrl } from '../../../BaseUrlContext';
+
 
 const Dashboard = () => {
+  const baseUrl = useBaseUrl();
   const [kycStatus, setKycStatus] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchKycStatus = async () => {
-      const token = localStorage.getItem('accessToken');
-
+    
       if (!token) {
         console.warn('Access token missing');
         navigate('/login');
@@ -19,7 +23,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await fetch('https://bishamsinchiury.com.np/api/user/user/', {
+        const response = await fetch(`${baseUrl}/user/user/`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

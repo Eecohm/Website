@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styles from './Signup.module.css'; // Changed to SCSS module
+import { useBaseUrl } from '../../../BaseUrlContext';
 
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -9,6 +11,7 @@ const SignUpForm = () => {
     role: '',
     otp: '',
   });
+  const baseUrl = useBaseUrl();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -50,6 +53,8 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -57,7 +62,7 @@ const SignUpForm = () => {
     }
     if (!isOtpSent) {
       try {
-        const response = await fetch('https://bishamsinchiury.com.np/api/user/register/', {
+        const response = await fetch(`${baseUrl}/user/signup/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -80,7 +85,7 @@ const SignUpForm = () => {
       }
     } else {
       try {
-        const response = await fetch('https://bishamsinchiury.com.np/api/user/verify/', {
+        const response = await fetch(`${baseUrl}/user/otp-verify/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -98,6 +103,8 @@ const SignUpForm = () => {
         setIsOtpSent(false);
       } catch (error) {
         setErrors({ api: 'Error verifying OTP. Please try again.' });
+      } finally {
+        setIsLoading(false);
       }
     }
   };

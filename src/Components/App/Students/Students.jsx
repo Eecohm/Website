@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import NavBar from '../NavBar/NavBar';
-import styles from './Students.module.css';
+import './Students.module.css';
 import debounce from 'lodash/debounce';
 
 const StudentTable = () => {
@@ -34,7 +34,7 @@ const StudentTable = () => {
         if (rollNoFrom) params.append('rollno_from', rollNoFrom);
         if (rollNoTo) params.append('rollno_to', rollNoTo);
 
-        const response = await fetch(`http://127.0.0.1:8000/api/user/students/?${params.toString()}`, {
+        const response = await fetch(`https://bishamsinchiury.com.np/api/user/students/?${params.toString()}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -118,71 +118,71 @@ const StudentTable = () => {
   return (
     <>
       <NavBar />
-      <div className={styles.studentTableContainer}>
-        <div className={styles.filterContainer}>
+      <div className="student-table-container">
+        <div className="filter-container">
           <input
             type="text"
             placeholder="Search by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={styles.searchInput}
+            className="search-input"
           />
           <select
             value={genderFilter}
             onChange={(e) => setGenderFilter(e.target.value)}
-            className={styles.filterSelect}
+            className="filter-select"
           >
             <option value="">All Genders</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
-          <div className={styles.classRange}>
+          <div className="class-range">
             <input
               type="text"
               placeholder="Class From"
               value={classFrom}
               onChange={(e) => setClassFrom(e.target.value)}
-              className={styles.filterInput}
+              className="filter-input"
             />
             <input
               type="text"
               placeholder="Class To"
               value={classTo}
               onChange={(e) => setClassTo(e.target.value)}
-              className={styles.filterInput}
+              className="filter-input"
             />
           </div>
-          <div className={styles.rollNoRange}>
+          <div className="rollno-range">
             <input
               type="number"
               placeholder="Roll No From"
               value={rollNoFrom}
               onChange={(e) => setRollNoFrom(e.target.value)}
-              className={styles.filterInput}
+              className="filter-input"
             />
             <input
               type="number"
               placeholder="Roll No To"
               value={rollNoTo}
               onChange={(e) => setRollNoTo(e.target.value)}
-              className={styles.filterInput}
+              className="filter-input"
             />
           </div>
-          <button className={styles.addStudentButton} onClick={handleAddStudent}>
+          <button className="add-student-button" onClick={handleAddStudent}>
             Add Student
           </button>
           <button
-            className={styles.showDataButton}
+            className="show-data-button"
             onClick={handleShowData}
             disabled={!isFilterApplied}
           >
             Show Data
           </button>
         </div>
-        {loading && <div className={styles.statusMessage}>Loading...</div>}
-        {error && <div className={styles.statusMessage}>Error: {error}</div>}
-        <table className={styles.studentTable}>
+        {loading && <div className="status-message">Loading...</div>}
+        {error && <div className="status-message">Error: {error}</div>}
+        <table className="student-table">
           <thead>
             <tr>
               <th onClick={() => handleSort('full_name')}>
@@ -211,24 +211,24 @@ const StudentTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className={styles.noData}>No students found</td>
+                <td colSpan="4" className="no-data">No students found</td>
               </tr>
             )}
           </tbody>
         </table>
         {selectedStudent && (
-          <div className={styles.studentCard}>
-            <div className={styles.cardContent}>
+          <div className="student-card">
+            <div className="card-content">
               <h2>{selectedStudent.full_name}</h2>
               <p>Gender: {selectedStudent.gender}</p>
               <p>Class: {selectedStudent.grade.name || 'N/A'}</p>
               <p>Roll No: {selectedStudent.rollno}</p>
-              <div className={styles.cardButtons}>
-                <button className={`${styles.actionButton} ${styles.showData}`} onClick={() => handleAction('Show Data')}>Show Data</button>
-                <button className={`${styles.actionButton} ${styles.reports}`} onClick={() => handleAction('Reports')}>Reports</button>
-                <button className={`${styles.actionButton} ${styles.accounts}`} onClick={() => handleAction('Accounts')}>Accounts</button>
-                <button className={`${styles.actionButton} ${styles.others}`} onClick={() => handleAction('Others')}>Others</button>
-                <button className={`${styles.actionButton} ${styles.close}`} onClick={closeCard}>Close</button>
+              <div className="card-buttons">
+                <button className="action-button show-data" onClick={() => handleAction('Show Data')}>Show Data</button>
+                <button className="action-button reports" onClick={() => handleAction('Reports')}>Reports</button>
+                <button className="action-button accounts" onClick={() => handleAction('Accounts')}>Accounts</button>
+                <button className="action-button others" onClick={() => handleAction('Others')}>Others</button>
+                <button className="action-button close" onClick={closeCard}>Close</button>
               </div>
             </div>
           </div>

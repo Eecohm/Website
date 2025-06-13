@@ -1,0 +1,9 @@
+.mainDiv{
+    background-color: #1c1c1c;
+    height: 90vh;
+    width: 85vw;
+    margin: 10vh 0 0 15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
