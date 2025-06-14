@@ -20,10 +20,12 @@ const NavBar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    if (isSettingsOpen) setIsSettingsOpen(false); // Close settings when toggling sidebar
   };
 
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
+    if (isSidebarOpen) setIsSidebarOpen(false); // Close sidebar when toggling settings
   };
 
   const handleLogoClick = () => {
@@ -33,6 +35,7 @@ const NavBar = () => {
       navigate('/dashboard');
     }
     setIsSidebarOpen(false);
+    setIsSettingsOpen(false);
   };
 
   const navItems = [
@@ -57,7 +60,10 @@ const NavBar = () => {
     <>
       <header className={styles.topBar}>
         <div className={styles.topBarContent}>
-          <h1 className={styles.schoolName}>EECOHM Foundation</h1>
+          <div className={styles.navBarToggle} onClick={toggleSidebar}>
+            <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faBars} />
+          </div>
+          <h1 className={styles.schoolName} onClick={handleLogoClick}>EECOHM Foundation</h1>
           <div className={styles.topBarInfo}>
             <span>{today}</span>
             <span>{currentTime}</span>
@@ -92,15 +98,12 @@ const NavBar = () => {
             className={styles.navBarLogo}
             onClick={handleLogoClick}
           />
-          <div className={styles.navBarToggle} onClick={toggleSidebar}>
-            <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faBars} />
-          </div>
         </div>
         <ul className={styles.navBarMenu}>
           {navItems.map((item, index) => (
             <li
               key={index}
-              className={styles.navBarItem}
+              className={`${styles.navBarItem} ${location.pathname === item.path ? styles.active : ''}`}
               onClick={() => {
                 navigate(item.path);
                 setIsSidebarOpen(false);
