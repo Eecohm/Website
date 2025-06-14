@@ -170,7 +170,7 @@ const Programs = () => {
   return (
     <section className={styles['programs-section']}>
       <header>
-        <h2 ref={titleRef} className={styles.title}>OUR COURSES</h2>
+        <h2 ref={titleRef} className={styles.title}>OUR COURSES:</h2>
       </header>
       <div className={styles.programs} ref={scrollRef}>
         <div className={styles['course-card-container']}>

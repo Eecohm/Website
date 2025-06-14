@@ -1,9 +1,14 @@
 .programs-section {
   background-color: #f7f7f7;
+  justify-content: center;
+  align-items: center;
 }
 
 .programs::-webkit-scrollbar {
   display: none;
+}
+.title{
+  font-size: 5vh;
 }
 
 .programs {

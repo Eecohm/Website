@@ -15,12 +15,14 @@ function Hero() {
         <p className={styles.animateText}>
           EECOHM School of Excellence is a top-tier educational establishment that provides comprehensive education from Pre-school till High School Diploma. Our dynamic environment fosters intellectual, artistic, and physical growth in students, with an emphasis on academic excellence and skill-based education.
         </p>
+        <div className={styles.heroButtonDiv}>
         <Link to="/login">
           <button className={`${styles.loginBtn} ${styles.animateText}`}>Log In</button>
         </Link>
         <Link to="/signup">
           <button className={`${styles.registerBtn} ${styles.animateText}`}>Sign Up</button>
         </Link>
+        </div>
       </div>
     </div>
   );

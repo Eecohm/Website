@@ -1,0 +1,186 @@
+.teamLeadCard {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 3px 8px rgba(128, 0, 0, 0.2);
+    transition: width 0.4s ease-in-out, height 0.4s ease-in-out, border-radius 0.4s ease-in-out, transform 0.4s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .teamLeadCard .teamLeadInfo {
+    display: none;
+  }
+  
+  .selected {
+    width: 400px;
+    height: 400px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(128, 0, 0, 0.4);
+    transform: scale(1.03);
+    z-index: 1000;
+    position: relative;
+  }
+  
+  .selected .teamLeadInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .teamLeadImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: height 0.4s ease-in-out, border-radius 0.4s ease-in-out;
+  }
+  
+  .selected .teamLeadImage {
+    height: 200px;
+    border-radius: 15px 15px 0 0;
+    border-bottom: 4px solid #800000;
+  }
+  
+  .teamLeadImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .teamLeadCard:hover .teamLeadImage img {
+    transform: scale(1.1);
+  }
+  
+  .teamLeadInfo {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+  }
+  
+  .selected .teamLeadInfo {
+    padding: 20px;
+    position: static;
+    background: #fff;
+    height: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 0 0 15px 15px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  
+  .teamLeadInfo h3 {
+    font-size: 0.2rem;
+    color: #800000;
+    margin: 5px 0;
+    font-weight: 700;
+  }
+  
+  .selected .teamLeadInfo h3 {
+    font-size: 1rem;
+    margin: 0 0 15px;
+    font-weight: 600;
+  }
+  
+  .teamLeadInfo .role {
+    font-size: 0.8rem;
+    color: #555;
+    margin: 5px 0;
+    font-style: italic;
+  }
+  
+  .teamLeadInfo .bio {
+    font-size: 0.7rem;
+    color: #666;
+    margin: 10px 0;
+    line-height: 1.5;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  
+  @media (max-width: 768px) {
+    .teamLeadCard {
+      width: 70px;
+      height: 70px;
+    }
+  
+    .selected {
+      width: 500px;
+      height: 400px;
+    }
+  
+    .selected .teamLeadImage {
+      height: 200px;
+    }
+  
+    .selected .teamLeadInfo {
+      height: auto;
+      padding: 20px;
+    }
+  
+    .teamLeadInfo h3 {
+      font-size: 0.8rem;
+    }
+  
+    .selected .teamLeadInfo h3 {
+      font-size: 1.6rem;
+    }
+  
+    .teamLeadInfo .role {
+      font-size: 1rem;
+    }
+  
+    .teamLeadInfo .bio {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .teamLeadCard {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .selected {
+      width: 100vw;
+      height: 60vh;
+      position: relative;
+      transform: scale(1.03);
+      z-index: 1000;
+    }
+  
+    .selected .teamLeadImage {
+      height: 150px;
+    }
+  
+    .selected .teamLeadInfo {
+      margin-top: 10px;
+      height: auto;
+      max-height: 600px;
+      max-width: 80%;
+    }
+  
+    .teamLeadInfo h3 {
+      font-size: 0.7rem;
+    }
+  
+    .selected .teamLeadInfo h3 {
+      font-size: 1.4rem;
+    }
+  
+    .teamLeadInfo .role {
+      font-size: 0.9rem;
+    }
+  
+    .teamLeadInfo .bio {
+      font-size: 0.85rem;
+    }
+  }

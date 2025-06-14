@@ -41,8 +41,4 @@ const App = () => {
 };
 
 export default App;
-<<<<<<< HEAD
-// Sugita
-=======
->>>>>>> 79300aa57bb0ffdbb159772da2d7b36582254cf5
 //Bibek Bishwokarma

@@ -1,20 +1,21 @@
 import React from 'react';
+import styles from './TeamLeadCard.module.css';
 
 function TeamLeadCard({ name, role, bio, image, isSelected, onSelect }) {
   return (
     <div
-      className={`team-lead-card ${isSelected ? 'selected' : ''}`}
+      className={`${styles.teamLeadCard} ${isSelected ? styles.selected : ''}`}
       onClick={onSelect}
     >
-      <div className="team-lead-image">
+      <div className={styles.teamLeadImage}>
         <img src={image} alt={name} />
       </div>
-      <div className="team-lead-info">
+      <div className={styles.teamLeadInfo}>
         <h3>{name}</h3>
         {isSelected && (
-          <div className="team-lead-details">
-            {role && <p className="role">{role}</p>}
-            <p className="bio">{bio}</p>
+          <div className={styles.teamLeadDetails}>
+            {role && <p className={styles.role}>{role}</p>}
+            <p className={styles.bio}>{bio}</p>
           </div>
         )}
       </div>
