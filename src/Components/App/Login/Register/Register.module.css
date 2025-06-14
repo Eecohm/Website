@@ -71,6 +71,11 @@ label {
   color: var(--text-color);
 }
 
+.required {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
 input,
 select {
   padding: 10px;
@@ -201,13 +206,7 @@ button:hover {
   background-color: #0056b3;
 }
 
-.loading {
-  color: var(--text-color);
-  text-align: center;
-  font-size: 0.9rem;
-  padding: 10px;
-}
-
+.loading,
 .info {
   color: var(--text-color);
   text-align: center;
@@ -217,7 +216,7 @@ button:hover {
 
 .error {
   color: var(--error-color);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-top: 5px;
 }
 
@@ -226,7 +225,6 @@ button:hover {
   text-align: center;
   margin-bottom: 20px;
 }
-
 
 @media (max-width: 768px) {
   .registrationForm {
@@ -290,4 +288,42 @@ button:hover {
     padding: 10px;
     font-size: 0.9rem;
   }
+}
+.successAlert {
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+  border-radius: var(--border-radius);
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #155724;
+}
+
+.alertSymbol {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.successText {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.dismissButton {
+  padding: 8px 16px;
+  background-color: var(--action-button-bg);
+  color: var(--text-color);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.dismissButton:hover {
+  background-color: var(--action-button-hover);
 }

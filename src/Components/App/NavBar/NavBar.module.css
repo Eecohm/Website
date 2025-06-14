@@ -1,3 +1,8 @@
+.mainNavDiv {
+  display: flex;
+  flex-direction: column;
+}
+
 .topBar {
   position: fixed;
   top: 0;
@@ -22,10 +27,24 @@
   margin: 0 auto;
 }
 
+.topBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topBarLogo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
 .schoolName {
   font-size: 1.5rem;
   margin: 0;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .topBarInfo {
@@ -93,7 +112,7 @@
 .navBarHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -127,6 +146,10 @@
   background-color: #1a2b38;
 }
 
+.navBarItem.active {
+  background-color: #1a2b38;
+}
+
 .navBarIcon {
   margin-right: 15px;
   font-size: 1.2rem;
@@ -142,9 +165,35 @@
 }
 
 @media (max-width: 768px) {
+  .topBar {
+    left: 0;
+    padding: 0 10px;
+    height: 12vh;
+  }
+
+  .topBarContent {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topBarLeft {
+    flex-shrink: 0;
+  }
+
+  .schoolName {
+    font-size: 1.2rem;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .topBarInfo {
+    display: none;
+  }
+
   .navBar {
+    width: 250px;
     transform: translateX(-100%);
-    width: 200px;
   }
 
   .navBar.open {
@@ -155,24 +204,40 @@
     display: block;
   }
 
-  .topBar {
-    left: 0;
-  }
-
-  .topBarContent {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-
-  .topBarInfo {
-    flex-wrap: wrap;
-    gap: 10px;
+  .navBarHeader {
+    display: none;
   }
 }
 
 @media (min-width: 769px) {
   .navBar {
     transform: translateX(0);
+  }
+
+  .topBarLeft {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .topBar {
+    height: 10vh;
+  }
+
+  .schoolName {
+    font-size: 1rem;
+  }
+
+  .topBarLogo {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navBar {
+    width: 200px;
+  }
+
+  .navBarHeader {
+    display: none;
   }
 }

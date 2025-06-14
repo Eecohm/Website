@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './NavBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTasks, faUserShield, faWallet, faBox, faChalkboardTeacher, faUsers, faChartBar, faBars, faTimes, faCog } from '@fortawesome/free-solid-svg-icons';
+import logo from '../../../assets/logo.svg';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -20,12 +21,12 @@ const NavBar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    if (isSettingsOpen) setIsSettingsOpen(false); // Close settings when toggling sidebar
+    if (isSettingsOpen) setIsSettingsOpen(false);
   };
 
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
-    if (isSidebarOpen) setIsSidebarOpen(false); // Close sidebar when toggling settings
+    if (isSidebarOpen) setIsSidebarOpen(false);
   };
 
   const handleLogoClick = () => {
@@ -57,11 +58,19 @@ const NavBar = () => {
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <>
+    <div className={styles.mainNavDiv}>
       <header className={styles.topBar}>
         <div className={styles.topBarContent}>
-          <div className={styles.navBarToggle} onClick={toggleSidebar}>
-            <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faBars} />
+          <div className={styles.topBarLeft}>
+            <div className={styles.navBarToggle} onClick={toggleSidebar}>
+              <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faBars} />
+            </div>
+            <img
+              src={logo}
+              alt="School Logo"
+              className={styles.topBarLogo}
+              onClick={handleLogoClick}
+            />
           </div>
           <h1 className={styles.schoolName} onClick={handleLogoClick}>EECOHM Foundation</h1>
           <div className={styles.topBarInfo}>
@@ -93,7 +102,7 @@ const NavBar = () => {
       <nav className={`${styles.navBar} ${isSidebarOpen ? styles.open : ''}`}>
         <div className={styles.navBarHeader}>
           <img
-            src="/src/assets/logo.svg"
+            src={logo}
             alt="School Logo"
             className={styles.navBarLogo}
             onClick={handleLogoClick}
@@ -115,7 +124,7 @@ const NavBar = () => {
           ))}
         </ul>
       </nav>
-    </>
+    </div>
   );
 };
 

@@ -15,16 +15,15 @@ const Register = () => {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { token } = useAuth()
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!token) {
+        navigate('/login');
+        return;
+      }
       try {
-        if (!token) {
-          navigate('/login');
-          return;
-        }
-        setToken(token);
         const response = await fetch(`${baseUrl}/user/user/`, {
           method: 'GET',
           headers: {
@@ -43,7 +42,7 @@ const Register = () => {
       }
     };
     fetchUserData();
-  }, [baseUrl, navigate]);
+  }, [baseUrl, navigate, token]);
 
   if (loading) return <div className={styles.loading}>Loading...</div>;
 
@@ -79,12 +78,12 @@ const Register = () => {
   }
 
   return (
-    <AuthContext.Provider value={{ token }}>
+    <>
       <NavBar />
       <div className={styles.registrationForm}>
         <FormComponent />
       </div>
-    </AuthContext.Provider>
+    </>
   );
 };
 

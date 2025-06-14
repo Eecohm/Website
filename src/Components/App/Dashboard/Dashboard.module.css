@@ -1,94 +1,107 @@
 .dashboard {
-    background-color: #1c1c1c;
-    margin-top: 10vh;
-    margin-left: 15vw;
-    height: 90vh;
-    width: 85vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    font-size: 2rem;
+  background-color: #1c1c1c;
+  margin-top: 10vh;
+  margin-left: 15vw;
+  height: 90vh;
+  width: 85vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+.alert {
+  position: fixed;
+  top: 10vh;
+  left: 15vw;
+  width: 85vw;
+  background-color: #f8d7da;
+  border-bottom: 4px solid #dc3545;
+  z-index: 1050;
+  padding: 40px 0;
+}
+
+.kycPendingAlert {
+  background-color: #fff3cd;
+  border-bottom: 4px solid #ffc107;
+}
+
+.alertContent {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.alertSymbol {
+  font-size: 64px;
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+.kycPendingAlert .alertSymbol {
+  color: #ffc107;
+}
+
+.alertText {
+  margin: 0 0 25px 0;
+  font-size: 24px;
+  color: #721c24;
+  font-weight: 600;
+}
+
+.kycPendingAlert .alertText {
+  color: #856404;
+}
+
+.alertButtons {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.completeButton {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.completeButton:hover {
+  background-color: #c82333;
+}
+
+.dismissButton {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.dismissButton:hover {
+  background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    margin-left: 0;
+    width: 100vw;
   }
-  
-  .alert {
-    position: fixed;
-    top: 10vh;
-    left: 15vw;
-    width: 85vw;
-    background-color: #f8d7da;
-    border-bottom: 4px solid #dc3545;
-    z-index: 1050;
-    padding: 40px 0;
+
+  .alert,
+  .kycPendingAlert {
+    left: 0;
+    width: 100vw;
   }
-  
-  .alertContent {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .alertSymbol {
-    font-size: 64px;
-    color: #dc3545;
-    margin-bottom: 20px;
-  }
-  
-  .alertText {
-    margin: 0 0 25px 0;
-    font-size: 24px;
-    color: #721c24;
-    font-weight: 600;
-  }
-  
-  .alertButtons {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .button {
-    padding: 14px 28px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 600;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .completeButton {
-    background-color: #dc3545;
-    color: #fff;
-  }
-  
-  .completeButton:hover {
-    background-color: #c82333;
-  }
-  
-  .dismissButton {
-    background-color: #6c757d;
-    color: #fff;
-  }
-  
-  .dismissButton:hover {
-    background-color: #5a6268;
-  }
-  
-  @media (max-width: 768px) {
-    .dashboard {
-      margin-left: 0;
-      width: 100vw;
-    }
-  
-    .alert {
-      left: 0;
-      width: 100vw;
-    }
-  }
-  
+}

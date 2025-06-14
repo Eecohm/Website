@@ -5,17 +5,15 @@ import NavBar from '../NavBar/NavBar';
 import { useAuth } from '../Login/Auth/AuthContext';
 import { useBaseUrl } from '../../../BaseUrlContext';
 
-
 const Dashboard = () => {
   const baseUrl = useBaseUrl();
-  const [kycStatus, setKycStatus] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const [userData, setUserData] = useState({ kyc_status: null, verified: null });
+  const [alertType, setAlertType] = useState(null); // 'kyc_pending' or 'registration_incomplete'
   const navigate = useNavigate();
   const { token } = useAuth();
 
   useEffect(() => {
-    const fetchKycStatus = async () => {
-    
+    const fetchUserData = async () => {
       if (!token) {
         console.warn('Access token missing');
         navigate('/login');
@@ -34,32 +32,36 @@ const Dashboard = () => {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
-        setKycStatus(data.kyc_status);
+        setUserData({ kyc_status: data.kyc_status, verified: data.verified });
 
-        if (!data.kyc_status) setShowAlert(true);
+        if (!data.kyc_status) {
+          setAlertType('registration_incomplete');
+        } else if (data.kyc_status && !data.verified) {
+          setAlertType('kyc_pending');
+        }
       } catch (error) {
-        console.error('Failed to fetch KYC status:', error);
+        console.error('Failed to fetch user data:', error);
         navigate('/dashboard');
       }
     };
 
-    fetchKycStatus();
-  }, [navigate]);
+    fetchUserData();
+  }, [navigate, token, baseUrl]);
 
   const handleNavigate = () => {
-    setShowAlert(false);
+    setAlertType(null);
     navigate('/register');
   };
 
   const handleCloseAlert = () => {
-    setShowAlert(false);
+    setAlertType(null);
   };
 
   return (
     <>
       <NavBar />
 
-      {showAlert && (
+      {alertType === 'registration_incomplete' && (
         <div className={styles.alert}>
           <div className={styles.alertContent}>
             <span className={styles.alertSymbol}>⚠️</span>
@@ -73,6 +75,25 @@ const Dashboard = () => {
               >
                 Complete Registration
               </button>
+              <button
+                className={`${styles.button} ${styles.dismissButton}`}
+                onClick={handleCloseAlert}
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {alertType === 'kyc_pending' && (
+        <div className={`${styles.alert} ${styles.kycPendingAlert}`}>
+          <div className={styles.alertContent}>
+            <span className={styles.alertSymbol}>⏳</span>
+            <p className={styles.alertText}>
+              <strong>KYC Pending:</strong> Your KYC is yet to be verified. Wait for 24 hours. If it isn't verified by 24 hours, contact admin or IT at college.
+            </p>
+            <div className={styles.alertButtons}>
               <button
                 className={`${styles.button} ${styles.dismissButton}`}
                 onClick={handleCloseAlert}

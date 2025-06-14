@@ -1,26 +1,31 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 import { useBaseUrl } from '../../../../BaseUrlContext';
 import { useAuth } from '../Auth/AuthContext';
 import PersonalDetailForm from './PersonalDetailForm';
-import AddressDetailForm from './AddressDetailForm';
 import ContactDetailForm from './ContactDetailForm';
 
-const StudentForm = () => {
+const GuardianForm = () => {
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [grades, setGrades] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [studentQuery, setStudentQuery] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [submissionError, setSubmissionError] = useState('');
-  const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+  const [successMessage, setSuccessMessage] = useState('');
+  const studentInputRef = useRef(null);
 
+  // Fetch grades on mount
   useEffect(() => {
     const fetchGrades = async () => {
       try {
-        const response = await fetch(`${baseUrl}/sadmin/classes`, {
+        const response = await fetch(`${baseUrl}/api/admin/classes/`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -32,174 +37,159 @@ const StudentForm = () => {
         setGrades(data);
       } catch (error) {
         console.error('Error fetching grades:', error);
-        setErrors((prev) => ({ ...prev, grade: 'Failed to load grades. Please try again.' }));
+        setErrors((prev) => ({ ...prev, grade: 'Failed to load grades.' }));
       }
     };
-    if (token) {
-      fetchGrades();
-    } else {
-      navigate('/login');
-    }
+    if (token) fetchGrades();
+    else navigate('/login');
   }, [baseUrl, token, navigate]);
 
-  const handleFileChange = (e, field) => {
-    const file = e.target.files[0];
-    if (file && file.size > maxFileSize) {
-      setErrors((prev) => ({ ...prev, [field]: 'File size exceeds 5MB limit.' }));
-      setFormData((prev) => ({ ...prev, [field]: null }));
+  // Fetch students when grade changes
+  useEffect(() => {
+    if (formData.grade) {
+      const fetchStudents = async () => {
+        try {
+          const response = await fetch(`${baseUrl}/api/user/students/?grade_id=${formData.grade}`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+          if (!response.ok) throw new Error('Failed to fetch students');
+          const data = await response.json();
+          setStudents(data);
+        } catch (error) {
+          console.error('Error fetching students:', error);
+          setErrors((prev) => ({ ...prev, student_id: 'Failed to load students.' }));
+        }
+      };
+      fetchStudents();
     } else {
-      setErrors((prev) => ({ ...prev, [field]: '' }));
-      setFormData((prev) => ({ ...prev, [field]: file }));
+      setStudents([]);
+      setStudentQuery('');
+      setFormData((prev) => ({ ...prev, student_id: '', student_name: '' }));
     }
-  };
+  }, [formData.grade, baseUrl, token]);
 
   const validateName = (value, field) => {
-    if (!value) return `${field.replace('_', ' ')} is required`;
-    if (!/^[a-zA-Z\s]+$/.test(value)) return `${field.replace('_', ' ')} can only contain alphabets and spaces`;
+    if (!value || !value.trim()) return `${field.replace('_', ' ')} is required.`;
+    if (value.length < 2) return `${field.replace('_', ' ')} must be at least 2 characters long.`;
+    if (!/^[a-zA-Z\s]+$/.test(value)) return `${field.replace('_', ' ')} can only contain letters and spaces.`;
     return '';
   };
 
   const validateContact = (value, field) => {
     if (!value && field === 'phone') return 'Phone is required';
-    if (value && !/^(97|98)\d{8}$/.test(value)) return `${field.replace('_', ' ')} must be 10 digits starting with 97 or 98`;
+    if (value && !/^\+?\d{7,15}$/.test(value)) return `${field.replace('_', ' ')} must be a valid phone number (7-15 digits).`;
     return '';
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    newErrors.full_name = validateName(formData.full_name, 'full_name');
-    if (!formData.date_of_birth) newErrors.date_of_birth = 'Date of birth is required';
-    if (!formData.gender) newErrors.gender = 'Gender is required';
-    if (!formData.photo) newErrors.photo = 'Photo is required';
-    if (!formData.country) newErrors.country = 'Country is required';
-    if (!formData.province) newErrors.province = 'Province is required';
-    if (!formData.municipality) newErrors.municipality = 'Municipality is required';
-    if (!formData.ward) newErrors.ward = 'Ward is required';
-    if (!formData.tole) newErrors.tole = 'Tole is required';
-    newErrors.phone = validateContact(formData.phone, 'phone');
-    newErrors.mother_name = validateName(formData.mother_name, 'mother_name');
-    newErrors.father_name = validateName(formData.father_name, 'father_name');
-    newErrors.guardian_contact = validateContact(formData.guardian_contact, 'guardian_contact');
-    if (!formData.birth_certificate_photo) newErrors.birth_certificate_photo = 'Birth certificate photo is required';
-    if (!formData.grade) newErrors.grade = 'Grade is required';
-    const filteredErrors = Object.fromEntries(
-      Object.entries(newErrors).filter(([_, value]) => value)
-    );
-    setErrors((prev) => ({ ...prev, ...filteredErrors }));
-    return Object.keys(filteredErrors).length === 0;
+  const handleStudentSelect = (student) => {
+    setFormData((prev) => ({
+      ...prev,
+      student_id: student.id,
+      student_name: student.full_name,
+    }));
+    setStudentQuery(student.full_name);
+    setShowSuggestions(false);
+    setErrors((prev) => ({ ...prev, student_id: '' }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmissionError('');
-    setErrors({}); // Clear previous errors
-    if (!validateForm()) {
-      setSubmissionError('Please fill all required fields correctly.');
+    setSuccessMessage('');
+    const newErrors = {};
+
+    newErrors.relation_to_student = validateName(formData.relation_to_student, 'relation_to_student');
+    newErrors.grade = formData.grade ? '' : 'Grade is required';
+    newErrors.student_id = formData.student_id ? '' : 'Student is required';
+
+    if (Object.values(newErrors).some((error) => error) || Object.values(errors).some((error) => error)) {
+      setErrors((prev) => ({ ...prev, ...newErrors }));
+      setSubmissionError('Please correct the errors in the form.');
       return;
     }
+
     const formDataToSend = new FormData();
     for (const key in formData) {
-      if (formData[key]) formDataToSend.append(key, formData[key]);
+      if (formData[key] && key !== 'student_name') { // Exclude student_name
+        formDataToSend.append(key, formData[key]);
+      }
     }
+
     try {
-      const response = await fetch(`${baseUrl}/user/student/`, {
+      const response = await fetch(`${baseUrl}/api/user/guardian/`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
       });
+
+      if (response.status === 201) {
+        setSuccessMessage('Registration form submitted correctly. Please wait while your form is verified.');
+        setTimeout(() => navigate('/dashboard'), 5000);
+        return;
+      }
+
       if (!response.ok) {
         const errorData = await response.json();
-        if (typeof errorData === 'object' && !errorData.message) {
-          // Map backend errors to fields
-          const fieldErrors = {};
-          for (const [field, messages] of Object.entries(errorData)) {
-            fieldErrors[field] = Array.isArray(messages) ? messages[0] : messages;
-          }
-          setErrors(fieldErrors);
-          setSubmissionError('Please correct the errors in the form.');
-          throw new Error('Validation errors');
-        }
-        throw new Error(errorData.message || 'Failed to submit student data');
+        setErrors(errorData);
+        setSubmissionError('Please correct the errors in the form.');
+        throw new Error('Failed to submit guardian data');
       }
-      navigate('/dashboard');
     } catch (error) {
       console.error('Submission error:', error);
-      if (!errors) {
-        setSubmissionError(error.message || 'An error occurred while submitting the form. Please try again.');
-      }
+      setSubmissionError('An error occurred while submitting the form.');
     }
   };
 
+  const handleCloseSuccess = () => {
+    setSuccessMessage('');
+    navigate('/dashboard');
+  };
+
+  const filteredStudents = students.filter((student) =>
+    student.full_name.toLowerCase().includes(studentQuery.toLowerCase())
+  ).slice(0, 3); // Limit to 3 suggestions
+
   return (
     <form className={styles.formContainer} onSubmit={handleSubmit}>
-      <h2>Student Registration</h2>
+      <h2>Guardian Registration</h2>
       {submissionError && <p className={styles.error}>{submissionError}</p>}
-      <PersonalDetailForm formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} validateName={validateName} />
-      <AddressDetailForm formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-      <ContactDetailForm formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} validateContact={validateContact} />
+      <PersonalDetailForm
+        formData={formData}
+        setFormData={setFormData}
+        errors={errors}
+        setErrors={setErrors}
+        validateName={validateName}
+      />
+      <ContactDetailForm
+        formData={formData}
+        setFormData={setFormData}
+        errors={errors}
+        setErrors={setErrors}
+        validateContact={validateContact}
+      />
       <div className={styles.formSection}>
-        <h3>Student Details</h3>
+        <h3>Guardian Details</h3>
         <div className={styles.formGrid}>
           <div>
-            <label>Mother's Name *</label>
-            <input
-              type="text"
-              value={formData.mother_name || ''}
-              onChange={(e) => {
-                setFormData({ ...formData, mother_name: e.target.value });
-                setErrors((prev) => ({ ...prev, mother_name: validateName(e.target.value, 'mother_name') }));
-              }}
-              className={errors.mother_name ? styles.errorInput : ''}
-              required
-            />
-            {errors.mother_name && <p className={styles.error}>{errors.mother_name}</p>}
-          </div>
-          <div>
-            <label>Father's Name *</label>
-            <input
-              type="text"
-              value={formData.father_name || ''}
-              onChange={(e) => {
-                setFormData({ ...formData, father_name: e.target.value });
-                setErrors((prev) => ({ ...prev, father_name: validateName(e.target.value, 'father_name') }));
-              }}
-              className={errors.father_name ? styles.errorInput : ''}
-              required
-            />
-            {errors.father_name && <p className={styles.error}>{errors.father_name}</p>}
-          </div>
-          <div>
-            <label>Guardian Contact</label>
-            <input
-              type="text"
-              value={formData.guardian_contact || ''}
-              onChange={(e) => {
-                setFormData({ ...formData, guardian_contact: e.target.value });
-                setErrors((prev) => ({ ...prev, guardian_contact: validateContact(e.target.value, 'guardian_contact') }));
-              }}
-              className={errors.guardian_contact ? styles.errorInput : ''}
-            />
-            {errors.guardian_contact && <p className={styles.error}>{errors.guardian_contact}</p>}
-          </div>
-          <div>
-            <label>Birth Certificate Photo *</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileChange(e, 'birth_certificate_photo')}
-              className={errors.birth_certificate_photo ? styles.errorInput : ''}
-              required
-            />
-            {errors.birth_certificate_photo && <p className={styles.error}>{errors.birth_certificate_photo}</p>}
-          </div>
-          <div>
-            <label>Grade *</label>
+            <label htmlFor="grade">Grade <span className={styles.required}>*</span></label>
             <select
+              id="grade"
               value={formData.grade || ''}
-              onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFormData((prev) => ({ ...prev, grade: value, student_id: '', student_name: '' }));
+                setStudentQuery('');
+                setErrors((prev) => ({ ...prev, grade: value ? '' : 'Grade is required' }));
+              }}
               className={errors.grade ? styles.errorInput : ''}
+              aria-invalid={!!errors.grade}
+              aria-describedby={errors.grade ? 'grade-error' : undefined}
               required
-              >
+            >
               <option value="">Select Grade</option>
               {grades.map((grade) => (
                 <option key={grade.id} value={grade.id}>
@@ -207,37 +197,81 @@ const StudentForm = () => {
                 </option>
               ))}
             </select>
-            {errors.grade && <p className={styles.error}>{errors.grade}</p>}
+            {errors.grade && <p id="grade-error" className={styles.error}>{errors.grade}</p>}
           </div>
-          <div>
-            <label>Roll Number</label>
+          <div className={styles.autocompleteContainer}>
+            <label htmlFor="student_id">Student <span className={styles.required}>*</span></label>
             <input
-              type="number"
-              value={formData.rollno || ''}
-              onChange={(e) => setFormData({ ...formData, rollno: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Symbol Number</label>
-            <input
+              id="student_id"
               type="text"
-              value={formData.symbol_number || ''}
-              onChange={(e) => setFormData({ ...formData, symbol_number: e.target.value })}
+              value={studentQuery}
+              onChange={(e) => {
+                setStudentQuery(e.target.value);
+                setShowSuggestions(true);
+                if (!e.target.value) {
+                  setFormData((prev) => ({ ...prev, student_id: '', student_name: '' }));
+                  setErrors((prev) => ({ ...prev, student_id: 'Student is required' }));
+                }
+              }}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+              className={errors.student_id ? styles.errorInput : ''}
+              aria-invalid={!!errors.student_id}
+              aria-describedby={errors.student_id ? 'student_id-error' : undefined}
+              placeholder="Type to search students..."
+              ref={studentInputRef}
+              required
             />
+            {showSuggestions && studentQuery && filteredStudents.length > 0 && (
+              <ul className={styles.suggestionsList}>
+                {filteredStudents.map((student) => (
+                  <li
+                    key={student.id}
+                    onClick={() => handleStudentSelect(student)}
+                    className={styles.suggestionItem}
+                  >
+                    {student.full_name}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {errors.student_id && <p id="student_id-error" className={styles.error}>{errors.student_id}</p>}
           </div>
           <div>
-            <label>IEMIS Code</label>
+            <label htmlFor="relation_to_student">Relation to Student <span className={styles.required}>*</span></label>
             <input
+              id="relation_to_student"
               type="text"
-            value={formData.iemis_code || ''}
-              onChange={(e) => setFormData({ ...formData, iemis_code: e.target.value })}
+              value={formData.relation_to_student || ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFormData((prev) => ({ ...prev, relation_to_student: value }));
+                setErrors((prev) => ({ ...prev, relation_to_student: validateName(value, 'relation_to_student') }));
+              }}
+              onBlur={(e) => setErrors((prev) => ({ ...prev, relation_to_student: validateName(e.target.value, 'relation_to_student') }))}
+              className={errors.relation_to_student ? styles.errorInput : ''}
+              aria-invalid={!!errors.relation_to_student}
+              aria-describedby={errors.relation_to_student ? 'relation_to_student-error' : undefined}
+              required
             />
+            {errors.relation_to_student && (
+              <p id="relation_to_student-error" className={styles.error}>{errors.relation_to_student}</p>
+            )}
           </div>
         </div>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" disabled={successMessage}>Submit</button>
+      {successMessage && (
+        <div className={styles.successAlert} aria-live="polite">
+          <span className={styles.alertSymbol}>✅</span>
+          <p className={styles.successText}>{successMessage}</p>
+          <button className={styles.dismissButton} onClick={handleCloseSuccess}>
+            OK
+          </button>
+        </div>
+      )}
     </form>
   );
 };
 
-export default StudentForm;
+export default GuardianForm;
