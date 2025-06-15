@@ -3,16 +3,60 @@ import styles from './Register.module.css';
 
 const PersonalDetailForm = ({ formData, setFormData, errors, setErrors, validateName }) => {
   const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+  const minWidth = 400; // Passport photo width in pixels
+  const maxWidth = 450;
+  const minHeight = 500; // Passport photo height in pixels
+  const maxHeight = 600;
+  const minAspectRatio = 1.25; // Approx. 45mm/35mm
+  const maxAspectRatio = 1.35;
 
-  const handleFileChange = (e, field) => {
+  const validateImageDimensions = (file) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const { width, height } = img;
+        const aspectRatio = height / width;
+        URL.revokeObjectURL(img.src); // Clean up
+        if (width < minWidth || width > maxWidth || height < minHeight || height > maxHeight) {
+          reject(`Photo must be a passport-sized image (approx. ${minWidth}-${maxWidth}px width, ${minHeight}-${maxHeight}px height).`);
+        } else if (aspectRatio < minAspectRatio || aspectRatio > maxAspectRatio) {
+          reject('Photo aspect ratio is incorrect for a passport-sized image.');
+        } else {
+          resolve();
+        }
+      };
+      img.onerror = () => {
+        reject('Invalid image file.');
+        URL.revokeObjectURL(img.src);
+      };
+    });
+  };
+
+  const handleFileChange = async (e, field) => {
     const file = e.target.files[0];
-    if (file && file.size > maxFileSize) {
+    if (!file) {
+      setErrors((prev) => ({ ...prev, [field]: 'This field is required.' }));
+      setFormData((prev) => ({ ...prev, [field]: null }));
+      e.target.value = '';
+      return;
+    }
+
+    if (file.size > maxFileSize) {
       setErrors((prev) => ({ ...prev, [field]: 'File size exceeds 5MB limit.' }));
       setFormData((prev) => ({ ...prev, [field]: null }));
       e.target.value = '';
-    } else {
-      setErrors((prev) => ({ ...prev, [field]: file ? '' : 'This field is required.' }));
+      return;
+    }
+
+    try {
+      await validateImageDimensions(file);
+      setErrors((prev) => ({ ...prev, [field]: '' }));
       setFormData((prev) => ({ ...prev, [field]: file }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, [field]: error }));
+      setFormData((prev) => ({ ...prev, [field]: null }));
+      e.target.value = '';
     }
   };
 
@@ -85,7 +129,7 @@ const PersonalDetailForm = ({ formData, setFormData, errors, setErrors, validate
           {errors.gender && <p id="gender-error" className={styles.error}>{errors.gender}</p>}
         </div>
         <div>
-          <label htmlFor="photo">Photo <span className={styles.required}>*</span></label>
+          <label htmlFor="photo">Passport Size Photo <span className={styles.required}>*</span></label>
           <input
             id="photo"
             type="file"
