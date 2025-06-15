@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styles from './Signup.module.css'; // Changed to SCSS module
+import styles from './Signup.module.css';
 import { useBaseUrl } from '../../../BaseUrlContext';
 
 const SignUpForm = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -29,6 +29,8 @@ const SignUpForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    // Clear error for the field being edited
+    setErrors((prev) => ({ ...prev, [name]: '', api: '' }));
   };
 
   const validateForm = () => {
@@ -45,7 +47,7 @@ const SignUpForm = () => {
     if (!formData.role) {
       newErrors.role = 'Please select a role';
     }
-    if (isOtpSent && formData.otp.length !== 6) {
+    if (isOtpSent && (!formData.otp || formData.otp.length !== 6)) {
       newErrors.otp = 'OTP must be 6 digits';
     }
     return newErrors;
@@ -55,13 +57,19 @@ const SignUpForm = () => {
     e.preventDefault();
     if (isLoading) return;
     setIsLoading(true);
+    console.log('Submitting form with isOtpSent:', isOtpSent, 'formData:', formData);
+
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setIsLoading(false);
+      console.log('Validation errors:', validationErrors);
       return;
     }
-    if (!isOtpSent) {
-      try {
+
+    try {
+      if (!isOtpSent) {
+        console.log('Sending OTP to:', `${baseUrl}/user/register/`);
         const response = await fetch(`${baseUrl}/user/register/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -73,18 +81,21 @@ const SignUpForm = () => {
           }),
         });
         const data = await response.json();
+        console.log('Send OTP response:', data, 'Status:', response.status);
+
         if (!response.ok) {
-          setErrors({ api: data.message || 'Failed to send OTP' });
+          setErrors({
+            api: data.message || data.email || data.non_field_errors || 'Failed to send OTP',
+          });
+          setIsLoading(false);
           return;
         }
+
         setIsOtpSent(true);
         setErrors({});
         alert('OTP sent to your email!');
-      } catch (error) {
-        setErrors({ api: 'Network error. Please try again.' });
-      }
-    } else {
-      try {
+      } else {
+        console.log('Verifying OTP at:', `${baseUrl}/user/otp-verify/`);
         const response = await fetch(`${baseUrl}/user/otp-verify/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -94,18 +105,25 @@ const SignUpForm = () => {
           }),
         });
         const data = await response.json();
+        console.log('Verify OTP response:', data, 'Status:', response.status);
+
         if (!response.ok) {
-          setErrors({ api: data.message || 'Invalid OTP' });
+          setErrors({
+            api: data.message || data.otp || data.non_field_errors || 'Invalid OTP',
+          });
+          setIsLoading(false);
           return;
         }
+
         alert('Form submitted successfully!');
         setFormData({ email: '', password: '', confirmPassword: '', role: '', otp: '' });
         setIsOtpSent(false);
-      } catch (error) {
-        setErrors({ api: 'Error verifying OTP. Please try again.' });
-      } finally {
-        setIsLoading(false);
       }
+    } catch (error) {
+      console.error('API error:', error);
+      setErrors({ api: `Error: ${error.message || 'Network error. Please try again.'}` });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -123,8 +141,12 @@ const SignUpForm = () => {
             onChange={handleChange}
             placeholder="Enter your email"
             required
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? 'email-error' : undefined}
           />
-          {errors.email && <span className={styles.error}>{errors.email}</span>}
+          {errors.email && (
+            <span id="email-error" className={styles.error}>{errors.email}</span>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -137,6 +159,8 @@ const SignUpForm = () => {
               onChange={handleChange}
               placeholder="Enter your password"
               required
+              aria-invalid={!!errors.password}
+              aria-describedby={errors.password ? 'password-error' : undefined}
             />
             <button
               type="button"
@@ -146,7 +170,9 @@ const SignUpForm = () => {
               {showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
-          {errors.password && <span className={styles.error}>{errors.password}</span>}
+          {errors.password && (
+            <span id="password-error" className={styles.error}>{errors.password}</span>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -159,6 +185,8 @@ const SignUpForm = () => {
               onChange={handleChange}
               placeholder="Confirm your password"
               required
+              aria-invalid={!!errors.confirmPassword}
+              aria-describedby={errors.confirmPassword ? 'confirmPassword-error' : undefined}
             />
             <button
               type="button"
@@ -169,7 +197,9 @@ const SignUpForm = () => {
             </button>
           </div>
           {errors.confirmPassword && (
-            <span className={styles.error}>{errors.confirmPassword}</span>
+            <span id="confirmPassword-error" className={styles.error}>
+              {errors.confirmPassword}
+            </span>
           )}
         </div>
 
@@ -180,6 +210,8 @@ const SignUpForm = () => {
             value={formData.role}
             onChange={handleChange}
             required
+            aria-invalid={!!errors.role}
+            aria-describedby={errors.role ? 'role-error' : undefined}
           >
             {roleOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -187,7 +219,9 @@ const SignUpForm = () => {
               </option>
             ))}
           </select>
-          {errors.role && <span className={styles.error}>{errors.role}</span>}
+          {errors.role && (
+            <span id="role-error" className={styles.error}>{errors.role}</span>
+          )}
         </div>
 
         {isOtpSent && (
@@ -201,15 +235,21 @@ const SignUpForm = () => {
               placeholder="Enter 6-digit OTP"
               maxLength="6"
               required
+              aria-invalid={!!errors.otp}
+              aria-describedby={errors.otp ? 'otp-error' : undefined}
             />
-            {errors.otp && <span className={styles.error}>{errors.otp}</span>}
+            {errors.otp && (
+              <span id="otp-error" className={styles.error}>{errors.otp}</span>
+            )}
           </div>
         )}
 
-        {errors.api && <span className={styles.error}>{errors.api}</span>}
+        {errors.api && (
+          <span id="api-error" className={styles.error}>{errors.api}</span>
+        )}
 
-        <button type="submit" className={styles.submitBtn}>
-          {isOtpSent ? 'Verify OTP' : 'Send OTP'}
+        <button type="submit" className={styles.submitBtn} disabled={isLoading}>
+          {isLoading ? 'Loading...' : isOtpSent ? 'Verify OTP' : 'Send OTP'}
         </button>
       </form>
     </div>
