@@ -91,7 +91,7 @@ const Dashboard = () => {
           <div className={styles.alertContent}>
             <span className={styles.alertSymbol}>⏳</span>
             <p className={styles.alertText}>
-              <strong>KYC Pending:</strong> Your KYC is yet to be verified. Wait for 24 hours. If it isn't verified by 24 hours, contact admin or IT at college.
+              <strong>Registration Pending:</strong> Your registration is yet to be verified. Wait for 24 hours. If it isn't verified by 24 hours, contact admin or IT at college.
             </p>
             <div className={styles.alertButtons}>
               <button
