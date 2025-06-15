@@ -1,31 +1,26 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 import { useBaseUrl } from '../../../../BaseUrlContext';
 import { useAuth } from '../Auth/AuthContext';
 import PersonalDetailForm from './PersonalDetailForm';
+import AddressDetailForm from './AddressDetailForm';
 import ContactDetailForm from './ContactDetailForm';
 
-const GuardianForm = () => {
+const StudentForm = () => {
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [grades, setGrades] = useState([]);
-  const [students, setStudents] = useState([]);
-  const [studentQuery, setStudentQuery] = useState('');
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [submissionError, setSubmissionError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const studentInputRef = useRef(null);
 
-  // Fetch grades on mount
   useEffect(() => {
     const fetchGrades = async () => {
       try {
-        const response = await fetch(`${baseUrl}/api/admin/classes/`, {
+        const response = await fetch(`${baseUrl}/sadmin/classes`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,34 +39,6 @@ const GuardianForm = () => {
     else navigate('/login');
   }, [baseUrl, token, navigate]);
 
-  // Fetch students when grade changes
-  useEffect(() => {
-    if (formData.grade) {
-      const fetchStudents = async () => {
-        try {
-          const response = await fetch(`${baseUrl}/api/user/students/?grade_id=${formData.grade}`, {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-          if (!response.ok) throw new Error('Failed to fetch students');
-          const data = await response.json();
-          setStudents(data);
-        } catch (error) {
-          console.error('Error fetching students:', error);
-          setErrors((prev) => ({ ...prev, student_id: 'Failed to load students.' }));
-        }
-      };
-      fetchStudents();
-    } else {
-      setStudents([]);
-      setStudentQuery('');
-      setFormData((prev) => ({ ...prev, student_id: '', student_name: '' }));
-    }
-  }, [formData.grade, baseUrl, token]);
-
   const validateName = (value, field) => {
     if (!value || !value.trim()) return `${field.replace('_', ' ')} is required.`;
     if (value.length < 2) return `${field.replace('_', ' ')} must be at least 2 characters long.`;
@@ -79,21 +46,27 @@ const GuardianForm = () => {
     return '';
   };
 
-  const validateContact = (value, field) => {
-    if (!value && field === 'phone') return 'Phone is required';
-    if (value && !/^\+?\d{7,15}$/.test(value)) return `${field.replace('_', ' ')} must be a valid phone number (7-15 digits).`;
+  const validateRequiredField = (value, field) => {
+    if (!value || !value.trim()) return `${field.replace('_', ' ')} is required.`;
     return '';
   };
 
-  const handleStudentSelect = (student) => {
-    setFormData((prev) => ({
-      ...prev,
-      student_id: student.id,
-      student_name: student.full_name,
-    }));
-    setStudentQuery(student.full_name);
-    setShowSuggestions(false);
-    setErrors((prev) => ({ ...prev, student_id: '' }));
+  const validateContact = (value, field) => {
+    if (!value && field === 'phone') return 'Phone is required';
+    if (value && !/^(97|98)\d{8}$/.test(value)) return `${field.replace('_', ' ')} must be 10 digits starting with 97 or 98`;
+    return '';
+  };
+
+  const handleFileChange = (e, field) => {
+    const file = e.target.files[0];
+    if (file && file.size > 5 * 1024 * 1024) {
+      setErrors((prev) => ({ ...prev, [field]: 'File size exceeds 5MB limit.' }));
+      setFormData((prev) => ({ ...prev, [field]: null }));
+      e.target.value = '';
+    } else {
+      setErrors((prev) => ({ ...prev, [field]: file ? '' : 'This field is required.' }));
+      setFormData((prev) => ({ ...prev, [field]: file }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -102,9 +75,10 @@ const GuardianForm = () => {
     setSuccessMessage('');
     const newErrors = {};
 
-    newErrors.relation_to_student = validateName(formData.relation_to_student, 'relation_to_student');
+    newErrors.mother_name = validateName(formData.mother_name, 'mother_name');
+    newErrors.father_name = validateName(formData.father_name, 'father_name');
+    newErrors.guardian_contact = validateContact(formData.guardian_contact, 'guardian_contact');
     newErrors.grade = formData.grade ? '' : 'Grade is required';
-    newErrors.student_id = formData.student_id ? '' : 'Student is required';
 
     if (Object.values(newErrors).some((error) => error) || Object.values(errors).some((error) => error)) {
       setErrors((prev) => ({ ...prev, ...newErrors }));
@@ -114,13 +88,11 @@ const GuardianForm = () => {
 
     const formDataToSend = new FormData();
     for (const key in formData) {
-      if (formData[key] && key !== 'student_name') { // Exclude student_name
-        formDataToSend.append(key, formData[key]);
-      }
+      if (formData[key]) formDataToSend.append(key, formData[key]);
     }
 
     try {
-      const response = await fetch(`${baseUrl}/api/user/guardian/`, {
+      const response = await fetch(`${baseUrl}/user/students/`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
@@ -128,6 +100,7 @@ const GuardianForm = () => {
 
       if (response.status === 201) {
         setSuccessMessage('Registration form submitted correctly. Please wait while your form is verified.');
+        // Optional: Redirect after 5 seconds
         setTimeout(() => navigate('/dashboard'), 5000);
         return;
       }
@@ -136,7 +109,7 @@ const GuardianForm = () => {
         const errorData = await response.json();
         setErrors(errorData);
         setSubmissionError('Please correct the errors in the form.');
-        throw new Error('Failed to submit guardian data');
+        throw new Error('Failed to submit student data');
       }
     } catch (error) {
       console.error('Submission error:', error);
@@ -149,20 +122,24 @@ const GuardianForm = () => {
     navigate('/dashboard');
   };
 
-  const filteredStudents = students.filter((student) =>
-    student.full_name.toLowerCase().includes(studentQuery.toLowerCase())
-  ).slice(0, 3); // Limit to 3 suggestions
-
   return (
     <form className={styles.formContainer} onSubmit={handleSubmit}>
-      <h2>Guardian Registration</h2>
+      <h2>Student Registration</h2>
       {submissionError && <p className={styles.error}>{submissionError}</p>}
+     
       <PersonalDetailForm
         formData={formData}
         setFormData={setFormData}
         errors={errors}
         setErrors={setErrors}
         validateName={validateName}
+      />
+      <AddressDetailForm
+        formData={formData}
+        setFormData={setFormData}
+        errors={errors}
+        setErrors={setErrors}
+        validateField={validateRequiredField}
       />
       <ContactDetailForm
         formData={formData}
@@ -172,8 +149,80 @@ const GuardianForm = () => {
         validateContact={validateContact}
       />
       <div className={styles.formSection}>
-        <h3>Guardian Details</h3>
+        <h3>Student Details</h3>
         <div className={styles.formGrid}>
+          <div>
+            <label htmlFor="mother_name">Mother's Name <span className={styles.required}>*</span></label>
+            <input
+              id="mother_name"
+              type="text"
+              value={formData.mother_name || ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFormData((prev) => ({ ...prev, mother_name: value }));
+                setErrors((prev) => ({ ...prev, mother_name: validateName(value, 'mother_name') }));
+              }}
+              onBlur={(e) => setErrors((prev) => ({ ...prev, mother_name: validateName(e.target.value, 'mother_name') }))}
+              className={errors.mother_name ? styles.errorInput : ''}
+              aria-invalid={!!errors.mother_name}
+              aria-describedby={errors.mother_name ? 'mother_name-error' : undefined}
+              required
+            />
+            {errors.mother_name && <p id="mother_name-error" className={styles.error}>{errors.mother_name}</p>}
+          </div>
+          <div>
+            <label htmlFor="father_name">Father's Name <span className={styles.required}>*</span></label>
+            <input
+              id="father_name"
+              type="text"
+              value={formData.father_name || ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFormData((prev) => ({ ...prev, father_name: value }));
+                setErrors((prev) => ({ ...prev, father_name: validateName(value, 'father_name') }));
+              }}
+              onBlur={(e) => setErrors((prev) => ({ ...prev, father_name: validateName(e.target.value, 'father_name') }))}
+              className={errors.father_name ? styles.errorInput : ''}
+              aria-invalid={!!errors.father_name}
+              aria-describedby={errors.father_name ? 'father_name-error' : undefined}
+              required
+            />
+            {errors.father_name && <p id="father_name-error" className={styles.error}>{errors.father_name}</p>}
+          </div>
+          <div>
+            <label htmlFor="guardian_contact">Guardian Contact</label>
+            <input
+              id="guardian_contact"
+              type="text"
+              value={formData.guardian_contact || ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFormData((prev) => ({ ...prev, guardian_contact: value }));
+                setErrors((prev) => ({ ...prev, guardian_contact: validateContact(value, 'guardian_contact') }));
+              }}
+              onBlur={(e) => setErrors((prev) => ({ ...prev, guardian_contact: validateContact(e.target.value, 'guardian_contact') }))}
+              className={errors.guardian_contact ? styles.errorInput : ''}
+              aria-invalid={!!errors.guardian_contact}
+              aria-describedby={errors.guardian_contact ? 'guardian_contact-error' : undefined}
+            />
+            {errors.guardian_contact && <p id="guardian_contact-error" className={styles.error}>{errors.guardian_contact}</p>}
+          </div>
+          <div>
+            <label htmlFor="birth_certificate_photo">Birth Certificate Photo <span className={styles.required}>*</span></label>
+            <input
+              id="birth_certificate_photo"
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleFileChange(e, 'birth_certificate_photo')}
+              className={errors.birth_certificate_photo ? styles.errorInput : ''}
+              aria-invalid={!!errors.birth_certificate_photo}
+              aria-describedby={errors.birth_certificate_photo ? 'birth_certificate_photo-error' : undefined}
+              required
+            />
+            {errors.birth_certificate_photo && (
+              <p id="birth_certificate_photo-error" className={styles.error}>{errors.birth_certificate_photo}</p>
+            )}
+          </div>
           <div>
             <label htmlFor="grade">Grade <span className={styles.required}>*</span></label>
             <select
@@ -181,8 +230,7 @@ const GuardianForm = () => {
               value={formData.grade || ''}
               onChange={(e) => {
                 const value = e.target.value;
-                setFormData((prev) => ({ ...prev, grade: value, student_id: '', student_name: '' }));
-                setStudentQuery('');
+                setFormData((prev) => ({ ...prev, grade: value }));
                 setErrors((prev) => ({ ...prev, grade: value ? '' : 'Grade is required' }));
               }}
               className={errors.grade ? styles.errorInput : ''}
@@ -199,64 +247,32 @@ const GuardianForm = () => {
             </select>
             {errors.grade && <p id="grade-error" className={styles.error}>{errors.grade}</p>}
           </div>
-          <div className={styles.autocompleteContainer}>
-            <label htmlFor="student_id">Student <span className={styles.required}>*</span></label>
+          <div>
+            <label htmlFor="rollno">Roll Number</label>
             <input
-              id="student_id"
-              type="text"
-              value={studentQuery}
-              onChange={(e) => {
-                setStudentQuery(e.target.value);
-                setShowSuggestions(true);
-                if (!e.target.value) {
-                  setFormData((prev) => ({ ...prev, student_id: '', student_name: '' }));
-                  setErrors((prev) => ({ ...prev, student_id: 'Student is required' }));
-                }
-              }}
-              onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-              className={errors.student_id ? styles.errorInput : ''}
-              aria-invalid={!!errors.student_id}
-              aria-describedby={errors.student_id ? 'student_id-error' : undefined}
-              placeholder="Type to search students..."
-              ref={studentInputRef}
-              required
+              id="rollno"
+              type="number"
+              value={formData.rollno || ''}
+              onChange={(e) => setFormData((prev) => ({ ...prev, rollno: e.target.value }))}
             />
-            {showSuggestions && studentQuery && filteredStudents.length > 0 && (
-              <ul className={styles.suggestionsList}>
-                {filteredStudents.map((student) => (
-                  <li
-                    key={student.id}
-                    onClick={() => handleStudentSelect(student)}
-                    className={styles.suggestionItem}
-                  >
-                    {student.full_name}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {errors.student_id && <p id="student_id-error" className={styles.error}>{errors.student_id}</p>}
           </div>
           <div>
-            <label htmlFor="relation_to_student">Relation to Student <span className={styles.required}>*</span></label>
+            <label htmlFor="symbol_number">Symbol Number</label>
             <input
-              id="relation_to_student"
+              id="symbol_number"
               type="text"
-              value={formData.relation_to_student || ''}
-              onChange={(e) => {
-                const value = e.target.value;
-                setFormData((prev) => ({ ...prev, relation_to_student: value }));
-                setErrors((prev) => ({ ...prev, relation_to_student: validateName(value, 'relation_to_student') }));
-              }}
-              onBlur={(e) => setErrors((prev) => ({ ...prev, relation_to_student: validateName(e.target.value, 'relation_to_student') }))}
-              className={errors.relation_to_student ? styles.errorInput : ''}
-              aria-invalid={!!errors.relation_to_student}
-              aria-describedby={errors.relation_to_student ? 'relation_to_student-error' : undefined}
-              required
+              value={formData.symbol_number || ''}
+              onChange={(e) => setFormData((prev) => ({ ...prev, symbol_number: e.target.value }))}
             />
-            {errors.relation_to_student && (
-              <p id="relation_to_student-error" className={styles.error}>{errors.relation_to_student}</p>
-            )}
+          </div>
+          <div>
+            <label htmlFor="iemis_code">IEMIS Code</label>
+            <input
+              id="iemis_code"
+              type="text"
+              value={formData.iemis_code || ''}
+              onChange={(e) => setFormData((prev) => ({ ...prev, iemis_code: e.target.value }))}
+            />
           </div>
         </div>
       </div>
@@ -265,7 +281,10 @@ const GuardianForm = () => {
         <div className={styles.successAlert} aria-live="polite">
           <span className={styles.alertSymbol}>✅</span>
           <p className={styles.successText}>{successMessage}</p>
-          <button className={styles.dismissButton} onClick={handleCloseSuccess}>
+          <button
+            className={styles.dismissButton}
+            onClick={handleCloseSuccess}
+          >
             OK
           </button>
         </div>
@@ -274,4 +293,4 @@ const GuardianForm = () => {
   );
 };
 
-export default GuardianForm;
+export default StudentForm;

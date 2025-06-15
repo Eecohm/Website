@@ -16,6 +16,11 @@ const Admin = () => {
                 <h1> CLASS SETTING </h1>
                 </ Link>
             </div>
+            <div className={styles.card}>
+                <Link to="/admin/registrationapproval">
+                <h1> REGISTRATION APPROVAL </h1>
+                </ Link>
+            </div>
 
         </div>
         </>
