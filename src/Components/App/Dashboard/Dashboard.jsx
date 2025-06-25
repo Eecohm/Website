@@ -77,7 +77,10 @@ const DashBoard = () => {
   const handleCloseAlert = () => {
     setAlertType(null);
   };
-
+  const handleNavigate = () => {
+    setAlertType(null);
+    navigate('/register');
+  }
 
   return (
   <>
@@ -94,7 +97,7 @@ const DashBoard = () => {
           Opps Looks like you haven't Completed your registration.
           Please Complete to Continue
           </p>
-          <button className={styles.completeButton}>Register</button>
+          <button className={styles.completeButton} onClick={handleNavigate}>Register</button>
           <button className={styles.dismissButton}
           onClick={handleCloseAlert}
           >Close</button>

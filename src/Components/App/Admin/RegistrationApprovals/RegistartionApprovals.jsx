@@ -11,6 +11,8 @@ import GuardianDetails from './RegistrationApprovalDetails/GuardianDetails';
 import OwnerDetails from './RegistrationApprovalDetails/OwnerDetails';
 
 const RegistrationApproval = () => {
+    const pk = localStorage.getItem('userId');
+    console.log(pk)
     const [searchTerm, setSearchTerm] = useState('');
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
