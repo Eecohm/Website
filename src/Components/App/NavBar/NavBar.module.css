@@ -3,6 +3,57 @@
   flex-direction: column;
 }
 
+/* Modal Styling */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modalBox {
+  background: #1a2b38;
+  color: white;
+  padding: 30px 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.logoutButton {
+  background-color: #e53935;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.cancelButton {
+  background-color: #777;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+/* Top Bar */
 .topBar {
   position: fixed;
   top: 0;
@@ -47,6 +98,13 @@
   cursor: pointer;
 }
 
+/* Settings and Info */
+.topBarInfoGroup {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .topBarInfo {
   display: flex;
   align-items: center;
@@ -60,6 +118,7 @@
 
 .settingsContainer {
   position: relative;
+  display: block;
 }
 
 .settingsIcon {
@@ -79,6 +138,7 @@
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   min-width: 120px;
+  z-index: 10000;
 }
 
 .settingsItem {
@@ -93,6 +153,7 @@
   background-color: #000000;
 }
 
+/* Sidebar */
 .navBar {
   position: fixed;
   top: 0;
@@ -164,6 +225,7 @@
   color: #d1d5db;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .topBar {
     left: 0;
@@ -189,6 +251,14 @@
 
   .topBarInfo {
     display: none;
+  }
+
+  .topBarInfoGroup {
+    gap: 10px;
+  }
+
+  .settingsContainer {
+    display: block;
   }
 
   .navBar {

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { throttle } from "lodash";
 import styles from "./Dashboard.module.css";
+import { FaHandLizard } from "react-icons/fa";
+import StudentDetails from "../Admin/RegistrationApprovals/RegistrationApprovalDetails/StudentDetails";
 
 
 const DashBoard = () => {
@@ -14,6 +16,7 @@ const DashBoard = () => {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null)
   const [alert, setAlertType] = useState(null)
+  
   
     
   useEffect(() => {
@@ -70,6 +73,12 @@ const DashBoard = () => {
     }
     fetchUserData()
   }, [])
+
+  const handleCloseAlert = () => {
+    setAlertType(null);
+  };
+
+
   return (
   <>
     <NavBar />
@@ -86,8 +95,9 @@ const DashBoard = () => {
           Please Complete to Continue
           </p>
           <button className={styles.completeButton}>Register</button>
-          <button>Close</button>
-
+          <button className={styles.dismissButton}
+          onClick={handleCloseAlert}
+          >Close</button>
         </div>
       )
     }

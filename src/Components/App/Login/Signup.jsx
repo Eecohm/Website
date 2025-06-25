@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styles from './Signup.module.css';
+import { useNavigate } from 'react-router-dom';
 import { useBaseUrl } from '../../../BaseUrlContext';
 
 const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -118,6 +120,9 @@ const SignUpForm = () => {
         alert('Form submitted successfully!');
         setFormData({ email: '', password: '', confirmPassword: '', role: '', otp: '' });
         setIsOtpSent(false);
+        if (response.ok){
+          navigate('/dashboard');
+        }
       }
     } catch (error) {
       console.error('API error:', error);

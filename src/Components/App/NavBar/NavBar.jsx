@@ -2,7 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './NavBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTasks, faUserShield, faWallet, faBox, faChalkboardTeacher, faUsers, faChartBar, faBars, faTimes, faCog } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTasks,
+  faUserShield,
+  faWallet,
+  faBox,
+  faChalkboardTeacher,
+  faUsers,
+  faChartBar,
+  faBars,
+  faTimes,
+  faCog
+} from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../assets/logo.svg';
 
 const NavBar = () => {
@@ -10,11 +21,16 @@ const NavBar = () => {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' }));
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' })
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' }));
+      setCurrentTime(
+        new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' })
+      );
     }, 60000);
     return () => clearInterval(timer);
   }, []);
@@ -52,10 +68,17 @@ const NavBar = () => {
   const settingsItems = [
     { name: 'Profile', path: '/profile' },
     { name: 'Preferences', path: '/preferences' },
-    { name: 'Logout', path: '/logout' },
+    { name: 'Logout', action: () => setShowLogoutModal(true) },
   ];
 
-  const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+  });
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
 
   return (
     <div className={styles.mainNavDiv}>
@@ -73,10 +96,12 @@ const NavBar = () => {
             />
           </div>
           <h1 className={styles.schoolName} onClick={handleLogoClick}>EECOHM Foundation</h1>
-          <div className={styles.topBarInfo}>
-            <span>{today}</span>
-            <span>{currentTime}</span>
-            <span>Contact: 023-546392</span>
+          <div className={styles.topBarInfoGroup}>
+            <div className={styles.topBarInfo}>
+              <span>{today}</span>
+              <span>{currentTime}</span>
+              <span>Contact: 023-546392</span>
+            </div>
             <div className={styles.settingsContainer}>
               <FontAwesomeIcon icon={faCog} className={styles.settingsIcon} onClick={toggleSettings} />
               {isSettingsOpen && (
@@ -86,7 +111,11 @@ const NavBar = () => {
                       key={index}
                       className={styles.settingsItem}
                       onClick={() => {
-                        navigate(item.path);
+                        if (item.action) {
+                          item.action();
+                        } else {
+                          navigate(item.path);
+                        }
                         setIsSettingsOpen(false);
                       }}
                     >
@@ -99,6 +128,7 @@ const NavBar = () => {
           </div>
         </div>
       </header>
+
       <nav className={`${styles.navBar} ${isSidebarOpen ? styles.open : ''}`}>
         <div className={styles.navBarHeader}>
           <img
@@ -124,6 +154,18 @@ const NavBar = () => {
           ))}
         </ul>
       </nav>
+
+      {showLogoutModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalBox}>
+            <h3>Do you want to logout?</h3>
+            <div className={styles.modalButtons}>
+              <button className={styles.logoutButton} onClick={handleLogout}>Yes, Logout</button>
+              <button className={styles.cancelButton} onClick={() => setShowLogoutModal(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
