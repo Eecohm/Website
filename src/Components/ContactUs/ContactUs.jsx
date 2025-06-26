@@ -15,7 +15,7 @@ const ContactUs = () => {
           <ContactCard
             icon="📞"
             title="Phone"
-            detail="023-546392"
+            detail="023-536392"
             animationDelay="0.2s"
           />
         </a>

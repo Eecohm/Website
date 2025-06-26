@@ -80,9 +80,12 @@ const RegistrationApproval = () => {
             setDetailsLoading(false);
             return;
         }
+        const id = user.id
+        console.log(user.id)
+        console.log(typeof(id))
 
         try {
-            const response = await fetch(`${baseUrl}/user/${endpoint}/`, {
+            const response = await fetch(`${baseUrl}/user/${endpoint}/${user.id}/`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

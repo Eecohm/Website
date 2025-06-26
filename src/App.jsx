@@ -18,6 +18,7 @@ import { BaseUrlContext } from './BaseUrlContext';
 import AuthProvider from './Components/App/Login/Auth/AuthProvider';
 const App = () => {
   const baseUrl = 'https://bishamsinchiury.com.np/api';
+  // const baseUrl = 'http://127.0.0.1:8000/api';
   return (
     <AuthProvider>
     <BaseUrlContext.Provider value={baseUrl}>
