@@ -184,7 +184,7 @@ const Questions = () => {
       if (answer !== null) counts[answer]++;
     });
     const maxCount = Math.max(...Object.values(counts));
-    const streams = ['HM', 'CS', 'BS'];
+    const streams = ['Hotel Management', 'Computer Science', 'Business Studies'];
     const possibleStreams = Object.keys(counts).filter(
       (key) => counts[key] === maxCount
     );
