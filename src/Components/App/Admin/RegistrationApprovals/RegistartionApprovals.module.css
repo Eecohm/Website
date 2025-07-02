@@ -134,6 +134,7 @@
     color: #ff4444;
 }
 
+/* Modal Styles */
 .modal {
     position: fixed;
     top: 0;
@@ -149,6 +150,7 @@
 }
 
 .modalContent {
+    position: relative;
     background-color: #2a2a2a;
     border-radius: 12px;
     padding: 20px;
@@ -162,7 +164,7 @@
 .modalTitle {
     color: #fff;
     font-size: 24px;
-    margin: 0 0 20px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -174,7 +176,7 @@
 .detailsTitle {
     color: #007bff;
     font-size: 20px;
-    margin: 0 0 15px;
+    margin-bottom: 15px;
 }
 
 .detailImageWrapper {
@@ -232,10 +234,17 @@
     background-color: #c82333;
 }
 
+/* Image Zoom View */
+.zoomedImage {
+    max-width: 100%;
+    max-height: 80vh;
+    cursor: zoom-in;
+}
+
 @media (max-width: 768px) {
     .mainDiv {
         flex-direction: column;
-        height: 90vh;
+        height: 100vh;
         width: 100vw;
         margin: 10vh 0 0 0;
     }
@@ -269,7 +278,8 @@
         padding: 15px;
     }
 
-    .userPhoto, .photoPlaceholder {
+    .userPhoto,
+    .photoPlaceholder {
         width: 60px;
         height: 60px;
         font-size: 24px;
@@ -288,13 +298,10 @@
         font-size: 12px;
     }
 
-    .loading, .error, .noResults {
+    .loading,
+    .error,
+    .noResults {
         font-size: 14px;
-    }
-
-    .searchWrapper {
-        top: 5px;
-        padding: 5px 0;
     }
 
     .modalTitle {

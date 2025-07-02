@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './RegistartionApprovals.module.css';
 import NavBar from '../../NavBar/NavBar';
-import { useBaseUrl } from '../../../../BaseUrlContext';
+import { useBaseMediaUrl, useBaseUrl } from '../../../../BaseUrlContext';
 import { useAuth } from '../../Login/Auth/AuthContext';
 import StudentDetails from './RegistrationApprovalDetails/StudentDetails';
 import TeacherDetails from './RegistrationApprovalDetails/TeacherDetails';
@@ -12,7 +12,6 @@ import OwnerDetails from './RegistrationApprovalDetails/OwnerDetails';
 
 const RegistrationApproval = () => {
     const pk = localStorage.getItem('userId');
-    console.log(pk)
     const [searchTerm, setSearchTerm] = useState('');
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -22,6 +21,7 @@ const RegistrationApproval = () => {
     const [detailsLoading, setDetailsLoading] = useState(false);
     const [detailsError, setDetailsError] = useState(null);
     const baseUrl = useBaseUrl();
+    const basemediaUrl = useBaseMediaUrl();
     const { token } = useAuth();
     const navigate = useNavigate();
 
@@ -80,9 +80,6 @@ const RegistrationApproval = () => {
             setDetailsLoading(false);
             return;
         }
-        const id = user.id
-        console.log(user.id)
-        console.log(typeof(id))
 
         try {
             const response = await fetch(`${baseUrl}/user/${endpoint}/${user.id}/`, {
@@ -100,6 +97,8 @@ const RegistrationApproval = () => {
             const data = await response.json();
             setUserDetails(data);
             setDetailsLoading(false);
+            // Prevent body scroll while modal open
+            document.body.style.overflow = 'hidden';
         } catch (err) {
             setDetailsError(err.message);
             setDetailsLoading(false);
@@ -128,8 +127,7 @@ const RegistrationApproval = () => {
                 throw new Error(`Failed to verify user: ${response.status}`);
             }
             setUsers(users.filter(user => user.email !== selectedUser.email));
-            setSelectedUser(null);
-            setUserDetails(null);
+            handleCloseModal();
         } catch (err) {
             setDetailsError(err.message);
         }
@@ -154,8 +152,7 @@ const RegistrationApproval = () => {
                 throw new Error(`Failed to reject user: ${response.status}`);
             }
             setUsers(users.filter(user => user.email !== selectedUser.email));
-            setSelectedUser(null);
-            setUserDetails(null);
+            handleCloseModal();
         } catch (err) {
             setDetailsError(err.message);
         }
@@ -165,6 +162,8 @@ const RegistrationApproval = () => {
         setSelectedUser(null);
         setUserDetails(null);
         setDetailsError(null);
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
     };
 
     const filteredUsers = users.filter(user =>
@@ -217,7 +216,7 @@ const RegistrationApproval = () => {
                                 <div className={styles.photoWrapper}>
                                     {user.photo ? (
                                         <img
-                                            src={user.photo}
+                                            src={`${basemediaUrl}${user.photo}`}
                                             alt="User"
                                             className={styles.userPhoto}
                                         />
@@ -249,8 +248,8 @@ const RegistrationApproval = () => {
                 </div>
             </div>
             {selectedUser && (
-                <div className={styles.modal}>
-                    <div className={styles.modalContent}>
+                <div className={styles.modal} onClick={handleCloseModal} role="dialog" aria-modal="true">
+                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
                         <h2 className={styles.modalTitle}>User Details</h2>
                         {renderDetails()}
                         <div className={styles.modalButtons}>

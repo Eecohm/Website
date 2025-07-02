@@ -4,11 +4,35 @@ import { useState } from 'react';
 
 const OwnerDetails = ({ details }) => {
     const basemediaUrl = useBaseMediaUrl();
+    const [showPhotoModal, setShowPhotoModal] = useState(false);
+    const [currentPhoto, setCurrentPhoto] = useState(null);
 
+    const openModal = (photoUrl) => {
+        setCurrentPhoto(photoUrl);
+        setShowPhotoModal(true);
+    };
+
+    const closeModal = () => {
+        setShowPhotoModal(false);
+        setCurrentPhoto(null);
+    };
 
     return (
         <div className={styles.detailsContainer}>
-            
+            {/* Modal */}
+            {showPhotoModal && (
+                <div className={styles.modalOverlay} onClick={closeModal}>
+                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+                        <button onClick={closeModal} className={styles.closeButton}>X</button>
+                        <img
+                            src={currentPhoto}
+                            alt="Zoomed"
+                            className={styles.zoomedImage}
+                        />
+                    </div>
+                </div>
+            )}
+
             <h3 className={styles.detailsTitle}>Owner Details</h3>
             <p><strong>Full Name:</strong> {details.full_name || 'N/A'}</p>
             <p><strong>Email:</strong> {details.user?.email || 'N/A'}</p>
@@ -31,7 +55,7 @@ const OwnerDetails = ({ details }) => {
                         src={`${basemediaUrl}${details.photo}`}
                         alt="Owner"
                         className={styles.detailImage}
-                        
+                        onClick={() => openModal(`${basemediaUrl}${details.photo}`)}
                     />
                 </div>
             )}
@@ -43,7 +67,7 @@ const OwnerDetails = ({ details }) => {
                         src={`${basemediaUrl}${details.nagarikta_photo}`}
                         alt="Nagarikta"
                         className={styles.detailImage}
-                        
+                        onClick={() => openModal(`${basemediaUrl}${details.nagarikta_photo}`)}
                     />
                 </div>
             )}
@@ -55,6 +79,7 @@ const OwnerDetails = ({ details }) => {
                         src={`${basemediaUrl}${details.pan_photo}`}
                         alt="PAN"
                         className={styles.detailImage}
+                        onClick={() => openModal(`${basemediaUrl}${details.pan_photo}`)}
                     />
                 </div>
             )}

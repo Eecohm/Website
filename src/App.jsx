@@ -14,14 +14,18 @@ import RoundImage from './Components/AboutUs/RoundImage/RoundImage';
 import SignUpForm from './Components/App/Login/Signup';
 import StudentTable from './Components/App/Students/Students';
 import UnderConstruction from './Components/App/UnderConstruction';
-import { BaseUrlContext } from './BaseUrlContext';
+import { BaseUrlContext, BaseMediaUrlContext } from './BaseUrlContext';
 import AuthProvider from './Components/App/Login/Auth/AuthProvider';
+import Questions from './Components/New/Questions';
 const App = () => {
-  const baseUrl = 'https://bishamsinchiury.com.np/api';
-  // const baseUrl = 'http://127.0.0.1:8000/api';
+  const basemediaUrl = "http://127.0.0.1:8000"
+  // const basemediaUrl = "'https://bishamsinchiury.com.np/media/"
+  // const baseUrl = 'https://bishamsinchiury.com.np/api';
+  const baseUrl = 'http://127.0.0.1:8000/api';
   return (
     <AuthProvider>
     <BaseUrlContext.Provider value={baseUrl}>
+    <BaseMediaUrlContext.Provider value={basemediaUrl}>
     <Router basename="/">
       <Routes>
         <Route path="/" element={<Home />} />
@@ -35,9 +39,12 @@ const App = () => {
         <Route path='/admin' element={<Admin />} />
         <Route path='/admin/classinfo' element={<ClassInfo />} />
         <Route path='/admin/registrationapproval' element={<RegistrationApproval />} />
+        <Route path='/questions/' element={<Questions />} />
         <Route path="*" element={<UnderConstruction />} />
+
       </Routes>
     </Router>
+    </BaseMediaUrlContext.Provider>
     </BaseUrlContext.Provider>
     </AuthProvider>
   );
