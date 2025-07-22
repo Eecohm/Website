@@ -19,6 +19,7 @@ import AuthProvider from './Components/App/Login/Auth/AuthProvider';
 import Questions from './Components/New/Questions';
 const App = () => {
   // const basemediaUrl = "http://127.0.0.1:8000"
+  // commetn
   const basemediaUrl = "'https://bishamsinchiury.com.np/media/"
   const baseUrl = 'https://bishamsinchiury.com.np/api';
   // const baseUrl = 'http://127.0.0.1:8000/api';
