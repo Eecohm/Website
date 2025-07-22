@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// Create context
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-// AuthProvider to wrap your app
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
@@ -33,7 +31,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook to use auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
