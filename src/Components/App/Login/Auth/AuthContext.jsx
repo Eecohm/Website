@@ -1,15 +1,43 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// Create AuthContext for global token
+// Create context
 const AuthContext = createContext();
 
-// Custom hook to access token
-const useAuth = () => {
+// AuthProvider to wrap your app
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
+  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('accessToken');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    setIsAuthLoaded(true);
+  }, []);
+
+  const login = (newToken) => {
+    localStorage.setItem('accessToken', newToken);
+    setToken(newToken);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    setToken(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, login, logout, isAuthLoaded }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+// Hook to use auth context
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
-
-export { AuthContext, useAuth };
