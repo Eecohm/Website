@@ -7,7 +7,6 @@ import { useBaseUrl } from '../../../BaseUrlContext';
 const LoginForm = () => {
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -73,10 +72,8 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLoading) return;
-
     setError('');
     setIsLoading(true);
-
     if (rememberMe) {
       localStorage.setItem('savedEmail', email);
       localStorage.setItem('savedPassword', password);
