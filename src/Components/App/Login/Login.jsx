@@ -7,6 +7,7 @@ import { useBaseUrl } from '../../../BaseUrlContext';
 const LoginForm = () => {
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -55,7 +56,10 @@ const LoginForm = () => {
         localStorage.setItem('accessToken', data.access);
         localStorage.setItem('userId', data.user_id);
         localStorage.setItem('userEmail', data.email);
+
+        setIsCheckingSavedLogin(false); // ✅ Set this before redirect
         navigate('/dashboard');
+        return; // ✅ Prevent executing further
       } else if ([401, 403].includes(response.status)) {
         setError('Invalid credentials');
       } else {
@@ -65,7 +69,7 @@ const LoginForm = () => {
       setError('Network error. Please check your connection.');
     } finally {
       if (!auto) setIsLoading(false);
-      setIsCheckingSavedLogin(false);
+      if (!response?.ok) setIsCheckingSavedLogin(false); // fallback if not successful
     }
   };
 
@@ -74,6 +78,7 @@ const LoginForm = () => {
     if (isLoading) return;
     setError('');
     setIsLoading(true);
+
     if (rememberMe) {
       localStorage.setItem('savedEmail', email);
       localStorage.setItem('savedPassword', password);
@@ -112,7 +117,6 @@ const LoginForm = () => {
       setResetError("Passwords don't match");
       return;
     }
-
     try {
       const res = await fetch(`${baseUrl}/user/otp-verify/`, {
         method: 'PUT',
@@ -120,11 +124,12 @@ const LoginForm = () => {
         body: JSON.stringify({ email: forgotEmail, otp, new_password: newPassword }),
       });
       if (res.ok) {
-        setShowForgotModal(false);
-        const data = await response.json();
+        const data = await res.json();
         localStorage.setItem('accessToken', data.access);
         localStorage.setItem('userId', data.user_id);
         localStorage.setItem('userEmail', data.email);
+
+        setShowForgotModal(false);
         navigate('/dashboard');
       } else {
         const data = await res.json();
@@ -156,7 +161,9 @@ const LoginForm = () => {
             <label><input type="checkbox" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />Remember Me</label>
           </div>
           {error && <div className={styles.errorMessage}>{error}</div>}
-          <button type="submit" className={`${styles.loginButton} ${styles.neonButton}`} disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
+          <button type="submit" className={`${styles.loginButton} ${styles.neonButton}`} disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Login'}
+          </button>
           <button type="button" className={styles.forgotPassword} onClick={() => setShowForgotModal(true)}>Forgot Password?</button>
         </form>
       </div>
