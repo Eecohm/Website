@@ -15,7 +15,7 @@ import SignUpForm from './Components/App/Login/Signup';
 import StudentTable from './Components/App/Students/Students';
 import UnderConstruction from './Components/App/UnderConstruction';
 import { BaseUrlContext, BaseMediaUrlContext } from './BaseUrlContext';
-import AuthProvider from './Components/App/Login/Auth/AuthProvider';
+import { AuthProvider }from './Components/App/Login/Auth/AuthContext';
 import Questions from './Components/New/Questions';
 const App = () => {
   // const basemediaUrl = "http://127.0.0.1:8000"
@@ -42,7 +42,6 @@ const App = () => {
         <Route path='/admin/registrationapproval' element={<RegistrationApproval />} />
         <Route path='/questions/' element={<Questions />} />
         <Route path="*" element={<UnderConstruction />} />
-
       </Routes>
     </Router>
     </BaseMediaUrlContext.Provider>
