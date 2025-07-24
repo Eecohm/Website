@@ -56,18 +56,18 @@ const NavBar = () => {
   };
 
   const navItems = [
-    { name: 'Tasks', icon: faTasks, path: '/tasks' },
-    { name: 'Admin', icon: faUserShield, path: '/admin' },
-    { name: 'Accounts', icon: faWallet, path: '/accounts' },
-    { name: 'Inventory', icon: faBox, path: '/inventory' },
+    { name: 'Tasks', icon: faTasks, path: '/dashboard/tasks' },
+    { name: 'Admin', icon: faUserShield, path: '/dashboard/admin' },
+    { name: 'Accounts', icon: faWallet, path: '/dashboard/accounts' },
+    { name: 'Inventory', icon: faBox, path: '/dashboard/inventory' },
     { name: 'Teachers', icon: faChalkboardTeacher, path: '/teachers' },
-    { name: 'Students', icon: faUsers, path: '/students' },
-    { name: 'Reports', icon: faChartBar, path: '/reports' },
+    { name: 'Students', icon: faUsers, path: '/dashboard/students' },
+    { name: 'Reports', icon: faChartBar, path: '/dashboard/reports' },
   ];
 
   const settingsItems = [
-    { name: 'Profile', path: '/profile' },
-    { name: 'Preferences', path: '/preferences' },
+    { name: 'Profile', path: '/dashboard/profile' },
+    { name: 'Preferences', path: '/dashboard/preferences' },
     { name: 'Logout', action: () => setShowLogoutModal(true) },
   ];
 

@@ -22,11 +22,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!token) {
-        console.warn('Access token missing');
-        navigate('/login');
-        return;
-      }
 
       try {
         const response = await fetch(`${baseUrl}/user/user/`, {

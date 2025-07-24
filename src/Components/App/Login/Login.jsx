@@ -40,15 +40,20 @@ const LoginForm = () => {
     }
   }, []);
 
-  const loginUser = async (loginEmail, loginPassword, auto = false) => {
+  const loginUser = async (loginEmail, loginPassword, auto=false) => {
     setError('');
     if (!auto) setIsLoading(true);
-
     try {
-      const response = await fetch(`${baseUrl}/user/login/`, {
+      const response = await fetch(`${baseUrl}/user/login/`, 
+        {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        headers: { 
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ 
+          email: loginEmail, 
+          password: loginPassword 
+        }),
       });
 
       if (response.ok) {
@@ -57,9 +62,9 @@ const LoginForm = () => {
         localStorage.setItem('userId', data.user_id);
         localStorage.setItem('userEmail', data.email);
 
-        setIsCheckingSavedLogin(false); // ✅ Set this before redirect
+        setIsCheckingSavedLogin(false);
         navigate('/dashboard');
-        return; // ✅ Prevent executing further
+        return; 
       } else if ([401, 403].includes(response.status)) {
         setError('Invalid credentials');
       } else {
@@ -68,8 +73,8 @@ const LoginForm = () => {
     } catch {
       setError('Network error. Please check your connection.');
     } finally {
-      if (!auto) setIsLoading(false);
-      if (!response?.ok) setIsCheckingSavedLogin(false); // fallback if not successful
+      setIsLoading(false);
+      setIsCheckingSavedLogin(false); 
     }
   };
 
@@ -144,27 +149,57 @@ const LoginForm = () => {
 
   return (
     <div className={styles.loginContainer}>
-      <div className={styles.loginBox}>
+       <div className={styles.loginBox}>
         <button className={styles.homebutton} onClick={handleClose}>✕</button>
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <label>Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={error ? styles.inputError : styles.neonInput} required />
+            <input 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            className={error ? styles.inputError : styles.neonInput} 
+            required />
           </div>
-          <div className={styles.inputGroup}>
+           <div className={styles.inputGroup}>
             <label>Password</label>
-            <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} className={error ? styles.inputError : styles.neonInput} required />
+            <input 
+            type={showPassword ? 'text' : 'password'} 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            className={error ? styles.inputError : styles.neonInput} 
+            required />
           </div>
           <div className={styles.checkboxGroup}>
-            <label><input type="checkbox" checked={showPassword} onChange={() => setShowPassword(!showPassword)} />Show Password</label>
-            <label><input type="checkbox" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />Remember Me</label>
+            <label>
+              <input 
+              type="checkbox" 
+              checked={showPassword} 
+              onChange={() => setShowPassword(!showPassword)} 
+              />Show Password
+              </label>
+            <label>
+              <input 
+              type="checkbox" 
+              checked={rememberMe} 
+              onChange={() => setRememberMe(!rememberMe)} 
+              />Remember Me
+              </label>
           </div>
           {error && <div className={styles.errorMessage}>{error}</div>}
-          <button type="submit" className={`${styles.loginButton} ${styles.neonButton}`} disabled={isLoading}>
-            {isLoading ? 'Logging in...' : 'Login'}
+          <button 
+          type="submit" 
+          className={`${styles.loginButton} ${styles.neonButton}`} 
+          disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
           </button>
-          <button type="button" className={styles.forgotPassword} onClick={() => setShowForgotModal(true)}>Forgot Password?</button>
+          <button 
+          type="button" 
+          className={styles.forgotPassword} 
+          onClick={() => setShowForgotModal(true)}>
+          Forgot Password?
+          </button>
         </form>
       </div>
 
@@ -174,8 +209,15 @@ const LoginForm = () => {
             <h3>Reset Password</h3>
             {resetStep === 1 && (
               <>
-                <input type="email" placeholder="Enter your email" value={forgotEmail} onChange={(e) => setForgotEmail(e.target.value)} className={styles.neonInput} />
-                <button className={styles.neonButton} onClick={handleForgotPassword}>Send OTP</button>
+                <input 
+                type="email" 
+                placeholder="Enter your email" 
+                value={forgotEmail} onChange={(e) => setForgotEmail(e.target.value)} 
+                className={styles.neonInput} />
+                <button 
+                className={styles.neonButton} 
+                onClick={handleForgotPassword}>
+                Send OTP</button>
               </>
             )}
             {resetStep === 2 && (
@@ -190,7 +232,7 @@ const LoginForm = () => {
             <button className={styles.cancelButton} onClick={() => setShowForgotModal(false)}>Cancel</button>
           </div>
         </div>
-      )}
+      )} 
     </div>
   );
 };
