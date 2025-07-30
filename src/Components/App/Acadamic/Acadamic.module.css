@@ -1,73 +1,191 @@
 .container {
-  top: 0;
-  padding: 2rem;
-  margin-left: 220px; /* Adjust if your left navbar is wider/narrower */
-  margin-top: -150px;
+  margin-left: 250px;
+  margin-top: -6rem;
   padding: 20px;
-  background-color: #121212;
   color: #ffffff;
-  font-family: "Segoe UI", sans-serif;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .title {
-  text-align: center;
-  margin-bottom: 70px;
-  font-size: 3rem;
+  font-size: 28px;
+  margin-bottom: 60px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 40px;
-  justify-content: flex-start;
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
 }
 
 .card {
-  margin-left: 2rem;
-  margin-right: 2rem;
-  flex: 1 1 40%;
   background-color: #1e1e1e;
-  border: 1px solid #333;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
-  min-width: 300px;
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
 }
 
 .card h2 {
-  margin-bottom: 15px;
-  font-size: 1.3rem;
+  display: flex;
+  align-content: center;
+  margin-bottom: 16px;
+  font-size: 20px;
+  cursor: pointer;
+  color: rgb(179, 176, 176);
 }
 
-.card input,
-.card button {
+.card form input {
+  display: block;
   width: 100%;
+  margin-bottom: 12px;
   padding: 10px;
-  margin-top: 10px;
+  background-color: #2c2c2c;
+  border: none;
+  color: white;
+  border-radius: 6px;
+}
+
+.card form button {
+  background-color: #4caf50;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.card form button:hover {
+  background-color: #43a047;
+}
+
+.savedData {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+.centeredCard {
+  margin-left: 220px;
+  margin-top: 9rem;
+  max-width: 600px;
+  margin-right: auto;
+  margin-bottom: 40px;
+  margin-left: auto;
+  padding: 30px;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.centeredCard h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: whtie;
+}
+
+.centeredCard form {
+  display: flex;
+  flex-direction: column;
+}
+
+.centeredCard form label {
+  margin-top: 12px;
+  margin-bottom: 6px;
+  color: #cccccc;
+}
+
+.centeredCard form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
   background-color: #2c2c2c;
   color: white;
-  border: 1px solid #444;
-  border-radius: 5px;
 }
 
-.card button {
-  background-color: #3a3a3a;
+.centeredCard form button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.card button:hover {
-  background-color: #505050;
+.centeredCard form button:hover {
+  background-color: #43a047;
 }
 
-/* Saved data section */
-.savedData {
-  margin-top: 30px;
+.cardContainer {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
-/* Optional: Hide saved data if you don't want to show it anymore */
-.savedData {
-  display: none; /* comment or remove this if you want to show saved data */
+.dataCard {
+  background-color: #2a2a2a;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.backButton {
+  margin-top: 15px;
+  padding: 8px 12px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #666;
+}
+
+/* acadamicyearcard */
+.dataCard {
+  background-color: #1e1e1e;
+  padding: 24px;
+  margin: 40px auto;
+  width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.dataTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+.dataItem {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.error {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 18px;
+  color: #ff4c4c;
 }

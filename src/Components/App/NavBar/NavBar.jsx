@@ -67,7 +67,7 @@ const NavBar = () => {
   const navItems = [
     { name: "Tasks", icon: faTasks, path: "/dashboard/tasks" },
     { name: "Admin", icon: faUserShield, path: "/dashboard/admin" },
-    { name: "Acadamic", icon: faBookOpenReader, path: "/dashboard/acadamic" },
+    { name: "Academic", icon: faBookOpenReader, path: "/dashboard/academic" },
     { name: "Accounts", icon: faWallet, path: "/dashboard/accounts" },
     { name: "Inventory", icon: faBox, path: "/dashboard/inventory" },
     { name: "Teachers", icon: faChalkboardTeacher, path: "/teachers" },
