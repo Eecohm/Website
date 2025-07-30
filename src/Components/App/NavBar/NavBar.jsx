@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import styles from './NavBar.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import styles from "./NavBar.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTasks,
   faUserShield,
@@ -12,9 +12,10 @@ import {
   faChartBar,
   faBars,
   faTimes,
-  faCog
-} from '@fortawesome/free-solid-svg-icons';
-import logo from '../../../assets/logo.svg';
+  faCog,
+  faBookOpenReader,
+} from "@fortawesome/free-solid-svg-icons";
+import logo from "../../../assets/logo.svg";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -23,13 +24,21 @@ const NavBar = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' })
+    new Date().toLocaleTimeString("en-US", {
+      hour12: true,
+      hour: "numeric",
+      minute: "2-digit",
+    })
   );
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(
-        new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' })
+        new Date().toLocaleTimeString("en-US", {
+          hour12: true,
+          hour: "numeric",
+          minute: "2-digit",
+        })
       );
     }, 60000);
     return () => clearInterval(timer);
@@ -46,38 +55,42 @@ const NavBar = () => {
   };
 
   const handleLogoClick = () => {
-    if (location.pathname === '/dashboard') {
+    if (location.pathname === "/dashboard") {
       window.location.reload();
     } else {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
     setIsSidebarOpen(false);
     setIsSettingsOpen(false);
   };
 
   const navItems = [
-    { name: 'Tasks', icon: faTasks, path: '/dashboard/tasks' },
-    { name: 'Admin', icon: faUserShield, path: '/dashboard/admin' },
-    { name: 'Accounts', icon: faWallet, path: '/dashboard/accounts' },
-    { name: 'Inventory', icon: faBox, path: '/dashboard/inventory' },
-    { name: 'Teachers', icon: faChalkboardTeacher, path: '/teachers' },
-    { name: 'Students', icon: faUsers, path: '/dashboard/students' },
-    { name: 'Reports', icon: faChartBar, path: '/dashboard/reports' },
+    { name: "Tasks", icon: faTasks, path: "/dashboard/tasks" },
+    { name: "Admin", icon: faUserShield, path: "/dashboard/admin" },
+    { name: "Acadamic", icon: faBookOpenReader, path: "/dashboard/acadamic" },
+    { name: "Accounts", icon: faWallet, path: "/dashboard/accounts" },
+    { name: "Inventory", icon: faBox, path: "/dashboard/inventory" },
+    { name: "Teachers", icon: faChalkboardTeacher, path: "/teachers" },
+    { name: "Students", icon: faUsers, path: "/dashboard/students" },
+    { name: "Reports", icon: faChartBar, path: "/dashboard/reports" },
   ];
 
   const settingsItems = [
-    { name: 'Profile', path: '/dashboard/profile' },
-    { name: 'Preferences', path: '/dashboard/preferences' },
-    { name: 'Logout', action: () => setShowLogoutModal(true) },
+    { name: "Profile", path: "/dashboard/profile" },
+    { name: "Preferences", path: "/dashboard/preferences" },
+    { name: "Logout", action: () => setShowLogoutModal(true) },
   ];
 
-  const today = new Date().toLocaleDateString('en-US', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -95,7 +108,9 @@ const NavBar = () => {
               onClick={handleLogoClick}
             />
           </div>
-          <h1 className={styles.schoolName} onClick={handleLogoClick}>EECOHM Foundation</h1>
+          <h1 className={styles.schoolName} onClick={handleLogoClick}>
+            EECOHM Foundation
+          </h1>
           <div className={styles.topBarInfoGroup}>
             <div className={styles.topBarInfo}>
               <span>{today}</span>
@@ -103,7 +118,11 @@ const NavBar = () => {
               <span>Contact: 023-546392</span>
             </div>
             <div className={styles.settingsContainer}>
-              <FontAwesomeIcon icon={faCog} className={styles.settingsIcon} onClick={toggleSettings} />
+              <FontAwesomeIcon
+                icon={faCog}
+                className={styles.settingsIcon}
+                onClick={toggleSettings}
+              />
               {isSettingsOpen && (
                 <ul className={styles.settingsMenu}>
                   {settingsItems.map((item, index) => (
@@ -129,7 +148,7 @@ const NavBar = () => {
         </div>
       </header>
 
-      <nav className={`${styles.navBar} ${isSidebarOpen ? styles.open : ''}`}>
+      <nav className={`${styles.navBar} ${isSidebarOpen ? styles.open : ""}`}>
         <div className={styles.navBarHeader}>
           <img
             src={logo}
@@ -142,7 +161,9 @@ const NavBar = () => {
           {navItems.map((item, index) => (
             <li
               key={index}
-              className={`${styles.navBarItem} ${location.pathname === item.path ? styles.active : ''}`}
+              className={`${styles.navBarItem} ${
+                location.pathname === item.path ? styles.active : ""
+              }`}
               onClick={() => {
                 navigate(item.path);
                 setIsSidebarOpen(false);
@@ -160,8 +181,15 @@ const NavBar = () => {
           <div className={styles.modalBox}>
             <h3>Do you want to logout?</h3>
             <div className={styles.modalButtons}>
-              <button className={styles.logoutButton} onClick={handleLogout}>Yes, Logout</button>
-              <button className={styles.cancelButton} onClick={() => setShowLogoutModal(false)}>Cancel</button>
+              <button className={styles.logoutButton} onClick={handleLogout}>
+                Yes, Logout
+              </button>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setShowLogoutModal(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
