@@ -17,9 +17,13 @@ import ViewImage from "../Components/App/Profile/ViewImage";
 import Acadamic from "../Components/App/Acadamic/Acadamic";
 
 const RequireAuth = ({ children }) => {
-  const { token } = useAuth();
+  const { token, isLoading } = useAuth();
+  
   const location = useLocation();
 
+  if (isLoading) {
+    return <div>loading......</div>
+  }
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
@@ -29,7 +33,7 @@ const RequireAuth = ({ children }) => {
 const PrivateRoutes = () => (
   <Routes>
     <Route
-      path="/"
+      path="/*"
       element={
         <RequireAuth>
           <DashBoard />

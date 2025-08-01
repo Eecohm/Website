@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/Profile.module.css";
-
+import axios from "axios";
+import { useBaseUrl } from "../../../BaseUrlContext";
+import { ImOpera } from "react-icons/im";
+import { useAuth } from "../Login/Auth/AuthContext";
 const OrganizationForm = () => {
+  const token = useAuth()
+  const baseUrl = useBaseUrl();
+  const [Loading, setLoading] = useState(true)
   const [formData, setFormData] = useState({
     orgName: "",
     orgAddress: "",
@@ -16,6 +22,54 @@ const OrganizationForm = () => {
     registrationImage: null,
     vatImage: null,
   });
+  const [OrgData, setOrgData] = useState([])
+  useEffect(() => {
+  console.log(token)
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/org/orgs`);
+      console.log(response.data); 
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData(); 
+}, []);
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const data = new FormData();
+    data.append("orgName", formData.orgName);
+    data.append("orgAddress", formData.orgAddress);
+    data.append("telPhoneNo", formData.telPhoneNo);
+    data.append("phoneNo", formData.phoneNo);
+    data.append("emailAddress", formData.emailAddress);
+    data.append("panNumber", formData.panNumber);
+    data.append("vatNumber", formData.vatNumber);
+
+    if (formData.logoUrl) data.append("logoUrl", formData.logoUrl);
+    if (formData.panImage) data.append("panImage", formData.panImage);
+    if (formData.registrationImage) data.append("registrationImage", formData.registrationImage);
+    if (formData.vatImage) data.append("vatImage", formData.vatImage);
+
+    try {
+      const response = await axios.post(
+        `${baseUrl}/org/orgs/`,
+        data, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+    });
+    console.log("Sucess");
+    } catch (error) {
+      console.error('Upload error:', error);
+    }
+  }
 
   const [previewImages, setPreviewImages] = useState({
     logoUrl: null,
@@ -44,11 +98,6 @@ const OrganizationForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Save logic here (API call, etc.)
-    navigate("/dashboard/profile/profile-data", { state: { formData } });
-  };
 
   const handleCancel = () => {
     navigate("/dashboard/profile");
@@ -166,6 +215,7 @@ const OrganizationForm = () => {
               name="logoUrl"
               onChange={handleImageChange}
               accept="image/*"
+              required
             />
             {previewImages.logoUrl && (
               <img
@@ -173,6 +223,7 @@ const OrganizationForm = () => {
                 alt="Logo Preview"
                 className={styles.imagePreview}
                 onClick={() => handleViewImage("logoUrl")}
+                required
               />
             )}
           </div>
@@ -185,6 +236,7 @@ const OrganizationForm = () => {
                 name="panImage"
                 onChange={handleImageChange}
                 accept="image/*"
+                required
               />
               {previewImages.panImage && (
                 <img
@@ -192,6 +244,7 @@ const OrganizationForm = () => {
                   alt="PAN Preview"
                   className={styles.imagePreview}
                   onClick={() => handleViewImage("panImage")}
+                  required
                 />
               )}
             </div>
@@ -203,6 +256,7 @@ const OrganizationForm = () => {
                 name="registrationImage"
                 onChange={handleImageChange}
                 accept="image/*"
+                required
               />
               {previewImages.registrationImage && (
                 <img
@@ -210,6 +264,7 @@ const OrganizationForm = () => {
                   alt="Registration Preview"
                   className={styles.imagePreview}
                   onClick={() => handleViewImage("registrationImage")}
+                  required
                 />
               )}
             </div>
