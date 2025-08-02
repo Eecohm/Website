@@ -61,6 +61,8 @@ const LoginForm = () => {
         localStorage.setItem('accessToken', data.access);
         localStorage.setItem('userId', data.user_id);
         localStorage.setItem('userEmail', data.email);
+        localStorage.setItem('role', data.role);
+        localStorage.setItem('verified', data.verified)
 
         setIsCheckingSavedLogin(false);
         navigate('/dashboard');

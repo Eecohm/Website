@@ -1,21 +1,60 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/Profile.module.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useBaseUrl } from "../../../BaseUrlContext";
+import { useAuth } from "../Login/Auth/AuthContext";
+ 
 
 const Profile = () => {
-  const navigate = useNavigate();
 
+  // usenavigate hooks and const auth
+  const navigate = useNavigate();
+  const baseUrl = useBaseUrl();
+  const token = useAuth()
+  const [hasOrg, sethasOrg] = useState(false);
+  // usenavigate hooks and const auth
+  
+
+  // check if org exists
+   useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${baseUrl}/org/orgs`, {
+            headers: {
+              Authorization: `Bearer ${token.token}`,
+            },
+          });
+          console.log(response.data);
+          if (response.status === 200) {
+            sethasOrg(true);
+          } 
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+        fetchData(); 
+      }, []);
+    // check if org exists
+    
+
+  // handle orgization card click
   const handleOrganizationClick = () => {
-    const hasOrganization = false;
-    if (hasOrganization) {
+    const hasOrg = false;
+    if (hasOrg) {
       navigate("/dashboard/profile/profile-data");
     } else {
       navigate("/dashboard/profile/organization");
     }
   };
+  // handle orgization card click
 
+
+  // handle sub-orgization card click
   const handleSubOrganizationClick = () => {
     navigate("/dashboard/profile/sub-organization");
   };
+  // handle sub-orgization card click
 
   return (
     <>
@@ -40,7 +79,7 @@ const Profile = () => {
           onClick={handleSubOrganizationClick}
         >
           <h2>Sub-Organization</h2>
-          <p>Manage your sub-organizations</p>
+          <p>Manage your sub-organizations    </p>
         </div>
       </div>
     </>

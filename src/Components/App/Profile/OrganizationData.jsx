@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./styles/Profile.module.css";
+import axios from "axios";
+import { useBaseUrl } from '../../../BaseUrlContext'
+import { useAuth } from "../Login/Auth/AuthContext";
 
 const OrganizationData = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const baseUrl = useBaseUrl()
+  const token = useAuth()
   const [formData, setFormData] = useState({
     orgName: "Acme Corporation",
     orgAddress: "1234 Elm Street, Springfield",
@@ -31,6 +36,8 @@ const OrganizationData = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  
 
   useEffect(() => {
     const convertFileToBase64 = (file) => {
@@ -312,7 +319,10 @@ const OrganizationData = () => {
               >
                 Cancel
               </button>
-              <button type="submit" className={styles.saveButton}>
+              <button 
+              type="submit"
+              className={styles.saveButton}
+              onClick={handleSubmmit}>
                 Save
               </button>
             </div>

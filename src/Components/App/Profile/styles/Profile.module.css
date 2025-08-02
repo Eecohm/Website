@@ -13,40 +13,33 @@
 
 body {
   background-color: var(--bg-color);
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
 }
+
 .profileContainer {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   background-color: var(--bg-color);
   color: var(--text-color);
-  padding: 2rem;
-  gap: 2rem;
+  padding: 1rem;
+  gap: 1.5rem;
+  overflow-y: auto;
 }
 
 .profileCard {
   background-color: var(--card-bg);
-  padding: 3rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  width: 90%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 350px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid var(--border-color);
-  margin-top: 2rem;
-}
-
-.profileCard {
-  background-color: var(--card-bg);
-  padding: 3rem;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 400px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid var(--border-color);
+  margin: 1rem 0;
 }
 
 .profileCard:hover {
@@ -56,392 +49,225 @@ body {
 
 .profileCard h2 {
   color: var(--primary-color);
+  font-size: clamp(1rem, 4vw, 1.8rem);
   margin-bottom: 0.5rem;
 }
 
 .profileCard p {
+  font-size: clamp(0.8rem, 3vw, 1rem);
   color: var(--text-color);
   opacity: 0.8;
 }
 
-.formContainer,
-.dataContainer {
-  background-color: var(--card-bg);
-  padding: 2rem;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 800px;
-  margin: 2rem auto;
+.backButton {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  width: 5vw;
+  min-width: 80px;
+  background-color: transparent;
+  color: var(--text-color);
   border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.formContainer h2,
-.dataContainer h2 {
+.backButton::before {
+  content: "← BACK";
+  display: inline-block;
+  transition: transform 0.5s ease;
+}
+
+.backButton:hover {
+  background-color: var(--surface-color);
+  transform: translateY(-2px);
+}
+.errorMessage{
+  color: red;
+}
+.formContainer {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  margin: 1rem auto;
+  border: 1px solid var(--border-color);
+}
+.formContainer input.inputError{
+  border: 1px solid rgb(253, 66, 66);
+}
+
+
+.formContainer h2 {
   color: var(--primary-color);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.formGroup label {
-  color: var(--text-color);
-  font-weight: 500;
-}
-
-.formGroup input,
-.formGroup textarea,
-.formGroup select {
-  background-color: var(--surface-color);
+.formContainer input {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  padding: 0.75rem;
+  background-color: var(--surface-color);
   color: var(--text-color);
-  font-size: 1rem;
 }
 
-.formGroup textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.formRow {
+.formRowGrop {
   display: flex;
+  width: 100%;
   gap: 1rem;
-}
-
-.formRow .formGroup {
-  flex: 1;
-}
-
-/* Image styles */
-.imageRow {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
   flex-wrap: wrap;
 }
 
-.imageGroup,
-.imageContainer {
-  flex: 0 1 30%;
-  max-width: 30%;
+.formGroupe {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-
-.imageGroup,
-.imageContainer {
+  align-items: flex-start;
   flex: 1;
+  min-width: 140px;
+}
+
+.imageUploadRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.imageUploadGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 160px;
 }
 
-.imagePreview,
-.imageThumbnail {
-  max-width: 100%;
-  max-height: 150px;
-  object-fit: contain;
+.imageUploadGroup label {
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  margin-bottom: 0.3rem;
+  color: var(--text-color);
+}
+
+.imageUploadGroup input[type="file"] {
+  width: 100%;
+  padding: 0.3rem;
   border: 1px solid var(--border-color);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  border-radius: 6px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
 }
 
-.imagePreview:hover,
-.imageThumbnail:hover {
-  transform: scale(1.05);
+.imagePreviewBox {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-height: 150px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  object-fit: cover;
 }
 
-/* Button styles */
 .buttonGroup {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
-.saveButton,
-.editButton {
-  background-color: var(--primary-variant);
-  color: var(--on-surface);
+.buttonGroup button {
+  width: 100%;
+  max-width: 150px;
+  padding: 0.8rem;
   border: none;
   border-radius: 4px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
 }
 
-.saveButton:hover,
-.editButton:hover {
-  background-color: var(--on-surface);
-  color: black;
+.cancelButton {
+  background-color: var(--error-color);
+  color: var(--on-surface);
 }
 
-.cancelButton,
-.deleteButton {
-  background-color: transparent;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.imageViewContainer {
-  width: 100%;
-}
-.backButton {
-  margin: 2rem;
-  padding: 0.75rem 1.5rem;
-  text-align: center;
-  width: 8%;
-  background-color: transparent;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-.backButton::before {
-  content: " BACK";
-  display: inline-block;
-  margin-right: 0.25rem;
-  transition: transform 0.2s ease;
-}
-.backButton:hover {
-  background-color: var(--surface-color);
-  transform: translateY(-2px);
+.saveButton {
+  background-color: var(--secondary-color);
+  color: var(--on-surface);
 }
 
-.cancelButton:hover {
-  background-color: var(--surface-color);
+@media (max-width: 1024px) {
+  .profileContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+  }
+  
+  .profileCard {
+    max-width: 90%;
+  }
+  
+  .formContainer {
+    width: 95%;
+  }
 }
 
-.deleteButton {
-  color: var(--error-color);
-  border-color: var(--error-color);
-}
-
-.deleteButton:hover {
-  background-color: rgba(207, 102, 121, 0.1);
-}
-
-.dataDisplay {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  color: #ffffff;
-}
-
-.dataRow {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.dataRow span:first-child {
-  font-weight: 500;
-  color: var(--primary-color);
-}
-
-.imageViewContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  padding: 2rem;
-}
-
-.imageWrapper {
-  max-width: 90vw;
-  max-height: 80vh;
-  margin: 2rem 0;
-  overflow: hidden;
-}
-
-.fullImage {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-  .formRow,
-  .imageRow {
+  .profileContainer {
+    gap: 1rem;
+  }
+  
+  .profileCard {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .formContainer {
+    padding: 1rem;
+  }
+  
+  .formRowGrop {
     flex-direction: column;
   }
+  
+  .formGroupe {
+    min-width: 100%;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+  }
+  
+  .buttonGroup button {
+    max-width: 100%;
+  }
+}
 
+@media (max-width: 480px) {
+  .backButton {
+    width: 100%;
+    max-width: 120px;
+  }
+  
   .profileCard {
-    padding: 1.5rem;
+    padding: 0.8rem;
   }
-
-  .formContainer,
-  .dataContainer {
-    padding: 1.5rem;
+  
+  .formContainer {
+    margin: 0.5rem;
   }
-}
-
-.subOrgList {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.subOrgCard {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 1.5rem;
-  width: 100%;
-  max-width: 450px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.3s ease;
-  color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.subOrgCard:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-}
-
-.subOrgCard h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: var(--primary-color);
-}
-
-.subOrgCard p {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--text-color);
-  opacity: 0.9;
-}
-
-.subOrgCard .buttonGroup {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
-.addNewCard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 2px dashed var(--primary-color);
-  border-radius: 10px;
-  cursor: pointer;
-  padding: 1rem;
-  font-size: 2rem;
-  color: var(--primary-color);
-  transition: background-color 0.3s ease;
-  height: 220px;
-  max-width: 350px;
-  width: 100%;
-}
-
-.addNewCard:hover {
-  background-color: rgba(3, 218, 198, 0.1);
-}
-
-.addIcon {
-  font-size: 3rem;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-/* New styles for logo image */
-.logoImageRounded {
-  border-radius: 12px;
-  max-width: 150px;
-  max-height: 150px;
-  object-fit: contain;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-}
-
-/* Modal styles */
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modalContent {
-  position: relative;
-  background-color: var(--card-bg);
-  padding: 1rem;
-  border-radius: 8px;
-  max-width: 95vw;
-  max-height: 95vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modalImage {
-  max-width: 100%;
-  max-height: 90vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.closeButton {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  border: none;
-  font-size: 1.8rem;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  line-height: 1;
-  padding: 0;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-}
-
-.closeButton:hover {
-  background: rgba(0, 0, 0, 0.8);
+  
+  .imageUploadGroup {
+    max-width: 100%;
+  }
 }
