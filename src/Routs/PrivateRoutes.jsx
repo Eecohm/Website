@@ -21,7 +21,7 @@ import FacultyCard from "../Components/App/Acadamic/Card/FacultyCard";
 import GradeCard from "../Components/App/Acadamic/Card/GradeCard";
 import AcademicClassCard from "../Components/App/Acadamic/Card/AcademicClassCard";
 import AcademicYearData from "../Components/App/Acadamic/Data/AcademicYearData ";
-import ProgramData from "../Components/App/Acadamic/Data/ProgramData ";
+import ProgramData from "../Components/App/Acadamic/Data/ProgramData";
 import FacultyData from "../Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";

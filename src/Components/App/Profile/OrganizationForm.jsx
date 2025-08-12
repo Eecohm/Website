@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles/Profile.module.css";
+import styles from "./styles/OrgFrom.module.css";
 import axios from "axios";
 import { useBaseUrl } from "../../../BaseUrlContext";
 import { useAuth } from "../Login/Auth/AuthContext";

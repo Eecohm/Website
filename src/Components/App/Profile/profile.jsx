@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./styles/Profile.module.css";
+import styles from "./styles/OrgFrom.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useBaseUrl } from "../../../BaseUrlContext";
@@ -25,22 +25,19 @@ const Profile = () => {
               Authorization: `Bearer ${token.token}`,
             },
           });
-          console.log(response.data);
           if (response.status === 200) {
             sethasOrg(true);
           } 
         } catch (error) {
-          console.log(error.message);
+          alert(error.message);
         }
       };
         fetchData(); 
       }, []);
     // check if org exists
     
-
   // handle orgization card click
   const handleOrganizationClick = () => {
-    const hasOrg = false;
     if (hasOrg) {
       navigate("/dashboard/profile/profile-data");
     } else {

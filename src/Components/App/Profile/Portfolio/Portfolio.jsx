@@ -1,0 +1,15 @@
+import React from 'react';
+import styles from './Portfolio.module.css';
+import { FaFacebook, FaInstagram, FaLinkedin, FaTiktok } from 'react-icons/fa';
+
+const Portfolio = () => {
+  return (
+    <>
+    <div>
+        
+    </div>
+    </>
+  );
+};
+
+export default Portfolio;
