@@ -5,7 +5,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTiktok } from 'react-icons/fa';
 const Portfolio = () => {
   return (
     <>
-    <div>
+    <div className={styles.mainProfileContainer}>
         
     </div>
     </>

@@ -55,6 +55,7 @@ const Profile = () => {
 
   return (
     <>
+    <div className={styles.wholediv}>
       <div
         className={styles.backButton}
         onClick={() => navigate("/dashboard")}
@@ -78,6 +79,7 @@ const Profile = () => {
           <h2>Sub-Organization</h2>
           <p>Manage your sub-organizations    </p>
         </div>
+      </div>
       </div>
     </>
   );

@@ -1,0 +1,101 @@
+.wholediv {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: rgb(37, 36, 36);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.backButton::before {
+  content: "← BACK";
+  display: inline-block;
+  border: 2px solid white;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+.backButton:hover::before {
+  background-color: rgb(55, 55, 55);
+  transform: translateY(-2px);
+}
+
+.formContainer {
+  background-color: rgb(20, 38, 56);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.formContainer h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  color: white;
+}
+
+.formGroup input,
+.formGroup textarea {
+  padding: 0.6rem;
+  border-radius: 5px;
+  border: 1px solid rgb(70, 70, 70);
+  background-color: rgb(37, 36, 36);
+  color: white;
+  font-size: 1rem;
+}
+
+.formGroup input[type="checkbox"] {
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.imageRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.imageGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 180px;
+}
+
+.imageGroup label {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.imagePreview {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-height: 150px
+}

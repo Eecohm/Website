@@ -13,6 +13,7 @@ import OrganizationForm from "../Components/App/Profile/OrganizationForm";
 import OrganizationData from "../Components/App/Profile/OrganizationData";
 import SubOrganizationForm from "../Components/App/Profile/SubOrganizationForm";
 import SubOrganizationData from "../Components/App/Profile/SubOrganizationData";
+import SubOrgDetails from "../Components/App/Profile/SubOrgDetails";
 import ViewImage from "../Components/App/Profile/ViewImage";
 import Acadamic from "../Components/App/Acadamic/Acadamic";
 import AcademicYearCard from "../Components/App/Acadamic/Card/AcademicYearCard";
@@ -126,10 +127,27 @@ const PrivateRoutes = () => (
       path="/profile/sub-organization"
       element={
         <RequireAuth>
+          <SubOrganizationData />
+        </RequireAuth>
+      }
+    />
+    <Route
+      path="/profile/add-sub-organization"
+      element={
+        <RequireAuth>
           <SubOrganizationForm />
         </RequireAuth>
       }
     />
+      <Route
+    path="/profile/suborg-details/:id"
+    element={
+      <RequireAuth>
+        <SubOrgDetails />
+      </RequireAuth>
+    }
+  />
+
     <Route
       path="/profile/sub-org/:id"
       element={

@@ -1,0 +1,151 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #ffffff;
+}
+
+.backButton {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #424242 0%, #212121 100%);
+  color: white;
+  border: 2px solid #3a3a3a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.backButton:hover {
+  background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
+  border-color: #64b5f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(100, 181, 246, 0.3);
+}
+
+.twoColumnLayout {
+  display: flex;
+  gap: 2rem;
+}
+
+.formColumn, .cardColumn {
+  flex: 1;
+}
+
+.centeredCard {
+  padding: 2rem;
+  background: linear-gradient(145deg, #2a2a2a, #1e1e1e);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid #3a3a3a;
+}
+
+.centeredCard h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.centeredCard form {
+  display: flex;
+  flex-direction: column;
+}
+
+.centeredCard form label {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+.centeredCard form input {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 2px solid #3a3a3a;
+  background-color: #2c2c2c;
+  color: white;
+  transition: border-color 0.3s ease;
+}
+
+.centeredCard form input:focus {
+  outline: none;
+  border-color: #64b5f6;
+  box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.1);
+}
+
+.errorInput {
+  border-color: #f44336;
+}
+
+.centeredCard form button {
+  margin-top: 1.5rem;
+  padding: 0.875rem;
+  background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.centeredCard form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(100, 181, 246, 0.3);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: linear-gradient(145deg, #2a2a2a, #1e1e1e);
+  border: 1px solid #3a3a3a;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  border-color: #64b5f6;
+}
+
+.cardContent h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.cardContent p {
+  font-size: 0.95rem;
+  color: #b0b0b0;
+  line-height: 1.5;
+}
+
+.error {
+  color: #f44336;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+@media (max-width: 768px) {
+  .twoColumnLayout {
+    flex-direction: column;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}

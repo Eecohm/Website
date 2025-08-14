@@ -25,7 +25,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`container ${isScrolled ? styles.navScrolled : ''}`}>
+   <nav
+  className={`container ${styles.nav} ${isScrolled ? styles.navScrolled : ''}`}
+>
       <Link to="/" onClick={closeMobileMenu}>
         <img src={logo} alt="Logo" className={styles.logoName} />
       </Link>
@@ -38,19 +40,19 @@ const Navbar = () => {
       {/* Mobile menu */}
       <ul className={`${styles.navMenu} ${isMobileMenuOpen ? styles.navMenuActive : ''}`}>
         <li>
-          <Link to="/" onClick={closeMobileMenu}>Home</Link>
+          <Link to="/" className={styles.Link} onClick={closeMobileMenu}>Home</Link>
         </li>
         <li>
-          <Link to="#programs" onClick={closeMobileMenu}>Program</Link>
+          <Link to="#programs" onClick={closeMobileMenu} className={styles.Link} >Program</Link>
         </li>
         <li>
-          <Link to="#school" onClick={closeMobileMenu}>School</Link>
+          <Link to="#school" onClick={closeMobileMenu} className={styles.Link}>School</Link>
         </li>
         <li>
-          <Link to="#about-us" onClick={closeMobileMenu}>About</Link>
+          <Link to="#about-us" onClick={closeMobileMenu} className={styles.Link}> About</Link>
         </li>
         <li>
-          <Link to="#testimonials" onClick={closeMobileMenu}>Testimonials</Link>
+          <Link to="#testimonials" onClick={closeMobileMenu} className={styles.Link}>Testimonials</Link>
         </li>
         <li>
           <Link to="#contact-us" onClick={closeMobileMenu}>

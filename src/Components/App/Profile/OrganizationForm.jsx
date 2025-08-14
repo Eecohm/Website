@@ -177,7 +177,7 @@ const OrganizationForm = () => {
   };
 
   return (
-    <>
+    <div className={styles.wholediv}>
       <div
         className={styles.backButton}
         onClick={handleCancel}
@@ -185,7 +185,6 @@ const OrganizationForm = () => {
         tabIndex={0}
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleCancel()}
       />
-
       <div className={styles.formContainer}>
         <h2>Organization Details</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -327,7 +326,7 @@ const OrganizationForm = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
