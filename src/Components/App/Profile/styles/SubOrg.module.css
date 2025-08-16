@@ -1,107 +1,212 @@
-.wholeDiv {
-  background-color: rgb(37, 36, 36);
+/* Main Container */
+.mainContainer {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
   min-height: 100vh;
-  width: 100vw;
-  padding: 1rem;
-  color: var(--text-color);
+  padding: 2rem;
+  color: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .backButton {
-  width: 100px;
-  padding: 0.5rem;
-  border: 2px solid white;
-  border-radius: 5px;
-  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #4b5563, #374151);
+  color: #f5f5f5;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  text-align: center;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  width: 20%;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .backButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #6b7280, #4b5563);
   transform: translateY(-2px);
 }
 
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #d1d5db, #9ca3af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-h2 {
-  text-align: center;
-  color: var(--primary-color);
-  margin-bottom: 1.5rem;
+/* Grid Layout */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-.subOrgList {
+/* Business Card */
+.businessCard {
+  background: rgba(26, 26, 26, 0.8);
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(156, 163, 175, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.businessCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(156, 163, 175, 0.3);
+}
+
+.cardContent {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: flex-start;
+  height: 100%;
 }
 
-.subOrgCard,
+.cardDetails {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardLogo {
+  width: 120px;
+  background: rgba(45, 45, 45, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-left: 1px solid rgba(156, 163, 175, 0.1);
+}
+
+.orgName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: #f5f5f5;
+}
+
+.orgDescription {
+  font-size: 0.9rem;
+  color: #d1d5db;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.metaInfo {
+  margin-top: auto;
+}
+
+.entityTag {
+  display: inline-block;
+  background: rgba(226, 226, 226, 0.2);
+  color: #d8d8d8;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.logoImage {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid rgba(156, 163, 175, 0.3);
+}
+
+/* Add New Card */
 .addNewCard {
-  background-color: rgb(20, 38, 56);
-  color: var(--text-color);
-  width: 180px;
-  height: 180px;
-  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 26, 26, 0.5);
+  border: 2px dashed rgba(156, 163, 175, 0.3);
+}
+
+.addNewCard:hover {
+  background: rgba(26, 26, 26, 0.7);
+  border-color: rgba(156, 163, 175, 0.5);
+}
+
+.addNewContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2rem;
   text-align: center;
-  padding: 0.5rem;
-  border: 1px solid white;
-}
-
-.subOrgCard:hover,
-.addNewCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.subOrgLogo {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
 }
 
 .addIcon {
-  font-size: 2rem;
-  margin-bottom: 0.3rem;
+  font-size: 3rem;
+  font-weight: 300;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
 }
 
-.addNewCard span {
-  display: block;
+.addText {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #d1d5db;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
-  .subOrgList {
-    justify-content: flex-start;
+  .gridContainer {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
-
-  .subOrgCard,
-  .addNewCard {
-    width: 45%;
-    height: 160px;
+  .backButton{
+      width: 0%;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .subOrgCard,
-  .addNewCard {
-    width: 100%;
-    height: 140px;
+  .mainContainer {
+    padding: 1rem;
   }
-
-  .backButton {
-    width: 100px;
-    margin-bottom: 1rem;
+  
+  .businessCard {
+    flex-direction: column;
+  }
+  
+  .cardLogo {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid rgba(156, 163, 175, 0.1);
+    padding: 1rem;
+  }
+  
+  .logoImage {
+    width: 60px;
+    height: 60px;
   }
 }

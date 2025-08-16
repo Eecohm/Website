@@ -11,12 +11,12 @@
   display: inline-block;
   width: 120px;
   padding: 0.6rem;
-  border: 2px solid #1abc9c;
+  border: 2px solid #dbdbdb;
   border-radius: 8px;
   margin-bottom: 1.5rem;
   cursor: pointer;
   text-align: center;
-  color: #1abc9c;
+  color: #e7e7e7;
   font-weight: bold;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -40,7 +40,7 @@
 
 h2 {
   text-align: center;
-  color: #1abc9c;
+  color: #1a89bc;
   margin-bottom: 2rem;
   font-size: 2rem;
   font-weight: 600;
@@ -48,7 +48,7 @@ h2 {
 
 /* Card View Styles */
 .cardView {
-  background-color: #142638;
+  background-color: #2f3030;
   padding: 2rem 2.5rem;
   border-radius: 15px;
   text-align: center;
@@ -67,7 +67,7 @@ h2 {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
-  border: 3px solid #1abc9c;
+  border: 3px solid #c9c9c9;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -91,10 +91,10 @@ h2 {
 .entityDetails {
   margin-top: 1.5rem;
   text-align: left;
-  background-color: rgba(26, 188, 156, 0.1);
+  background-color: rgba(26, 123, 188, 0.1);
   padding: 1rem;
   border-radius: 10px;
-  border-left: 4px solid #1abc9c;
+  border-left: 4px solid #1a9cbc;
 }
 
 .entityDetails p {
@@ -115,7 +115,7 @@ h2 {
   height: 90px;
   object-fit: cover;
   border-radius: 10px;
-  border: 2px solid #1abc9c;
+  border: 2px solid #1a66bc;
   cursor: pointer;
   transition: transform 0.3s ease;
 }

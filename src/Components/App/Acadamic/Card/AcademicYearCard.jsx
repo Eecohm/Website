@@ -3,187 +3,525 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useBaseUrl } from "../../../../BaseUrlContext";
 import { useAuth } from "../../Login/Auth/AuthContext";
-import styles from "../styles/AcademicYear.module.css";
+import styles from "./AcademicYearCard.module.css";
+import ModalNotification from "../../../../GlobalComponets/ModalNotification";
+import NavBar from "../../NavBar/NavBar"; // Import NavBar component
+import { 
+  FiAlertCircle, 
+  FiSearch, 
+  FiPlus, 
+  FiCalendar, 
+  FiSave, 
+  FiArrowLeft,
+  FiCheck,
+  FiX,
+  FiEye,
+  FiBookOpen,
+  FiSettings
+} from "react-icons/fi";
 
 const AcademicYearCard = () => {
   const navigate = useNavigate();
   const baseUrl = useBaseUrl();
-  const token = useAuth();
-  const [formData, setFormData] = useState({
-    startDate: "",
-    endDate: "",
-    programName: "",
-    durationMonths: "",
-    previousProgramId: "",
-    affiliatedTo: "",
-  });
+  const { token } = useAuth();
+
   const [academicYears, setAcademicYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [notification, setNotification] = useState(null);
+
+  // Fetch academic years
+  const fetchAcademicYears = async (query = "") => {
+    try {
+      const res = await axios.get(`${baseUrl}/academics/academic-years/`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { search: query },
+      });
+      const data = res.data.map((y) => ({
+        ...y,
+        name:
+          y.academicName ||
+          (y.start_of_year && y.end_of_year
+            ? `${y.start_of_year} - ${y.end_of_year}`
+            : "Unnamed Year"),
+      }));
+      setAcademicYears(data);
+
+      if (data.length) {
+        const currentYear = data.find((y) => y.is_current || y.isCurrent) || data[0];
+        setSelectedYear(currentYear);
+        setFormData(currentYear);
+      } else {
+        setSelectedYear(null);
+        setFormData({});
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchAcademicYears = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/api/academic-years`, {
-          headers: { Authorization: `Bearer ${token.token}` },
-        });
-        setAcademicYears(response.data);
-      } catch (err) {
-        console.error("Failed to fetch academic years:", err);
-      }
-    };
     fetchAcademicYears();
-  }, [baseUrl, token]);
+  }, []);
 
-  const validateField = (name, value) => {
-    let error = "";
-    switch (name) {
-      case "startDate":
-      case "endDate":
-        if (!value) error = "Date is required.";
-        break;
-      case "programName":
-        if (!value) error = "Program name is required.";
-        else if (value.length < 2) error = "Program name must be at least 2 characters.";
-        break;
-      case "durationMonths":
-        if (!value) error = "Duration is required.";
-        else if (isNaN(value) || value <= 0) error = "Duration must be a positive number.";
-        break;
-      case "affiliatedTo":
-        if (!value) error = "Affiliation is required.";
-        else if (value.length < 2) error = "Affiliation must be at least 2 characters.";
-        break;
-      default:
-        break;
-    }
-    return error;
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    fetchAcademicYears(e.target.value);
+  };
+
+  const handleSelectYear = (year) => {
+    setSelectedYear(year);
+    setFormData(year);
+    setErrors({});
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    const error = validateField(name, value);
-    setErrors((prev) => ({ ...prev, [name]: error }));
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validateForm = () => {
     const newErrors = {};
-    Object.keys(formData).forEach((key) => {
-      const error = validateField(key, formData[key]);
-      if (error) newErrors[key] = error;
-    });
-    if (Object.keys(newErrors).length === 0) {
-      navigate("/dashboard/academic/academic-year/academic-data", {
-        state: { data: formData },
+    if (!formData.startDate && !formData.start_of_year)
+      newErrors.startDate = "Start date required";
+    if (!formData.endDate && !formData.end_of_year)
+      newErrors.endDate = "End date required";
+    const start = formData.startDate || formData.start_of_year;
+    const end = formData.endDate || formData.end_of_year;
+    if (start && end && new Date(start) >= new Date(end)) {
+      newErrors.endDate = "End date must be after start date";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSave = async () => {
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
+      const payload = {
+        isCurrent: formData.is_current ?? formData.isCurrent,
+        isActive: formData.is_activate ?? formData.isActive,
+        startDate: formData.start_of_year ?? formData.startDate,
+        endDate: formData.end_of_year ?? formData.endDate,
+      };
+
+      const res = await axios.patch(
+        `${baseUrl}/academics/academic-years/${formData.id}/`,
+        payload,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setNotification({
+        type: "success",
+        message: "Academic year updated successfully!",
       });
-    } else {
-      setErrors(newErrors);
+      fetchAcademicYears();
+      setSelectedYear(res.data);
+      setFormData(res.data);
+    } catch (err) {
+      console.error(err);
+      setNotification({
+        type: "error",
+        message: "Failed to update academic year",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAdd = async (newData) => {
+    try {
+      const payload = {
+        startDate: newData.start_of_year,
+        endDate: newData.end_of_year,
+        isCurrent: newData.is_current,
+        isActive: newData.is_activate,
+      };
+
+      const res = await axios.post(
+        `${baseUrl}/academics/academic-years/`,
+        payload,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setNotification({
+        type: "success",
+        message: "Academic year added successfully!",
+      });
+      setAddModalOpen(false);
+      fetchAcademicYears();
+      setSelectedYear(res.data);
+      setFormData(res.data);
+    } catch (err) {
+      console.error(err);
+      setNotification({
+        type: "error",
+        message: "Failed to add academic year",
+      });
     }
   };
 
   return (
-    <div className={styles.container}>
-      <button
-        className={styles.backButton}
-        onClick={() => navigate("/dashboard/academic")}
-      >
-        ← Back
-      </button>
-
-      <div className={styles.twoColumnLayout}>
-        <div className={styles.formColumn}>
-          <div className={styles.centeredCard}>
-            <h2>Academic Year & Program</h2>
-            <form onSubmit={handleSubmit}>
-              <label>Start Date</label>
-              <input
-                type="date"
-                name="startDate"
-                value={formData.startDate}
-                onChange={handleChange}
-                className={errors.startDate ? styles.errorInput : ""}
-                required
-              />
-              {errors.startDate && <p className={styles.error}>{errors.startDate}</p>}
-
-              <label>End Date</label>
-              <input
-                type="date"
-                name="endDate"
-                value={formData.endDate}
-                onChange={handleChange}
-                className={errors.endDate ? styles.errorInput : ""}
-                required
-              />
-              {errors.endDate && <p className={styles.error}>{errors.endDate}</p>}
-
-              <label>Program Name</label>
-              <input
-                type="text"
-                name="programName"
-                value={formData.programName}
-                onChange={handleChange}
-                className={errors.programName ? styles.errorInput : ""}
-                required
-              />
-              {errors.programName && <p className={styles.error}>{errors.programName}</p>}
-
-              <label>Duration (Months)</label>
-              <input
-                type="number"
-                name="durationMonths"
-                value={formData.durationMonths}
-                onChange={handleChange}
-                className={errors.durationMonths ? styles.errorInput : ""}
-                required
-              />
-              {errors.durationMonths && <p className={styles.error}>{errors.durationMonths}</p>}
-
-              <label>Previous Program ID</label>
-              <input
-                type="text"
-                name="previousProgramId"
-                value={formData.previousProgramId}
-                onChange={handleChange}
-                className={errors.previousProgramId ? styles.errorInput : ""}
-              />
-              {errors.previousProgramId && <p className={styles.error}>{errors.previousProgramId}</p>}
-
-              <label>Affiliated To</label>
-              <input
-                type="text"
-                name="affiliatedTo"
-                value={formData.affiliatedTo}
-                onChange={handleChange}
-                className={errors.affiliatedTo ? styles.errorInput : ""}
-                required
-              />
-              {errors.affiliatedTo && <p className={styles.error}>{errors.affiliatedTo}</p>}
-
-              <button type="submit">Save</button>
-            </form>
+    <>
+      {/* Add NavBar component */}
+      <NavBar />
+      <div className={styles.container}>
+        {/* Header */}
+        <div className={styles.header}>
+          <button
+            className={styles.backButton}
+            onClick={() => navigate("/dashboard/academic")}
+          >
+            <FiArrowLeft className={styles.icon} />
+            Back to Dashboard
+          </button>
+          <div className={styles.headerTitle}>
+            <FiBookOpen className={styles.headerIcon} />
+            <h1>Academic Year Management</h1>
           </div>
         </div>
 
-        <div className={styles.cardColumn}>
-          <div className={styles.cardGrid}>
-            {academicYears.map((year) => (
-              <div key={year.id} className={styles.card}>
-                <div className={styles.cardContent}>
-                  <h3 className={styles.cardTitle}>
-                    {year.startDate} - {year.endDate}
-                  </h3>
-                  <p className={styles.cardDescription}>
-                    Program: {year.programName} | Duration: {year.durationMonths} months
-                  </p>
-                  <p className={styles.cardDescription}>
-                    Affiliated: {year.affiliatedTo}
-                  </p>
+        <div className={styles.wholeDiv}>
+          {/* Left Panel */}
+          <div className={styles.leftPanel}>
+            <div className={styles.panelHeader}>
+              <FiCalendar className={styles.panelIcon} />
+              <h3>Academic Years</h3>
+            </div>
+            
+            <div className={styles.searchContainer}>
+              <FiSearch className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search academic years..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className={styles.searchInput}
+              />
+            </div>
+
+            <div className={styles.yearList}>
+              {academicYears.length ? (
+                academicYears.map((year) => (
+                  <div
+                    key={year.id}
+                    className={`${styles.yearItem} ${
+                      selectedYear?.id === year.id ? styles.active : ""
+                    }`}
+                    onClick={() => handleSelectYear(year)}
+                  >
+                    <div className={styles.yearItemContent}>
+                      <FiCalendar className={styles.yearIcon} />
+                      <div className={styles.yearDetails}>
+                        <span className={styles.yearName}>{year.name}</span>
+                        <div className={styles.yearBadges}>
+                          {(year.is_current || year.isCurrent) && (
+                            <span className={styles.badge + ' ' + styles.currentBadge}>
+                              <FiCheck className={styles.badgeIcon} />
+                              Current
+                            </span>
+                          )}
+                          {(year.is_activate || year.isActive) && (
+                            <span className={styles.badge + ' ' + styles.activeBadge}>
+                              <FiEye className={styles.badgeIcon} />
+                              Active
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className={styles.noData}>
+                  <FiAlertCircle className={styles.noDataIcon} />
+                  <span>No academic years found</span>
+                </div>
+              )}
+            </div>
+
+            <button
+              className={`${styles.addBtn} ${
+                !academicYears.length ? styles.highlightBtn : ""
+              }`}
+              onClick={() => setAddModalOpen(true)}
+            >
+              <FiPlus className={styles.btnIcon} />
+              Add New Year
+            </button>
+          </div>
+
+          {/* Right Panel */}
+          <div className={styles.rightPanel}>
+            {selectedYear ? (
+              <div className={styles.detailsCard}>
+                <div className={styles.cardHeader}>
+                  <FiSettings className={styles.cardIcon} />
+                  <h2>Academic Year Details</h2>
+                </div>
+
+                <div className={styles.formGrid}>
+                  <div className={styles.fieldGroup}>
+                    <label>
+                      <FiBookOpen className={styles.fieldIcon} />
+                      Academic Year Name
+                    </label>
+                    <div className={styles.displayField}>
+                      {formData.academicName || "Unnamed Year"}
+                    </div>
+                  </div>
+
+                  <div className={styles.fieldGroup}>
+                    <label>
+                      <FiCalendar className={styles.fieldIcon} />
+                      Start Date
+                    </label>
+                    <input
+                      type="date"
+                      name="start_of_year"
+                      value={formData.start_of_year || formData.startDate || ""}
+                      onChange={handleChange}
+                      className={`${styles.dateInput} ${errors.startDate ? styles.inputError : ""}`}
+                    />
+                    {errors.startDate && (
+                      <div className={styles.error}>
+                        <FiAlertCircle className={styles.errorIcon} />
+                        {errors.startDate}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className={styles.fieldGroup}>
+                    <label>
+                      <FiCalendar className={styles.fieldIcon} />
+                      End Date
+                    </label>
+                    <input
+                      type="date"
+                      name="end_of_year"
+                      value={formData.end_of_year || formData.endDate || ""}
+                      onChange={handleChange}
+                      className={`${styles.dateInput} ${errors.endDate ? styles.inputError : ""}`}
+                    />
+                    {errors.endDate && (
+                      <div className={styles.error}>
+                        <FiAlertCircle className={styles.errorIcon} />
+                        {errors.endDate}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className={styles.checkboxSection}>
+                    <div className={styles.checkboxGroup}>
+                      <label className={styles.checkboxLabel}>
+                        <input
+                          type="checkbox"
+                          name="is_current"
+                          checked={formData.is_current ?? formData.isCurrent ?? false}
+                          onChange={handleChange}
+                          className={styles.checkbox}
+                        />
+                        <span className={styles.checkmark}></span>
+                        <FiCheck className={styles.checkboxIcon} />
+                        Set as Current Year
+                      </label>
+                      
+                      <label className={styles.checkboxLabel}>
+                        <input
+                          type="checkbox"
+                          name="is_activate"
+                          checked={formData.is_activate ?? formData.isActive ?? false}
+                          onChange={handleChange}
+                          className={styles.checkbox}
+                        />
+                        <span className={styles.checkmark}></span>
+                        <FiEye className={styles.checkboxIcon} />
+                        Mark as Active
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.actionButtons}>
+                  <button
+                    className={styles.saveBtn}
+                    onClick={handleSave}
+                    disabled={loading}
+                  >
+                    <FiSave className={styles.btnIcon} />
+                    {loading ? "Saving..." : "Save Changes"}
+                  </button>
                 </div>
               </div>
-            ))}
+            ) : (
+              <div className={styles.noSelection}>
+                <FiCalendar className={styles.noSelectionIcon} />
+                <h3>Select an Academic Year</h3>
+                <p>Choose an academic year from the list to view and edit its details</p>
+              </div>
+            )}
           </div>
+        </div>
+
+        {addModalOpen && (
+          <AddAcademicYearModal
+            onClose={() => setAddModalOpen(false)}
+            onAdd={handleAdd}
+          />
+        )}
+
+        {notification && (
+          <ModalNotification
+            type={notification.type}
+            message={notification.message}
+            onClose={() => setNotification(null)}
+          />
+        )}
+      </div>
+    </>
+  );
+};
+
+const AddAcademicYearModal = ({ onClose, onAdd }) => {
+  const [data, setData] = useState({
+    start_of_year: "",
+    end_of_year: "",
+    is_current: false,
+    is_activate: false,
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!data.start_of_year) newErrors.start_of_year = "Start date required";
+    if (!data.end_of_year) newErrors.end_of_year = "End date required";
+    if (
+      data.start_of_year &&
+      data.end_of_year &&
+      new Date(data.start_of_year) >= new Date(data.end_of_year)
+    ) {
+      newErrors.end_of_year = "End date must be after start date";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (!validateForm()) return;
+    onAdd(data);
+  };
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <div className={styles.modalHeader}>
+          <FiPlus className={styles.modalIcon} />
+          <h3>Add New Academic Year</h3>
+          <button className={styles.modalCloseBtn} onClick={onClose}>
+            <FiX />
+          </button>
+        </div>
+
+        <div className={styles.modalBody}>
+          <div className={styles.fieldGroup}>
+            <label>
+              <FiCalendar className={styles.fieldIcon} />
+              Start Date
+            </label>
+            <input
+              type="date"
+              name="start_of_year"
+              value={data.start_of_year}
+              onChange={handleChange}
+              className={`${styles.dateInput} ${errors.start_of_year ? styles.inputError : ""}`}
+            />
+            {errors.start_of_year && (
+              <div className={styles.error}>
+                <FiAlertCircle className={styles.errorIcon} />
+                {errors.start_of_year}
+              </div>
+            )}
+          </div>
+
+          <div className={styles.fieldGroup}>
+            <label>
+              <FiCalendar className={styles.fieldIcon} />
+              End Date
+            </label>
+            <input
+              type="date"
+              name="end_of_year"
+              value={data.end_of_year}
+              onChange={handleChange}
+              className={`${styles.dateInput} ${errors.end_of_year ? styles.inputError : ""}`}
+            />
+            {errors.end_of_year && (
+              <div className={styles.error}>
+                <FiAlertCircle className={styles.errorIcon} />
+                {errors.end_of_year}
+              </div>
+            )}
+          </div>
+
+          <div className={styles.checkboxSection}>
+            <div className={styles.checkboxGroup}>
+              <label className={styles.checkboxLabel}>
+                <input
+                  type="checkbox"
+                  name="is_current"
+                  checked={data.is_current}
+                  onChange={handleChange}
+                  className={styles.checkbox}
+                />
+                <span className={styles.checkmark}></span>
+                <FiCheck className={styles.checkboxIcon} />
+                Set as Current Year
+              </label>
+              
+              <label className={styles.checkboxLabel}>
+                <input
+                  type="checkbox"
+                  name="is_activate"
+                  checked={data.is_activate}
+                  onChange={handleChange}
+                  className={styles.checkbox}
+                />
+                <span className={styles.checkmark}></span>
+                <FiEye className={styles.checkboxIcon} />
+                Mark as Active
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.modalFooter}>
+          <button onClick={handleSubmit} className={styles.saveBtn}>
+            <FiPlus className={styles.btnIcon} />
+            Add Academic Year
+          </button>
+          <button onClick={onClose} className={styles.cancelBtn}>
+            <FiX className={styles.btnIcon} />
+            Cancel
+          </button>
         </div>
       </div>
     </div>
