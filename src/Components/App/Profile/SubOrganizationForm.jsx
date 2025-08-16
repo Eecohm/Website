@@ -4,6 +4,7 @@ import styles from "./styles/SubOrgForm.module.css";
 import axios from "axios";
 import { useBaseUrl } from "../../../BaseUrlContext";
 import { useAuth } from "../Login/Auth/AuthContext";
+import ModalNotification from "../../../GlobalComponets/ModalNotification";
 import {
   isOnlyAlphabets,
   isValidString,
@@ -20,7 +21,7 @@ const SubOrganizationForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    organization: "", // org id
+    organization: "",
     subOrgName: "",
     descriptionText: "",
     differentEntity: false,
@@ -37,8 +38,14 @@ const SubOrganizationForm = () => {
   const [fieldValid, setFieldValid] = useState({});
   const [imageErrors, setImageErrors] = useState({});
   const [previewImages, setPreviewImages] = useState({});
-  const [fieldErrors, setFieldErrors] = useState({}); // server-side errors
+  const [fieldErrors, setFieldErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    type: "success", // or "error"
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -111,10 +118,10 @@ const SubOrganizationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFieldErrors({}); // reset backend errors
+    setFieldErrors({});
 
     if (!validateAll()) {
-      alert("Please correct the errors before submitting.");
+      setNotification({ show: true, message: "Please correct the errors before submitting.", type: "error" });
       return;
     }
 
@@ -134,19 +141,31 @@ const SubOrganizationForm = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await axios.post(`${baseUrl}/org/suborgs/`, fd, {
+      await axios.post(`${baseUrl}/org/suborgs/`, fd, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-      alert("Sub-Organization created successfully!");
-      navigate("/dashboard/profile/sub-org/1");
+      setNotification({
+        show: true,
+        message: "Sub-Organization created successfully!",
+        type: "success",
+      });
     } catch (error) {
       if (error.response && error.response.data) {
-        setFieldErrors(error.response.data); // maps to serializer field names
+        setFieldErrors(error.response.data);
+        setNotification({
+          show: true,
+          message: "Please correct the errors.",
+          type: "error",
+        });
       } else {
-        alert("An unexpected error occurred.");
+        setNotification({
+          show: true,
+          message: "An unexpected error occurred.",
+          type: "error",
+        });
       }
     } finally {
       setIsSubmitting(false);
@@ -163,8 +182,23 @@ const SubOrganizationForm = () => {
     }
   };
 
+  const handleNotificationClose = () => {
+    setNotification({ ...notification, show: false });
+    if (notification.type === "success") {
+      navigate("/dashboard/profile/sub-organization");
+    }
+  };
+
   return (
     <div className={styles.wholediv}>
+      {notification.show && (
+        <ModalNotification
+          message={notification.message}
+          type={notification.type}
+          onClose={handleNotificationClose}
+        />
+      )}
+
       <div className={styles.backButton} onClick={handleCancel}>
         Back
       </div>

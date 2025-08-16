@@ -2,6 +2,17 @@
   height: 100vh;
   width: 100vw;
   background-color: rgb(41, 40, 40);
+  position: relative;
+}
+
+.notificationWrapper {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 600px;
+  width: 90%;
+  z-index: 1000;
 }
 
 .profileContainer {
@@ -214,11 +225,11 @@
 @media (max-width: 1024px) {
   .profileContainer {
     flex-direction: column;
-    align-items: flex-start; /* push cards to top */
-    justify-content: flex-start; /* important for vertical top */
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: 1rem;
     gap: 1rem;
-    height: auto; /* allow height to fit content */
+    height: auto;
   }
 
   .profileCard {

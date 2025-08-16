@@ -1,0 +1,112 @@
+/* Overlay to dim background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal box */
+.modal {
+  background: #1e1e1e;
+  color: #fff;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border-top: 4px solid transparent;
+  animation: popIn 0.25s ease;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.icon {
+  font-size: 22px;
+}
+
+.title {
+  flex-grow: 1;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* Body */
+.body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+/* Close button */
+.closeBtn {
+  background: transparent;
+  border: 2px solid rgb(66, 66, 66);
+  font-size: 20px;
+  width: 20%;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.closeBtn:hover {
+  color: #fff;
+}
+
+/* Variants */
+.success {
+  border-top-color: #4caf50;
+}
+
+.error {
+  border-top-color: #f44336;
+}
+
+.warning {
+  border-top-color: #ff9800;
+}
+
+.info {
+  border-top-color: #2196f3;
+}
+
+.help {
+  border-top-color: #9c27b0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -4,6 +4,7 @@ import styles from "./styles/OrgFrom.module.css";
 import axios from "axios";
 import { useBaseUrl } from "../../../BaseUrlContext";
 import { useAuth } from "../Login/Auth/AuthContext";
+import ModalNotification from "../../../GlobalComponets/ModalNotification";
 import {
   isValidPhone,
   isValidTelephone,
@@ -57,6 +58,14 @@ const OrganizationForm = () => {
     orgAddress: true,
     telPhoneNo: true,
     phoneNo: true,
+  });
+
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationConfig, setNotificationConfig] = useState({
+    type: "info",
+    message: "",
+    autoClose: true,
+    duration: 3000,
   });
 
   const handleChange = (e) => {
@@ -152,14 +161,19 @@ const OrganizationForm = () => {
 
     const allValid = validateAll();
     if (!allValid) {
-      alert("Please correct the errors before submitting.");
+      setNotificationConfig({
+        type: "error",
+        message: "Please correct the errors before submitting.",
+        autoClose: false,
+      });
+      setShowNotification(true);
       return;
     }
 
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === "vatImage" || value) {
-        data.append(key, typeof value === 'string' ? value.trim() : value);
+        data.append(key, typeof value === "string" ? value.trim() : value);
       }
     });
 
@@ -170,9 +184,28 @@ const OrganizationForm = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Success");
+      setNotificationConfig({
+        type: "success",
+        message: "Organization created successfully!",
+        autoClose: true,
+        duration: 3000,
+      });
+      setShowNotification(true);
     } catch (error) {
+      setNotificationConfig({
+        type: "error",
+        message: "Failed to create organization. Please try again.",
+        autoClose: false,
+      });
+      setShowNotification(true);
       console.error("Upload error:", error);
+    }
+  };
+
+  const handleNotificationClose = () => {
+    setShowNotification(false);
+    if (notificationConfig.type === "success") {
+      navigate("/dashboard/profile/profile-data");
     }
   };
 
@@ -326,6 +359,14 @@ const OrganizationForm = () => {
           </div>
         </form>
       </div>
+
+      {/* Modal Notification */}
+      {showNotification && (
+        <ModalNotification
+          {...notificationConfig}
+          onClose={handleNotificationClose}
+        />
+      )}
     </div>
   );
 };

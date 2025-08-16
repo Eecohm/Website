@@ -4,6 +4,7 @@ import styles from "./styles/SubOrgDetails.module.css";
 import axios from "axios";
 import { useBaseUrl } from "../../../BaseUrlContext";
 import { useAuth } from "../Login/Auth/AuthContext";
+import ModalNotification from "../../../GlobalComponets/ModalNotification";
 
 const SubOrgDetails = () => {
   const navigate = useNavigate();
@@ -14,10 +15,17 @@ const SubOrgDetails = () => {
   const [subOrgData, setSubOrgData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({});
-  const [changedFiles, setChangedFiles] = useState({}); // Track which files have been changed
+  const [changedFiles, setChangedFiles] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [modalImage, setModalImage] = useState(null);
+
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    type: "", // "success" or "error"
+    navigateTo: "", // optional redirect
+  });
 
   useEffect(() => {
     const fetchSubOrg = async () => {
@@ -36,10 +44,9 @@ const SubOrgDetails = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-    
+
     if (files && files[0]) {
-      // Track that this file has been changed
-      setChangedFiles(prev => ({ ...prev, [name]: true }));
+      setChangedFiles((prev) => ({ ...prev, [name]: true }));
       setFormData((prev) => ({
         ...prev,
         [name]: files[0],
@@ -50,32 +57,26 @@ const SubOrgDetails = () => {
         [name]: type === "checkbox" ? checked : value,
       }));
     }
-    
+
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleUpdate = async () => {
     setLoading(true);
     setErrors({});
-    
+
     try {
       const form = new FormData();
-      
-      // Image fields that should only be sent if changed
-      const imageFields = ['logo', 'panImage', 'registrationImage', 'vatImage'];
-      
-      // Add all form fields to FormData
+      const imageFields = ["logo", "panImage", "registrationImage", "vatImage"];
+
       Object.keys(formData).forEach((key) => {
         if (formData[key] !== null && formData[key] !== undefined) {
-          // Only send image files if they've been changed (are File objects)
           if (imageFields.includes(key)) {
             if (formData[key] instanceof File && changedFiles[key]) {
               form.append(key, formData[key]);
             }
-            // Skip unchanged image fields (don't send URLs as files)
           } else {
-            // Handle non-image fields normally
-            if (typeof formData[key] === 'boolean') {
+            if (typeof formData[key] === "boolean") {
               form.append(key, formData[key].toString());
             } else {
               form.append(key, formData[key]);
@@ -92,11 +93,18 @@ const SubOrgDetails = () => {
       });
 
       if (response.status === 200) {
-        alert("Sub-Organization updated successfully!");
         setSubOrgData(response.data);
         setFormData(response.data);
-        setChangedFiles({}); // Reset changed files tracker
+        setChangedFiles({});
         setEditMode(false);
+
+        // Show success notification
+        setNotification({
+          show: true,
+          message: "Sub-Organization updated successfully!",
+          type: "success",
+          
+        });
       }
     } catch (err) {
       if (err.response?.data) {
@@ -104,7 +112,12 @@ const SubOrgDetails = () => {
         console.error("Validation errors:", err.response.data);
       } else {
         console.error("Update error:", err);
-        alert("Failed to update sub-organization. Please try again.");
+        setNotification({
+          show: true,
+          message: "Failed to update sub-organization. Please try again.",
+          type: "error",
+          navigateTo: "",
+        });
       }
     } finally {
       setLoading(false);
@@ -113,19 +126,25 @@ const SubOrgDetails = () => {
 
   const handleCancel = () => {
     setFormData(subOrgData);
-    setChangedFiles({}); // Reset changed files tracker
+    setChangedFiles({});
     setErrors({});
     setEditMode(false);
+  };
+
+  const handleNotificationClose = () => {
+    setNotification((prev) => ({ ...prev, show: false }));
+    if (notification.type === "success" && notification.navigateTo) {
+      navigate(notification.navigateTo);
+    }
   };
 
   if (!subOrgData) return <div className={styles.loading}>Loading...</div>;
 
   const renderImage = (field, label) => {
     const currentValue = formData[field];
-    const displaySrc = currentValue instanceof File 
-      ? URL.createObjectURL(currentValue) 
-      : currentValue || "/default-logo.png";
-    
+    const displaySrc =
+      currentValue instanceof File ? URL.createObjectURL(currentValue) : currentValue || "/default-logo.png";
+
     const hasError = errors[field];
 
     return (
@@ -133,17 +152,12 @@ const SubOrgDetails = () => {
         <label className={styles.imageLabel}>{label}</label>
         <div className={styles.imageUploadContainer}>
           <div className={styles.imagePreview}>
-            <img
-              src={displaySrc}
-              alt={label}
-              className={styles.thumbnail}
-              onClick={() => setModalImage(displaySrc)}
-            />
+            <img src={displaySrc} alt={label} className={styles.thumbnail} onClick={() => setModalImage(displaySrc)} />
           </div>
           <div className={styles.fileInputContainer}>
-            <input 
-              type="file" 
-              name={field} 
+            <input
+              type="file"
+              name={field}
               onChange={handleChange}
               accept="image/*"
               className={styles.fileInput}
@@ -152,16 +166,10 @@ const SubOrgDetails = () => {
             <label htmlFor={`${field}-input`} className={styles.fileInputLabel}>
               Change File
             </label>
-            {currentValue instanceof File && (
-              <span className={styles.fileName}>{currentValue.name}</span>
-            )}
+            {currentValue instanceof File && <span className={styles.fileName}>{currentValue.name}</span>}
           </div>
         </div>
-        {hasError && (
-          <div className={styles.errorMessage}>
-            {Array.isArray(hasError) ? hasError.join(', ') : hasError}
-          </div>
-        )}
+        {hasError && <div className={styles.errorMessage}>{Array.isArray(hasError) ? hasError.join(", ") : hasError}</div>}
       </div>
     );
   };
@@ -190,23 +198,23 @@ const SubOrgDetails = () => {
             className={`${styles.formControl} ${hasError ? styles.error : ""}`}
           />
         )}
-        {hasError && (
-          <div className={styles.errorMessage}>
-            {Array.isArray(hasError) ? hasError.join(', ') : hasError}
-          </div>
-        )}
+        {hasError && <div className={styles.errorMessage}>{Array.isArray(hasError) ? hasError.join(", ") : hasError}</div>}
       </div>
     );
   };
 
   return (
     <div className={styles.wholeDiv}>
+      {notification.show && (
+        <ModalNotification message={notification.message} type={notification.type} onClose={handleNotificationClose} />
+      )}
+
       <div
         className={styles.backButton}
         onClick={() => navigate("/dashboard/profile/sub-organization")}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && navigate("/dashboard/profile/sub-organization")}
+        onKeyDown={(e) => e.key === "Enter" && navigate("/dashboard/profile/sub-organization")}
       >
         ← BACK
       </div>
@@ -216,40 +224,24 @@ const SubOrgDetails = () => {
 
         {!editMode ? (
           <div className={styles.cardView}>
-            <img 
-              src={subOrgData.logo || "/default-logo.png"} 
-              alt={subOrgData.subOrgName || "Organization Logo"} 
-              className={styles.logo} 
-            />
+            <img src={subOrgData.logo || "/default-logo.png"} alt={subOrgData.subOrgName || "Organization Logo"} className={styles.logo} />
             <h3>{subOrgData.subOrgName}</h3>
             <p>{subOrgData.descriptionText}</p>
-            
+
             {subOrgData.differentEntity && (
               <div className={styles.entityDetails}>
-                <p><strong>PAN:</strong> {subOrgData.panNumber}</p>
-                <p><strong>VAT:</strong> {subOrgData.vatNumber}</p>
+                <p>
+                  <strong>PAN:</strong> {subOrgData.panNumber}
+                </p>
+                <p>
+                  <strong>VAT:</strong> {subOrgData.vatNumber}
+                </p>
                 <div className={styles.images}>
-                  {subOrgData.panImage && (
-                    <img 
-                      src={subOrgData.panImage} 
-                      alt="PAN Document" 
-                      onClick={() => setModalImage(subOrgData.panImage)} 
-                    />
-                  )}
+                  {subOrgData.panImage && <img src={subOrgData.panImage} alt="PAN Document" onClick={() => setModalImage(subOrgData.panImage)} />}
                   {subOrgData.registrationImage && (
-                    <img 
-                      src={subOrgData.registrationImage} 
-                      alt="Registration Document" 
-                      onClick={() => setModalImage(subOrgData.registrationImage)} 
-                    />
+                    <img src={subOrgData.registrationImage} alt="Registration Document" onClick={() => setModalImage(subOrgData.registrationImage)} />
                   )}
-                  {subOrgData.vatImage && (
-                    <img 
-                      src={subOrgData.vatImage} 
-                      alt="VAT Document" 
-                      onClick={() => setModalImage(subOrgData.vatImage)} 
-                    />
-                  )}
+                  {subOrgData.vatImage && <img src={subOrgData.vatImage} alt="VAT Document" onClick={() => setModalImage(subOrgData.vatImage)} />}
                 </div>
               </div>
             )}
@@ -266,13 +258,7 @@ const SubOrgDetails = () => {
 
             <div className={styles.formGroup}>
               <label className={styles.checkboxLabel}>
-                <input 
-                  type="checkbox" 
-                  name="differentEntity" 
-                  checked={formData.differentEntity || false} 
-                  onChange={handleChange}
-                  className={styles.checkbox}
-                /> 
+                <input type="checkbox" name="differentEntity" checked={formData.differentEntity || false} onChange={handleChange} className={styles.checkbox} />
                 <span className={styles.checkboxText}>Different Entity</span>
               </label>
             </div>
@@ -296,18 +282,10 @@ const SubOrgDetails = () => {
             </div>
 
             <div className={styles.buttonGroup}>
-              <button 
-                onClick={handleCancel} 
-                className={styles.cancelButton}
-                disabled={loading}
-              >
+              <button onClick={handleCancel} className={styles.cancelButton} disabled={loading}>
                 Cancel
               </button>
-              <button 
-                onClick={handleUpdate} 
-                disabled={loading} 
-                className={styles.saveButton}
-              >
+              <button onClick={handleUpdate} disabled={loading} className={styles.saveButton}>
                 {loading ? "Updating..." : "Save Changes"}
               </button>
             </div>
@@ -318,7 +296,9 @@ const SubOrgDetails = () => {
       {/* Image Modal */}
       {modalImage && (
         <div className={styles.modal} onClick={() => setModalImage(null)}>
-          <span className={styles.closeModal} onClick={() => setModalImage(null)}>×</span>
+          <span className={styles.closeModal} onClick={() => setModalImage(null)}>
+            ×
+          </span>
           <img src={modalImage} alt="Full view" className={styles.modalContent} />
         </div>
       )}

@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/Profile.module.css";
+import ModalNotification from "../Common/ModalNotification"; // ensure correct import path
 
 const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(data);
+
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    type: "", // success or error
+    navigateTo: "", // optional path to navigate after close
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -34,6 +42,14 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
   const handleSave = () => {
     setIsEditing(false);
     onEdit(formData);
+
+    // Show success notification
+    setNotification({
+      show: true,
+      message: "Sub-Organization updated successfully!",
+      type: "success",
+      navigateTo: "/dashboard/profile/sub-organization",
+    });
   };
 
   const handleCancel = () => {
@@ -41,8 +57,33 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
     setFormData(data);
   };
 
+  const handleDelete = () => {
+    onDelete();
+    setNotification({
+      show: true,
+      message: "Sub-Organization deleted successfully!",
+      type: "success",
+      navigateTo: "/dashboard/profile/sub-organization",
+    });
+  };
+
+  const handleNotificationClose = () => {
+    setNotification((prev) => ({ ...prev, show: false }));
+    if (notification.type === "success" && notification.navigateTo) {
+      navigate(notification.navigateTo);
+    }
+  };
+
   return (
     <div className={styles.subOrgCard}>
+      {notification.show && (
+        <ModalNotification
+          message={notification.message}
+          type={notification.type}
+          onClose={handleNotificationClose}
+        />
+      )}
+
       {isEditing ? (
         <form
           className={styles.form}
@@ -281,7 +322,7 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
             >
               Edit
             </button>
-            <button onClick={() => onDelete()} className={styles.deleteButton}>
+            <button onClick={handleDelete} className={styles.deleteButton}>
               Delete
             </button>
           </div>
