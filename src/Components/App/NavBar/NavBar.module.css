@@ -5,6 +5,18 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Backdrop for mobile overlay */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1150;
+  display: none;
+}
+
 /* Modal Styling */
 .modalOverlay {
   position: fixed;
@@ -195,6 +207,7 @@
   align-items: center;
   gap: 8px;
   position: relative;
+  white-space: nowrap;
 }
 
 .topBarInfo span:not(:last-child)::after {
@@ -204,6 +217,11 @@
   background: rgba(75, 85, 99, 0.5);
   position: absolute;
   right: -12px;
+}
+
+/* Individual span styles for responsive hiding */
+.dateSpan, .timeSpan, .contactSpan {
+  transition: all 0.3s ease;
 }
 
 /* Settings */
@@ -468,6 +486,10 @@
   .navBar.open {
     transform: translateX(0);
   }
+
+  .backdrop {
+    display: block;
+  }
 }
 
 @media (max-width: 768px) {
@@ -491,8 +513,13 @@
     margin-left: 16px;
   }
 
-  .topBarInfo {
+  .contactSpan {
     display: none;
+  }
+
+  .topBarInfo {
+    gap: 12px;
+    padding: 8px 12px;
   }
 
   .topBarInfoGroup {
@@ -551,6 +578,14 @@
     height: 40px;
   }
 
+  .timeSpan {
+    display: none;
+  }
+
+  .topBarInfo span {
+    font-size: 0.8rem;
+  }
+
   .navBar {
     width: 260px;
   }
@@ -594,6 +629,19 @@
     height: 36px;
   }
 
+  .topBarInfo {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .topBarInfo span {
+    font-size: 0.75rem;
+  }
+
+  .dateSpan {
+    display: none;
+  }
+
   .navBar {
     width: 240px;
   }
@@ -620,6 +668,10 @@
 
   .topBarLeft {
     display: none;
+  }
+
+  .backdrop {
+    display: none !important;
   }
 }
 

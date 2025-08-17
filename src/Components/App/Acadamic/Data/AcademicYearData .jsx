@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import styles from "../Acadamic.module.css";
+import styles from "../Academic.module.css";
 
 const AcademicYearData = () => {
   const location = useLocation();

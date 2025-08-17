@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./Acadamic.module.css";
+import styles from "./Academic.module.css";
 import NavBar from "../NavBar/NavBar";
 
-const Acadamic = () => {
+const Academic = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,4 +73,4 @@ const Acadamic = () => {
   );
 };
 
-export default Acadamic;
+export default Academic;

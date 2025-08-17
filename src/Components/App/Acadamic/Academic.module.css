@@ -1,18 +1,21 @@
 /* Main Container */
 .container {
-  margin-left: 250px;
-  margin-top: 10vh;
+  margin-left: 280px;
+  margin-top: 100px;
   padding: 2rem;
   color: #ffffff;
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
   box-sizing: border-box;
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  position: relative;
+  z-index: 1;
 }
 
 /* Header Section */
 .header {
   margin-bottom: 3rem;
   text-align: center;
+  padding: 0 1rem;
 }
 
 .title {
@@ -41,6 +44,7 @@
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* Individual Cards */
@@ -159,7 +163,7 @@
 
 /* Legacy Styles for Other Components */
 .centeredCard {
-  margin: 9rem auto 40px;
+  margin: 2rem auto 40px;
   max-width: 600px;
   padding: 2rem;
   background: linear-gradient(145deg, #2a2a2a, #1e1e1e);
@@ -311,6 +315,7 @@
 @media (max-width: 1024px) {
   .container {
     margin-left: 0;
+    margin-top: 100px;
     padding: 1.5rem;
   }
   
@@ -318,15 +323,24 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.25rem;
   }
+  
+  .title {
+    font-size: 2.2rem;
+  }
 }
 
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
+    margin-top: 100px;
   }
   
   .title {
     font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
   }
   
   .card {
@@ -334,6 +348,7 @@
     flex-direction: column;
     text-align: center;
     min-height: auto;
+    gap: 1rem;
   }
   
   .cardIcon {
@@ -350,11 +365,20 @@
   .cardArrow {
     display: none;
   }
+  
+  .header {
+    margin-bottom: 2rem;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .container {
-    padding: 0.5rem;
+    padding: 0.75rem;
+    margin-top: 100px;
+  }
+  
+  .title {
+    font-size: 1.8rem;
   }
   
   .card {
@@ -373,5 +397,55 @@
   
   .cardDescription {
     font-size: 0.9rem;
+  }
+  
+  .cardGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+    margin-top: 100px;
+  }
+  
+  .title {
+    font-size: 1.6rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .cardIcon {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
+  
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+  
+  .cardDescription {
+    font-size: 0.85rem;
+  }
+  
+  .header {
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1440px) {
+  .container {
+    margin-left: 300px;
   }
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../Acadamic.module.css";
+import styles from "../Academic.module.css";
 import NavBar from "../../NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 
