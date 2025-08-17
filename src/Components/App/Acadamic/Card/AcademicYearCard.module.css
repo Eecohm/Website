@@ -550,6 +550,7 @@
 }
 
 .modalContent {
+  margin-top: 50px;
   background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
   border-radius: 1.5rem;
   width: 100%;
@@ -558,6 +559,7 @@
   overflow-y: auto;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(148, 163, 184, 0.1);
+
 }
 
 .modalHeader {
