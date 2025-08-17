@@ -1,0 +1,292 @@
+.wholediv {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(41, 40, 40);
+  position: relative;
+}
+
+.notificationWrapper {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 600px;
+  width: 90%;
+  z-index: 1000;
+}
+
+.profileContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* keep top alignment for large screens */
+  justify-content: center;
+  height: 100vh;
+  background-color: rgb(41, 40, 40);
+  color: var(--text-color);
+  padding: 1rem;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+
+.profileCard {
+  background-color: rgb(20, 38, 56);
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid white;
+  margin: 1rem 0;
+}
+
+.profileCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.profileCard h2 {
+  color: var(--primary-color);
+  font-size: clamp(1rem, 4vw, 1.8rem);
+  margin-bottom: 0.5rem;
+}
+
+.profileCard p {
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.backButton::before {
+  content: "← BACK";
+  display: inline-block;
+  transition: transform 0.5s ease;
+  border: 2px solid white;
+  color: white;
+  margin-top: 25px;
+  margin-left: 25px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.backButton:hover {
+  background-color: var(---color);
+  transform: translateY(-2px);
+}
+
+.errorMessage {
+  color: red;
+}
+
+.formContainer {
+  background-color: rgb(24, 40, 54);
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  margin: 1rem auto;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formContainer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+}
+
+.formContainer input.inputError {
+  border: 1px solid rgb(253, 66, 66);
+}
+
+.formContainer h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formContainer input {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid rgb(54, 82, 94);
+  border-radius: 4px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  transition: box-shadow 0.3s ease;
+}
+
+.formContainer input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
+}
+
+.formRowGrop {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.formGroupe {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 140px;
+}
+
+.imageUploadRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.imageUploadGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 160px;
+}
+
+.imageUploadGroup label {
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  margin-bottom: 0.3rem;
+  color: var(--text-color);
+}
+
+.imageUploadGroup input[type="file"] {
+  width: 100%;
+  padding: 0.3rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+}
+
+.imagePreviewBox {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-height: 150px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.imagePreviewBox:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.buttonGroup button {
+  width: 100%;
+  max-width: 150px;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buttonGroup button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.cancelButton {
+  background-color: yellow;
+  color: var(--on-surface);
+}
+
+.saveButton {
+  background-color: green;
+  color: var(--on-surface);
+}
+
+@media (max-width: 1024px) {
+  .profileContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+    height: auto;
+  }
+
+  .profileCard {
+    max-width: 90%;
+  }
+
+  .formContainer {
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .profileContainer {
+    gap: 1rem;
+  }
+
+  .profileCard {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .formContainer {
+    padding: 1rem;
+  }
+
+  .formRowGrop {
+    flex-direction: column;
+  }
+
+  .formGroupe {
+    min-width: 100%;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .buttonGroup button {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .backButton {
+    width: 100%;
+    max-width: 120px;
+  }
+
+  .profileCard {
+    padding: 0.8rem;
+  }
+
+  .formContainer {
+    margin: 0.5rem;
+  }
+
+  .imageUploadGroup {
+    max-width: 100%;
+  }
+}

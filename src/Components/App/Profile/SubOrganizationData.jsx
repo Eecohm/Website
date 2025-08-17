@@ -1,58 +1,105 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import styles from "./styles/Profile.module.css";
-import SubOrganizationCard from "./SubOrganizationCard";
+import { useNavigate } from "react-router-dom";
+import styles from "./styles/SubOrg.module.css";
+import axios from "axios";
+import { useBaseUrl } from "../../../BaseUrlContext";
+import { useAuth } from "../Login/Auth/AuthContext";
 
 const SubOrganizationData = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const [savedSubOrgs, setSavedSubOrgs] = useState([]);
+  const baseUrl = useBaseUrl();
+  const token = useAuth();
+  const [subOrgs, setSubOrgs] = useState([]);
 
   useEffect(() => {
-    if (location.state && location.state.formData) {
-      setSavedSubOrgs((prev) => [location.state.formData, ...prev]);
-    }
-  }, [location.state]);
+    const fetchSubOrgs = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/org/suborgs`, {
+          headers: { Authorization: `Bearer ${token.token}` },
+        });
+        if (response.status === 200) {
+          setSubOrgs(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch sub-organizations", error);
+      }
+    };
+    fetchSubOrgs();
+  }, [baseUrl, token]);
 
   const handleAddNew = () => {
-    navigate("/dashboard/profile/sub-organization");
+    navigate("/dashboard/profile/add-sub-organization");
   };
 
-  const handleEdit = (index) => {
-    navigate("/profile/sub-organization", {
-      state: { formData: savedSubOrgs[index] },
-    });
-  };
-
-  const handleDelete = (index) => {
-    setSavedSubOrgs((prev) => prev.filter((_, idx) => idx !== index));
+  const handleViewDetails = async (subOrgId) => {
+    try {
+      const response = await axios.get(`${baseUrl}/org/suborgs/${subOrgId}/`, {
+        headers: { Authorization: `Bearer ${token.token}` },
+      });
+      if (response.status === 200) {
+        navigate(`/dashboard/profile/suborg-details/${subOrgId}`, {
+          state: { subOrg: response.data },
+        });
+      }
+    } catch (error) {
+      console.error("Failed to fetch sub-organization details", error);
+    }
   };
 
   return (
-    <div className={styles.dataContainer}>
-      <h2>Sub-Organization Details</h2>
-      <div className={styles.subOrgList}>
-        {savedSubOrgs.map((subOrg, index) => (
-          <SubOrganizationCard
-            key={index}
-            data={subOrg}
-            onEdit={() => handleEdit(index)}
-            onDelete={() => handleDelete(index)}
-          />
+    <div className={styles.mainContainer}>
+      <div className={styles.header}>
+        <button 
+          className={styles.backButton}
+          onClick={() => navigate("/dashboard/profile")}
+        >
+          ← Back to Profile
+        </button>
+        <h1 className={styles.title}>Sub-Organizations</h1>
+      </div>
+
+      <div className={styles.gridContainer}>
+        {subOrgs.map((subOrg) => (
+          <div 
+            key={subOrg.id} 
+            className={styles.businessCard}
+            onClick={() => handleViewDetails(subOrg.id)}
+          >
+            <div className={styles.cardContent}>
+              <div className={styles.cardDetails}>
+                <h3 className={styles.orgName}>{subOrg.name}</h3>
+                {subOrg.description && (
+                  <p className={styles.orgDescription}>{subOrg.description}</p>
+                )}
+                <div className={styles.metaInfo}>
+                  {subOrg.differentEntity && (
+                    <span className={styles.entityTag}>Separate Entity</span>
+                  )}
+                </div>
+              </div>
+              
+              <div className={styles.cardLogo}>
+                <img
+                  src={subOrg.logo || "/default-logo.png"}
+                  alt={subOrg.name}
+                  className={styles.logoImage}
+                />
+              </div>
+            </div>
+          </div>
         ))}
-        <div
-          className={styles.addNewCard}
+
+        <div 
+          className={`${styles.businessCard} ${styles.addNewCard}`}
           onClick={handleAddNew}
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              handleAddNew();
-            }
-          }}
+          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleAddNew()}
         >
-          <span className={styles.addIcon}>+</span>
-          <span>Add New</span>
+          <div className={styles.addNewContent}>
+            <span className={styles.addIcon}>+</span>
+            <span className={styles.addText}>Add New Sub-Organization</span>
+          </div>
         </div>
       </div>
     </div>

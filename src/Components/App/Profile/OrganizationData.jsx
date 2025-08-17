@@ -1,434 +1,278 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import styles from "./styles/Profile.module.css";
+import { useNavigate } from "react-router-dom";
+import styles from "./styles/OrgCard.module.css";
+import axios from "axios";
+import { useBaseUrl } from '../../../BaseUrlContext';
+import { useAuth } from "../Login/Auth/AuthContext";
+import { 
+  FiPhone, 
+  FiSmartphone, 
+  FiMail, 
+  FiArrowLeft,
+  FiMapPin,
+  FiFileText,
+  FiCreditCard,
+  FiHome,
+  FiEye,
+  FiX,
+  FiImage,
+  FiZoomIn,
+  FiDownload,
+  FiInfo
+} from 'react-icons/fi';
 
 const OrganizationData = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    orgName: "Acme Corporation",
-    orgAddress: "1234 Elm Street, Springfield",
-    telPhoneNo: "01-5551234",
-    phoneNo: "9801234567",
-    emailAddress: "info@acme.com",
-    logoUrl: null,
-    panNumber: "123456789",
-    vatNumber: "987654321",
-    panImage: null,
-    registrationImage: null,
-    vatImage: null,
-  });
-
-  const [previewImages, setPreviewImages] = useState({
-    logoUrl: null,
-    panImage: null,
-    registrationImage: null,
-    vatImage: null,
-  });
-
-  // New state for modal image view
-  const [viewedImage, setViewedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const baseUrl = useBaseUrl();
+  const token = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const [formData, setFormData] = useState({});
+  const [modalImage, setModalImage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const convertFileToBase64 = (file) => {
-      return new Promise((resolve) => {
-        if (!file) {
-          resolve(null);
-          return;
-        }
-        if (typeof file === "string") {
-          // Already a base64 string or URL
-          resolve(file);
-          return;
-        }
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          resolve(reader.result);
-        };
-        reader.readAsDataURL(file);
-      });
-    };
-
-    const processImages = async () => {
-      if (location.state && location.state.formData) {
-        const data = location.state.formData;
-        setFormData(data);
-
-        const logoUrl = await convertFileToBase64(data.logoUrl);
-        const panImage = await convertFileToBase64(data.panImage);
-        const registrationImage = await convertFileToBase64(
-          data.registrationImage
-        );
-        const vatImage = await convertFileToBase64(data.vatImage);
-
-        setPreviewImages({
-          logoUrl,
-          panImage,
-          registrationImage,
-          vatImage,
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${baseUrl}/org/orgs`, {
+          headers: { Authorization: `Bearer ${token.token}` },
         });
+        if (response.status === 200) {
+          setFormData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data", error);
+        setError("Failed to load organization data");
+      } finally {
+        setLoading(false);
       }
     };
+    fetchData();
+  }, [baseUrl, token]);
 
-    processImages();
-  }, [location.state]);
+  const openModal = (imgUrl) => setModalImage(imgUrl);
+  const closeModal = () => setModalImage(null);
+  const handleBack = () => navigate("/dashboard/profile");
 
-  const handleEdit = () => {
-    setIsEditing(true);
+  const downloadImage = (imageUrl, filename) => {
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = filename;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  const handleDelete = () => {
-    const confirmDelete = window.confirm(
-      "Do you really want to delete this data?"
+  if (loading) {
+    return (
+      <div className={styles.maindiv}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner}></div>
+          <p>Loading organization data...</p>
+        </div>
+      </div>
     );
-    if (confirmDelete) {
-      // Delete logic here
-      navigate("/dashboard/profile", { replace: true });
-    }
-  };
+  }
 
-  const handleSave = () => {
-    // Save logic here
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
-
-  const handleViewImage = (imageType) => {
-    if (previewImages[imageType]) {
-      setViewedImage(previewImages[imageType]);
-      setIsModalOpen(true);
-    }
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setViewedImage(null);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleImageChange = (e) => {
-    const { name } = e.target;
-    const file = e.target.files[0];
-    if (file) {
-      setFormData((prev) => ({ ...prev, [name]: file }));
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImages((prev) => ({ ...prev, [name]: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  if (error) {
+    return (
+      <div className={styles.maindiv}>
+        <div className={styles.errorContainer}>
+          <FiInfo className={styles.errorIcon} />
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()} className={styles.retryBtn}>
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div
-        className={styles.backButton}
-        onClick={() => navigate("/dashboard/profile")}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            navigate("/dashboard/profile");
-          }
-        }}
-      ></div>
-      <div className={styles.dataContainer}>
-        <h2>Organization Details</h2>
+    <div className={styles.maindiv}>
+      {/* Header */}
+      <div className={styles.header}>
+        <button className={styles.backButton} onClick={handleBack}>
+          <FiArrowLeft className={styles.btnIcon} />
+          Back to Profile
+        </button>
+        <div className={styles.headerTitle}>
+          <FiHome className={styles.headerIcon} />
+          <h1>Organization Details</h1>
+        </div>
+      </div>
 
-        {isEditing ? (
-          <form
-            className={styles.form}
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSave();
-            }}
-          >
-            <div className={styles.formGroup}>
-              <label>Organization Name</label>
-              <input
-                type="text"
-                name="orgName"
-                value={formData.orgName}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Organization Address</label>
-              <input
-                type="text"
-                name="orgAddress"
-                value={formData.orgAddress}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.formRow}>
-              <div className={styles.formGroup}>
-                <label>Telephone Number</label>
-                <input
-                  type="text"
-                  name="telPhoneNo"
-                  value={formData.telPhoneNo}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Mobile Number</label>
-                <input
-                  type="text"
-                  name="phoneNo"
-                  value={formData.phoneNo}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Email Address</label>
-              <input
-                type="email"
-                name="emailAddress"
-                value={formData.emailAddress}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.formRow}>
-              <div className={styles.formGroup}>
-                <label>PAN Number</label>
-                <input
-                  type="text"
-                  name="panNumber"
-                  value={formData.panNumber}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>VAT Number</label>
-                <input
-                  type="text"
-                  name="vatNumber"
-                  value={formData.vatNumber}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Logo</label>
-              <input
-                type="file"
-                name="logoUrl"
-                onChange={handleImageChange}
-                accept="image/*"
-              />
-              {previewImages.logoUrl && (
-                <img
-                  src={previewImages.logoUrl}
-                  alt="Logo Preview"
-                  className={styles.imagePreview}
-                />
-              )}
-            </div>
-
-            <div className={styles.imageRow}>
-              <div className={styles.imageGroup}>
-                <label>PAN Image</label>
-                <input
-                  type="file"
-                  name="panImage"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                />
-                {previewImages.panImage && (
-                  <img
-                    src={previewImages.panImage}
-                    alt="PAN Preview"
-                    className={styles.imagePreview}
-                  />
-                )}
-              </div>
-
-              <div className={styles.imageGroup}>
-                <label>Registration Image</label>
-                <input
-                  type="file"
-                  name="registrationImage"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                />
-                {previewImages.registrationImage && (
-                  <img
-                    src={previewImages.registrationImage}
-                    alt="Registration Preview"
-                    className={styles.imagePreview}
-                  />
-                )}
-              </div>
-
-              <div className={styles.imageGroup}>
-                <label>VAT Image</label>
-                <input
-                  type="file"
-                  name="vatImage"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                />
-                {previewImages.vatImage && (
-                  <img
-                    src={previewImages.vatImage}
-                    alt="VAT Preview"
-                    className={styles.imagePreview}
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className={styles.buttonGroup}>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className={styles.cancelButton}
-              >
-                Cancel
-              </button>
-              <button type="submit" className={styles.saveButton}>
-                Save
-              </button>
-            </div>
-          </form>
-        ) : (
-          <>
-            {previewImages.logoUrl && (
-              <div className={styles.logoContainer}>
-                <img
-                  src={previewImages.logoUrl}
-                  alt="Organization Logo"
-                  className={styles.logoImageRounded}
-                  onClick={() => handleViewImage("logoUrl")}
-                />
-              </div>
-            )}
-
-            <div className={styles.dataDisplay}>
-              <div className={styles.dataRow}>
-                <span>Organization Name:</span>
-                <span>{formData.orgName}</span>
-              </div>
-
-              <div className={styles.dataRow}>
-                <span>Address:</span>
-                <span>{formData.orgAddress}</span>
-              </div>
-
-              <div className={styles.dataRow}>
-                <span>Telephone:</span>
+      {/* Business Card Layout */}
+      <div className={styles.businessCard}>
+        {/* Left Side - Details */}
+        <div className={styles.cardDetails}>
+          <h2 className={styles.orgName}>{formData.orgName || "Organization Name"}</h2>
+          
+          {/* Contact Info */}
+          <div className={styles.contactSection}>
+            {formData.telPhoneNo && (
+              <div className={styles.contactItem}>
+                <FiPhone className={styles.contactIcon} />
                 <span>{formData.telPhoneNo}</span>
               </div>
-
-              <div className={styles.dataRow}>
-                <span>Mobile:</span>
+            )}
+            
+            {formData.phoneNo && (
+              <div className={styles.contactItem}>
+                <FiSmartphone className={styles.contactIcon} />
                 <span>{formData.phoneNo}</span>
               </div>
-
-              <div className={styles.dataRow}>
-                <span>Email:</span>
+            )}
+            
+            {formData.emailAddress && (
+              <div className={styles.contactItem}>
+                <FiMail className={styles.contactIcon} />
                 <span>{formData.emailAddress}</span>
               </div>
-
-              <div className={styles.dataRow}>
-                <span>PAN Number:</span>
-                <span>{formData.panNumber}</span>
+            )}
+            
+            {formData.orgAddress && (
+              <div className={styles.contactItem}>
+                <FiMapPin className={styles.contactIcon} />
+                <span>{formData.orgAddress}</span>
               </div>
-
-              <div className={styles.dataRow}>
-                <span>VAT Number:</span>
-                <span>{formData.vatNumber}</span>
+            )}
+          </div>
+          
+          {/* Legal Info */}
+          <div className={styles.legalSection}>
+            {formData.panNumber && (
+              <div className={styles.legalItem}>
+                <FiCreditCard className={styles.legalIcon} />
+                <span>PAN: {formData.panNumber}</span>
+              </div>
+            )}
+            
+            {formData.vatNumber && (
+              <div className={styles.legalItem}>
+                <FiFileText className={styles.legalIcon} />
+                <span>VAT: {formData.vatNumber}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {/* Right Side - Logo */}
+        {formData.logoUrl && (
+          <div className={styles.cardLogo}>
+            <div className={styles.logoContainer}>
+              <img 
+                src={formData.logoUrl} 
+                alt="Organization Logo" 
+                className={styles.logoImage}
+              />
+              <div className={styles.logoOverlay}>
+                <button 
+                  className={styles.logoActionBtn}
+                  onClick={() => openModal(formData.logoUrl)}
+                >
+                  <FiZoomIn />
+                </button>
+                <button 
+                  className={styles.logoActionBtn}
+                  onClick={() => downloadImage(formData.logoUrl, 'organization_logo.jpg')}
+                >
+                  <FiDownload />
+                </button>
               </div>
             </div>
-
-            <div className={styles.imageRow}>
-              {previewImages.panImage && (
-                <div className={styles.imageContainer}>
-                  <img
-                    src={previewImages.panImage}
-                    alt="PAN Image"
-                    className={styles.imageThumbnail}
-                    onClick={() => handleViewImage("panImage")}
-                  />
-                </div>
-              )}
-
-              {previewImages.registrationImage && (
-                <div className={styles.imageContainer}>
-                  <img
-                    src={previewImages.registrationImage}
-                    alt="Registration Image"
-                    className={styles.imageThumbnail}
-                    onClick={() => handleViewImage("registrationImage")}
-                  />
-                </div>
-              )}
-
-              {previewImages.vatImage && (
-                <div className={styles.imageContainer}>
-                  <img
-                    src={previewImages.vatImage}
-                    alt="VAT Image"
-                    className={styles.imageThumbnail}
-                    onClick={() => handleViewImage("vatImage")}
-                  />
-                </div>
-              )}
-            </div>
-
-            <div className={styles.buttonGroup}>
-              <button onClick={handleEdit} className={styles.editButton}>
-                Edit
-              </button>
-              <button onClick={handleDelete} className={styles.deleteButton}>
-                Delete
-              </button>
-            </div>
-          </>
+          </div>
         )}
       </div>
 
-      {/* Modal for viewing image */}
-      {isModalOpen && (
+      {/* Documents Section */}
+      <div className={styles.documentsSection}>
+        <div className={styles.sectionHeader}>
+          <FiImage className={styles.sectionIcon} />
+          <h3>Legal Documents</h3>
+        </div>
+        
+        <div className={styles.documentsGrid}>
+          {[
+            { key: "panImage", label: "PAN Document", icon: FiCreditCard },
+            { key: "registrationImage", label: "Registration Document", icon: FiFileText },
+            { key: "vatImage", label: "VAT Document", icon: FiFileText },
+          ].map(({ key, label, icon: Icon }) =>
+            formData[key] ? (
+              <div key={key} className={styles.documentCard}>
+                <div className={styles.documentHeader}>
+                  <Icon className={styles.documentIcon} />
+                  <span className={styles.documentLabel}>{label}</span>
+                </div>
+                
+                <div className={styles.documentImageContainer}>
+                  <img
+                    src={formData[key]}
+                    alt={label}
+                    className={styles.documentImage}
+                  />
+                  <div className={styles.documentOverlay}>
+                    <button
+                      className={styles.documentBtn}
+                      onClick={() => openModal(formData[key])}
+                      title="View Full Size"
+                    >
+                      <FiEye />
+                    </button>
+                    <button
+                      className={styles.documentBtn}
+                      onClick={() => downloadImage(formData[key], `${label.replace(/\s+/g, '_')}.jpg`)}
+                      title="Download Image"
+                    >
+                      <FiDownload />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : null
+          )}
+        </div>
+
+        {![formData.panImage, formData.registrationImage, formData.vatImage].some(Boolean) && (
+          <div className={styles.noDocuments}>
+            <FiImage className={styles.noDocumentsIcon} />
+            <p>No documents available</p>
+          </div>
+        )}
+      </div>
+
+      {/* Image Modal */}
+      {modalImage && (
         <div className={styles.modalOverlay} onClick={closeModal}>
-          <div
-            className={styles.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className={styles.closeButton} onClick={closeModal}>
-              &times;
-            </button>
-            <img src={viewedImage} alt="Viewed" className={styles.modalImage} />
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h3>Document Preview</h3>
+              <div className={styles.modalActions}>
+                <button
+                  className={styles.modalActionBtn}
+                  onClick={() => downloadImage(modalImage, 'document.jpg')}
+                  title="Download"
+                >
+                  <FiDownload />
+                </button>
+                <button
+                  className={styles.modalCloseBtn}
+                  onClick={closeModal}
+                  title="Close"
+                >
+                  <FiX />
+                </button>
+              </div>
+            </div>
+            <div className={styles.modalImageContainer}>
+              <img src={modalImage} alt="Document Preview" className={styles.modalImage} />
+            </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

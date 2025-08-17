@@ -1,6 +1,20 @@
+/* Main Container */
 .mainNavDiv {
   display: flex;
   flex-direction: column;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Backdrop for mobile overlay */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1150;
+  display: none;
 }
 
 /* Modal Styling */
@@ -10,63 +24,111 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2000;
+  z-index: 3000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
 .modalBox {
-  background: #1a2b38;
-  color: white;
-  padding: 30px 20px;
-  border-radius: 10px;
+  background: linear-gradient(135deg, #4d4e4e 0%, #252525 100%);
+  color: #f9fafb;
+  padding: 40px 30px;
+  border-radius: 20px;
   text-align: center;
-  width: 400px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  width: 420px;
+  max-width: 90vw;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(47, 49, 51, 0.3);
+  border: 1px solid rgba(75, 85, 99, 0.2);
+  transform: scale(0.9);
+  animation: modalSlideIn 0.3s ease forwards;
+}
+
+@keyframes modalSlideIn {
+  to { 
+    transform: scale(1); 
+  }
+}
+
+.modalBox h3 {
+  margin: 0 0 30px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f9fafb;
 }
 
 .modalButtons {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.logoutButton, .cancelButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  position: relative;
+  overflow: hidden;
 }
 
 .logoutButton {
-  background-color: #e53935;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 10px;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.logoutButton:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
 }
 
 .cancelButton {
-  background-color: #777;
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
   color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 10px;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+}
+
+.cancelButton:hover {
+  background: linear-gradient(135deg, #0f1011 0%, #1f2022 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
 }
 
 /* Top Bar */
 .topBar {
   position: fixed;
   top: 0;
-  left: 15vw;
+  left: 280px;
   right: 0;
-  height: 10vh;
-  background-color: black;
-  color: #ffffff;
+  height: 100px;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  color: #f9fafb;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 0 32px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(75, 85, 99, 0.2);
   z-index: 1100;
+  backdrop-filter: blur(20px);
 }
 
 .topBarContent {
@@ -74,48 +136,95 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
 }
 
 .topBarLeft {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
 }
 
 .topBarLogo {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  padding: 4px;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.topBarLogo:hover {
+  transform: scale(1.1);
+  background: rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
 .schoolName {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin: 0;
-  color: #ffffff;
+  color: #f9fafb;
   cursor: pointer;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Settings and Info */
+.schoolName:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.2);
+}
+
+/* Top Bar Info Group */
 .topBarInfoGroup {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 32px;
 }
 
 .topBarInfo {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  padding: 12px 20px;
+  background: rgba(31, 41, 55, 0.6);
+  border-radius: 16px;
+  border: 1px solid rgba(75, 85, 99, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .topBarInfo span {
   font-size: 0.9rem;
   color: #d1d5db;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  white-space: nowrap;
 }
 
+.topBarInfo span:not(:last-child)::after {
+  content: '';
+  width: 1px;
+  height: 16px;
+  background: rgba(75, 85, 99, 0.5);
+  position: absolute;
+  right: -12px;
+}
+
+/* Individual span styles for responsive hiding */
+.dateSpan, .timeSpan, .contactSpan {
+  transition: all 0.3s ease;
+}
+
+/* Settings */
 .settingsContainer {
   position: relative;
   display: block;
@@ -123,34 +232,84 @@
 
 .settingsIcon {
   cursor: pointer;
-  font-size: 1.2rem;
-  color: #d1d5db;
+  font-size: 1.3rem;
+  color: #9ca3af;
+  padding: 12px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: rgba(31, 41, 55, 0.6);
+  border: 1px solid rgba(75, 85, 99, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.settingsIcon:hover {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  transform: rotate(90deg);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
 }
 
 .settingsMenu {
   position: absolute;
-  top: 30px;
+  top: 60px;
   right: 0;
-  background-color: #101f29;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
   list-style: none;
-  padding: 10px;
+  padding: 12px;
   margin: 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  min-width: 120px;
+  border-radius: 16px;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.4),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
   z-index: 10000;
+  border: 1px solid rgba(75, 85, 99, 0.2);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: dropIn 0.3s ease forwards;
+}
+
+@keyframes dropIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .settingsItem {
-  padding: 10px;
+  padding: 14px 16px;
   cursor: pointer;
-  border-radius: 3px;
-  color: #ffffff;
-  transition: background-color 0.2s ease;
+  border-radius: 10px;
+  color: #d1d5db;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.settingsItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  transition: width 0.3s ease;
 }
 
 .settingsItem:hover {
-  background-color: #000000;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  transform: translateX(5px);
+}
+
+.settingsItem:hover::before {
+  width: 4px;
 }
 
 /* Sidebar */
@@ -159,110 +318,168 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 15vw;
-  background-color: #000000;
-  color: #ffffff;
+  width: 280px;
+  background: linear-gradient(180deg, #3f3f3f 0%, #161616 100%);
+  color: #f9fafb;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease-in-out;
-  z-index: 1000;
+  padding: 32px 0;
+  box-shadow: 
+    4px 0 15px -3px rgba(0, 0, 0, 0.3),
+    2px 0 6px -1px rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgba(75, 85, 99, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1200;
+  backdrop-filter: blur(20px);
 }
 
 .navBarHeader {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  padding: 0 32px;
 }
 
 .navBarLogo {
-  width: 100px;
-  height: 100px;
-  background-color: #ffffff;
-  border-radius: 10%;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #ffffff 0%, #c2c2c2 100%);
+  border-radius: 24px;
   object-fit: contain;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  padding: 8px;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+.navBarLogo:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
 }
 
 .navBarMenu {
   list-style: none;
-  padding: 0;
+  padding: 0 20px;
   margin: 0;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .navBarItem {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
-  margin: 5px 0;
+  padding: 16px 20px;
   cursor: pointer;
-  border-radius: 5px;
-  color: #ffffff;
-  transition: background-color 0.2s ease;
+  border-radius: 16px;
+  color: #d1d5db;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+}
+
+.navBarItem::before {
+  content: '';
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  transition: left 0.4s ease;
 }
 
 .navBarItem:hover {
-  background-color: #1a2b38;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  transform: translateX(8px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+
+.navBarItem:hover::before {
+  left: 0;
 }
 
 .navBarItem.active {
-  background-color: #1a2b38;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  color: #3b82f6;
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 
+    0 4px 15px rgba(59, 130, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.navBarItem.active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 2px 0 0 2px;
 }
 
 .navBarIcon {
-  margin-right: 15px;
-  font-size: 1.2rem;
-  color: #d1d5db;
+  margin-right: 16px;
+  font-size: 1.3rem;
+  color: #9ca3af;
+  transition: all 0.3s ease;
+  width: 24px;
+  text-align: center;
+}
+
+.navBarItem:hover .navBarIcon {
+  color: #3b82f6;
+  transform: scale(1.1);
+}
+
+.navBarItem.active .navBarIcon {
+  color: #3b82f6;
 }
 
 .navBarToggle {
   display: none;
   font-size: 1.5rem;
   cursor: pointer;
-  padding: 10px;
+  padding: 12px;
   color: #d1d5db;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: rgba(31, 41, 55, 0.6);
+  border: 1px solid rgba(75, 85, 99, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+.navBarToggle:hover {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .topBar {
     left: 0;
-    padding: 0 10px;
-    height: 12vh;
-  }
-
-  .topBarContent {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .topBarLeft {
-    flex-shrink: 0;
-  }
-
-  .schoolName {
-    font-size: 1.2rem;
-    flex-grow: 1;
-    text-align: center;
+    padding: 0 20px;
   }
 
   .topBarInfo {
-    display: none;
+    gap: 16px;
   }
 
-  .topBarInfoGroup {
-    gap: 10px;
-  }
-
-  .settingsContainer {
-    display: block;
+  .topBarInfo span {
+    font-size: 0.85rem;
   }
 
   .navBar {
-    width: 250px;
     transform: translateX(-100%);
   }
 
@@ -270,16 +487,181 @@
     transform: translateX(0);
   }
 
-  .navBarToggle {
+  .backdrop {
     display: block;
-  }
-
-  .navBarHeader {
-    display: none;
   }
 }
 
-@media (min-width: 769px) {
+@media (max-width: 768px) {
+  .topBar {
+    height: 100px;
+    padding: 0 16px;
+  }
+
+  .topBarContent {
+    gap: 16px;
+  }
+
+  .topBarLeft {
+    flex-shrink: 0;
+  }
+
+  .schoolName {
+    font-size: 1.4rem;
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 16px;
+  }
+
+  .contactSpan {
+    display: none;
+  }
+
+  .topBarInfo {
+    gap: 12px;
+    padding: 8px 12px;
+  }
+
+  .topBarInfoGroup {
+    gap: 12px;
+  }
+
+  .settingsContainer {
+    display: block;
+  }
+
+  .navBarToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navBar {
+    width: 280px;
+    transform: translateX(-100%);
+    box-shadow: 
+      4px 0 25px -5px rgba(0, 0, 0, 0.4),
+      2px 0 10px -3px rgba(0, 0, 0, 0.3);
+  }
+
+  .navBar.open {
+    transform: translateX(0);
+  }
+
+  .navBarHeader {
+    margin-bottom: 30px;
+  }
+
+  .navBarLogo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .modalBox {
+    width: 350px;
+    padding: 30px 25px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topBar {
+    height: 100px;
+    padding: 0 12px;
+  }
+
+  .schoolName {
+    font-size: 1.25rem;
+  }
+
+  .topBarLogo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .timeSpan {
+    display: none;
+  }
+
+  .topBarInfo span {
+    font-size: 0.8rem;
+  }
+
+  .navBar {
+    width: 260px;
+  }
+
+  .navBarItem {
+    padding: 14px 16px;
+  }
+
+  .navBarIcon {
+    font-size: 1.2rem;
+    margin-right: 12px;
+  }
+
+  .modalBox {
+    width: 320px;
+    padding: 25px 20px;
+  }
+
+  .modalButtons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .logoutButton, .cancelButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .topBar {
+    height: 100px;
+    padding: 0 10px;
+  }
+
+  .schoolName {
+    font-size: 1.1rem;
+  }
+
+  .topBarLogo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .topBarInfo {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .topBarInfo span {
+    font-size: 0.75rem;
+  }
+
+  .dateSpan {
+    display: none;
+  }
+
+  .navBar {
+    width: 240px;
+  }
+
+  .navBarItem {
+    padding: 12px 14px;
+  }
+
+  .navBarItem span {
+    font-size: 0.9rem;
+  }
+
+  .modalBox {
+    width: 300px;
+    margin: 20px;
+  }
+}
+
+/* Desktop specific adjustments */
+@media (min-width: 1025px) {
   .navBar {
     transform: translateX(0);
   }
@@ -287,27 +669,87 @@
   .topBarLeft {
     display: none;
   }
+
+  .backdrop {
+    display: none !important;
+  }
 }
 
-@media (max-width: 480px) {
+/* Large screens */
+@media (min-width: 1440px) {
   .topBar {
-    height: 10vh;
-  }
-
-  .schoolName {
-    font-size: 1rem;
-  }
-
-  .topBarLogo {
-    width: 30px;
-    height: 30px;
+    left: 300px;
+    padding: 0 40px;
   }
 
   .navBar {
-    width: 200px;
+    width: 300px;
   }
 
   .navBarHeader {
-    display: none;
+    margin-bottom: 50px;
+  }
+
+  .navBarLogo {
+    width: 140px;
+    height: 140px;
+  }
+
+  .navBarItem {
+    padding: 18px 24px;
+  }
+
+  .topBarInfo {
+    gap: 28px;
+  }
+}
+
+/* Dark scrollbar for webkit browsers */
+.navBar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.navBar::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.5);
+}
+
+.navBar::-webkit-scrollbar-thumb {
+  background: rgba(107, 114, 128, 0.5);
+  border-radius: 3px;
+}
+
+.navBar::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.7);
+}
+
+/* Loading states and micro interactions */
+.navBarItem, .settingsItem, .logoutButton, .cancelButton {
+  position: relative;
+}
+
+.navBarItem::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navBarItem:hover::after {
+  width: 80%;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .navBarItem, .settingsItem, .modalBox, .navBar, .topBar {
+    transition: none;
+  }
+  
+  .navBarLogo, .topBarLogo {
+    transition: none;
   }
 }

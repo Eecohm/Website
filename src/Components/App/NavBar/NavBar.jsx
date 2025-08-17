@@ -44,12 +44,40 @@ const NavBar = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const toggleSidebar = () => {
+  // Close sidebar when clicking outside or when route changes
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(`.${styles.navBar}`) && 
+          !event.target.closest(`.${styles.navBarToggle}`) && 
+          !event.target.closest(`.${styles.settingsContainer}`)) {
+        setIsSidebarOpen(false);
+        setIsSettingsOpen(false);
+      }
+    };
+
+    if (isSidebarOpen || isSettingsOpen) {
+      document.addEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isSidebarOpen, isSettingsOpen]);
+
+  // Close sidebar on route change
+  useEffect(() => {
+    setIsSidebarOpen(false);
+    setIsSettingsOpen(false);
+  }, [location.pathname]);
+
+  const toggleSidebar = (event) => {
+    event.stopPropagation();
     setIsSidebarOpen(!isSidebarOpen);
     if (isSettingsOpen) setIsSettingsOpen(false);
   };
 
-  const toggleSettings = () => {
+  const toggleSettings = (event) => {
+    event.stopPropagation();
     setIsSettingsOpen(!isSettingsOpen);
     if (isSidebarOpen) setIsSidebarOpen(false);
   };
@@ -93,8 +121,33 @@ const NavBar = () => {
     navigate("/login");
   };
 
+  const handleNavItemClick = (path) => {
+    navigate(path);
+    setIsSidebarOpen(false);
+  };
+
+  const handleSettingsItemClick = (item) => {
+    if (item.action) {
+      item.action();
+    } else {
+      navigate(item.path);
+    }
+    setIsSettingsOpen(false);
+  };
+
   return (
     <div className={styles.mainNavDiv}>
+      {/* Backdrop for mobile */}
+      {(isSidebarOpen || showLogoutModal) && (
+        <div 
+          className={styles.backdrop}
+          onClick={() => {
+            setIsSidebarOpen(false);
+            setShowLogoutModal(false);
+          }}
+        />
+      )}
+
       <header className={styles.topBar}>
         <div className={styles.topBarContent}>
           <div className={styles.topBarLeft}>
@@ -113,15 +166,14 @@ const NavBar = () => {
           </h1>
           <div className={styles.topBarInfoGroup}>
             <div className={styles.topBarInfo}>
-              <span>{today}</span>
-              <span>{currentTime}</span>
-              <span>Contact: 023-546392</span>
+              <span className={styles.dateSpan}>{today}</span>
+              <span className={styles.timeSpan}>{currentTime}</span>
+              <span className={styles.contactSpan}>Contact: 023-546392</span>
             </div>
-            <div className={styles.settingsContainer}>
+            <div className={styles.settingsContainer} onClick={toggleSettings}>
               <FontAwesomeIcon
                 icon={faCog}
                 className={styles.settingsIcon}
-                onClick={toggleSettings}
               />
               {isSettingsOpen && (
                 <ul className={styles.settingsMenu}>
@@ -129,13 +181,9 @@ const NavBar = () => {
                     <li
                       key={index}
                       className={styles.settingsItem}
-                      onClick={() => {
-                        if (item.action) {
-                          item.action();
-                        } else {
-                          navigate(item.path);
-                        }
-                        setIsSettingsOpen(false);
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSettingsItemClick(item);
                       }}
                     >
                       {item.name}
@@ -164,10 +212,7 @@ const NavBar = () => {
               className={`${styles.navBarItem} ${
                 location.pathname === item.path ? styles.active : ""
               }`}
-              onClick={() => {
-                navigate(item.path);
-                setIsSidebarOpen(false);
-              }}
+              onClick={() => handleNavItemClick(item.path)}
             >
               <FontAwesomeIcon icon={item.icon} className={styles.navBarIcon} />
               <span>{item.name}</span>

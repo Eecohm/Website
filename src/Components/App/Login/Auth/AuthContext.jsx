@@ -1,29 +1,42 @@
-import React, { createContext, useState, useEffect, Children, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [role, setrole] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    try{
     const savedToken = localStorage.getItem("accessToken")
+    const setUserId = localStorage.getItem("userId")
+    const setrole = localStorage.getItem("role")
     if (savedToken) {
       setToken(savedToken);
+    }
+  } catch (error){
+    console.error("Error accessing localStorage:", error)
+  }
+  finally{
+    setIsLoading(false);
     }
   }, []);
 
   const login = (newToken) => {
     setToken(newToken);
-    localStorage.setItem('authToken', newToken);
+    localStorage.setItem('accessToken', newToken);
   };
 
   const logut = () => {
     setToken(null);
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('accessToken');
   };
 
   return(
-    <AuthContext.Provider value={{token, login, logut}}>
+    <AuthContext.Provider value={{token, login, logut, isLoading, userId, role}}>
     {children}
     </AuthContext.Provider>
   );
@@ -32,7 +45,7 @@ export const AuthProvider = ({children}) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error ("userAuth must be used insed an AutherProvider");
+    throw new Error("useAuth must be used inside an AuthProvider");
   }
   return context;
 };

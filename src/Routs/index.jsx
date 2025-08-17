@@ -5,11 +5,13 @@ import UnderConstruction from '../Components/App/UnderConstruction';
 
 const AppRoutes = () => (
     <Routes>
+        {/* Protected Routes */}
+        <Route path='/dashboard/*' element={<PrivateRoutes />} />
+        
         {/* Public Routes */}
         <Route path='/*' element={<PublicRoutes/>} />
 
-        {/* Protected Routes */}
-        <Route path='/dashboard/*' element={<PrivateRoutes />} />
+        
 
         {/* Catch-all */}
         <Route path="*" element={<UnderConstruction />} />

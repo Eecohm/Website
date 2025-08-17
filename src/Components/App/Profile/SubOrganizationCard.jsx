@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/Profile.module.css";
+import ModalNotification from "../Common/ModalNotification";
 
 const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(data);
+
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    type: "",
+    navigateTo: "",
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -34,6 +42,12 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
   const handleSave = () => {
     setIsEditing(false);
     onEdit(formData);
+    setNotification({
+      show: true,
+      message: "Sub-Organization updated successfully!",
+      type: "success",
+      navigateTo: "/dashboard/profile/sub-organization",
+    });
   };
 
   const handleCancel = () => {
@@ -41,8 +55,33 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
     setFormData(data);
   };
 
+  const handleDelete = () => {
+    onDelete();
+    setNotification({
+      show: true,
+      message: "Sub-Organization deleted successfully!",
+      type: "success",
+      navigateTo: "/dashboard/profile/sub-organization",
+    });
+  };
+
+  const handleNotificationClose = () => {
+    setNotification((prev) => ({ ...prev, show: false }));
+    if (notification.type === "success" && notification.navigateTo) {
+      navigate(notification.navigateTo);
+    }
+  };
+
   return (
     <div className={styles.subOrgCard}>
+      {notification.show && (
+        <ModalNotification
+          message={notification.message}
+          type={notification.type}
+          onClose={handleNotificationClose}
+        />
+      )}
+
       {isEditing ? (
         <form
           className={styles.form}
@@ -51,66 +90,72 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
             handleSave();
           }}
         >
-          <div className={styles.formGroup}>
-            <label>Sub-Organization Name</label>
-            <input
-              type="text"
-              name="subOrgName"
-              value={formData.subOrgName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Description</label>
-            <textarea
-              name="descriptionText"
-              value={formData.descriptionText}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>
-              <input
-                type="checkbox"
-                name="differentEntity"
-                checked={formData.differentEntity}
-                onChange={handleChange}
-              />
-              Different Entity
-            </label>
-          </div>
-
-          {formData.differentEntity && (
-            <>
-              <div className={styles.formRow}>
-                <div className={styles.formGroup}>
-                  <label>PAN Number</label>
-                  <input
-                    type="text"
-                    name="panNumber"
-                    value={formData.panNumber}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label>VAT Number</label>
-                  <input
-                    type="text"
-                    name="vatNumber"
-                    value={formData.vatNumber}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
+          <div className={styles.businessCard}>
+            <div className={styles.cardDetails}>
+              <div className={styles.formGroup}>
+                <label>Sub-Organization Name</label>
+                <input
+                  type="text"
+                  name="subOrgName"
+                  value={formData.subOrgName}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
-              <div className={styles.imageRow}>
+              <div className={styles.formGroup}>
+                <label>Description</label>
+                <textarea
+                  name="descriptionText"
+                  value={formData.descriptionText}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    name="differentEntity"
+                    checked={formData.differentEntity}
+                    onChange={handleChange}
+                  />
+                  Different Entity
+                </label>
+              </div>
+
+              {formData.differentEntity && (
+                <>
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>PAN Number</label>
+                      <input
+                        type="text"
+                        name="panNumber"
+                        value={formData.panNumber}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                      <label>VAT Number</label>
+                      <input
+                        type="text"
+                        name="vatNumber"
+                        value={formData.vatNumber}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {formData.differentEntity && (
+              <div className={styles.cardImages}>
                 <div className={styles.imageGroup}>
                   <label>PAN Image</label>
                   <input
@@ -177,8 +222,8 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
                   )}
                 </div>
               </div>
-            </>
-          )}
+            )}
+          </div>
 
           <div className={styles.buttonGroup}>
             <button
@@ -194,84 +239,85 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
           </div>
         </form>
       ) : (
-        <div className={styles.dataDisplay}>
-          <div className={styles.dataRow}>
-            <span>Sub-Organization Name:</span>
-            <span>{formData.subOrgName}</span>
-          </div>
+        <div className={styles.businessCard}>
+          <div className={styles.cardDetails}>
+            <h2 className={styles.orgName}>{formData.subOrgName}</h2>
+            
+            <div className={styles.dataRow}>
+              <span>Description:</span>
+              <p>{formData.descriptionText}</p>
+            </div>
 
-          <div className={styles.dataRow}>
-            <span>Description:</span>
-            <span>{formData.descriptionText}</span>
-          </div>
+            <div className={styles.dataRow}>
+              <span>Different Entity:</span>
+              <span>{formData.differentEntity ? "Yes" : "No"}</span>
+            </div>
 
-          <div className={styles.dataRow}>
-            <span>Different Entity:</span>
-            <span>{formData.differentEntity ? "Yes" : "No"}</span>
+            {formData.differentEntity && (
+              <>
+                <div className={styles.dataRow}>
+                  <span>PAN Number:</span>
+                  <span>{formData.panNumber}</span>
+                </div>
+
+                <div className={styles.dataRow}>
+                  <span>VAT Number:</span>
+                  <span>{formData.vatNumber}</span>
+                </div>
+              </>
+            )}
           </div>
 
           {formData.differentEntity && (
-            <>
-              <div className={styles.dataRow}>
-                <span>PAN Number:</span>
-                <span>{formData.panNumber}</span>
-              </div>
+            <div className={styles.cardImages}>
+              {formData.panImage && (
+                <div className={styles.imageContainer}>
+                  <span>PAN:</span>
+                  <img
+                    src={
+                      typeof formData.panImage === "string"
+                        ? formData.panImage
+                        : URL.createObjectURL(formData.panImage)
+                    }
+                    alt="PAN Image"
+                    className={styles.imageThumbnail}
+                    onClick={() => handleViewImage("panImage")}
+                  />
+                </div>
+              )}
 
-              <div className={styles.dataRow}>
-                <span>VAT Number:</span>
-                <span>{formData.vatNumber}</span>
-              </div>
+              {formData.registrationImage && (
+                <div className={styles.imageContainer}>
+                  <span>Registration:</span>
+                  <img
+                    src={
+                      typeof formData.registrationImage === "string"
+                        ? formData.registrationImage
+                        : URL.createObjectURL(formData.registrationImage)
+                    }
+                    alt="Registration Image"
+                    className={styles.imageThumbnail}
+                    onClick={() => handleViewImage("registrationImage")}
+                  />
+                </div>
+              )}
 
-              <div className={styles.imageRow}>
-                {formData.panImage && (
-                  <div className={styles.imageContainer}>
-                    <span>PAN:</span>
-                    <img
-                      src={
-                        typeof formData.panImage === "string"
-                          ? formData.panImage
-                          : URL.createObjectURL(formData.panImage)
-                      }
-                      alt="PAN Image"
-                      className={styles.imageThumbnail}
-                      onClick={() => handleViewImage("panImage")}
-                    />
-                  </div>
-                )}
-
-                {formData.registrationImage && (
-                  <div className={styles.imageContainer}>
-                    <span>Registration:</span>
-                    <img
-                      src={
-                        typeof formData.registrationImage === "string"
-                          ? formData.registrationImage
-                          : URL.createObjectURL(formData.registrationImage)
-                      }
-                      alt="Registration Image"
-                      className={styles.imageThumbnail}
-                      onClick={() => handleViewImage("registrationImage")}
-                    />
-                  </div>
-                )}
-
-                {formData.vatImage && (
-                  <div className={styles.imageContainer}>
-                    <span>VAT:</span>
-                    <img
-                      src={
-                        typeof formData.vatImage === "string"
-                          ? formData.vatImage
-                          : URL.createObjectURL(formData.vatImage)
-                      }
-                      alt="VAT Image"
-                      className={styles.imageThumbnail}
-                      onClick={() => handleViewImage("vatImage")}
-                    />
-                  </div>
-                )}
-              </div>
-            </>
+              {formData.vatImage && (
+                <div className={styles.imageContainer}>
+                  <span>VAT:</span>
+                  <img
+                    src={
+                      typeof formData.vatImage === "string"
+                        ? formData.vatImage
+                        : URL.createObjectURL(formData.vatImage)
+                    }
+                    alt="VAT Image"
+                    className={styles.imageThumbnail}
+                    onClick={() => handleViewImage("vatImage")}
+                  />
+                </div>
+              )}
+            </div>
           )}
 
           <div className={styles.buttonGroup}>
@@ -281,7 +327,7 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
             >
               Edit
             </button>
-            <button onClick={() => onDelete()} className={styles.deleteButton}>
+            <button onClick={handleDelete} className={styles.deleteButton}>
               Delete
             </button>
           </div>

@@ -13,6 +13,7 @@ import OrganizationForm from "../Components/App/Profile/OrganizationForm";
 import OrganizationData from "../Components/App/Profile/OrganizationData";
 import SubOrganizationForm from "../Components/App/Profile/SubOrganizationForm";
 import SubOrganizationData from "../Components/App/Profile/SubOrganizationData";
+import SubOrgDetails from "../Components/App/Profile/SubOrgDetails";
 import ViewImage from "../Components/App/Profile/ViewImage";
 import Acadamic from "../Components/App/Acadamic/Acadamic";
 import AcademicYearCard from "../Components/App/Acadamic/Card/AcademicYearCard";
@@ -21,15 +22,19 @@ import FacultyCard from "../Components/App/Acadamic/Card/FacultyCard";
 import GradeCard from "../Components/App/Acadamic/Card/GradeCard";
 import AcademicClassCard from "../Components/App/Acadamic/Card/AcademicClassCard";
 import AcademicYearData from "../Components/App/Acadamic/Data/AcademicYearData ";
-import ProgramData from "../Components/App/Acadamic/Data/ProgramData ";
+import ProgramData from "../Components/App/Acadamic/Data/ProgramData";
 import FacultyData from "../Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";
 
 const RequireAuth = ({ children }) => {
-  const { token } = useAuth();
+  const { token, isLoading } = useAuth();
+  
   const location = useLocation();
 
+  if (isLoading) {
+    return <div>loading......</div>
+  }
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
@@ -39,7 +44,7 @@ const RequireAuth = ({ children }) => {
 const PrivateRoutes = () => (
   <Routes>
     <Route
-      path="/"
+      path="/*"
       element={
         <RequireAuth>
           <DashBoard />
@@ -122,10 +127,27 @@ const PrivateRoutes = () => (
       path="/profile/sub-organization"
       element={
         <RequireAuth>
+          <SubOrganizationData />
+        </RequireAuth>
+      }
+    />
+    <Route
+      path="/profile/add-sub-organization"
+      element={
+        <RequireAuth>
           <SubOrganizationForm />
         </RequireAuth>
       }
     />
+      <Route
+    path="/profile/suborg-details/:id"
+    element={
+      <RequireAuth>
+        <SubOrgDetails />
+      </RequireAuth>
+    }
+  />
+
     <Route
       path="/profile/sub-org/:id"
       element={
