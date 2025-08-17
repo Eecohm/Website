@@ -1,6 +1,6 @@
 /* Dashboard container */
 .dashboard {
-  background-color: #1c1c1c;
+  background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
   margin-top: 10vh;
   margin-left: 15vw;
   height: 90vh;

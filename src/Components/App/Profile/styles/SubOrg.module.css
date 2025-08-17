@@ -1,6 +1,6 @@
 /* Main Container */
 .mainContainer {
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
   min-height: 100vh;
   padding: 2rem;
   color: #f5f5f5;
