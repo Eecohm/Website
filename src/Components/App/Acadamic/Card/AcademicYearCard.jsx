@@ -178,19 +178,6 @@ const AcademicYearCard = () => {
       <NavBar />
       <div className={styles.container}>
         {/* Header */}
-        <div className={styles.header}>
-          <button
-            className={styles.backButton}
-            onClick={() => navigate("/dashboard/academic")}
-          >
-            <FiArrowLeft className={styles.icon} />
-            Back to Dashboard
-          </button>
-          <div className={styles.headerTitle}>
-            <FiBookOpen className={styles.headerIcon} />
-            <h1>Academic Year Management</h1>
-          </div>
-        </div>
 
         <div className={styles.wholeDiv}>
           {/* Left Panel */}

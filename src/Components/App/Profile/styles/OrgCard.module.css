@@ -3,7 +3,7 @@
 /* Business Card Layout */
 .businessCard {
   display: flex;
-  background: rgba(26, 26, 26, 0.8);
+   background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
   border-radius: 1.5rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(156, 163, 175, 0.1);
@@ -100,7 +100,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+   background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -478,7 +478,7 @@
 .documentsSection {
   margin: 0.75rem;
   padding: 1rem;
-  background: rgba(45, 45, 45, 0.3);
+   background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
   border-radius: 1rem;
   border: 1px solid rgba(156, 163, 175, 0.1);
 }
