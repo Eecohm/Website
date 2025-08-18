@@ -5,7 +5,7 @@ import { useBaseUrl } from "../../../../BaseUrlContext";
 import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./AcademicYearCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
-import NavBar from "../../NavBar/NavBar"; // Import NavBar component
+import NavBar from "../../NavBar/NavBar";
 import {
   FiAlertCircle,
   FiSearch,
