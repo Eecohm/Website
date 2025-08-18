@@ -41,6 +41,16 @@ const ProgramCard = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
 
+  // Sample previous program options
+  const previousProgramOptions = [
+    { id: "", name: "-- None --" },
+    { id: "1", name: "High School" },
+    { id: "2", name: "Diploma" },
+    { id: "3", name: "Associate Degree" },
+    { id: "4", name: "Bachelor's Degree" },
+    { id: "5", name: "Master's Degree" },
+  ];
+
   // Fetch programs
   const fetchPrograms = async (query = "") => {
     try {
@@ -87,13 +97,13 @@ const ProgramCard = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // if dropdown changed
     if (name === "previousProgramId") {
-      const selected = programs.find((p) => String(p.id) === value);
+      const selected = previousProgramOptions.find(
+        (p) => String(p.id) === value
+      );
       setFormData((prev) => ({
         ...prev,
-        previousProgramId: value,
-        previousProgramName: selected ? selected.programName : "",
+        previousProgramName: selected ? selected.name : "",
       }));
     }
 
@@ -329,14 +339,11 @@ const ProgramCard = () => {
                       onChange={handleChange}
                       className={styles.selectInput}
                     >
-                      <option value="">-- None --</option>
-                      {programs
-                        .filter((p) => p.id !== selectedProgram?.id)
-                        .map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.programName}
-                          </option>
-                        ))}
+                      {previousProgramOptions.map((option) => (
+                        <option key={option.id} value={option.id}>
+                          {option.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -392,6 +399,7 @@ const ProgramCard = () => {
           <AddProgramModal
             onClose={() => setAddModalOpen(false)}
             onAdd={handleAdd}
+            previousProgramOptions={previousProgramOptions}
           />
         )}
 
@@ -407,7 +415,7 @@ const ProgramCard = () => {
   );
 };
 
-const AddProgramModal = ({ onClose, onAdd }) => {
+const AddProgramModal = ({ onClose, onAdd, previousProgramOptions }) => {
   const [data, setData] = useState({
     programName: "",
     durationMonths: "",
@@ -420,6 +428,17 @@ const AddProgramModal = ({ onClose, onAdd }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "previousProgramId") {
+      const selected = previousProgramOptions.find(
+        (p) => String(p.id) === value
+      );
+      setData((prev) => ({
+        ...prev,
+        previousProgramName: selected ? selected.name : "",
+      }));
+    }
+
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -493,6 +512,25 @@ const AddProgramModal = ({ onClose, onAdd }) => {
                 {errors.durationMonths}
               </div>
             )}
+          </div>
+
+          <div className={styles.fieldGroup}>
+            <label>
+              <FiLayers className={styles.fieldIcon} />
+              Previous Program
+            </label>
+            <select
+              name="previousProgramId"
+              value={data.previousProgramId}
+              onChange={handleChange}
+              className={styles.selectInput}
+            >
+              {previousProgramOptions.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className={styles.fieldGroup}>

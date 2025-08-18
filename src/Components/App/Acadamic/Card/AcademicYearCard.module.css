@@ -3,7 +3,7 @@
   min-height: 91vh;
   padding: 1.5rem 2rem;
   padding-top: 1rem; /* Restore some top padding */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #e5e7eb;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
   margin-top: 80px;
@@ -78,7 +78,7 @@
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(148, 163, 184, 0.1);
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 /* Left Panel */
@@ -88,7 +88,6 @@
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(148, 163, 184, 0.1);
-  
 }
 
 .panelHeader {
@@ -283,8 +282,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
-  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.7); }
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.7);
+  }
 }
 
 /* Right Panel */
@@ -293,7 +297,11 @@
 }
 
 .detailsCard {
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(30, 41, 59, 0.8) 0%,
+    rgba(15, 23, 42, 0.8) 100%
+  );
   padding: 1rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -560,7 +568,6 @@
   overflow-y: auto;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(148, 163, 184, 0.1);
-
 }
 
 .modalHeader {
@@ -672,7 +679,7 @@
   .container {
     margin-left: 200px;
   }
-  
+
   .wholeDiv {
     grid-template-columns: 350px 1fr;
   }
@@ -682,7 +689,7 @@
   .container {
     margin-left: 180px;
   }
-  
+
   .wholeDiv {
     grid-template-columns: 320px 1fr;
   }
@@ -693,17 +700,17 @@
     margin-left: 0;
     padding: 1rem;
   }
-  
+
   .wholeDiv {
     grid-template-columns: 1fr;
     height: auto;
   }
-  
+
   .leftPanel {
     border-right: none;
     border-bottom: 1px solid rgba(148, 163, 184, 0.1);
   }
-  
+
   .checkboxGroup {
     grid-template-columns: 1fr;
   }
@@ -714,51 +721,51 @@
     padding: 1rem;
     margin-left: 0;
   }
-  
+
   .backButton {
     width: 150px;
     min-width: auto;
   }
-  
+
   .header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
     margin-top: 1rem;
   }
-  
+
   .headerTitle h1 {
     font-size: 1.5rem;
   }
-  
+
   .wholeDiv {
     border-radius: 1rem;
   }
-  
+
   .leftPanel,
   .rightPanel {
     padding: 1rem;
   }
-  
+
   .detailsCard {
     padding: 1.5rem;
   }
-  
+
   .modalContent {
     margin: 1rem;
     max-width: none;
   }
-  
+
   .modalHeader,
   .modalBody,
   .modalFooter {
     padding: 1rem;
   }
-  
+
   .modalFooter {
     flex-direction: column-reverse;
   }
-  
+
   .saveBtn,
   .cancelBtn {
     width: 100%;
@@ -770,16 +777,16 @@
   .container {
     padding: 0.5rem;
   }
-  
+
   .yearBadges {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .checkboxGroup {
     gap: 0.75rem;
   }
-  
+
   .checkboxLabel {
     padding: 0.75rem;
   }
