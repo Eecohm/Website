@@ -5,19 +5,19 @@ import { useBaseUrl } from "../../../../BaseUrlContext";
 import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./AcademicYearCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
-import NavBar from "../../NavBar/NavBar"; // Import NavBar component
-import { 
-  FiAlertCircle, 
-  FiSearch, 
-  FiPlus, 
-  FiCalendar, 
-  FiSave, 
+import NavBar from "../../NavBar/NavBar";
+import {
+  FiAlertCircle,
+  FiSearch,
+  FiPlus,
+  FiCalendar,
+  FiSave,
   FiArrowLeft,
   FiCheck,
   FiX,
   FiEye,
   FiBookOpen,
-  FiSettings
+  FiSettings,
 } from "react-icons/fi";
 
 const AcademicYearCard = () => {
@@ -52,7 +52,8 @@ const AcademicYearCard = () => {
       setAcademicYears(data);
 
       if (data.length) {
-        const currentYear = data.find((y) => y.is_current || y.isCurrent) || data[0];
+        const currentYear =
+          data.find((y) => y.is_current || y.isCurrent) || data[0];
         setSelectedYear(currentYear);
         setFormData(currentYear);
       } else {
@@ -185,7 +186,7 @@ const AcademicYearCard = () => {
               <FiCalendar className={styles.panelIcon} />
               <h3>Academic Years</h3>
             </div>
-            
+
             <div className={styles.searchContainer}>
               <FiSearch className={styles.searchIcon} />
               <input
@@ -213,13 +214,21 @@ const AcademicYearCard = () => {
                         <span className={styles.yearName}>{year.name}</span>
                         <div className={styles.yearBadges}>
                           {(year.is_current || year.isCurrent) && (
-                            <span className={styles.badge + ' ' + styles.currentBadge}>
+                            <span
+                              className={
+                                styles.badge + " " + styles.currentBadge
+                              }
+                            >
                               <FiCheck className={styles.badgeIcon} />
                               Current
                             </span>
                           )}
                           {(year.is_activate || year.isActive) && (
-                            <span className={styles.badge + ' ' + styles.activeBadge}>
+                            <span
+                              className={
+                                styles.badge + " " + styles.activeBadge
+                              }
+                            >
                               <FiEye className={styles.badgeIcon} />
                               Active
                             </span>
@@ -278,7 +287,9 @@ const AcademicYearCard = () => {
                       name="start_of_year"
                       value={formData.start_of_year || formData.startDate || ""}
                       onChange={handleChange}
-                      className={`${styles.dateInput} ${errors.startDate ? styles.inputError : ""}`}
+                      className={`${styles.dateInput} ${
+                        errors.startDate ? styles.inputError : ""
+                      }`}
                     />
                     {errors.startDate && (
                       <div className={styles.error}>
@@ -298,7 +309,9 @@ const AcademicYearCard = () => {
                       name="end_of_year"
                       value={formData.end_of_year || formData.endDate || ""}
                       onChange={handleChange}
-                      className={`${styles.dateInput} ${errors.endDate ? styles.inputError : ""}`}
+                      className={`${styles.dateInput} ${
+                        errors.endDate ? styles.inputError : ""
+                      }`}
                     />
                     {errors.endDate && (
                       <div className={styles.error}>
@@ -314,7 +327,9 @@ const AcademicYearCard = () => {
                         <input
                           type="checkbox"
                           name="is_current"
-                          checked={formData.is_current ?? formData.isCurrent ?? false}
+                          checked={
+                            formData.is_current ?? formData.isCurrent ?? false
+                          }
                           onChange={handleChange}
                           className={styles.checkbox}
                         />
@@ -322,12 +337,14 @@ const AcademicYearCard = () => {
                         <FiCheck className={styles.checkboxIcon} />
                         Set as Current Year
                       </label>
-                      
+
                       <label className={styles.checkboxLabel}>
                         <input
                           type="checkbox"
                           name="is_activate"
-                          checked={formData.is_activate ?? formData.isActive ?? false}
+                          checked={
+                            formData.is_activate ?? formData.isActive ?? false
+                          }
                           onChange={handleChange}
                           className={styles.checkbox}
                         />
@@ -354,7 +371,10 @@ const AcademicYearCard = () => {
               <div className={styles.noSelection}>
                 <FiCalendar className={styles.noSelectionIcon} />
                 <h3>Select an Academic Year</h3>
-                <p>Choose an academic year from the list to view and edit its details</p>
+                <p>
+                  Choose an academic year from the list to view and edit its
+                  details
+                </p>
               </div>
             )}
           </div>
@@ -439,7 +459,9 @@ const AddAcademicYearModal = ({ onClose, onAdd }) => {
               name="start_of_year"
               value={data.start_of_year}
               onChange={handleChange}
-              className={`${styles.dateInput} ${errors.start_of_year ? styles.inputError : ""}`}
+              className={`${styles.dateInput} ${
+                errors.start_of_year ? styles.inputError : ""
+              }`}
             />
             {errors.start_of_year && (
               <div className={styles.error}>
@@ -459,7 +481,9 @@ const AddAcademicYearModal = ({ onClose, onAdd }) => {
               name="end_of_year"
               value={data.end_of_year}
               onChange={handleChange}
-              className={`${styles.dateInput} ${errors.end_of_year ? styles.inputError : ""}`}
+              className={`${styles.dateInput} ${
+                errors.end_of_year ? styles.inputError : ""
+              }`}
             />
             {errors.end_of_year && (
               <div className={styles.error}>
@@ -483,7 +507,7 @@ const AddAcademicYearModal = ({ onClose, onAdd }) => {
                 <FiCheck className={styles.checkboxIcon} />
                 Set as Current Year
               </label>
-              
+
               <label className={styles.checkboxLabel}>
                 <input
                   type="checkbox"
