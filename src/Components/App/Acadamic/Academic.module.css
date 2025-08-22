@@ -6,7 +6,7 @@
   color: #ffffff;
   min-height: calc(100vh - 100px);
   box-sizing: border-box;
-  background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
+  background: linear-gradient(135deg, #0f2027 0%, #202443 50%, #2c4464 100%);
   position: relative;
   z-index: 1;
 }

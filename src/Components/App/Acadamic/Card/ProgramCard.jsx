@@ -27,6 +27,7 @@ const ProgramCard = () => {
   const { token } = useAuth();
 
   const [programs, setPrograms] = useState([]);
+  const [previousProgramOptions, setPreviousProgramOptions] = useState([]);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [formData, setFormData] = useState({
     programName: "",
@@ -41,15 +42,24 @@ const ProgramCard = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
 
-  // Sample previous program options
-  const previousProgramOptions = [
-    { id: "", name: "-- None --" },
-    { id: "1", name: "High School" },
-    { id: "2", name: "Diploma" },
-    { id: "3", name: "Associate Degree" },
-    { id: "4", name: "Bachelor's Degree" },
-    { id: "5", name: "Master's Degree" },
-  ];
+  // Fetch all programs for the previous program dropdown
+  const fetchPreviousPrograms = async () => {
+    try {
+      const res = await axios.get(`${baseUrl}/academics/programs/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      // Add "None" option and format the data
+      const programOptions = [
+        { id: "", programName: "-- None --" },
+        ...res.data
+      ];
+      
+      setPreviousProgramOptions(programOptions);
+    } catch (err) {
+      console.error("Error fetching previous programs:", err);
+    }
+  };
 
   // Fetch programs
   const fetchPrograms = async (query = "") => {
@@ -80,6 +90,7 @@ const ProgramCard = () => {
 
   useEffect(() => {
     fetchPrograms();
+    fetchPreviousPrograms();
   }, []);
 
   const handleSearchChange = (e) => {
@@ -103,7 +114,7 @@ const ProgramCard = () => {
       );
       setFormData((prev) => ({
         ...prev,
-        previousProgramName: selected ? selected.name : "",
+        previousProgramName: selected ? selected.programName : "",
       }));
     }
 
@@ -156,6 +167,7 @@ const ProgramCard = () => {
       }
 
       fetchPrograms();
+      fetchPreviousPrograms(); // Refresh previous programs list
     } catch (err) {
       console.error(err);
       setNotification({
@@ -187,6 +199,7 @@ const ProgramCard = () => {
       });
       setAddModalOpen(false);
       fetchPrograms();
+      fetchPreviousPrograms(); // Refresh previous programs list
       setSelectedProgram(res.data);
       setFormData(res.data);
     } catch (err) {
@@ -341,7 +354,7 @@ const ProgramCard = () => {
                     >
                       {previousProgramOptions.map((option) => (
                         <option key={option.id} value={option.id}>
-                          {option.name}
+                          {option.programName}
                         </option>
                       ))}
                     </select>
@@ -435,7 +448,7 @@ const AddProgramModal = ({ onClose, onAdd, previousProgramOptions }) => {
       );
       setData((prev) => ({
         ...prev,
-        previousProgramName: selected ? selected.name : "",
+        previousProgramName: selected ? selected.programName : "",
       }));
     }
 
@@ -527,7 +540,7 @@ const AddProgramModal = ({ onClose, onAdd, previousProgramOptions }) => {
             >
               {previousProgramOptions.map((option) => (
                 <option key={option.id} value={option.id}>
-                  {option.name}
+                  {option.programName}
                 </option>
               ))}
             </select>
@@ -556,7 +569,6 @@ const AddProgramModal = ({ onClose, onAdd, previousProgramOptions }) => {
             )}
           </div>
         </div>
-
         <div className={styles.modalFooter}>
           <button onClick={handleSubmit} className={styles.saveBtn}>
             <FiPlus className={styles.btnIcon} />
@@ -571,5 +583,4 @@ const AddProgramModal = ({ onClose, onAdd, previousProgramOptions }) => {
     </div>
   );
 };
-
 export default ProgramCard;
