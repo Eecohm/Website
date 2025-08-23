@@ -6,6 +6,7 @@ import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./AcademicYearCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
 import NavBar from "../../NavBar/NavBar";
+import NewYearData from "../modal/NewyearData";
 import {
   FiAlertCircle,
   FiSearch,
@@ -24,6 +25,9 @@ const AcademicYearCard = () => {
   const navigate = useNavigate();
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
+
+  //new model for view details
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
 
   const [academicYears, setAcademicYears] = useState([]);
   const [selectedYear, setSelectedYear] = useState(null);
@@ -140,6 +144,7 @@ const AcademicYearCard = () => {
     }
   };
 
+  // Handle adding a new academic year
   const handleAdd = async (newData) => {
     try {
       const payload = {
@@ -165,9 +170,15 @@ const AcademicYearCard = () => {
       setFormData(res.data);
     } catch (err) {
       console.error(err);
+
+      let errorMessage = "Academic year could not be added";
+      if (err.response && err.response.status === 400) {
+        errorMessage = "Academic year must be at least 1 year long.";
+      }
+
       setNotification({
         type: "error",
-        message: "Failed to add academic year",
+        message: errorMessage,
       });
     }
   };
@@ -178,13 +189,23 @@ const AcademicYearCard = () => {
       <NavBar />
       <div className={styles.container}>
         {/* Header */}
-
         <div className={styles.wholeDiv}>
           {/* Left Panel */}
           <div className={styles.leftPanel}>
             <div className={styles.panelHeader}>
               <FiCalendar className={styles.panelIcon} />
               <h3>Academic Years</h3>
+              <button
+                className={styles.viewData}
+                onClick={() => {
+                  if (selectedYear) {
+                    setDetailsModalOpen(true);
+                  }
+                }}
+                disabled={!selectedYear}
+              >
+                View details
+              </button>
             </div>
 
             <div className={styles.searchContainer}>
@@ -198,63 +219,68 @@ const AcademicYearCard = () => {
               />
             </div>
 
-            <div className={styles.yearList}>
-              {academicYears.length ? (
-                academicYears.map((year) => (
-                  <div
-                    key={year.id}
-                    className={`${styles.yearItem} ${
-                      selectedYear?.id === year.id ? styles.active : ""
-                    }`}
-                    onClick={() => handleSelectYear(year)}
-                  >
-                    <div className={styles.yearItemContent}>
-                      <FiCalendar className={styles.yearIcon} />
-                      <div className={styles.yearDetails}>
-                        <span className={styles.yearName}>{year.name}</span>
-                        <div className={styles.yearBadges}>
-                          {(year.is_current || year.isCurrent) && (
-                            <span
-                              className={
-                                styles.badge + " " + styles.currentBadge
-                              }
-                            >
-                              <FiCheck className={styles.badgeIcon} />
-                              Current
-                            </span>
-                          )}
-                          {(year.is_activate || year.isActive) && (
-                            <span
-                              className={
-                                styles.badge + " " + styles.activeBadge
-                              }
-                            >
-                              <FiEye className={styles.badgeIcon} />
-                              Active
-                            </span>
-                          )}
+            <div className={styles.yearListContainer}>
+              <div className={styles.yearList}>
+                {academicYears.length ? (
+                  academicYears.slice(0, 4).map((year) => (
+                    <div
+                      key={year.id}
+                      className={`${styles.yearItem} ${
+                        selectedYear?.id === year.id ? styles.active : ""
+                      }`}
+                      onClick={() => handleSelectYear(year)}
+                    >
+                      <div className={styles.yearItemContent}>
+                        <FiCalendar className={styles.yearIcon} />
+                        <div className={styles.yearDetails}>
+                          <span className={styles.yearName}>{year.name}</span>
+                          <div className={styles.yearBadges}>
+                            {(year.is_current || year.isCurrent) && (
+                              <span
+                                className={
+                                  styles.badge + " " + styles.currentBadge
+                                }
+                              >
+                                <FiCheck className={styles.badgeIcon} />
+                                Current
+                              </span>
+                            )}
+                            {(year.is_activate || year.isActive) && (
+                              <span
+                                className={
+                                  styles.badge + " " + styles.activeBadge
+                                }
+                              >
+                                <FiEye className={styles.badgeIcon} />
+                                Active
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className={styles.noData}>
+                    <FiAlertCircle className={styles.noDataIcon} />
+                    <span>No academic years found</span>
                   </div>
-                ))
-              ) : (
-                <div className={styles.noData}>
-                  <FiAlertCircle className={styles.noDataIcon} />
-                  <span>No academic years found</span>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
-            <button
-              className={`${styles.addBtn} ${
-                !academicYears.length ? styles.highlightBtn : ""
-              }`}
-              onClick={() => setAddModalOpen(true)}
-            >
-              <FiPlus className={styles.btnIcon} />
-              Add New Year
-            </button>
+            {/* add new year button to open new modal */}
+            <div className={styles.addButtonContainer}>
+              <button
+                className={`${styles.addBtn} ${
+                  !academicYears.length ? styles.highlightBtn : ""
+                }`}
+                onClick={() => setAddModalOpen(true)}
+              >
+                <FiPlus className={styles.btnIcon} />
+                Add New Year
+              </button>
+            </div>
           </div>
 
           {/* Right Panel */}
@@ -384,6 +410,14 @@ const AcademicYearCard = () => {
           <AddAcademicYearModal
             onClose={() => setAddModalOpen(false)}
             onAdd={handleAdd}
+          />
+        )}
+
+        {detailsModalOpen && (
+          <NewYearData
+            year={selectedYear}
+            onClose={() => setDetailsModalOpen(false)}
+            allYears={academicYears}
           />
         )}
 
