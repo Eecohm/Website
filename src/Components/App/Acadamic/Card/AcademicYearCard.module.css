@@ -1,3 +1,5 @@
+/* for the scrollbar at the right */
+
 /* Root Container - adjusted for navbar */
 .container {
   min-height: 91vh;
@@ -40,11 +42,12 @@
   min-width: 180px;
 }
 .viewData {
+  width: 40%;
   background: #4caf50;
   color: white;
   border: none;
   padding: 8px 8px;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
   transition: background 0.2s;
@@ -112,11 +115,16 @@
 .panelHeader {
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+.acadHeader {
+  display: flex;
+  align-items: left;
+  gap: 6px;
 }
 
 .panelHeader h3 {
@@ -517,7 +525,7 @@
 /* Action Buttons */
 .actionButtons {
   border-top: 1px solid rgba(148, 163, 184, 0.1);
-  padding-top: 1.5rem;
+  padding-top: 0.5rem;
   margin-top: 2rem;
 }
 
@@ -845,6 +853,37 @@
 
 .yearList::-webkit-scrollbar-thumb:hover {
   background: rgba(59, 130, 246, 0.6);
+}
+
+/* Right Panel */
+.rightPanel {
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.rightPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rightPanel::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 3px;
+  margin: 10px 4px;
+}
+
+.rightPanel::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.4);
+  border-radius: 3px;
+}
+
+.rightPanel::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
+/* For Firefox */
+.rightPanel {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.4) rgba(30, 41, 59, 0.3);
 }
 
 /* Animation for smooth transitions */

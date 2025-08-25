@@ -193,8 +193,10 @@ const AcademicYearCard = () => {
           {/* Left Panel */}
           <div className={styles.leftPanel}>
             <div className={styles.panelHeader}>
-              <FiCalendar className={styles.panelIcon} />
-              <h3>Academic Years</h3>
+              <div className={styles.acadHeader}>
+                <FiCalendar className={styles.panelIcon} />
+                <h3>Academic Years</h3>
+              </div>
               <button
                 className={styles.viewData}
                 onClick={() => {
