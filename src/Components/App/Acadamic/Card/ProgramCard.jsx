@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useBaseUrl } from "../../../../BaseUrlContext";
@@ -12,10 +12,8 @@ import {
   FiPlus,
   FiCalendar,
   FiSave,
-  FiArrowLeft,
   FiCheck,
   FiX,
-  FiEye,
   FiBookOpen,
   FiSettings,
   FiLayers,
@@ -44,7 +42,22 @@ const ProgramCard = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
-  const [activeView, setActiveView] = useState(null);
+
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setViewDetailsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Fetch all programs for the previous program dropdown
   const fetchPreviousPrograms = async () => {
@@ -230,7 +243,7 @@ const ProgramCard = () => {
   };
 
   const handleViewDetails = (view) => {
-    setActiveView(view);
+    setViewDetailsOpen(false);
     // Navigate to the appropriate component
     if (view === "affiliated") {
       navigate("/affiliated-data");
@@ -249,7 +262,7 @@ const ProgramCard = () => {
             <div className={styles.panelHeader}>
               <FiBookOpen className={styles.panelIcon} />
               <h3>Programs</h3>
-              <div className={styles.viewDetailsDropdown}>
+              <div className={styles.viewDetailsDropdown} ref={dropdownRef}>
                 <button
                   className={styles.viewDetailsButton}
                   onClick={() => setViewDetailsOpen(!viewDetailsOpen)}
@@ -292,42 +305,36 @@ const ProgramCard = () => {
             <div className={styles.programListContainer}>
               <div className={styles.programList}>
                 {programs.length ? (
-                  programs.slice(0, 4).map(
-                    (
-                      program // Show only first 4 programs
-                    ) => (
-                      <div
-                        key={program.id}
-                        className={`${styles.programItem} ${
-                          selectedProgram?.id === program.id
-                            ? styles.active
-                            : ""
-                        }`}
-                        onClick={() => handleSelectProgram(program)}
-                      >
-                        <div className={styles.programItemContent}>
-                          <FiBookOpen className={styles.programIcon} />
-                          <div className={styles.programDetails}>
-                            <span className={styles.programName}>
-                              {program.programName}
+                  programs.slice(0, 4).map((program) => (
+                    <div
+                      key={program.id}
+                      className={`${styles.programItem} ${
+                        selectedProgram?.id === program.id ? styles.active : ""
+                      }`}
+                      onClick={() => handleSelectProgram(program)}
+                    >
+                      <div className={styles.programItemContent}>
+                        <FiBookOpen className={styles.programIcon} />
+                        <div className={styles.programDetails}>
+                          <span className={styles.programName}>
+                            {program.programName}
+                          </span>
+                          <div className={styles.programBadges}>
+                            <span className={styles.badge}>
+                              <FiCalendar className={styles.badgeIcon} />
+                              {program.durationMonths} months
                             </span>
-                            <div className={styles.programBadges}>
+                            {program.affiliatedTo && (
                               <span className={styles.badge}>
-                                <FiCalendar className={styles.badgeIcon} />
-                                {program.durationMonths} months
+                                <FiCheck className={styles.badgeIcon} />
+                                {program.affiliatedTo}
                               </span>
-                              {program.affiliatedTo && (
-                                <span className={styles.badge}>
-                                  <FiCheck className={styles.badgeIcon} />
-                                  {program.affiliatedTo}
-                                </span>
-                              )}
-                            </div>
+                            )}
                           </div>
                         </div>
                       </div>
-                    )
-                  )
+                    </div>
+                  ))
                 ) : (
                   <div className={styles.noData}>
                     <FiAlertCircle className={styles.noDataIcon} />
@@ -337,7 +344,7 @@ const ProgramCard = () => {
               </div>
             </div>
 
-            {/* Move the add button to the container */}
+            {/* Add button container */}
             <div className={styles.addButtonContainer}>
               <button
                 className={`${styles.addBtn} ${
@@ -362,7 +369,6 @@ const ProgramCard = () => {
 
                 {/* Scrollable form content */}
                 <div className={styles.scrollableContent}>
-                  {/* form grid below */}
                   <div className={styles.formGrid}>
                     <div className={styles.fieldGroup}>
                       <label>
