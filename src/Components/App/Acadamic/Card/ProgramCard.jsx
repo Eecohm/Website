@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useBaseUrl } from "../../../../BaseUrlContext";
@@ -6,6 +6,7 @@ import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./ProgramCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
 import NavBar from "../../NavBar/NavBar";
+import ProgramModalData from "../modal/ProgramModalData";
 import {
   FiAlertCircle,
   FiSearch,
@@ -17,12 +18,10 @@ import {
   FiBookOpen,
   FiSettings,
   FiLayers,
-  FiChevronDown,
-  FiChevronUp,
 } from "react-icons/fi";
 
 const ProgramCard = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
 
@@ -42,22 +41,6 @@ const ProgramCard = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
-
-  const dropdownRef = useRef(null);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setViewDetailsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   // Fetch all programs for the previous program dropdown
   const fetchPreviousPrograms = async () => {
@@ -184,7 +167,7 @@ const ProgramCard = () => {
       }
 
       fetchPrograms();
-      fetchPreviousPrograms(); // Refresh previous programs list
+      fetchPreviousPrograms();
     } catch (err) {
       console.error(err);
       if (err.response && err.response.status === 400) {
@@ -223,7 +206,7 @@ const ProgramCard = () => {
       });
       setAddModalOpen(false);
       fetchPrograms();
-      fetchPreviousPrograms(); // Refresh previous programs list
+      fetchPreviousPrograms();
       setSelectedProgram(res.data);
       setFormData(res.data);
     } catch (err) {
@@ -242,16 +225,6 @@ const ProgramCard = () => {
     }
   };
 
-  const handleViewDetails = (view) => {
-    setViewDetailsOpen(false);
-    // Navigate to the appropriate component
-    if (view === "affiliated") {
-      navigate("/affiliated-data");
-    } else if (view === "previous") {
-      navigate("/previous-program-data");
-    }
-  };
-
   return (
     <>
       <NavBar />
@@ -260,35 +233,17 @@ const ProgramCard = () => {
           {/* Left Panel */}
           <div className={styles.leftPanel}>
             <div className={styles.panelHeader}>
-              <FiBookOpen className={styles.panelIcon} />
-              <h3>Programs</h3>
-              <div className={styles.viewDetailsDropdown} ref={dropdownRef}>
-                <button
-                  className={styles.viewDetailsButton}
-                  onClick={() => setViewDetailsOpen(!viewDetailsOpen)}
-                >
-                  View Details
-                  {viewDetailsOpen ? <FiChevronUp /> : <FiChevronDown />}
-                </button>
-                {viewDetailsOpen && (
-                  <div className={styles.viewDetailsMenu}>
-                    <button
-                      className={styles.viewDetailsItem}
-                      onClick={() => handleViewDetails("affiliated")}
-                    >
-                      <FiCheck className={styles.viewDetailsIcon} />
-                      Affiliated To
-                    </button>
-                    <button
-                      className={styles.viewDetailsItem}
-                      onClick={() => handleViewDetails("previous")}
-                    >
-                      <FiLayers className={styles.viewDetailsIcon} />
-                      Previous Program
-                    </button>
-                  </div>
-                )}
+              <div className={styles.panelLeft}>
+                <FiBookOpen className={styles.panelIcon} />
+                <h3>Programs</h3>
               </div>
+
+              <button
+                className={styles.viewDetailsButton}
+                onClick={() => setViewDetailsOpen(true)}
+              >
+                View Details
+              </button>
             </div>
 
             <div className={styles.searchContainer}>
@@ -498,6 +453,16 @@ const ProgramCard = () => {
             type={notification.type}
             message={notification.message}
             onClose={() => setNotification(null)}
+          />
+        )}
+
+        {viewDetailsOpen && (
+          <ProgramModalData
+            programs={programs}
+            onClose={() => setViewDetailsOpen(false)}
+            onProgramUpdate={fetchPrograms}
+            token={token}
+            baseUrl={baseUrl}
           />
         )}
       </div>

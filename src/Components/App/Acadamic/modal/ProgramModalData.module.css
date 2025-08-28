@@ -21,7 +21,6 @@
   border-bottom: 1px solid #2d3748;
   height: 70px;
   position: relative;
-  background: #1a2236; /* Ensure solid background */
 }
 
 .headerCenter {
@@ -66,7 +65,7 @@
 .modalContent {
   flex: 1;
   overflow-y: auto;
-  padding: 0; /* Remove padding from content area */
+  padding: 1.5rem;
   background: #1a2236;
 }
 
@@ -89,17 +88,22 @@
   background: #2563eb;
 }
 
-/* Search Section - Made Sticky */
-.searchSection {
+/* Sticky Header */
+.stickyHeader {
   position: sticky;
   top: 0;
-  z-index: 20; /* Increased z-index to ensure it's above cards */
-  background: #1a2236; /* Solid background matching modal */
-  padding: 1.5rem; /* Added padding to container instead of content */
-  margin-bottom: 0; /* Remove bottom margin */
+  background: #1a2236;
+  z-index: 100;
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #2d3748;
+}
+
+/* Search Section */
+.searchSection {
+  margin-bottom: 1rem;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #2d3748; /* Subtle separation line */
 }
 
 .searchContainer {
@@ -123,7 +127,7 @@
   border: 1px solid #374151;
   border-radius: 8px;
   font-size: 1rem;
-  background: #111827; /* Dark input background */
+  background: #111827;
   color: #e5e7eb;
   transition: all 0.2s;
 }
@@ -138,9 +142,45 @@
   color: #64748b;
 }
 
+/* Filter Section */
+.filterSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterGroup label {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.filterInput {
+  padding: 10px 12px;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: #111827;
+  color: #e5e7eb;
+  transition: all 0.2s;
+}
+
+.filterInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
 /* Cards Container */
 .cardsContainer {
-  padding: 0 3rem 3rem 3rem; /* Adjusted padding to account for sticky search */
+  padding: 1rem 0;
   width: 100%;
 }
 
@@ -150,99 +190,67 @@
   gap: 1.5rem;
 }
 
-/* Year Card */
-.yearCard {
-  background: #1f2937; /* Dark card background */
+/* Program Card */
+.programCard {
+  background: #1f2937;
   border: 1px solid #374151;
   border-radius: 12px;
   padding: 1.25rem;
-  cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  height: 180px; /* Cute minimal height */
+  height: 200px;
+  cursor: pointer;
 }
 
-.yearCard:hover {
+.programCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   border-color: #3b82f6;
 }
 
 .cardHeader {
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
 .cardIcon {
   margin-right: 10px;
-  color: #93c5fd; /* Light blue icon color */
+  color: #93c5fd;
   font-size: 1.5rem;
 }
 
-.yearName {
+.programName {
   margin: 0;
-  color: #f8fafc; /* Light text color */
+  color: #f8fafc;
   font-size: 1.1rem;
   font-weight: 600;
+  flex: 1;
 }
 
 .cardContent {
   flex: 1;
-  margin-bottom: 0.75rem;
 }
 
-.dateRow {
+.detailRow {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
-.dateLabel {
-  color: #cbd5e1; /* Light gray color */
+.detailLabel {
+  color: #cbd5e1;
   font-size: 0.9rem;
 }
 
-.dateValue {
-  color: #f1f5f9; /* Light text color */
+.detailValue {
+  color: #f1f5f9;
   font-weight: 500;
+  text-align: right;
 }
 
-.yearBadges {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3rem 0.6rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.currentBadge {
-  background: rgba(34, 197, 94, 0.2); /* Semi-transparent green */
-  color: #22c55e; /* Bright green text */
-  border: 1px solid rgba(34, 197, 94, 0.3);
-}
-
-.activeBadge {
-  background: rgba(59, 130, 246, 0.2); /* Semi-transparent blue */
-  color: #3b82f6; /* Bright blue text */
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.badgeIcon {
-  margin-right: 0.25rem;
-  font-size: 0.75rem;
-}
-
-.noYears {
+.noPrograms {
   text-align: center;
   padding: 3rem;
   color: #64748b;
@@ -254,11 +262,10 @@
 .detailsView {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1.5rem; /* Add padding for details view */
 }
 
 .detailsCard {
-  background: #1f2937; /* Dark card background */
+  background: #1f2937;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   padding: 2rem;
@@ -276,28 +283,66 @@
 
 .detailsCard .cardHeader h2 {
   margin: 0;
-  color: #93c5fd; /* Light blue accent */
+  color: #93c5fd;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
+.headerActions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.editButton,
+.saveButton,
+.deleteButton,
 .backButton {
-  width: 15%;
   display: flex;
   align-items: center;
-  background: #3b82f6; /* Blue button */
-  color: white;
-  border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
   transition: background 0.2s;
   font-size: 0.9rem;
+  border: none;
+}
+
+.editButton {
+  background: #8b5cf6;
+  color: white;
+}
+
+.editButton:hover {
+  background: #7c3aed;
+}
+
+.saveButton {
+  background: #10b981;
+  color: white;
+}
+
+.saveButton:hover {
+  background: #059669;
+}
+
+.deleteButton {
+  background: #ef4444;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #dc2626;
+}
+
+.backButton {
+  background: #64748b;
+  color: white;
 }
 
 .backButton:hover {
-  background: #2563eb; /* Darker blue on hover */
+  background: #475569;
 }
 
 .btnIcon {
@@ -319,29 +364,119 @@
   display: flex;
   align-items: center;
   font-weight: 600;
-  color: #cbd5e1; /* Light gray color */
+  color: #cbd5e1;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
 }
 
 .fieldIcon {
   margin-right: 0.5rem;
-  color: #93c5fd; /* Light blue icon color */
+  color: #93c5fd;
 }
 
 .detailValue {
-  color: #f1f5f9; /* Light text color */
+  color: #f1f5f9;
   padding: 0.75rem;
-  background: #111827; /* Dark background for value */
+  background: #111827;
   border-radius: 6px;
   border: 1px solid #374151;
   font-size: 0.95rem;
+  min-height: 44px;
+}
+
+.editInput {
+  padding: 0.75rem;
+  background: #111827;
+  border: 1px solid #3b82f6;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.editInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Delete Confirmation Modal */
+.confirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.confirmModal {
+  background: #1f2937;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #374151;
+  max-width: 400px;
+  width: 90%;
+}
+
+.confirmModal h3 {
+  margin: 0 0 1rem 0;
+  color: #f8fafc;
+  font-size: 1.2rem;
+}
+
+.confirmModal p {
+  margin: 0 0 2rem 0;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.confirmButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.confirmDeleteButton,
+.cancelDeleteButton {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+  font-size: 0.9rem;
+}
+
+.confirmDeleteButton {
+  background: #ef4444;
+  color: white;
+}
+
+.confirmDeleteButton:hover {
+  background: #dc2626;
+}
+
+.cancelDeleteButton {
+  background: #64748b;
+  color: white;
+}
+
+.cancelDeleteButton:hover {
+  background: #475569;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   .cardsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .filterSection {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -367,17 +502,17 @@
     gap: 1rem;
   }
 
+  .headerActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .editButton,
+  .saveButton,
+  .deleteButton,
   .backButton {
-    width: auto;
-    align-self: flex-end;
-  }
-
-  .searchSection {
-    padding: 1rem; /* Adjust padding for mobile */
-  }
-
-  .cardsContainer {
-    padding: 0 1rem 1rem 1rem;
+    width: 100%;
+    justify-content: center;
   }
 }
 
