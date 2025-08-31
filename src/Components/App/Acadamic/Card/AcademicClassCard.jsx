@@ -6,6 +6,7 @@ import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./AcademicClassCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
 import NavBar from "../../NavBar/NavBar";
+import AcademicClassDataModule from "../modal/AcademicClassDataModule";
 import {
   FiAlertCircle,
   FiSearch,
@@ -17,6 +18,7 @@ import {
   FiUsers,
   FiCalendar,
   FiLayers,
+  FiEye,
 } from "react-icons/fi";
 
 const AcademicClassCard = () => {
@@ -40,6 +42,8 @@ const AcademicClassCard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [showAcademicClassDataModule, setShowAcademicClassDataModule] =
+    useState(false);
 
   // Fetch academic classes
   const fetchAcademicClasses = async (query = "") => {
@@ -237,8 +241,17 @@ const AcademicClassCard = () => {
           {/* Left Panel */}
           <div className={styles.leftPanel}>
             <div className={styles.panelHeader}>
-              <FiLayers className={styles.panelIcon} />
-              <h3>Academic Classes</h3>
+              <div className={styles.panelTitle}>
+                <FiLayers className={styles.panelIcon} />
+                <h3>Academic Classes</h3>
+              </div>
+              <button
+                className={styles.viewDetailsButton}
+                onClick={() => setShowAcademicClassDataModule(true)}
+              >
+                <FiEye className={styles.btnIcon} />
+                View Details
+              </button>
             </div>
 
             <div className={styles.searchContainer}>
@@ -254,43 +267,45 @@ const AcademicClassCard = () => {
 
             <div className={styles.classList}>
               {academicClasses.length ? (
-                academicClasses.map((academicClass) => (
-                  <div
-                    key={academicClass.id}
-                    className={`${styles.classItem} ${
-                      selectedClass?.id === academicClass.id
-                        ? styles.active
-                        : ""
-                    }`}
-                    onClick={() => handleSelectClass(academicClass)}
-                  >
-                    <div className={styles.classItemContent}>
-                      <FiBookOpen className={styles.classIcon} />
-                      <div className={styles.classDetails}>
-                        <span className={styles.className}>
-                          {academicClass.gradeName} - {academicClass.section}
-                        </span>
-                        <div className={styles.classBadges}>
-                          <span className={styles.badge}>
-                            {academicClass.academicYearName}
+                <>
+                  {academicClasses.slice(0, 3).map((academicClass) => (
+                    <div
+                      key={academicClass.id}
+                      className={`${styles.classItem} ${
+                        selectedClass?.id === academicClass.id
+                          ? styles.active
+                          : ""
+                      }`}
+                      onClick={() => handleSelectClass(academicClass)}
+                    >
+                      <div className={styles.classItemContent}>
+                        <FiBookOpen className={styles.classIcon} />
+                        <div className={styles.classDetails}>
+                          <span className={styles.className}>
+                            {academicClass.gradeName} - {academicClass.section}
                           </span>
-                          <span className={styles.badge}>
-                            {academicClass.facultyName}
-                          </span>
+                          <div className={styles.classBadges}>
+                            <span className={styles.badge}>
+                              {academicClass.academicYearName}
+                            </span>
+                            <span className={styles.badge}>
+                              {academicClass.facultyName}
+                            </span>
+                          </div>
                         </div>
                       </div>
+                      <button
+                        className={styles.deleteBtn}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(academicClass.id);
+                        }}
+                      >
+                        <FiX />
+                      </button>
                     </div>
-                    <button
-                      className={styles.deleteBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(academicClass.id);
-                      }}
-                    >
-                      <FiX />
-                    </button>
-                  </div>
-                ))
+                  ))}
+                </>
               ) : (
                 <div className={styles.noData}>
                   <FiAlertCircle className={styles.noDataIcon} />
@@ -464,6 +479,15 @@ const AcademicClassCard = () => {
             type={notification.type}
             message={notification.message}
             onClose={() => setNotification(null)}
+          />
+        )}
+
+        {showAcademicClassDataModule && (
+          <AcademicClassDataModule
+            academicClasses={academicClasses}
+            onClose={() => setShowAcademicClassDataModule(false)}
+            token={token}
+            baseUrl={baseUrl}
           />
         )}
       </div>
