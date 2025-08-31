@@ -38,6 +38,7 @@
 .panelHeader {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
@@ -54,6 +55,26 @@
 .panelIcon {
   font-size: 1.5rem;
   color: #3b82f6;
+}
+.panelTitle {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.viewDetailsButton {
+  background-color: #059669;
+  border: 20px;
+  width: 180px;
+}
+.viewDetailsButton:hover {
+  background-color: #048168;
+  border: 20px;
+  width: 180px;
+  color: #fff;
+}
+.searchContainer {
+  position: relative;
+  margin-bottom: 1.5rem;
 }
 
 /* Search Container */
@@ -201,6 +222,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  margin-top: auto;
 }
 
 .addBtn:hover {

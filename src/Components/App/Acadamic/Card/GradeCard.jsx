@@ -6,6 +6,7 @@ import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./GradeCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
 import NavBar from "../../NavBar/NavBar";
+import GradeDataModule from "../modal/GradeDataModule"; // Add this import
 import {
   FiAlertCircle,
   FiSearch,
@@ -31,6 +32,7 @@ const GradeCard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [showFacultyDataModule, setShowFacultyDataModule] = useState(false);
 
   // Fetch grades
   const fetchGrades = async (query = "") => {
@@ -153,10 +155,18 @@ const GradeCard = () => {
       setFormData(res.data);
     } catch (err) {
       console.error(err);
-      setNotification({
-        type: "error",
-        message: "Failed to add grade",
-      });
+      if (err.response && err.response.status === 400) {
+        setNotification({
+          type: "error",
+          message:
+            "Grade with this name already exists. Please use a different name.",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message: "Failed to add grade",
+        });
+      }
     }
   };
 
@@ -168,8 +178,17 @@ const GradeCard = () => {
           {/* Left Panel */}
           <div className={styles.leftPanel}>
             <div className={styles.panelHeader}>
-              <FiBookOpen className={styles.panelIcon} />
-              <h3>Grades</h3>
+              <div className={styles.panelTitle}>
+                <FiBookOpen className={styles.panelIcon} />
+                <h3>Grades</h3>
+              </div>
+
+              <button
+                className={styles.viewDetailsButton}
+                onClick={() => setShowFacultyDataModule(true)}
+              >
+                View Details
+              </button>
             </div>
 
             <div className={styles.searchContainer}>
@@ -185,29 +204,31 @@ const GradeCard = () => {
 
             <div className={styles.gradeList}>
               {grades.length ? (
-                grades.map((grade) => (
-                  <div
-                    key={grade.id}
-                    className={`${styles.gradeItem} ${
-                      selectedGrade?.id === grade.id ? styles.active : ""
-                    }`}
-                    onClick={() => handleSelectGrade(grade)}
-                  >
-                    <div className={styles.gradeItemContent}>
-                      <FiBookOpen className={styles.gradeIcon} />
-                      <div className={styles.gradeDetails}>
-                        <span className={styles.gradeName}>
-                          {grade.gradeName}
-                        </span>
-                        <div className={styles.gradeBadges}>
-                          <span className={styles.badge}>
-                            {grade.programName || "No Program"}
+                <>
+                  {grades.slice(0, 3).map((grade) => (
+                    <div
+                      key={grade.id}
+                      className={`${styles.gradeItem} ${
+                        selectedGrade?.id === grade.id ? styles.active : ""
+                      }`}
+                      onClick={() => handleSelectGrade(grade)}
+                    >
+                      <div className={styles.gradeItemContent}>
+                        <FiBookOpen className={styles.gradeIcon} />
+                        <div className={styles.gradeDetails}>
+                          <span className={styles.gradeName}>
+                            {grade.gradeName}
                           </span>
+                          <div className={styles.gradeBadges}>
+                            <span className={styles.badge}>
+                              {grade.programName || "No Program"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))}
+                </>
               ) : (
                 <div className={styles.noData}>
                   <FiAlertCircle className={styles.noDataIcon} />
@@ -323,6 +344,16 @@ const GradeCard = () => {
             type={notification.type}
             message={notification.message}
             onClose={() => setNotification(null)}
+          />
+        )}
+
+        {/* Add this modal rendering section */}
+        {showFacultyDataModule && (
+          <GradeDataModule
+            grades={grades}
+            onClose={() => setShowFacultyDataModule(false)}
+            token={token}
+            baseUrl={baseUrl}
           />
         )}
       </div>
