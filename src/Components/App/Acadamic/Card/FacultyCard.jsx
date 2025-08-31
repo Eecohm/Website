@@ -6,6 +6,7 @@ import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./FacultyCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
 import NavBar from "../../NavBar/NavBar";
+import FacultyDataModule from "../modal/FacultyDataModule";
 import {
   FiAlertCircle,
   FiSearch,
@@ -17,6 +18,7 @@ import {
   FiSettings,
   FiCheck,
   FiUsers,
+  FiList,
 } from "react-icons/fi";
 
 const FacultyCard = () => {
@@ -33,6 +35,7 @@ const FacultyCard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [showFacultyDataModule, setShowFacultyDataModule] = useState(false); // New state for modal
 
   // Fetch faculties
   const fetchFaculties = async (query = "") => {
@@ -155,10 +158,18 @@ const FacultyCard = () => {
       setFormData(res.data);
     } catch (err) {
       console.error(err);
-      setNotification({
-        type: "error",
-        message: "Failed to add faculty",
-      });
+      if (err.response && err.response.status === 400) {
+        setNotification({
+          type: "error",
+          message:
+            "Faculty with this name already exists. Please enter a different name.",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message: "Failed to add faculty",
+        });
+      }
     }
   };
 
@@ -170,8 +181,16 @@ const FacultyCard = () => {
           {/* Left Panel */}
           <div className={styles.leftPanel}>
             <div className={styles.panelHeader}>
-              <FiUsers className={styles.panelIcon} />
-              <h3>Faculties</h3>
+              <div className={styles.panelTitle}>
+                <FiUsers className={styles.panelIcon} />
+                <h3>Faculties</h3>
+              </div>
+              <button
+                className={styles.viewDetailsButton}
+                onClick={() => setShowFacultyDataModule(true)}
+              >
+                View Details
+              </button>
             </div>
 
             <div className={styles.searchContainer}>
@@ -187,29 +206,31 @@ const FacultyCard = () => {
 
             <div className={styles.facultyList}>
               {faculties.length ? (
-                faculties.map((faculty) => (
-                  <div
-                    key={faculty.id}
-                    className={`${styles.facultyItem} ${
-                      selectedFaculty?.id === faculty.id ? styles.active : ""
-                    }`}
-                    onClick={() => handleSelectFaculty(faculty)}
-                  >
-                    <div className={styles.facultyItemContent}>
-                      <FiBookOpen className={styles.facultyIcon} />
-                      <div className={styles.facultyDetails}>
-                        <span className={styles.facultyName}>
-                          {faculty.facultyName}
-                        </span>
-                        <div className={styles.facultyBadges}>
-                          <span className={styles.badge}>
-                            {faculty.programName || "No Program"}
+                <>
+                  {faculties.slice(0, 3).map((faculty) => (
+                    <div
+                      key={faculty.id}
+                      className={`${styles.facultyItem} ${
+                        selectedFaculty?.id === faculty.id ? styles.active : ""
+                      }`}
+                      onClick={() => handleSelectFaculty(faculty)}
+                    >
+                      <div className={styles.facultyItemContent}>
+                        <FiBookOpen className={styles.facultyIcon} />
+                        <div className={styles.facultyDetails}>
+                          <span className={styles.facultyName}>
+                            {faculty.facultyName}
                           </span>
+                          <div className={styles.facultyBadges}>
+                            <span className={styles.badge}>
+                              {faculty.programName || "No Program"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))}
+                </>
               ) : (
                 <div className={styles.noData}>
                   <FiAlertCircle className={styles.noDataIcon} />
@@ -327,6 +348,15 @@ const FacultyCard = () => {
             type={notification.type}
             message={notification.message}
             onClose={() => setNotification(null)}
+          />
+        )}
+
+        {showFacultyDataModule && (
+          <FacultyDataModule
+            faculties={faculties}
+            onClose={() => setShowFacultyDataModule(false)}
+            token={token}
+            baseUrl={baseUrl}
           />
         )}
       </div>

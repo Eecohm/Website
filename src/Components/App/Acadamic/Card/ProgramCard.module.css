@@ -38,10 +38,19 @@
 .panelHeader {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  position: relative;
+}
+
+.panelLeft {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
 }
 
 .panelHeader h3 {
@@ -94,12 +103,20 @@
   color: #64748b;
 }
 
-/* Program List */
-.programList {
+/* Program List Container */
+.programListContainer {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.programList {
   overflow-y: auto;
-  margin-bottom: 1.5rem;
   padding-right: 0.5rem;
+  max-height: 280px; /* Limit height to show only 4 programs */
+  min-height: 100px;
 }
 
 .programItem {
@@ -190,12 +207,24 @@
   font-size: 1.25rem;
 }
 
+/* Add Button Container */
+.addButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 0.75rem;
+  margin-top: auto;
+}
+
 /* Add Button */
 .addBtn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%;
   padding: 0.875rem 1.5rem;
   background: linear-gradient(135deg, #10b981, #059669);
   color: white;
@@ -227,9 +256,37 @@
   }
 }
 
-/* Right Panel */
+/* Right Panel with proper scrollbar styling */
 .rightPanel {
+  height: 80vh;
   overflow-y: auto;
+  padding-right: 8px; /* Add padding to prevent content from being hidden behind scrollbar */
+}
+
+/* Right Panel Scrollbar Styling */
+.rightPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rightPanel::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 3px;
+  margin: 10px 0; /* Add margin to top and bottom to shorten the scrollbar track */
+}
+
+.rightPanel::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.4);
+  border-radius: 3px;
+}
+
+.rightPanel::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
+/* For Firefox */
+.rightPanel {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.4) rgba(30, 41, 59, 0.3);
 }
 
 .detailsCard {
@@ -434,16 +491,16 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .modalContent {
-  margin-top: 80px;
+  margin-top: 100px;
   background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
   border-radius: 1.5rem;
   width: 100%;
   max-width: 500px;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow-y: auto;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -453,7 +510,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 1.2rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.1);
 }
 
@@ -498,13 +555,14 @@
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  padding: 1.5rem 2rem;
+  padding: 0.4rem 1.2rem;
   border-top: 1px solid rgba(148, 163, 184, 0.1);
 }
 
 .cancelBtn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   background: rgba(71, 85, 105, 0.5);
@@ -550,6 +608,188 @@
 .rightPanel::-webkit-scrollbar-track,
 .modalContent::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.viewDetailsDropdown {
+  position: relative;
+  margin-left: auto;
+}
+
+.viewDetailsButton {
+  width: 40%;
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.viewDetailsButton:hover {
+  background: #45a049;
+}
+
+.viewDetailsMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: rgba(30, 41, 59, 0.98);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  z-index: 10;
+  min-width: 180px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.viewDetailsItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  padding: 0.875rem 1rem;
+  background: transparent;
+  color: #e5e7eb;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  margin: 0.25rem 0;
+}
+
+.viewDetailsItem:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(30, 64, 175, 0.2)
+  );
+  color: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.viewDetailsItem:active {
+  transform: translateY(0);
+}
+
+/* Sticky action buttons */
+.stickyActionButtons {
+  position: sticky;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0) 0%,
+    rgba(15, 23, 42, 0.95) 20%,
+    rgba(15, 23, 42, 1) 100%
+  );
+  padding: 1.5rem 0;
+  margin-top: 0;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 100;
+}
+
+/* Scrollable content with reduced height */
+.scrollableContent {
+  max-height: calc(90vh - 200px);
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 15px;
+}
+
+.scrollableContent::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollableContent::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 2px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.4);
+  border-radius: 2px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
+/* For Firefox */
+.scrollableContent {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.4) rgba(30, 41, 59, 0.3);
+}
+
+/* Adjust right panel height */
+.rightPanel {
+  overflow-y: auto;
+  padding-right: 8px;
+  max-height: calc(100vh - 120px);
+  position: relative; /* Needed for sticky positioning */
+}
+
+/* Details card should have relative positioning */
+.detailsCard {
+  background: linear-gradient(
+    180deg,
+    rgba(30, 41, 59, 0.8) 0%,
+    rgba(15, 23, 42, 0.8) 100%
+  );
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Remove the old actionButtons style if it exists */
+.actionButtons {
+  display: none;
+}
+
+/* Ensure the form grid takes available space */
+.formGrid {
+  display: grid;
+  gap: 2rem;
+  flex: 1;
+}
+
+/* Add a subtle animation when the menu opens */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.viewDetailsMenu {
+  animation: slideDown 0.2s ease-out;
+}
+
+/* Add icons to the menu items if desired */
+.viewDetailsItem:nth-child(1)::before {
+  content: "🏛️";
+  margin-right: 0.5rem;
+}
+
+.viewDetailsItem:nth-child(2)::before {
+  content: "📚";
+  margin-right: 0.5rem;
 }
 
 /* Responsive Design */

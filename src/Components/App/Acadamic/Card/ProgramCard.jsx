@@ -6,23 +6,22 @@ import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./ProgramCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";
 import NavBar from "../../NavBar/NavBar";
+import ProgramModalData from "../modal/ProgramModalData";
 import {
   FiAlertCircle,
   FiSearch,
   FiPlus,
   FiCalendar,
   FiSave,
-  FiArrowLeft,
   FiCheck,
   FiX,
-  FiEye,
   FiBookOpen,
   FiSettings,
   FiLayers,
 } from "react-icons/fi";
 
 const ProgramCard = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
 
@@ -41,6 +40,7 @@ const ProgramCard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
 
   // Fetch all programs for the previous program dropdown
   const fetchPreviousPrograms = async () => {
@@ -48,13 +48,13 @@ const ProgramCard = () => {
       const res = await axios.get(`${baseUrl}/academics/programs/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       // Add "None" option and format the data
       const programOptions = [
         { id: "", programName: "-- None --" },
-        ...res.data
+        ...res.data,
       ];
-      
+
       setPreviousProgramOptions(programOptions);
     } catch (err) {
       console.error("Error fetching previous programs:", err);
@@ -167,13 +167,20 @@ const ProgramCard = () => {
       }
 
       fetchPrograms();
-      fetchPreviousPrograms(); // Refresh previous programs list
+      fetchPreviousPrograms();
     } catch (err) {
       console.error(err);
-      setNotification({
-        type: "error",
-        message: "Failed to save program",
-      });
+      if (err.response && err.response.status === 400) {
+        setNotification({
+          type: "error",
+          message: "Program already exists. Please enter a new program name.",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message: "Failed to save program",
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -199,15 +206,22 @@ const ProgramCard = () => {
       });
       setAddModalOpen(false);
       fetchPrograms();
-      fetchPreviousPrograms(); // Refresh previous programs list
+      fetchPreviousPrograms();
       setSelectedProgram(res.data);
       setFormData(res.data);
     } catch (err) {
       console.error(err);
-      setNotification({
-        type: "error",
-        message: "Failed to add program",
-      });
+      if (err.response && err.response.status === 400) {
+        setNotification({
+          type: "error",
+          message: "Program already exists. Please enter a new program name.",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message: "Failed to add program",
+        });
+      }
     }
   };
 
@@ -219,8 +233,17 @@ const ProgramCard = () => {
           {/* Left Panel */}
           <div className={styles.leftPanel}>
             <div className={styles.panelHeader}>
-              <FiBookOpen className={styles.panelIcon} />
-              <h3>Programs</h3>
+              <div className={styles.panelLeft}>
+                <FiBookOpen className={styles.panelIcon} />
+                <h3>Programs</h3>
+              </div>
+
+              <button
+                className={styles.viewDetailsButton}
+                onClick={() => setViewDetailsOpen(true)}
+              >
+                View Details
+              </button>
             </div>
 
             <div className={styles.searchContainer}>
@@ -234,55 +257,60 @@ const ProgramCard = () => {
               />
             </div>
 
-            <div className={styles.programList}>
-              {programs.length ? (
-                programs.map((program) => (
-                  <div
-                    key={program.id}
-                    className={`${styles.programItem} ${
-                      selectedProgram?.id === program.id ? styles.active : ""
-                    }`}
-                    onClick={() => handleSelectProgram(program)}
-                  >
-                    <div className={styles.programItemContent}>
-                      <FiBookOpen className={styles.programIcon} />
-                      <div className={styles.programDetails}>
-                        <span className={styles.programName}>
-                          {program.programName}
-                        </span>
-                        <div className={styles.programBadges}>
-                          <span className={styles.badge}>
-                            <FiCalendar className={styles.badgeIcon} />
-                            {program.durationMonths} months
+            <div className={styles.programListContainer}>
+              <div className={styles.programList}>
+                {programs.length ? (
+                  programs.slice(0, 4).map((program) => (
+                    <div
+                      key={program.id}
+                      className={`${styles.programItem} ${
+                        selectedProgram?.id === program.id ? styles.active : ""
+                      }`}
+                      onClick={() => handleSelectProgram(program)}
+                    >
+                      <div className={styles.programItemContent}>
+                        <FiBookOpen className={styles.programIcon} />
+                        <div className={styles.programDetails}>
+                          <span className={styles.programName}>
+                            {program.programName}
                           </span>
-                          {program.affiliatedTo && (
+                          <div className={styles.programBadges}>
                             <span className={styles.badge}>
-                              <FiCheck className={styles.badgeIcon} />
-                              {program.affiliatedTo}
+                              <FiCalendar className={styles.badgeIcon} />
+                              {program.durationMonths} months
                             </span>
-                          )}
+                            {program.affiliatedTo && (
+                              <span className={styles.badge}>
+                                <FiCheck className={styles.badgeIcon} />
+                                {program.affiliatedTo}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className={styles.noData}>
+                    <FiAlertCircle className={styles.noDataIcon} />
+                    <span>No programs found</span>
                   </div>
-                ))
-              ) : (
-                <div className={styles.noData}>
-                  <FiAlertCircle className={styles.noDataIcon} />
-                  <span>No programs found</span>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
-            <button
-              className={`${styles.addBtn} ${
-                !programs.length ? styles.highlightBtn : ""
-              }`}
-              onClick={() => setAddModalOpen(true)}
-            >
-              <FiPlus className={styles.btnIcon} />
-              Add New Program
-            </button>
+            {/* Add button container */}
+            <div className={styles.addButtonContainer}>
+              <button
+                className={`${styles.addBtn} ${
+                  !programs.length ? styles.highlightBtn : ""
+                }`}
+                onClick={() => setAddModalOpen(true)}
+              >
+                <FiPlus className={styles.btnIcon} />
+                Add New Program
+              </button>
+            </div>
           </div>
 
           {/* Right Panel */}
@@ -294,97 +322,101 @@ const ProgramCard = () => {
                   <h2>Program Details</h2>
                 </div>
 
-                <div className={styles.formGrid}>
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiBookOpen className={styles.fieldIcon} />
-                      Program Name
-                    </label>
-                    <input
-                      type="text"
-                      name="programName"
-                      placeholder="e.g., BHM"
-                      value={formData.programName}
-                      onChange={handleChange}
-                      className={`${styles.inputField} ${
-                        errors.programName ? styles.inputError : ""
-                      }`}
-                    />
-                    {errors.programName && (
-                      <div className={styles.error}>
-                        <FiAlertCircle className={styles.errorIcon} />
-                        {errors.programName}
-                      </div>
-                    )}
-                  </div>
+                {/* Scrollable form content */}
+                <div className={styles.scrollableContent}>
+                  <div className={styles.formGrid}>
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiBookOpen className={styles.fieldIcon} />
+                        Program Name
+                      </label>
+                      <input
+                        type="text"
+                        name="programName"
+                        placeholder="e.g., BHM"
+                        value={formData.programName}
+                        onChange={handleChange}
+                        className={`${styles.inputField} ${
+                          errors.programName ? styles.inputError : ""
+                        }`}
+                      />
+                      {errors.programName && (
+                        <div className={styles.error}>
+                          <FiAlertCircle className={styles.errorIcon} />
+                          {errors.programName}
+                        </div>
+                      )}
+                    </div>
 
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiCalendar className={styles.fieldIcon} />
-                      Duration (months)
-                    </label>
-                    <input
-                      type="number"
-                      name="durationMonths"
-                      placeholder="e.g., 36"
-                      value={formData.durationMonths}
-                      onChange={handleChange}
-                      className={`${styles.inputField} ${
-                        errors.durationMonths ? styles.inputError : ""
-                      }`}
-                    />
-                    {errors.durationMonths && (
-                      <div className={styles.error}>
-                        <FiAlertCircle className={styles.errorIcon} />
-                        {errors.durationMonths}
-                      </div>
-                    )}
-                  </div>
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiCalendar className={styles.fieldIcon} />
+                        Duration (months)
+                      </label>
+                      <input
+                        type="number"
+                        name="durationMonths"
+                        placeholder="e.g., 36"
+                        value={formData.durationMonths}
+                        onChange={handleChange}
+                        className={`${styles.inputField} ${
+                          errors.durationMonths ? styles.inputError : ""
+                        }`}
+                      />
+                      {errors.durationMonths && (
+                        <div className={styles.error}>
+                          <FiAlertCircle className={styles.errorIcon} />
+                          {errors.durationMonths}
+                        </div>
+                      )}
+                    </div>
 
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiLayers className={styles.fieldIcon} />
-                      Previous Program
-                    </label>
-                    <select
-                      name="previousProgramId"
-                      value={formData.previousProgramId}
-                      onChange={handleChange}
-                      className={styles.selectInput}
-                    >
-                      {previousProgramOptions.map((option) => (
-                        <option key={option.id} value={option.id}>
-                          {option.programName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiLayers className={styles.fieldIcon} />
+                        Previous Program
+                      </label>
+                      <select
+                        name="previousProgramId"
+                        value={formData.previousProgramId}
+                        onChange={handleChange}
+                        className={styles.selectInput}
+                      >
+                        {previousProgramOptions.map((option) => (
+                          <option key={option.id} value={option.id}>
+                            {option.programName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiCheck className={styles.fieldIcon} />
-                      Affiliated To
-                    </label>
-                    <input
-                      type="text"
-                      name="affiliatedTo"
-                      placeholder="e.g., TU"
-                      value={formData.affiliatedTo}
-                      onChange={handleChange}
-                      className={`${styles.inputField} ${
-                        errors.affiliatedTo ? styles.inputError : ""
-                      }`}
-                    />
-                    {errors.affiliatedTo && (
-                      <div className={styles.error}>
-                        <FiAlertCircle className={styles.errorIcon} />
-                        {errors.affiliatedTo}
-                      </div>
-                    )}
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiCheck className={styles.fieldIcon} />
+                        Affiliated To
+                      </label>
+                      <input
+                        type="text"
+                        name="affiliatedTo"
+                        placeholder="e.g., TU"
+                        value={formData.affiliatedTo}
+                        onChange={handleChange}
+                        className={`${styles.inputField} ${
+                          errors.affiliatedTo ? styles.inputError : ""
+                        }`}
+                      />
+                      {errors.affiliatedTo && (
+                        <div className={styles.error}>
+                          <FiAlertCircle className={styles.errorIcon} />
+                          {errors.affiliatedTo}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <div className={styles.actionButtons}>
+                {/* Sticky save button */}
+                <div className={styles.stickyActionButtons}>
                   <button
                     className={styles.saveBtn}
                     onClick={handleSave}
@@ -421,6 +453,16 @@ const ProgramCard = () => {
             type={notification.type}
             message={notification.message}
             onClose={() => setNotification(null)}
+          />
+        )}
+
+        {viewDetailsOpen && (
+          <ProgramModalData
+            programs={programs}
+            onClose={() => setViewDetailsOpen(false)}
+            onProgramUpdate={fetchPrograms}
+            token={token}
+            baseUrl={baseUrl}
           />
         )}
       </div>
