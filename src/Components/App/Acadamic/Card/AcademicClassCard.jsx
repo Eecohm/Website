@@ -34,7 +34,7 @@ const AcademicClassCard = () => {
   const [formData, setFormData] = useState({
     academicYearId: "",
     gradeId: "",
-    facultyId: "",
+    programId: "",
     section: "",
   });
   const [errors, setErrors] = useState({});
@@ -62,7 +62,7 @@ const AcademicClassCard = () => {
         setFormData({
           academicYearId: "",
           gradeId: "",
-          facultyId: "",
+          programId: "",
           section: "",
         });
       }
@@ -132,7 +132,7 @@ const AcademicClassCard = () => {
     if (!formData.academicYearId)
       newErrors.academicYearId = "Academic year required";
     if (!formData.gradeId) newErrors.gradeId = "Grade required";
-    if (!formData.facultyId) newErrors.facultyId = "Faculty required";
+    if (!formData.programId) newErrors.programId = "Program required";
     if (!formData.section) newErrors.section = "Section required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -146,7 +146,7 @@ const AcademicClassCard = () => {
       const payload = {
         academicYearId: formData.academicYearId,
         gradeId: formData.gradeId,
-        facultyId: formData.facultyId,
+        programId: formData.programId,
         section: formData.section,
       };
 
@@ -180,7 +180,7 @@ const AcademicClassCard = () => {
       const payload = {
         academicYearId: newData.academicYearId,
         gradeId: newData.gradeId,
-        facultyId: newData.facultyId,
+        programId: newData.programId,
         section: newData.section,
       };
 
@@ -288,7 +288,7 @@ const AcademicClassCard = () => {
                               {academicClass.academicYearName}
                             </span>
                             <span className={styles.badge}>
-                              {academicClass.facultyName}
+                              {academicClass.programName}
                             </span>
                           </div>
                         </div>
@@ -393,14 +393,14 @@ const AcademicClassCard = () => {
                   <div className={styles.fieldGroup}>
                     <label>
                       <FiUsers className={styles.fieldIcon} />
-                      Faculty
+                      Program
                     </label>
                     <select
-                      name="facultyId"
-                      value={formData.facultyId || ""}
+                      name="programId"
+                      value={formData.programId || ""}
                       onChange={handleChange}
                       className={`${styles.selectInput} ${
-                        errors.facultyId ? styles.inputError : ""
+                        errors.programId ? styles.inputError : ""
                       }`}
                     >
                       <option value="">Select faculty</option>
@@ -410,10 +410,10 @@ const AcademicClassCard = () => {
                         </option>
                       ))}
                     </select>
-                    {errors.facultyId && (
+                    {errors.programId && (
                       <div className={styles.error}>
                         <FiAlertCircle className={styles.errorIcon} />
-                        {errors.facultyId}
+                        {errors.programId}
                       </div>
                     )}
                   </div>
@@ -504,7 +504,7 @@ const AddClassModal = ({
   const [data, setData] = useState({
     academicYearId: "",
     gradeId: "",
-    facultyId: "",
+    programId: "",
     section: "",
   });
   const [errors, setErrors] = useState({});
@@ -524,7 +524,7 @@ const AddClassModal = ({
     if (!data.academicYearId)
       newErrors.academicYearId = "Academic year required";
     if (!data.gradeId) newErrors.gradeId = "Grade required";
-    if (!data.facultyId) newErrors.facultyId = "Faculty required";
+    if (!data.programId) newErrors.programId = "Program Id required";
     if (!data.section) newErrors.section = "Section required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -569,7 +569,7 @@ const AddClassModal = ({
               <option value="">Select academic year</option>
               {academicYears.map((year) => (
                 <option key={year.id} value={year.id}>
-                  {year.academicYearName}
+                  {year.academicName}
                 </option>
               ))}
             </select>
@@ -615,24 +615,24 @@ const AddClassModal = ({
               Faculty
             </label>
             <select
-              name="facultyId"
-              value={data.facultyId}
+              name="programId"
+              value={data.programId}
               onChange={handleChange}
               className={`${styles.selectInput} ${
-                errors.facultyId ? styles.inputError : ""
+                errors.programId ? styles.inputError : ""
               }`}
             >
               <option value="">Select faculty</option>
-              {faculties.map((faculty) => (
-                <option key={faculty.id} value={faculty.id}>
-                  {faculty.facultyName}
+              {program.map((program) => (
+                <option key={faculty.id} value={program.id}>
+                  {program.facultyName}
                 </option>
               ))}
             </select>
-            {errors.facultyId && (
+            {errors.programId && (
               <div className={styles.error}>
                 <FiAlertCircle className={styles.errorIcon} />
-                {errors.facultyId}
+                {errors.programId}
               </div>
             )}
           </div>

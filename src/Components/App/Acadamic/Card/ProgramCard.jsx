@@ -568,7 +568,6 @@ const AddProgramModal = ({ onClose, onAdd, previousProgramOptions }) => {
               </div>
             )}
           </div>
-
           <div className={styles.fieldGroup}>
             <label>
               <FiLayers className={styles.fieldIcon} />
@@ -587,7 +586,6 @@ const AddProgramModal = ({ onClose, onAdd, previousProgramOptions }) => {
               ))}
             </select>
           </div>
-
           <div className={styles.fieldGroup}>
             <label>
               <FiCheck className={styles.fieldIcon} />
