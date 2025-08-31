@@ -52,32 +52,27 @@
 }
 
 .viewDetailsButton {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  width: 40%;
   background: #4caf50;
   color: white;
   border: none;
-  border-radius: 0.5rem;
+  padding: 8px 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 500;
+  font-size: 14px;
   transition: background 0.2s;
 }
 
 .viewDetailsButton:hover {
   background: #45a049;
 }
-
 /* Make the class list scrollable and limit height */
 .classList {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 1.5rem;
   padding-right: 0.5rem;
-  max-height: calc(
-    100% - 200px
-  ); /* Limit height to ensure button stays visible */
+  max-height: calc(100% - 200px);
 }
 
 /* Make the add button sticky */

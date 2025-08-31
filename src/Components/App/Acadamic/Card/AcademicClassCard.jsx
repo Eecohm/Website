@@ -249,7 +249,6 @@ const AcademicClassCard = () => {
                 className={styles.viewDetailsButton}
                 onClick={() => setShowAcademicClassDataModule(true)}
               >
-                <FiEye className={styles.btnIcon} />
                 View Details
               </button>
             </div>
