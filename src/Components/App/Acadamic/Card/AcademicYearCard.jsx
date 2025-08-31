@@ -173,13 +173,16 @@ const AcademicYearCard = () => {
 
       let errorMessage = "Academic year could not be added";
       if (err.response && err.response.status === 400) {
-        errorMessage = "Academic year must be at least 1 year long.";
+        setNotification({
+          type: "error",
+          message: "Academic year must be at least 1 year long.",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message: errorMessage,
+        });
       }
-
-      setNotification({
-        type: "error",
-        message: errorMessage,
-      });
     }
   };
 

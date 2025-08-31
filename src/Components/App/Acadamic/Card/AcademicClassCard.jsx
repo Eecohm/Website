@@ -200,10 +200,19 @@ const AcademicClassCard = () => {
       setFormData(res.data);
     } catch (err) {
       console.error("Error adding academic class:", err);
-      setNotification({
-        type: "error",
-        message: err.response?.data?.message || "Failed to add academic class",
-      });
+      if (err.response && err.response.status === 400) {
+        setNotification({
+          type: "error",
+          message:
+            "Academic class already exists. Please select a different academic year, grade, or program.",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message:
+            err.response?.data?.message || "Failed to add academic class",
+        });
+      }
     }
   };
 
@@ -293,7 +302,7 @@ const AcademicClassCard = () => {
                           </div>
                         </div>
                       </div>
-                      <button
+                      {/* <button
                         className={styles.deleteBtn}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -301,7 +310,7 @@ const AcademicClassCard = () => {
                         }}
                       >
                         <FiX />
-                      </button>
+                      </button> */}
                     </div>
                   ))}
                 </>
@@ -622,10 +631,10 @@ const AddClassModal = ({
                 errors.programId ? styles.inputError : ""
               }`}
             >
-              <option value="">Select faculty</option>
-              {program.map((program) => (
-                <option key={faculty.id} value={program.id}>
-                  {program.facultyName}
+              // CORRECTED CODE:
+              {faculties.map((faculty) => (
+                <option key={faculty.id} value={faculty.id}>
+                  {faculty.facultyName}
                 </option>
               ))}
             </select>
