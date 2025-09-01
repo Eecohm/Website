@@ -175,6 +175,7 @@ const AcademicYearCard = () => {
       if (err.response && err.response.status === 400) {
         setNotification({
           type: "error",
+
           message: "Academic year must be at least 1 year long.",
         });
       } else {

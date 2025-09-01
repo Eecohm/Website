@@ -359,7 +359,7 @@ const AcademicClassCard = () => {
                       <option value="">Select academic year</option>
                       {academicYears.map((year) => (
                         <option key={year.id} value={year.id}>
-                          {year.academicYearName}
+                          {year.academicYearName || year.academicName}
                         </option>
                       ))}
                     </select>
@@ -578,7 +578,7 @@ const AddClassModal = ({
               <option value="">Select academic year</option>
               {academicYears.map((year) => (
                 <option key={year.id} value={year.id}>
-                  {year.academicName}
+                  {year.academicYearName || year.academicName}
                 </option>
               ))}
             </select>
@@ -631,7 +631,7 @@ const AddClassModal = ({
                 errors.programId ? styles.inputError : ""
               }`}
             >
-              // CORRECTED CODE:
+              <option value="">Select faculty</option>
               {faculties.map((faculty) => (
                 <option key={faculty.id} value={faculty.id}>
                   {faculty.facultyName}
