@@ -29,7 +29,7 @@ const AcademicClassCard = () => {
   const [academicClasses, setAcademicClasses] = useState([]);
   const [academicYears, setAcademicYears] = useState([]);
   const [grades, setGrades] = useState([]);
-  const [faculties, setFaculties] = useState([]);
+  const [programs, setPrograms] = useState([]); // Changed from faculties to programs
   const [selectedClass, setSelectedClass] = useState(null);
   const [formData, setFormData] = useState({
     academicYearId: "",
@@ -78,21 +78,22 @@ const AcademicClassCard = () => {
   // Fetch dropdown data
   const fetchDropdownData = async () => {
     try {
-      const [yearsRes, gradesRes, facultiesRes] = await Promise.all([
+      const [yearsRes, gradesRes, programsRes] = await Promise.all([
         axios.get(`${baseUrl}/academics/academic-years/`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
         axios.get(`${baseUrl}/academics/grades/`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${baseUrl}/academics/faculties/`, {
+        // Changed from faculties to programs
+        axios.get(`${baseUrl}/academics/programs/`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
 
       setAcademicYears(yearsRes.data);
       setGrades(gradesRes.data);
-      setFaculties(facultiesRes.data);
+      setPrograms(programsRes.data); // Changed from faculties to programs
     } catch (err) {
       console.error("Error fetching dropdown data:", err);
       setNotification({
@@ -412,10 +413,10 @@ const AcademicClassCard = () => {
                         errors.programId ? styles.inputError : ""
                       }`}
                     >
-                      <option value="">Select faculty</option>
-                      {faculties.map((faculty) => (
-                        <option key={faculty.id} value={faculty.id}>
-                          {faculty.facultyName}
+                      <option value="">Select program</option>
+                      {programs.map((program) => (
+                        <option key={program.id} value={program.id}>
+                          {program.programName}
                         </option>
                       ))}
                     </select>
@@ -478,7 +479,7 @@ const AcademicClassCard = () => {
             onAdd={handleAdd}
             academicYears={academicYears}
             grades={grades}
-            faculties={faculties}
+            programs={programs} // Changed from faculties to programs
           />
         )}
 
@@ -508,7 +509,7 @@ const AddClassModal = ({
   onAdd,
   academicYears,
   grades,
-  faculties,
+  programs, // Changed from faculties to programs
 }) => {
   const [data, setData] = useState({
     academicYearId: "",
@@ -533,7 +534,7 @@ const AddClassModal = ({
     if (!data.academicYearId)
       newErrors.academicYearId = "Academic year required";
     if (!data.gradeId) newErrors.gradeId = "Grade required";
-    if (!data.programId) newErrors.programId = "Program Id required";
+    if (!data.programId) newErrors.programId = "Program required"; // Updated error message
     if (!data.section) newErrors.section = "Section required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -621,7 +622,7 @@ const AddClassModal = ({
           <div className={styles.fieldGroup}>
             <label>
               <FiUsers className={styles.fieldIcon} />
-              Faculty
+              Program
             </label>
             <select
               name="programId"
@@ -631,10 +632,10 @@ const AddClassModal = ({
                 errors.programId ? styles.inputError : ""
               }`}
             >
-              <option value="">Select faculty</option>
-              {faculties.map((faculty) => (
-                <option key={faculty.id} value={faculty.id}>
-                  {faculty.facultyName}
+              <option value="">Select program</option>
+              {programs.map((program) => (
+                <option key={program.id} value={program.id}>
+                  {program.programName}
                 </option>
               ))}
             </select>
