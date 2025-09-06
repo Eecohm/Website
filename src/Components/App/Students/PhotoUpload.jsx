@@ -7,14 +7,28 @@ const PhotoUpload = ({ photo, photoPreview, onChange, onRemove, error }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (!file.type.startsWith("image/"))
-      return onChange(null, "", "Please select an image file");
-    if (file.size > 2 * 1024 * 1024)
-      return onChange(null, "", "Image size should be less than 2MB");
+    let errorMsg = "";
+    let preview = "";
 
-    const reader = new FileReader();
-    reader.onload = (ev) => onChange(file, ev.target.result, "");
-    reader.readAsDataURL(file);
+    // Only PNG allowed
+    if (file.type !== "image/png") {
+      errorMsg = "Only PNG images are allowed";
+    }
+    // Size limit 2MB
+    else if (file.size > 2 * 1024 * 1024) {
+      errorMsg = "File size must be less than 2MB";
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        preview = reader.result;
+        onChange(file, preview, ""); // send back file & preview
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    // If invalid → clear file and send error
+    onChange(null, "", errorMsg);
   };
 
   return (
@@ -35,10 +49,10 @@ const PhotoUpload = ({ photo, photoPreview, onChange, onRemove, error }) => {
         ) : (
           <label className={styles.uploadArea}>
             <FiUpload className={styles.uploadIcon} />
-            <span>Click to upload photo</span>
+            <span>Click to upload PNG photo (max 2MB)</span>
             <input
               type="file"
-              accept="image/*"
+              accept="image/png"
               onChange={handleFile}
               style={{ display: "none" }}
             />
@@ -46,9 +60,6 @@ const PhotoUpload = ({ photo, photoPreview, onChange, onRemove, error }) => {
         )}
       </div>
       {error && <span className={styles.error}>{error}</span>}
-      <div className={styles.photoNote}>
-        Please upload a passport-sized photo (max 2MB)
-      </div>
     </div>
   );
 };

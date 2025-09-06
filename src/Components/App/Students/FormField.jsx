@@ -3,8 +3,8 @@ import styles from "./Students.module.css";
 const FormField = ({ label, name, value, onChange, error, type = "text" }) => (
   <div className={styles.fieldGroup}>
     <label>{label}</label>
-    {type === "textarea" ? (
-      <textarea
+    {type === "label" ? (
+      <label
         name={name}
         value={value}
         onChange={onChange}

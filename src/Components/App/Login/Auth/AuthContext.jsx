@@ -7,12 +7,16 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [role, setrole] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [kycStatus, setKycStatus] = useState("");
+  const [verified, setVerified] = useState(false);
 
   useEffect(() => {
     try {
       const savedToken = localStorage.getItem("accessToken");
       const setUserId = localStorage.getItem("userId");
       const setrole = localStorage.getItem("role");
+      const setKycStatus = localStorage.getItem("kyc_Status");
+      const setVerified = localStorage.getItem("verified");
       if (savedToken) {
         setToken(savedToken);
       }
@@ -35,7 +39,16 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ token, login, logut, isLoading, userId, role }}
+      value={{
+        token,
+        login,
+        logut,
+        isLoading,
+        userId,
+        role,
+        verified,
+        kycStatus,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -104,7 +104,7 @@ body.modal-open {
 
 .formGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 .parentsGrid {
@@ -123,13 +123,15 @@ body.modal-open {
   font-weight: 600;
   color: #cbd5e1;
 }
-
+.fieldGroup input {
+  margin-bottom: 9px;
+}
 .fieldGroup:nth-child(4) {
   grid-column: span 1;
 }
 
 .photoUpload {
-  grid-column: span 2;
+  grid-column: span 3;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -235,6 +237,39 @@ textarea {
   color: #ef4444;
   font-size: 0.8rem;
   margin-top: -0.2rem;
+}
+
+/* here */
+.rowFlex {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.rowFlex > * {
+  flex: 1; /* makes them equal width */
+}
+
+.dobPhotoRow {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.dobContainer {
+  flex: 1;
+}
+
+.photoContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Adjust the photo upload component to fit properly */
+.photoContainer > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ====== NAVIGATION ====== */

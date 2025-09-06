@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Students.module.css";
 
 const FormSection = ({ icon: Icon, title, children }) => (

@@ -7,6 +7,9 @@ import FormField from "./FormField";
 import PhotoUpload from "./PhotoUpload";
 import ProgressBar from "./ProgressBar";
 import formConfig from "./formConfig";
+import axios from "axios";
+import { useBaseUrl } from "../../../BaseUrlContext";
+import { useAuth } from "../../App/Login/Auth/AuthContext";
 
 const Student = () => {
   const [currentPart, setCurrentPart] = useState(1);
@@ -14,10 +17,55 @@ const Student = () => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
+  const [programs, setPrograms] = useState([]);
+  const [faculties, setFaculties] = useState([]);
+  const [filteredFaculties, setFilteredFaculties] = useState([]);
+
+  const { baseUrl } = useBaseUrl();
+  const { token } = useAuth();
+
   useEffect(() => {
     document.body.classList.add("modal-open");
     return () => document.body.classList.remove("modal-open");
   }, []);
+
+  useEffect(() => {
+    // Fetch programs & faculties safely
+    axios
+      .get(`${baseUrl}/academics/programs/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        const data = Array.isArray(res.data)
+          ? res.data
+          : res.data.results || [];
+        setPrograms(data);
+      })
+      .catch((err) => console.error("Error fetching programs", err));
+
+    axios
+      .get(`${baseUrl}/academics/faculties/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        const data = Array.isArray(res.data)
+          ? res.data
+          : res.data.results || [];
+        setFaculties(data);
+      })
+      .catch((err) => console.error("Error fetching faculties", err));
+  }, [baseUrl, token]);
+
+  const handleProgramChange = (e) => {
+    const programId = e.target.value;
+    setFormData((prev) => ({ ...prev, programId }));
+
+    // Filter faculties for this program
+    const relatedFaculties = faculties.filter(
+      (f) => f.programId === parseInt(programId)
+    );
+    setFilteredFaculties(relatedFaculties);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -92,27 +140,100 @@ const Student = () => {
 
     return (
       <FormSection icon={section.icon} title={section.title}>
-        {section.fields.map((field) =>
-          field.type === "photo" ? (
-            <PhotoUpload
-              key={field.name}
-              photo={formData.photo}
-              photoPreview={formData.photoPreview}
-              onChange={handlePhotoChange}
-              onRemove={removePhoto}
-              error={errors.photo}
-            />
-          ) : (
-            <FormField
-              key={field.name}
-              label={field.label}
-              type={field.type}
-              name={field.name}
-              value={formData[field.name] || ""}
+        <div className={styles.formGrid}>
+          {section.fields.map((field) =>
+            field.type === "photo" ? (
+              <PhotoUpload
+                key={field.name}
+                photo={formData.photo}
+                photoPreview={formData.photoPreview}
+                onChange={handlePhotoChange}
+                onRemove={removePhoto}
+                error={errors.photo}
+              />
+            ) : (
+              <FormField
+                key={field.name}
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                value={formData[field.name] || ""}
+                onChange={handleInputChange}
+                error={errors[field.name]}
+              />
+            )
+          )}
+        </div>
+
+        {/* Extra UI for Contact Details → Map */}
+        {section.title === "Contact Details" && (
+          <div style={{ marginBottom: "16px" }}>
+            <label>Exact Location</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location || ""}
               onChange={handleInputChange}
-              error={errors[field.name]}
+              placeholder="Enter address or coordinates"
+              style={{ padding: "0.6rem", marginLeft: "10px" }}
             />
-          )
+            <iframe
+              src={`https://www.google.com/maps?q=${encodeURIComponent(
+                formData.location || "Kathmandu"
+              )}&output=embed`}
+              width="100%"
+              height="250"
+              style={{
+                marginTop: "8px",
+                borderRadius: "8px",
+                border: "1px solid #ccc",
+              }}
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
+
+        {/* Extra UI for Educational Details → Program & Faculty dropdowns */}
+        {section.title === "Educational Details" && (
+          <div
+            className="row"
+            style={{ display: "flex", gap: "16px", marginBottom: "16px" }}
+          >
+            <div style={{ flex: 1 }}>
+              <label>Program</label>
+              <select
+                value={formData.programId || ""}
+                onChange={handleProgramChange}
+              >
+                <option value="">Select Program</option>
+                {programs.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.programName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div style={{ flex: 1 }}>
+              <label>Faculty</label>
+              <select
+                value={formData.facultyId || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    facultyId: e.target.value,
+                  }))
+                }
+              >
+                <option value="">Select Faculty</option>
+                {filteredFaculties.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {f.facultyName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         )}
       </FormSection>
     );
