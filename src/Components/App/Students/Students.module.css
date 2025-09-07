@@ -10,7 +10,11 @@
   overflow-y: auto;
   position: relative;
 }
-
+.newdiv{
+  height: 100vh;
+  width: 100vw;
+  background-color: red;
+}
 .filterContainer {
   display: flex;
   gap: 10px;
