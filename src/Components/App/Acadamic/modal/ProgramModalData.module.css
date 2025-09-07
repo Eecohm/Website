@@ -199,7 +199,8 @@
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: auto; /* Changed from fixed height */
+  min-height: 200px; /* Added minimum height */
   cursor: pointer;
 }
 
@@ -227,6 +228,8 @@
   font-size: 1.1rem;
   font-weight: 600;
   flex: 1;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .cardContent {
@@ -242,12 +245,16 @@
 .detailLabel {
   color: #cbd5e1;
   font-size: 0.9rem;
+  flex-shrink: 0; /* Prevent label from shrinking */
 }
 
 .detailValue {
   color: #f1f5f9;
   font-weight: 500;
   text-align: right;
+  overflow-wrap: break-word; /* Added to fix overflow */
+  word-break: break-word; /* Added to fix overflow */
+  max-width: 60%; /* Limit width to prevent overflow */
 }
 
 .noPrograms {
@@ -381,7 +388,10 @@
   border-radius: 6px;
   border: 1px solid #374151;
   font-size: 0.95rem;
-  min-height: 44px;
+  height: auto; /* Changed from fixed height */
+  min-height: auto; /* Changed from fixed height */
+  overflow-wrap: break-word; /* Added to fix overflow */
+  word-break: break-word; /* Added to fix overflow */
 }
 
 .editInput {
@@ -392,6 +402,8 @@
   color: #f1f5f9;
   font-size: 0.95rem;
   transition: all 0.2s;
+  overflow-wrap: break-word; /* Added to fix overflow */
+  word-break: break-word; /* Added to fix overflow */
 }
 
 .editInput:focus {
@@ -432,6 +444,8 @@
   margin: 0 0 2rem 0;
   color: #cbd5e1;
   line-height: 1.5;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .confirmButtons {
@@ -513,6 +527,17 @@
   .backButton {
     width: 100%;
     justify-content: center;
+  }
+
+  /* Adjust detail rows for mobile */
+  .detailRow {
+    flex-direction: column;
+  }
+
+  .detailValue {
+    text-align: left;
+    max-width: 100%;
+    margin-top: 0.25rem;
   }
 }
 

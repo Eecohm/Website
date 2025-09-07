@@ -13,12 +13,9 @@ import {
   FiPlus,
   FiSave,
   FiX,
-  FiEye,
   FiBookOpen,
   FiSettings,
-  FiCheck,
   FiUsers,
-  FiList,
 } from "react-icons/fi";
 
 const FacultyCard = () => {

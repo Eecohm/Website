@@ -33,6 +33,23 @@ const AcademicClassDataModule = ({
   const [editData, setEditData] = useState({});
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
+  const [faculties, setFaculties] = useState([]);
+
+  // Fetch faculties data
+  useEffect(() => {
+    const fetchFaculties = async () => {
+      try {
+        const res = await axios.get(`${baseUrl}/academics/faculties/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFaculties(res.data);
+      } catch (err) {
+        console.error("Error fetching faculties:", err);
+      }
+    };
+
+    fetchFaculties();
+  }, [baseUrl, token]);
 
   // Filter classes based on search query and filters
   useEffect(() => {
@@ -47,7 +64,9 @@ const AcademicClassDataModule = ({
           c.academicYearName
             ?.toLowerCase()
             .includes(searchQuery.toLowerCase()) ||
-          c.facultyName?.toLowerCase().includes(searchQuery.toLowerCase())
+          (c.facultyName || c.programName)
+            ?.toLowerCase()
+            .includes(searchQuery.toLowerCase())
       );
     }
 
@@ -69,7 +88,8 @@ const AcademicClassDataModule = ({
     if (filters.facultyName) {
       filtered = filtered.filter(
         (c) =>
-          c.facultyName?.toLowerCase() === filters.facultyName.toLowerCase()
+          (c.facultyName || c.programName)?.toLowerCase() ===
+          filters.facultyName.toLowerCase()
       );
     }
 
@@ -156,9 +176,18 @@ const AcademicClassDataModule = ({
   const gradeOptions = [
     ...new Set(academicClasses.map((c) => c.gradeName).filter(Boolean)),
   ];
-  const facultyOptions = [
-    ...new Set(academicClasses.map((c) => c.facultyName).filter(Boolean)),
-  ];
+
+  // Use faculties from API or fallback to academicClasses data
+  const facultyOptions =
+    faculties.length > 0
+      ? faculties.map((f) => f.facultyName || f.name).filter(Boolean)
+      : [
+          ...new Set(
+            academicClasses
+              .map((c) => c.facultyName || c.programName)
+              .filter(Boolean)
+          ),
+        ];
 
   return (
     <div className={styles.fullScreenModal}>
@@ -275,7 +304,9 @@ const AcademicClassDataModule = ({
                         <div className={styles.detailRow}>
                           <span className={styles.detailLabel}>Faculty:</span>
                           <span className={styles.detailValue}>
-                            {academicClass.facultyName || "Not set"}
+                            {academicClass.facultyName ||
+                              academicClass.programName ||
+                              "Not set"}
                           </span>
                         </div>
                       </div>
@@ -371,16 +402,24 @@ const AcademicClassDataModule = ({
                     Faculty
                   </label>
                   {editMode ? (
-                    <input
-                      type="text"
+                    <select
                       name="facultyName"
-                      value={editData.facultyName || ""}
+                      value={editData.facultyName || editData.programId || ""}
                       onChange={handleEditChange}
                       className={styles.editInput}
-                    />
+                    >
+                      <option value="">Select Faculty</option>
+                      {faculties.map((faculty) => (
+                        <option key={faculty.id} value={faculty.id}>
+                          {faculty.facultyName || faculty.name}
+                        </option>
+                      ))}
+                    </select>
                   ) : (
                     <div className={styles.detailValue}>
-                      {selectedClass.facultyName || "Not set"}
+                      {selectedClass.facultyName ||
+                        selectedClass.programName ||
+                        "Not set"}
                     </div>
                   )}
                 </div>

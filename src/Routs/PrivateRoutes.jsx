@@ -27,13 +27,13 @@ import FacultyData from "../Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";
 
-const RequireAuth = ({ children }) => {
-  const { token, isLoading } = useAuth();
-  
+const RequireAuth = ({ children}) => {
+  const { token, isLoading} = useAuth();
+
   const location = useLocation();
 
   if (isLoading) {
-    return <div>loading......</div>
+    return <div>loading......</div>;
   }
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
@@ -139,14 +139,14 @@ const PrivateRoutes = () => (
         </RequireAuth>
       }
     />
-      <Route
-    path="/profile/suborg-details/:id"
-    element={
-      <RequireAuth>
-        <SubOrgDetails />
-      </RequireAuth>
-    }
-  />
+    <Route
+      path="/profile/suborg-details/:id"
+      element={
+        <RequireAuth>
+          <SubOrgDetails />
+        </RequireAuth>
+      }
+    />
 
     <Route
       path="/profile/sub-org/:id"

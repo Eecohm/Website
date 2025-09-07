@@ -140,7 +140,7 @@
 
 /* Cards Container */
 .cardsContainer {
-  padding: 0 3rem 3rem 3rem; /* Adjusted padding to account for sticky search */
+  padding: 3rem 3rem 3rem 3rem; /* Adjusted padding to account for sticky search */
   width: 100%;
 }
 

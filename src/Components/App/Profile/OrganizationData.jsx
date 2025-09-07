@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/OrgCard.module.css";
 import axios from "axios";
-import { useBaseUrl } from '../../../BaseUrlContext';
+import { useBaseUrl } from "../../../BaseUrlContext";
 import { useAuth } from "../Login/Auth/AuthContext";
-import { 
-  FiPhone, 
-  FiSmartphone, 
-  FiMail, 
+import {
+  FiPhone,
+  FiSmartphone,
+  FiMail,
   FiArrowLeft,
   FiMapPin,
   FiFileText,
@@ -18,8 +18,8 @@ import {
   FiImage,
   FiZoomIn,
   FiDownload,
-  FiInfo
-} from 'react-icons/fi';
+  FiInfo,
+} from "react-icons/fi";
 
 const OrganizationData = () => {
   const baseUrl = useBaseUrl();
@@ -56,10 +56,10 @@ const OrganizationData = () => {
   const handleBack = () => navigate("/dashboard/profile");
 
   const downloadImage = (imageUrl, filename) => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = imageUrl;
     link.download = filename;
-    link.target = '_blank';
+    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -82,7 +82,10 @@ const OrganizationData = () => {
         <div className={styles.errorContainer}>
           <FiInfo className={styles.errorIcon} />
           <p>{error}</p>
-          <button onClick={() => window.location.reload()} className={styles.retryBtn}>
+          <button
+            onClick={() => window.location.reload()}
+            className={styles.retryBtn}
+          >
             Try Again
           </button>
         </div>
@@ -108,8 +111,10 @@ const OrganizationData = () => {
       <div className={styles.businessCard}>
         {/* Left Side - Details */}
         <div className={styles.cardDetails}>
-          <h2 className={styles.orgName}>{formData.orgName || "Organization Name"}</h2>
-          
+          <h2 className={styles.orgName}>
+            {formData.orgName || "Organization Name"}
+          </h2>
+
           {/* Contact Info */}
           <div className={styles.contactSection}>
             {formData.telPhoneNo && (
@@ -118,21 +123,21 @@ const OrganizationData = () => {
                 <span>{formData.telPhoneNo}</span>
               </div>
             )}
-            
+
             {formData.phoneNo && (
               <div className={styles.contactItem}>
                 <FiSmartphone className={styles.contactIcon} />
                 <span>{formData.phoneNo}</span>
               </div>
             )}
-            
+
             {formData.emailAddress && (
               <div className={styles.contactItem}>
                 <FiMail className={styles.contactIcon} />
                 <span>{formData.emailAddress}</span>
               </div>
             )}
-            
+
             {formData.orgAddress && (
               <div className={styles.contactItem}>
                 <FiMapPin className={styles.contactIcon} />
@@ -140,7 +145,7 @@ const OrganizationData = () => {
               </div>
             )}
           </div>
-          
+
           {/* Legal Info */}
           <div className={styles.legalSection}>
             {formData.panNumber && (
@@ -149,7 +154,7 @@ const OrganizationData = () => {
                 <span>PAN: {formData.panNumber}</span>
               </div>
             )}
-            
+
             {formData.vatNumber && (
               <div className={styles.legalItem}>
                 <FiFileText className={styles.legalIcon} />
@@ -158,26 +163,28 @@ const OrganizationData = () => {
             )}
           </div>
         </div>
-        
+
         {/* Right Side - Logo */}
         {formData.logoUrl && (
           <div className={styles.cardLogo}>
             <div className={styles.logoContainer}>
-              <img 
-                src={formData.logoUrl} 
-                alt="Organization Logo" 
+              <img
+                src={formData.logoUrl}
+                alt="Organization Logo"
                 className={styles.logoImage}
               />
               <div className={styles.logoOverlay}>
-                <button 
+                <button
                   className={styles.logoActionBtn}
                   onClick={() => openModal(formData.logoUrl)}
                 >
                   <FiZoomIn />
                 </button>
-                <button 
+                <button
                   className={styles.logoActionBtn}
-                  onClick={() => downloadImage(formData.logoUrl, 'organization_logo.jpg')}
+                  onClick={() =>
+                    downloadImage(formData.logoUrl, "organization_logo.jpg")
+                  }
                 >
                   <FiDownload />
                 </button>
@@ -193,11 +200,15 @@ const OrganizationData = () => {
           <FiImage className={styles.sectionIcon} />
           <h3>Legal Documents</h3>
         </div>
-        
+
         <div className={styles.documentsGrid}>
           {[
             { key: "panImage", label: "PAN Document", icon: FiCreditCard },
-            { key: "registrationImage", label: "Registration Document", icon: FiFileText },
+            {
+              key: "registrationImage",
+              label: "Registration Document",
+              icon: FiFileText,
+            },
             { key: "vatImage", label: "VAT Document", icon: FiFileText },
           ].map(({ key, label, icon: Icon }) =>
             formData[key] ? (
@@ -206,7 +217,7 @@ const OrganizationData = () => {
                   <Icon className={styles.documentIcon} />
                   <span className={styles.documentLabel}>{label}</span>
                 </div>
-                
+
                 <div className={styles.documentImageContainer}>
                   <img
                     src={formData[key]}
@@ -223,7 +234,12 @@ const OrganizationData = () => {
                     </button>
                     <button
                       className={styles.documentBtn}
-                      onClick={() => downloadImage(formData[key], `${label.replace(/\s+/g, '_')}.jpg`)}
+                      onClick={() =>
+                        downloadImage(
+                          formData[key],
+                          `${label.replace(/\s+/g, "_")}.jpg`
+                        )
+                      }
                       title="Download Image"
                     >
                       <FiDownload />
@@ -235,7 +251,11 @@ const OrganizationData = () => {
           )}
         </div>
 
-        {![formData.panImage, formData.registrationImage, formData.vatImage].some(Boolean) && (
+        {![
+          formData.panImage,
+          formData.registrationImage,
+          formData.vatImage,
+        ].some(Boolean) && (
           <div className={styles.noDocuments}>
             <FiImage className={styles.noDocumentsIcon} />
             <p>No documents available</p>
@@ -246,13 +266,16 @@ const OrganizationData = () => {
       {/* Image Modal */}
       {modalImage && (
         <div className={styles.modalOverlay} onClick={closeModal}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className={styles.modalHeader}>
               <h3>Document Preview</h3>
               <div className={styles.modalActions}>
                 <button
                   className={styles.modalActionBtn}
-                  onClick={() => downloadImage(modalImage, 'document.jpg')}
+                  onClick={() => downloadImage(modalImage, "document.jpg")}
                   title="Download"
                 >
                   <FiDownload />
@@ -267,7 +290,11 @@ const OrganizationData = () => {
               </div>
             </div>
             <div className={styles.modalImageContainer}>
-              <img src={modalImage} alt="Document Preview" className={styles.modalImage} />
+              <img
+                src={modalImage}
+                alt="Document Preview"
+                className={styles.modalImage}
+              />
             </div>
           </div>
         </div>

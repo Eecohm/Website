@@ -1,179 +1,395 @@
-.studentTableContainer {
-  width: 85vw;
-  height: 90vh;
-  margin-left: 15vw;
-  margin-top: 10vh;
-  background-color: #1e1e1e;
-  color: #ffffff;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
+body.modal-open {
+  overflow: hidden;
+}
+
+.container {
+  position: fixed;
+  top: 3rem;
+  bottom: 6rem;
+  left: 10rem;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: center; /* centers vertically */
+  padding: 1rem;
+  z-index: 999;
+  background: rgba(34, 49, 72, 0.95);
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* keeps header at top, footer at bottom */
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  width: 100%;
+  max-width: 950px;
+  height: 82vh; /* fixed height */
+  padding: 2rem;
+}
+
+.header {
+  margin-bottom: 1rem; /* spacing below header */
+}
+.formContent {
+  flex: 1; /* take all remaining space */
+  overflow-y: auto; /* scroll only middle content */
+  padding: 1rem 0; /* vertical breathing space */
+}
+
+.navigation {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+}
+
+.header p {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin: 0.3rem 0 0 0;
+}
+
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progressBar {
+  margin-top: 10px;
+  height: 6px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  transition: width 0.3s ease-in-out;
+}
+
+.progressText {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-align: right;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+.sectionIcon {
+  color: #3b82f6;
+  font-size: 1.4rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.parentsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  gap: 1.5rem;
+}
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.fieldGroup label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+.fieldGroup input {
+  margin-bottom: 9px;
+}
+.fieldGroup:nth-child(4) {
+  grid-column: span 1;
+}
+
+.photoUpload {
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(30, 41, 59, 0.8);
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(30, 41, 59, 1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+textarea {
+  resize: none;
+}
+
+/* ====== PHOTO UPLOAD ====== */
+.uploadArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(30, 41, 59, 0.6);
+  border: 2px dashed rgba(148, 163, 184, 0.3);
+  border-radius: 0.75rem;
+  padding: 1.2rem;
+  cursor: pointer;
+  text-align: center;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.uploadArea:hover {
+  border-color: #3b82f6;
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.photoPreview {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.5rem;
   position: relative;
 }
-.newdiv{
-  height: 100vh;
-  width: 100vw;
-  background-color: red;
+
+.photoPreview img {
+  /* position: fixed; */
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  border: 2px solid rgba(148, 163, 184, 0.3);
 }
-.filterContainer {
+
+.removePhoto {
+  background: rgba(239, 68, 68, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  font-size: 14px;
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
   align-items: center;
-}
-
-.searchInput, .filterInput {
-  padding: 8px;
-  background-color: #2c2c2c;
-  border: 1px solid #444;
-  color: #ffffff;
-  border-radius: 4px;
-  min-width: 150px;
-}
-
-.filterSelect {
-  padding: 8px;
-  background-color: #2c2c2c;
-  border: 1px solid #444;
-  color: #ffffff;
-  border-radius: 4px;
-  min-width: 150px;
-}
-
-.classRange, .rollNoRange {
-  display: flex;
-  gap: 10px;
-}
-
-.addStudentButton {
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #4CAF50, #388E3C);
-  border: none;
-  color: #ffffff;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.addStudentButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.showDataButton {
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #2196F3, #1976D2);
-  border: none;
-  color: #ffffff;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.showDataButton:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.showDataButton:disabled {
-  background: #555;
-  cursor: not-allowed;
-}
-
-.studentTable {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #2c2c2c;
-}
-
-.studentTable th,
-.studentTable td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #444;
-}
-
-.studentTable th {
-  cursor: pointer;
-  background-color: #333;
-}
-
-.studentTable tr:hover {
-  background-color: #3a3a3a;
-}
-
-.noData {
-  text-align: center;
-  padding: 20px;
-}
-
-.statusMessage {
-  text-align: center;
-  margin-bottom: 10px;
-  color: #ff4444;
-}
-
-.studentCard {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #333;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.cardContent {
-  text-align: center;
-}
-
-.cardContent h2 {
-  margin-bottom: 10px;
-}
-
-.cardButtons {
-  display: flex;
-  gap: 10px;
   justify-content: center;
-  margin-top: 20px;
+  padding: 0;
+  line-height: 1;
+  margin-left: 0.5rem; /* pushes button slightly away from the image */
+  margin-top: 2px; /* aligns with image top */
+  transition: background 0.2s ease;
 }
 
-.actionButton {
-  padding: 8px 16px;
+.removePhoto:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.photoNote {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* ====== ERROR STATE ====== */
+.inputError {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: -0.2rem;
+}
+
+/* here */
+.rowFlex {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.rowFlex > * {
+  flex: 1; /* makes them equal width */
+}
+
+.dobPhotoRow {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.dobContainer {
+  flex: 1;
+}
+
+.photoContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Adjust the photo upload component to fit properly */
+.photoContainer > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ====== NAVIGATION ====== */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  gap: 3rem;
+}
+
+.navButton {
+  display: flex;
+  justify-content: center; /* center text inside */
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.95rem;
   border: none;
-  color: #ffffff;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
 }
 
-.actionButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+.navButton:first-child {
+  background: rgba(71, 85, 105, 0.5);
+  color: #cbd5e1;
 }
 
-.actionButton.showData {
-  background: linear-gradient(135deg, #2196F3, #1976D2);
+.navButton:first-child:hover {
+  background: rgba(71, 85, 105, 0.8);
 }
 
-.actionButton.reports {
-  background: linear-gradient(135deg, #FF9800, #F57C00);
+.navButton:last-child {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
 }
 
-.actionButton.accounts {
-  background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+.navButton:last-child:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
 }
 
-.actionButton.others {
-  background: linear-gradient(135deg, #E91E63, #C2185B);
+.steps {
+  display: flex;
+  gap: 1rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
 }
 
-.actionButton.close {
-  background: linear-gradient(135deg, #F44336, #D32F2F);
+.activeStep {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+  .formGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .photoUpload {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .photoUpload {
+    grid-column: span 1;
+  }
+
+  .navigation {
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+
+  .navButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ====== CUSTOM SCROLLBAR ====== */
+.formContent::-webkit-scrollbar {
+  width: 10px;
+}
+
+.formContent::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.7); /* dark slate */
+  border-radius: 10px;
+}
+
+.formContent::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6, #1d4ed8); /* blue gradient */
+  border-radius: 10px;
+}
+
+.formContent::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #2563eb,
+    #1e40af
+  ); /* darker blue on hover */
+}
+
+/* For Firefox */
+.formContent {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 rgba(30, 41, 59, 0.7);
 }
