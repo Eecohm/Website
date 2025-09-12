@@ -11,50 +11,18 @@ import StudentDetails from "../Admin/RegistrationApprovals/RegistrationApprovalD
 const DashBoard = () => {
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
+  const { verified } = useAuth()
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [alert, setAlertType] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
+      console.log(verified)
       if (!token) {
         console.warn("Access token missing");
         navigate("/login");
         return;
-      }
-      try {
-        const response = await fetch(`${baseUrl}/user/me`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        const data = await response.json();
-        setUserDetails({
-          kyc_status: data.kyc_status,
-          verified: data.verified,
-          role: data.role,
-        });
-        if (!data.kyc_status) {
-          setAlertType("incomplete_registration");
-        } else if (data.kyc_status && !data.verified) {
-          setAlertType("pending_registration");
-        }
-        if (!response.ok) {
-          if (response.status === 401) {
-            throw new Error("Invalid or expired token");
-          }
-          throw new Error(`HTTP error! status: ${res}`);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-        if (error.message.includes("Invalid or expired token")) {
-          navigate("/login");
-        } else {
-          navigate("/dashboard");
-        }
       }
     };
     fetchUserData();

@@ -5,18 +5,24 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [role, setrole] = useState(null);
+  const [role, setRole] = useState(null);
+  const [kyc_status, setKycStatus] = useState("pending");
+  const [verified, setVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
 
   useEffect(() => {
     try {
       const savedToken = localStorage.getItem("accessToken");
-      const setUserId = localStorage.getItem("userId");
-      const setrole = localStorage.getItem("role");
-      if (savedToken) {
-        setToken(savedToken);
-      }
+      const savedUserId = localStorage.getItem("userId");
+      const savedRole = localStorage.getItem("role");
+      const savedKycStatus = localStorage.getItem("kyc_status");
+      const savedVerified = localStorage.getItem("verified");
+
+      if (savedToken) setToken(savedToken);
+      if (savedUserId) setUserId(savedUserId);
+      if (savedRole) setRole(savedRole);
+      if (savedKycStatus) setKycStatus(savedKycStatus);
+      if (savedVerified) setVerified(savedVerified);
     } catch (error) {
       console.error("Error accessing localStorage:", error);
     } finally {
@@ -24,25 +30,40 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (newToken) => {
-    setToken(newToken);
-    localStorage.setItem("accessToken", newToken);
+  const login = (data) => {
+    localStorage.setItem("userId", data.user_id);
+    localStorage.setItem("role", data.role);
+    localStorage.setItem("verified", data.verified);
+    localStorage.setItem("kyc_status", data.kyc_status);
+    localStorage.setItem("accessToken", data.token);
+
+    setUserId(data.user_id);
+    setRole(data.role);
+    setVerified(data.verified);
+    setKycStatus(data.kyc_status);
+    setToken(data.token);
   };
 
-  const logut = () => {
+  const logout = () => {
     setToken(null);
-    localStorage.removeItem("accessToken");
+    setUserId(null);
+    setRole(null);
+    setKycStatus("pending");
+    setVerified(false);
+    localStorage.clear();
   };
 
   return (
     <AuthContext.Provider
       value={{
         token,
-        login,
-        logut,
-        isLoading,
         userId,
         role,
+        kyc_status,
+        verified,
+        isLoading,
+        login,
+        logout,
       }}
     >
       {children}
