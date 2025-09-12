@@ -1,102 +1,50 @@
-// import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import styles from "./KycStatusModal.module.css";
+import styles from "./KycStatusModal.module.css";
 
-// const KycStatusModal = ({ userDetails, onClose }) => {
-//   const [showModal, setShowModal] = useState(false);
-//   const navigate = useNavigate();
+const KycStatusModal = ({ verified, kycStatus, onClose }) => {
+  let content = null;
 
-//   useEffect(() => {
-//     // Show modal only if user is not verified
-//     if (userDetails && !userDetails.verified) {
-//       setShowModal(true);
-//     }
-//   }, [userDetails]);
+  if (!verified) {
+    content = {
+      title: "Account Not Verified",
+      message:
+        "Your account is not verified. Please verify your account to access all features.",
+    };
+  } else if (kycStatus === "pending") {
+    content = {
+      title: "KYC Pending",
+      message:
+        "Your KYC status is pending. Please wait for its approval before you can access any features.",
+    };
+  } else if (kycStatus === "unverified") {
+    content = {
+      title: "KYC Required",
+      message:
+        "Please complete your KYC form before you can access any features.",
+    };
+  } else if (kycStatus === "rejected") {
+    content = {
+      title: "KYC Rejected",
+      message:
+        "Your KYC has been rejected. Please review your details or contact the admin.",
+    };
+  }
 
-//   const handleClose = () => {
-//     setShowModal(false);
-//     onClose();
-//   };
+  if (!content) return null;
 
-//   const handleKycAction = () => {
-//     setShowModal(false);
-//     onClose();
-//     if (userDetails.kyc_status === "unverified") {
-//       navigate("/kyc-form"); // Navigate to KYC form
-//     } else if (userDetails.kyc_status === "rejected") {
-//       navigate("/support"); // Navigate to support/contact
-//     }
-//   };
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <h2>{content.title}</h2>
+        <p>{content.message}</p>
+        {kycStatus === "unverified" && (
+          <button onClick={() => alert("Navigate to KYC Form")}>
+            Complete KYC
+          </button>
+        )}
+        <button onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+};
 
-//   if (!showModal) return null;
-
-//   return (
-//     <div className={styles.modalOverlay}>
-//       <div className={styles.modalContent}>
-//         <div className={styles.modalHeader}>
-//           <h2>KYC Verification Status</h2>
-//           <button className={styles.closeButton} onClick={handleClose}>
-//             &times;
-//           </button>
-//         </div>
-
-//         <div className={styles.modalBody}>
-//           {!userDetails.verified && userDetails.kyc_status === "pending" && (
-//             <div className={styles.statusMessage}>
-//               <div className={styles.statusIcon}>⏳</div>
-//               <h3>KYC Verification Pending</h3>
-//               <p>
-//                 Your KYC status is pending. Please wait for approval before you
-//                 can access any features.
-//               </p>
-//             </div>
-//           )}
-
-//           {!userDetails.verified && userDetails.kyc_status === "unverified" && (
-//             <div className={styles.statusMessage}>
-//               <div className={styles.statusIcon}>📝</div>
-//               <h3>Complete KYC Verification</h3>
-//               <p>
-//                 Please complete your KYC form before you can access any
-//                 features.
-//               </p>
-//               <button className={styles.actionButton} onClick={handleKycAction}>
-//                 Complete KYC
-//               </button>
-//             </div>
-//           )}
-
-//           {!userDetails.verified && userDetails.kyc_status === "rejected" && (
-//             <div className={styles.statusMessage}>
-//               <div className={styles.statusIcon}>❌</div>
-//               <h3>KYC Verification Rejected</h3>
-//               <p>
-//                 Your KYC has been rejected. Please review your details or
-//                 contact the admin.
-//               </p>
-//               <button className={styles.actionButton} onClick={handleKycAction}>
-//                 Contact Support
-//               </button>
-//             </div>
-//           )}
-
-//           {userDetails.verified && (
-//             <div className={styles.statusMessage}>
-//               <div className={styles.statusIcon}>✅</div>
-//               <h3>Verification Successful</h3>
-//               <p>
-//                 Your account has been verified. You now have full access to all
-//                 features.
-//               </p>
-//               <button className={styles.successButton} onClick={handleClose}>
-//                 Continue to Dashboard
-//               </button>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default KycStatusModal;
+export default KycStatusModal;

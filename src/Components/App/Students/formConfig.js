@@ -110,8 +110,8 @@ const formConfig = [
             type: "text",
             required: true,
           },
-          { label: "Program *", name: "program", type: "text", required: true },
-          { label: "Faculty *", name: "faculty", type: "text", required: true },
+          // { label: "Program *", name: "program", type: "text", required: true },
+          // { label: "Faculty *", name: "faculty", type: "text", required: true },
           {
             label: "Academic Class *",
             name: "academicClass",

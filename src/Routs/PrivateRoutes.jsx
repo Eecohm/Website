@@ -27,17 +27,39 @@ import FacultyData from "../Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";
 
-const RequireAuth = ({ children}) => {
-  const { token, isLoading} = useAuth();
-
+const RequireAuth = ({ children }) => {
+  const { token, isLoading, isVerified, kycStatus } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
-    return <div>loading......</div>;
+    return <div>Loading...</div>;
   }
+
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+
+  // Handle KYC flow
+  if (!isVerified) {
+    if (!kycStatus || kycStatus === "unverified") {
+      return <Navigate to="/register" replace />;
+    }
+
+    if (kycStatus === "pending") {
+      return <Navigate to="/kyc-pending" replace />;
+    }
+
+    if (kycStatus === "rejected") {
+      return <Navigate to="/register" replace />;
+    }
+  } else {
+    if (isVerified === true) {
+      return <Navigate to="/dashboard" replace />;
+      s;
+    }
+  }
+
+  // Verified → allow access
   return children;
 };
 

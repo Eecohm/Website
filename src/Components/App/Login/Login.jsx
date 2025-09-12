@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { useBaseUrl } from "../../../BaseUrlContext";
+import { useAuth } from "./Auth/AuthContext";
 
 const LoginForm = () => {
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,11 +59,7 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("accessToken", data.access);
-        localStorage.setItem("userId", data.user_id);
-        localStorage.setItem("userEmail", data.email);
-        localStorage.setItem("role", data.role);
-
+        login(data);
         setIsCheckingSavedLogin(false);
         navigate("/dashboard");
         return;
@@ -70,8 +68,10 @@ const LoginForm = () => {
       } else {
         setError("An error occurred. Please try again.");
       }
-    } catch {
-      setError("Network error. Please check your connection.");
+    } catch (err) {
+      console.log(err);
+
+      // setError("Network error. Please check your connection.");
     } finally {
       setIsLoading(false);
       setIsCheckingSavedLogin(false);

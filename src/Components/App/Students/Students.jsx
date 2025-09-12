@@ -202,8 +202,18 @@ const Student = () => {
             <div style={{ flex: 1 }}>
               <label>Program</label>
               <select
+                name="programId"
                 value={formData.programId || ""}
-                onChange={handleProgramChange}
+                onChange={(e) => {
+                  const programId = e.target.value;
+                  setFormData((prev) => ({ ...prev, programId }));
+
+                  // Optional: filter faculties when program changes
+                  const relatedFaculties = faculties.filter(
+                    (f) => f.programId === parseInt(programId)
+                  );
+                  setFilteredFaculties(relatedFaculties);
+                }}
               >
                 <option value="">Select Program</option>
                 {programs.map((p) => (
@@ -217,6 +227,7 @@ const Student = () => {
             <div style={{ flex: 1 }}>
               <label>Faculty</label>
               <select
+                name="facultyId"
                 value={formData.facultyId || ""}
                 onChange={(e) =>
                   setFormData((prev) => ({

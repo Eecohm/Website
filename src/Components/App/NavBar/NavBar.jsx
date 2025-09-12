@@ -47,20 +47,22 @@ const NavBar = () => {
   // Close sidebar when clicking outside or when route changes
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (!event.target.closest(`.${styles.navBar}`) && 
-          !event.target.closest(`.${styles.navBarToggle}`) && 
-          !event.target.closest(`.${styles.settingsContainer}`)) {
+      if (
+        !event.target.closest(`.${styles.navBar}`) &&
+        !event.target.closest(`.${styles.navBarToggle}`) &&
+        !event.target.closest(`.${styles.settingsContainer}`)
+      ) {
         setIsSidebarOpen(false);
         setIsSettingsOpen(false);
       }
     };
 
     if (isSidebarOpen || isSettingsOpen) {
-      document.addEventListener('click', handleOutsideClick);
+      document.addEventListener("click", handleOutsideClick);
     }
 
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener("click", handleOutsideClick);
     };
   }, [isSidebarOpen, isSettingsOpen]);
 
@@ -139,7 +141,7 @@ const NavBar = () => {
     <div className={styles.mainNavDiv}>
       {/* Backdrop for mobile */}
       {(isSidebarOpen || showLogoutModal) && (
-        <div 
+        <div
           className={styles.backdrop}
           onClick={() => {
             setIsSidebarOpen(false);
@@ -171,10 +173,7 @@ const NavBar = () => {
               <span className={styles.contactSpan}>Contact: 023-546392</span>
             </div>
             <div className={styles.settingsContainer} onClick={toggleSettings}>
-              <FontAwesomeIcon
-                icon={faCog}
-                className={styles.settingsIcon}
-              />
+              <FontAwesomeIcon icon={faCog} className={styles.settingsIcon} />
               {isSettingsOpen && (
                 <ul className={styles.settingsMenu}>
                   {settingsItems.map((item, index) => (

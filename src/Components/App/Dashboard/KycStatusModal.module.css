@@ -1,101 +1,20 @@
-/* .modalOverlay {
+.modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .modalContent {
-  background-color: #1a202c;
-  color: #e2e8f0;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  border: 1px solid #2d3748;
-}
-
-.modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid #2d3748;
-  background-color: #2d3748;
-}
-
-.modalHeader h2 {
-  margin: 0;
-  color: #63b3ed;
-  font-size: 1.5rem;
-}
-
-.closeButton {
-  background: none;
-  border: none;
-  color: #e2e8f0;
-  font-size: 1.8rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.closeButton:hover {
-  color: #63b3ed;
-}
-
-.modalBody {
+  background: #fff;
   padding: 2rem;
-}
-
-.statusMessage {
+  border-radius: 12px;
+  max-width: 500px;
   text-align: center;
 }
-
-.statusIcon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.statusMessage h3 {
-  margin: 0 0 1rem 0;
-  color: #63b3ed;
-  font-size: 1.3rem;
-}
-
-.statusMessage p {
-  margin: 0 0 1.5rem 0;
-  line-height: 1.5;
-  color: #cbd5e0;
-}
-
-.actionButton,
-.successButton {
-  background-color: #3182ce;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.actionButton:hover,
-.successButton:hover {
-  background-color: #2c5282;
-}
-
-.successButton {
-  background-color: #38a169;
-}
-
-.successButton:hover {
-  background-color: #2f855a;
-} */
