@@ -1,28 +1,31 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext, use } from "react";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [role, setRole] = useState(null);
-  const [kyc_status, setKycStatus] = useState("pending");
+  const [role, setrole] = useState(null);
+  const [kyc_status, setkyc_status] = useState("pending");
   const [verified, setVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     try {
       const savedToken = localStorage.getItem("accessToken");
-      const savedUserId = localStorage.getItem("userId");
-      const savedRole = localStorage.getItem("role");
-      const savedKycStatus = localStorage.getItem("kyc_status");
+      const savedkycStatus = localStorage.getItem("kycStatus");
+      const saveduserId =localStorage.getItem("userId");
+      const savedrole = localStorage.getItem("role");
       const savedVerified = localStorage.getItem("verified");
-
-      if (savedToken) setToken(savedToken);
-      if (savedUserId) setUserId(savedUserId);
-      if (savedRole) setRole(savedRole);
-      if (savedKycStatus) setKycStatus(savedKycStatus);
-      if (savedVerified) setVerified(savedVerified);
+      if (savedToken) {
+        setToken(savedToken);
+        setVerified(savedVerified);
+        setUserId(saveduserId);
+        setrole(savedrole);
+        setkyc_status(savedkycStatus);
+      }
+      console.log()
     } catch (error) {
       console.error("Error accessing localStorage:", error);
     } finally {
@@ -32,38 +35,28 @@ export const AuthProvider = ({ children }) => {
 
   const login = (data) => {
     localStorage.setItem("userId", data.user_id);
-    localStorage.setItem("role", data.role);
+    localStorage.setItem("role", data.role)
     localStorage.setItem("verified", data.verified);
-    localStorage.setItem("kyc_status", data.kyc_status);
+    localStorage.setItem("kycStatus", data.kyc_status);
     localStorage.setItem("accessToken", data.token);
-
-    setUserId(data.user_id);
-    setRole(data.role);
-    setVerified(data.verified);
-    setKycStatus(data.kyc_status);
-    setToken(data.token);
   };
 
-  const logout = () => {
+  const logut = () => {
     setToken(null);
-    setUserId(null);
-    setRole(null);
-    setKycStatus("pending");
-    setVerified(false);
-    localStorage.clear();
+    localStorage.removeItem("accessToken");
   };
 
   return (
     <AuthContext.Provider
       value={{
         token,
+        login,
+        logut,
+        isLoading,
         userId,
         role,
         kyc_status,
-        verified,
-        isLoading,
-        login,
-        logout,
+        verified
       }}
     >
       {children}
