@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./NavBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "../../App/Login/Auth/AuthContext";
 import {
   faTasks,
   faUserShield,
@@ -20,6 +21,7 @@ import logo from "../../../assets/logo.svg";
 const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -117,7 +119,7 @@ const NavBar = () => {
   });
 
   const handleLogout = () => {
-    localStorage.clear();
+    logout();
     navigate("/login");
   };
 

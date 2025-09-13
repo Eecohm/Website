@@ -1,4 +1,3 @@
-// LoginForm.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
@@ -8,7 +7,7 @@ import { useAuth } from "./Auth/AuthContext";
 const LoginForm = () => {
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,22 +19,51 @@ const LoginForm = () => {
 
   const [showForgotModal, setShowForgotModal] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [resetError, setResetError] = useState("");
   const [resetStep, setResetStep] = useState(1);
 
+  // Cookie utility functions
+  const setCookie = (name, value, days = 7) => {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
+  };
+
+  const getCookie = (name) => {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  };
+
+  const deleteCookie = (name) => {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;secure;samesite=strict`;
+  };
+
   useEffect(() => {
-    const savedEmail = localStorage.getItem("savedEmail");
-    const savedPassword = localStorage.getItem("savedPassword");
-    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
+    // If user is already authenticated, redirect to dashboard
+    if (isAuthenticated()) {
+      navigate("/dashboard");
+      return;
+    }
+
+    // Check for remembered credentials
+    const savedEmail = getCookie("savedEmail");
+    const savedPassword = getCookie("savedPassword");
+    const savedRememberMe = getCookie("rememberMe") === "true";
 
     if (savedEmail && savedPassword && savedRememberMe) {
       setEmail(savedEmail);
       setPassword(savedPassword);
       setRememberMe(true);
+      // Auto-login with saved credentials
       loginUser(savedEmail, savedPassword, true);
     } else {
       setIsCheckingSavedLogin(false);
@@ -45,12 +73,14 @@ const LoginForm = () => {
   const loginUser = async (loginEmail, loginPassword, auto = false) => {
     setError("");
     if (!auto) setIsLoading(true);
+    
     try {
       const response = await fetch(`${baseUrl}/user/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", // This ensures cookies are sent/received
         body: JSON.stringify({
           email: loginEmail,
           password: loginPassword,
@@ -59,19 +89,42 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
+        
+        // Use AuthContext login method which handles cookie storage
         login(data);
+        
+        // Handle remember me functionality
+        if (rememberMe) {
+          setCookie("savedEmail", loginEmail, 30); // Remember for 30 days
+          setCookie("savedPassword", loginPassword, 30);
+          setCookie("rememberMe", "true", 30);
+        } else {
+          // Clear remembered credentials
+          deleteCookie("savedEmail");
+          deleteCookie("savedPassword");
+          deleteCookie("rememberMe");
+        }
+        
         setIsCheckingSavedLogin(false);
         navigate("/dashboard");
         return;
       } else if ([401, 403].includes(response.status)) {
         setError("Invalid credentials");
+        // Clear saved credentials if they're invalid
+        if (auto) {
+          deleteCookie("savedEmail");
+          deleteCookie("savedPassword");
+          deleteCookie("rememberMe");
+          setEmail("");
+          setPassword("");
+          setRememberMe(false);
+        }
       } else {
         setError("An error occurred. Please try again.");
       }
     } catch (err) {
-      console.log(err);
-
-      // setError("Network error. Please check your connection.");
+      console.error("Login error:", err);
+      setError("Network error. Please check your connection.");
     } finally {
       setIsLoading(false);
       setIsCheckingSavedLogin(false);
@@ -81,18 +134,9 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLoading) return;
+    
     setError("");
     setIsLoading(true);
-
-    if (rememberMe) {
-      localStorage.setItem("savedEmail", email);
-      localStorage.setItem("savedPassword", password);
-      localStorage.setItem("rememberMe", "true");
-    } else {
-      localStorage.removeItem("savedEmail");
-      localStorage.removeItem("savedPassword");
-      localStorage.setItem("rememberMe", "false");
-    }
 
     loginUser(email, password);
   };
@@ -101,56 +145,92 @@ const LoginForm = () => {
 
   const handleForgotPassword = async () => {
     setResetError("");
+    
+    if (!forgotEmail) {
+      setResetError("Please enter your email");
+      return;
+    }
+
     try {
       const res = await fetch(`${baseUrl}/user/forgot-password/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: forgotEmail }),
       });
+      
       if (res.ok) {
         setResetStep(2);
+        setResetError("");
       } else {
-        setResetError("Email not found");
+        const errorData = await res.json();
+        setResetError(errorData.message || "Email not found");
       }
-    } catch {
-      setResetError("Error sending email");
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      setResetError("Error sending email. Please try again.");
     }
   };
 
   const handleVerifyOtpAndSetPassword = async () => {
+    if (!otp || !newPassword || !confirmPassword) {
+      setResetError("Please fill in all fields");
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       setResetError("Passwords don't match");
       return;
     }
+
+    if (newPassword.length < 6) {
+      setResetError("Password must be at least 6 characters long");
+      return;
+    }
+
     try {
       const res = await fetch(`${baseUrl}/user/otp-verify/`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           email: forgotEmail,
-          otp,
+          otp: otp,
           new_password: newPassword,
         }),
       });
+      
       if (res.ok) {
         const data = await res.json();
-        localStorage.setItem("accessToken", data.access);
-        localStorage.setItem("userId", data.user_id);
-        localStorage.setItem("userEmail", data.email);
-
+        
+        // Use AuthContext login method
+        login(data);
+        
+        // Close modal and redirect
         setShowForgotModal(false);
         navigate("/dashboard");
       } else {
-        const data = await res.json();
-        setResetError(data.message || "Reset failed");
+        const errorData = await res.json();
+        setResetError(errorData.message || "Reset failed. Please try again.");
       }
-    } catch {
-      setResetError("Server error");
+    } catch (error) {
+      console.error("Password reset error:", error);
+      setResetError("Server error. Please try again.");
     }
   };
 
-  if (isCheckingSavedLogin)
+  const resetForgotPasswordModal = () => {
+    setShowForgotModal(false);
+    setForgotEmail("");
+    setOtp("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setResetError("");
+    setResetStep(1);
+  };
+
+  if (isCheckingSavedLogin) {
     return <div className={styles.loadingScreen}>Checking saved login...</div>;
+  }
 
   return (
     <div className={styles.loginContainer}>
@@ -168,6 +248,7 @@ const LoginForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               className={error ? styles.inputError : styles.neonInput}
               required
+              disabled={isLoading}
             />
           </div>
           <div className={styles.inputGroup}>
@@ -178,6 +259,7 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
               className={error ? styles.inputError : styles.neonInput}
               required
+              disabled={isLoading}
             />
           </div>
           <div className={styles.checkboxGroup}>
@@ -186,6 +268,7 @@ const LoginForm = () => {
                 type="checkbox"
                 checked={showPassword}
                 onChange={() => setShowPassword(!showPassword)}
+                disabled={isLoading}
               />
               Show Password
             </label>
@@ -194,6 +277,7 @@ const LoginForm = () => {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
+                disabled={isLoading}
               />
               Remember Me
             </label>
@@ -210,6 +294,7 @@ const LoginForm = () => {
             type="button"
             className={styles.forgotPassword}
             onClick={() => setShowForgotModal(true)}
+            disabled={isLoading}
           >
             Forgot Password?
           </button>
@@ -264,14 +349,14 @@ const LoginForm = () => {
                   className={styles.neonButton}
                   onClick={handleVerifyOtpAndSetPassword}
                 >
-                  Submit
+                  Reset Password
                 </button>
               </>
             )}
             {resetError && <p className={styles.errorMessage}>{resetError}</p>}
             <button
               className={styles.cancelButton}
-              onClick={() => setShowForgotModal(false)}
+              onClick={resetForgotPasswordModal}
             >
               Cancel
             </button>
