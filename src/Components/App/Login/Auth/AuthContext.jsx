@@ -5,11 +5,6 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [role, setRole] = useState(null);
-  const [kyc_status, setKycStatus] = useState("pending");
-  const [verified, setVerified] = useState(false);
-  const [userEmail, setUserEmail] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const baseUrl = useBaseUrl();
 
@@ -39,19 +34,8 @@ export const AuthProvider = ({ children }) => {
   const login = (data) => {
     // Set all user data in cookies
     setCookie("accessToken", data.access);
-    setCookie("userId", data.user_id.toString());
-    setCookie("role", data.role);
-    setCookie("verified", data.verified.toString());
-    setCookie("kycStatus", data.kyc_status);
-    setCookie("userEmail", data.email);
-
     // Update state
     setToken(data.access);
-    setUserId(data.user_id);
-    setRole(data.role);
-    setVerified(data.verified);
-    setKycStatus(data.kyc_status);
-    setUserEmail(data.email);
   };
 
   // Attempt to refresh token using refresh token cookie
@@ -85,20 +69,9 @@ export const AuthProvider = ({ children }) => {
   const clearAuthState = () => {
     // Clear all cookies
     deleteCookie("accessToken");
-    deleteCookie("userId");
-    deleteCookie("role");
-    deleteCookie("verified");
-    deleteCookie("kycStatus");
-    deleteCookie("userEmail");
     deleteCookie("refresh_token");
-
     // Clear state
     setToken(null);
-    setUserId(null);
-    setRole(null);
-    setVerified(false);
-    setKycStatus("pending");
-    setUserEmail(null);
   };
 
   // Logout function
@@ -181,11 +154,6 @@ export const AuthProvider = ({ children }) => {
           if (response.ok) {
             // Token is valid, restore user state from cookies
             setToken(savedToken);
-            setUserId(getCookie("userId"));
-            setRole(getCookie("role"));
-            setVerified(getCookie("verified") === "true");
-            setKycStatus(getCookie("kycStatus") || "pending");
-            setUserEmail(getCookie("userEmail"));
           } else {
             // Token is invalid, try to refresh
             await attemptTokenRefresh();
@@ -209,11 +177,6 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         token,
-        userId,
-        role,
-        kyc_status,
-        verified,
-        userEmail,
         isLoading,
         login,
         logout,
