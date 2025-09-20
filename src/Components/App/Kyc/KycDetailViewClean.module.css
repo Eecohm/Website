@@ -1,0 +1,288 @@
+/* === Page Overlay === */
+.overlay {
+  position: relative;
+  width: calc(100% - 220px); /* Reduce width to account for sidebar */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* Push content away from left sidebar */
+  margin-left: 240px; /* Left sidebar width */
+  margin-top: 120px; /* Top navbar height */
+  padding: 2rem;
+  color: #f1f5f9;
+  overflow-y: auto;
+}
+
+/* === Main Container === */
+.kycDetailContainer {
+  margin-top: 0; /* No extra margin needed since overlay has proper padding */
+  margin-left: auto; /* center horizontally */
+  margin-right: auto; /* center horizontally */
+  width: 100%;
+  max-width: 1050px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* === Header === */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.header .btn {
+  width: 20%;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  padding: 0.4rem 0.8rem; /* smaller button */
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.btn-warning {
+  background: #2563eb;
+
+  color: #fff;
+  padding: 0.8rem 0.8rem;
+  width: 40%;
+}
+
+.btn-warning:hover {
+  background: #1555e2;
+}
+
+.btn-secondary {
+  background: #475569;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: #334155;
+}
+
+/* === Main Layout === */
+.mainContent {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  align-items: stretch; /* equal height */
+  justify-content: center; /* center in container */
+}
+
+.leftSection,
+.rightSection {
+  justify-content: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* prevents overflow */
+}
+
+/* === Card Styling === */
+.detailsCard {
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  flex: 1; /* ensures equal height */
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Section Title === */
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 1rem;
+}
+
+/* === Role Info === */
+.roleInfo {
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.roleLabel {
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.roleBadge {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+/* === Status Info === */
+.statusExplanation {
+  margin-bottom: 1.25rem;
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.statusInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusLabel {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.statusValue {
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.statusAction {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #22d3ee;
+}
+
+.actionText {
+  background: rgba(34, 211, 238, 0.15);
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+}
+
+/* === CTA Button inside Card === */
+.ctaBtn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* === Verification Info === */
+.verificationInfo {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+/* === Right Side Card === */
+.noDataMessage {
+  text-align: center;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+}
+
+.noDataIcon {
+  font-size: 2.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.noDataMessage h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 0.5rem;
+}
+
+.noDataMessage p {
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.requirements {
+  text-align: left;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.requirements h4 {
+  width: 1005;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #f8fafc;
+}
+
+.requirements ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.requirements li {
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e2e8f0;
+}
+
+/* === Responsive === */
+@media (max-width: 992px) {
+  .overlay {
+    margin-left: 0; /* Remove sidebar margin on tablets */
+    width: 100%; /* Full width when no sidebar */
+    margin-top: 80px; /* Keep top navbar spacing */
+  }
+
+  .mainContent {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    margin-top: 60px; /* Smaller navbar on mobile */
+    margin-left: 0; /* No sidebar on mobile */
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .kycDetailContainer {
+    margin-top: 0.5rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .mainContent {
+    gap: 1rem;
+  }
+
+  .detailsCard {
+    padding: 1.25rem;
+  }
+}

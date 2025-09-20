@@ -1,0 +1,91 @@
+.verificationCard {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.cardHeader {
+  margin-bottom: 1.5rem;
+}
+
+.defaultIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.rejectedIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+  color: #e74c3c;
+}
+
+.cardHeader h2 {
+  color: #2c3e50;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.cardBody {
+  margin-bottom: 2rem;
+}
+
+.cardBody p {
+  color: #7f8c8d;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.detailsButton {
+  background: transparent;
+  color: #3498db;
+  border: 1px solid #3498db;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.detailsButton:hover {
+  background: #3498db;
+  color: white;
+}
+
+.cardFooter {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.backButton {
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.backButton:hover {
+  background: #7f8c8d;
+}
+
+.checkButton {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.checkButton:hover {
+  background: #2980b9;
+}

@@ -11,16 +11,16 @@ export const AuthProvider = ({ children }) => {
   // Cookie utility functions
   const setCookie = (name, value, days = 7) => {
     const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
     document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
   };
 
   const getCookie = (name) => {
     const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
+    const ca = document.cookie.split(";");
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
       if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
@@ -30,59 +30,30 @@ export const AuthProvider = ({ children }) => {
     document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;secure;samesite=strict`;
   };
 
-  // Login function - handles both initial login and refresh token data
+  // Login function - handles login and sets token
   const login = (data) => {
-    // Set all user data in cookies
-    setCookie("accessToken", data.access);
+    // Set access token in cookies (valid for 1 year)
+    setCookie("accessToken", data.access, 365); // 365 days = 1 year
     // Update state
     setToken(data.access);
   };
 
-  // Attempt to refresh token using refresh token cookie
-  const attemptTokenRefresh = async () => {
-    try {
-      const response = await fetch(`${baseUrl}/user/token/refresh/`, {
-        method: "POST",
-        credentials: "include", // This sends the refresh token cookie
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        
-        // Use the same login function to handle all cookie setting and state updates
-        login(data);
-        
-        return true;
-      }
-    } catch (error) {
-      console.error("Token refresh failed:", error);
-    }
-    
-    clearAuthState();
-    return false;
-  };
-
   // Clear all authentication state and cookies
   const clearAuthState = () => {
-    // Clear all cookies
+    // Clear access token cookie
     deleteCookie("accessToken");
-    deleteCookie("refresh_token");
     // Clear state
     setToken(null);
   };
 
   // Logout function
-  // Logout function
   const logout = async () => {
     try {
-      // Call logout endpoint to blacklist refresh token
+      // Call logout endpoint to invalidate token on server
       await fetch(`${baseUrl}/user/logout/`, {
         method: "POST",
-        credentials: "include", // Send refresh token cookie
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -100,37 +71,26 @@ export const AuthProvider = ({ children }) => {
     return !!token;
   };
 
-  // API call wrapper that handles token refresh automatically
+  // API call wrapper with authentication
   const authenticatedFetch = async (url, options = {}) => {
     const token = getCookie("accessToken");
-    
+
     // Add token to headers
     const headers = {
       ...options.headers,
-      ...(token && { "Authorization": `Bearer ${token}` }),
+      ...(token && { Authorization: `Bearer ${token}` }),
     };
 
-    let response = await fetch(url, {
+    const response = await fetch(url, {
       ...options,
       headers,
     });
 
-    // If token expired, try to refresh and retry
-    if (response.status === 401 && token) {
-      const refreshSuccess = await attemptTokenRefresh();
-      
-      if (refreshSuccess) {
-        const newToken = getCookie("accessToken");
-        const retryHeaders = {
-          ...options.headers,
-          "Authorization": `Bearer ${newToken}`,
-        };
-        
-        response = await fetch(url, {
-          ...options,
-          headers: retryHeaders,
-        });
-      }
+    // If token is invalid (401), clear auth state and redirect to login
+    if (response.status === 401) {
+      console.warn("Token expired or invalid, logging out");
+      clearAuthState();
+      // Optionally redirect to login - this can be handled by the calling component
     }
 
     return response;
@@ -141,26 +101,11 @@ export const AuthProvider = ({ children }) => {
     const checkAuthStatus = async () => {
       try {
         const savedToken = getCookie("accessToken");
-        
-        if (savedToken) {
-          // Verify token is still valid by making a test request
-          const response = await fetch(`${baseUrl}/user/login/`, {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${savedToken}`,
-            },
-          });
 
-          if (response.ok) {
-            // Token is valid, restore user state from cookies
-            setToken(savedToken);
-          } else {
-            // Token is invalid, try to refresh
-            await attemptTokenRefresh();
-          }
-        } else {
-          // No token found, try to refresh from refresh token
-          await attemptTokenRefresh();
+        if (savedToken) {
+          // Since token is valid for 1 year, just restore it
+          // No need to verify with server on every mount
+          setToken(savedToken);
         }
       } catch (error) {
         console.error("Error checking auth status:", error);
@@ -181,7 +126,6 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         isAuthenticated,
-        attemptTokenRefresh,
         authenticatedFetch,
       }}
     >

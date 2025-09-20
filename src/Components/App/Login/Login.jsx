@@ -28,16 +28,16 @@ const LoginForm = () => {
   // Cookie utility functions
   const setCookie = (name, value, days = 7) => {
     const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
     document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
   };
 
   const getCookie = (name) => {
     const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
+    const ca = document.cookie.split(";");
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
       if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
@@ -48,13 +48,7 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    // If user is already authenticated, redirect to dashboard
-    if (isAuthenticated()) {
-      navigate("/dashboard");
-      return;
-    }
-
-    // Check for remembered credentials
+    // Check for remembered credentials for auto-fill
     const savedEmail = getCookie("savedEmail");
     const savedPassword = getCookie("savedPassword");
     const savedRememberMe = getCookie("rememberMe") === "true";
@@ -64,23 +58,79 @@ const LoginForm = () => {
       setPassword(savedPassword);
       setRememberMe(true);
       // Auto-login with saved credentials
+      console.log("🔄 Auto-login with saved credentials");
       loginUser(savedEmail, savedPassword, true);
     } else {
       setIsCheckingSavedLogin(false);
     }
   }, []);
 
+  // Function to check user verification status and redirect accordingly
+  const redirectBasedOnVerificationStatus = async (token) => {
+    try {
+      console.log("🔍 Checking user verification status...");
+      const response = await fetch(`${baseUrl}/user/me/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const userData = await response.json();
+        const { verified, kyc_status } = userData;
+
+        console.log("👤 User data:", { verified, kyc_status });
+
+        // Implement the desired flow:
+        // if verified = true -> redirect to dashboard
+        if (verified === true) {
+          console.log("✅ User verified, redirecting to dashboard");
+          navigate("/dashboard");
+          return;
+        }
+
+        // if verified = false -> check kyc_status
+        if (verified === false) {
+          console.log("❌ User not verified, checking KYC status:", kyc_status);
+          switch (kyc_status) {
+            case "pending":
+              // Show KYC form for pending users
+              console.log("⏳ KYC pending, redirecting to form");
+              navigate("/dashboard/kyc/form");
+              break;
+            case "unverified":
+            case "rejected":
+            default:
+              // All other unverified users go to KYC Detail View first (central hub)
+              console.log("📝 Redirecting to KYC details (central hub)");
+              navigate("/dashboard/kyc/details");
+              break;
+          }
+        }
+      } else {
+        // If we can't fetch user data, fallback to dashboard
+        console.log("⚠️ Failed to fetch user data, fallback to dashboard");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("❌ Error checking verification status:", error);
+      // Fallback to dashboard on error
+      navigate("/dashboard");
+    }
+  };
+
   const loginUser = async (loginEmail, loginPassword, auto = false) => {
     setError("");
     if (!auto) setIsLoading(true);
-    
+
     try {
       const response = await fetch(`${baseUrl}/user/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // This ensures cookies are sent/received
         body: JSON.stringify({
           email: loginEmail,
           password: loginPassword,
@@ -89,10 +139,10 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        
+
         // Use AuthContext login method which handles cookie storage
         login(data);
-        
+
         // Handle remember me functionality
         if (rememberMe) {
           setCookie("savedEmail", loginEmail, 30); // Remember for 30 days
@@ -104,9 +154,15 @@ const LoginForm = () => {
           deleteCookie("savedPassword");
           deleteCookie("rememberMe");
         }
-        
+
         setIsCheckingSavedLogin(false);
-        navigate("/dashboard");
+
+        // Check user verification status and redirect accordingly
+        console.log(
+          "🚀 About to check verification status with token:",
+          data.access
+        );
+        await redirectBasedOnVerificationStatus(data.access);
         return;
       } else if ([401, 403].includes(response.status)) {
         setError("Invalid credentials");
@@ -134,7 +190,7 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLoading) return;
-    
+
     setError("");
     setIsLoading(true);
 
@@ -145,7 +201,7 @@ const LoginForm = () => {
 
   const handleForgotPassword = async () => {
     setResetError("");
-    
+
     if (!forgotEmail) {
       setResetError("Please enter your email");
       return;
@@ -157,7 +213,7 @@ const LoginForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: forgotEmail }),
       });
-      
+
       if (res.ok) {
         setResetStep(2);
         setResetError("");
@@ -191,20 +247,19 @@ const LoginForm = () => {
       const res = await fetch(`${baseUrl}/user/otp-verify/`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           email: forgotEmail,
           otp: otp,
           new_password: newPassword,
         }),
       });
-      
+
       if (res.ok) {
         const data = await res.json();
-        
+
         // Use AuthContext login method
         login(data);
-        
+
         // Close modal and redirect
         setShowForgotModal(false);
         navigate("/dashboard");

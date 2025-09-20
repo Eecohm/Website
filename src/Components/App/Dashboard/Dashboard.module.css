@@ -1,24 +1,171 @@
 /* Dashboard container */
 .dashboard {
   background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
-  margin-top: 10vh;
-  margin-left: 15vw;
-  height: 90vh;
+  height: 100vh;
+  width: 90vw;
+  margin: 9vh 14vw 0 18vw;
   width: 85vw;
   display: flex;
-  flex-direction: column; /* Better for stacking content */
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
   color: #ffffff;
-  font-size: 2rem;
-  position: relative; /* Ensure proper layering */
+  overflow-y: auto;
+  position: relative;
+  box-sizing: border-box;
+}
+.dashboard .dashboardStyling {
+  margin: 4rem;
+  /* margin-right: 2rem; */
 }
 
-.dashboard h1 {
-  margin: 0 0 1vh 0;
+.welcomeSection {
+  /* margin-bottom: 2rem; */
+  text-align: center;
 }
-/* Alert base styles */
+
+.welcomeSection h1 {
+  margin: 0 0 1rem 0;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #b0c4de;
+  margin-bottom: 1.5rem;
+}
+
+.roleInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.roleLabel {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.roleBadge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Quick Actions Section */
+.quickActions {
+  margin-bottom: 2rem;
+}
+
+.quickActions h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.actionCard {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.actionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.actionCard h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+.actionCard p {
+  margin: 0 0 1rem 0;
+  color: #b0c4de;
+  font-size: 0.95rem;
+}
+
+.actionButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.actionButton:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  transform: translateY(-2px);
+}
+
+Status Info Section .statusInfo {
+  margin-top: auto;
+  margin-bottom: 0.8rem;
+}
+
+.statusCard {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
+}
+
+.statusCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+.statusItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  color: #b0c4de;
+}
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.statusBadge.verified {
+  color: white;
+}
+
+.statusBadge.completed {
+  color: white;
+}
+
+/* Legacy alert styles for backward compatibility */
 .alert {
   width: 70vw;
   background-color: #222020;
@@ -27,8 +174,90 @@
   height: 80vh;
   border-radius: 50px;
   padding: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .dashboard {
+    margin-left: 0;
+    width: 100vw;
+    padding: 1.5rem;
+    margin-top: 8vh;
+    min-height: 92vh;
+  }
+
+  .actionGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .welcomeSection h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .actionGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .roleInfo {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .alert {
+    width: 90vw;
+    padding: 20px;
+    border-radius: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 0.8rem;
+  }
+
+  .welcomeSection h1 {
+    font-size: 1.8rem;
+  }
+
+  .quickActions h2 {
+    font-size: 1.5rem;
+  }
+
+  .actionCard {
+    padding: 1.2rem;
+  }
+
+  .statusCard {
+    padding: 1.2rem;
+  }
+
+  .statusItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .alert {
+    width: 95vw;
+    padding: 15px;
+    border-radius: 20px;
+  }
+}
+
+/* Alert content styles */
 .alert span {
   font-size: 20vh;
 }
@@ -62,6 +291,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  box-sizing: border-box;
 }
 
 /* Alert symbol */
@@ -104,15 +334,16 @@
   font-size: 20px;
   font-weight: 600;
   transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  box-sizing: border-box;
 }
 
 .button:focus {
   outline: 2px solid #ffffff;
-  outline-offset: 2px; /* Improve focus visibility */
+  outline-offset: 2px;
 }
 
 .button:active {
-  transform: scale(0.98); /* Subtle click effect */
+  transform: scale(0.98);
 }
 
 /* Complete button */
@@ -154,6 +385,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  box-sizing: border-box;
 }
 
 .viewDetailsButton:hover {
@@ -176,12 +408,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent backdrop */
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1100; /* Above alert */
-  overflow-y: auto; /* Allow scrolling for long content */
+  z-index: 1100;
+  overflow-y: auto;
 }
 
 /* Modal content */
@@ -191,10 +423,11 @@
   max-width: 800px;
   width: 90%;
   max-height: 80vh;
-  overflow-y: auto; /* Scrollable content */
+  overflow-y: auto;
   padding: 30px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   position: relative;
+  box-sizing: border-box;
 }
 
 /* Modal title */
@@ -222,6 +455,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  box-sizing: border-box;
 }
 
 .modalButton:focus {
@@ -259,55 +493,56 @@
   margin-top: 20px;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for alert components */
 @media (max-width: 768px) {
-  .dashboard {
-    margin-left: 0;
-    width: 100vw;
-    height: 100vh; /* Full height on mobile */
-    font-size: 1.5rem; /* Smaller font for mobile */
-  }
-
   .alert,
   .kycPendingAlert {
     left: 0;
-    width: 80vw;
-    top: 0; /* Stick to top on mobile */
-    padding: 20px 0; /* Reduce padding */
+    width: 90vw;
+    top: 0;
+    padding: 20px 0;
   }
 
   .alertContent {
-    padding: 0 20px; /* Less padding on mobile */
+    padding: 0 20px;
   }
 
   .alertSymbol {
-    font-size: 48px; /* Smaller symbol */
+    font-size: 48px;
   }
 
   .alertText {
-    font-size: 18px; /* Smaller text */
+    font-size: 18px;
   }
 
   .button,
   .viewDetailsButton,
   .modalButton {
-    padding: 10px 20px; /* Smaller buttons */
-    font-size: 16px; /* Smaller font */
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .viewDetailsButton {
+    width: 50vw;
   }
 
   .modalContent {
-    width: 95%; /* Wider on small screens */
-    padding: 20px; /* Less padding */
+    width: 95%;
+    padding: 20px;
   }
 
   .modalTitle {
-    font-size: 24px; /* Smaller title */
+    font-size: 24px;
+  }
+
+  .alert p {
+    width: 80vw;
   }
 }
 
 @media (max-width: 480px) {
   .alertButtons {
-    flex-direction: column; /* Stack buttons vertically */
+    flex-direction: column;
     gap: 15px;
   }
 
@@ -320,6 +555,14 @@
   }
 
   .modalContent {
-    max-height: 90vh; /* More space on very small screens */
+    max-height: 90vh;
+  }
+
+  .viewDetailsButton {
+    width: 70vw;
+  }
+
+  .alert p {
+    width: 90vw;
   }
 }

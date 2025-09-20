@@ -1,180 +1,130 @@
 import NavBar from "../NavBar/NavBar";
-import { useBaseUrl } from "../../../BaseUrlContext";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { throttle } from "lodash";
 import { useAuth } from "../Login/Auth/AuthContext";
+import { useUserVerification } from "../Login/Auth/useUserVerification";
 import styles from "./Dashboard.module.css";
-import { FaHandLizard } from "react-icons/fa";
-import StudentDetails from "../Admin/RegistrationApprovals/RegistrationApprovalDetails/StudentDetails";
 
 const DashBoard = () => {
-  const baseUrl = useBaseUrl();
   const { token } = useAuth();
-  const { verified } = useAuth()
-  const navigate = useNavigate();
-  const [userDetails, setUserDetails] = useState(null);
-  const [alert, setAlertType] = useState(null);
+  const { role, verified, kyc_status } = useUserVerification();
+  const [userStats, setUserStats] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      console.log(verified)
-      if (!token) {
-        console.warn("Access token missing");
-        navigate("/login");
-        return;
+    // Since UserValidationGuard protects this route, we know the user is verified
+    // We can focus on dashboard functionality here
+    const loadDashboardData = async () => {
+      if (!token) return;
+
+      try {
+        // Load dashboard-specific data here
+        // This could include user stats, notifications, etc.
+        console.log("Dashboard loaded for verified user with role:", role);
+      } catch (error) {
+        console.error("Error loading dashboard data:", error);
       }
     };
-    fetchUserData();
-  }, []);
 
-  const handleCloseAlert = () => {
-    setAlertType(null);
-  };
-  const handleNavigate = () => {
-    setAlertType(null);
-    navigate("/register");
-  };
+    loadDashboardData();
+  }, [token, role]);
 
   return (
     <>
       <NavBar />
       <div className={styles.dashboard}>
-        <h1>Welcome to the Dashboard</h1>
-        {alert === "incomplete_registration" && (
-          <div className={styles.alert}>
-            <span className={styles.alertSymbol}>⚠️</span>
-            <h4> ACTION REQUIRED</h4>
-            <p>
-              Opps Looks like you haven't Completed your registration. Please
-              Complete to Continue
+        <div className={styles.dashboardStyling}>
+          <div className={styles.welcomeSection}>
+            <h1>Welcome to your Dashboard</h1>
+            <p className={styles.subtitle}>
+              You have full access to all features. Your account is verified and
+              active.
             </p>
-            <button className={styles.completeButton} onClick={handleNavigate}>
-              Register
-            </button>
-            <button className={styles.dismissButton} onClick={handleCloseAlert}>
-              Close
-            </button>
+
+            {role && (
+              <div className={styles.roleInfo}>
+                <span className={styles.roleLabel}>Role:</span>
+                <span className={styles.roleBadge}>
+                  {role.charAt(0).toUpperCase() + role.slice(1)}
+                </span>
+              </div>
+            )}
           </div>
-        )}
+
+          <div className={styles.quickActions}>
+            <h2>Quick Actions</h2>
+            <div className={styles.actionGrid}>
+              <div className={styles.actionCard}>
+                <h3>Reports</h3>
+                <p>View and manage reports</p>
+                <button
+                  className={styles.actionButton}
+                  onClick={() => (window.location.href = "/dashboard/reports")}
+                >
+                  Go to Reports
+                </button>
+              </div>
+
+              <div className={styles.actionCard}>
+                <h3>Profile</h3>
+                <p>Manage your profile information</p>
+                <button
+                  className={styles.actionButton}
+                  onClick={() => (window.location.href = "/dashboard/profile")}
+                >
+                  View Profile
+                </button>
+              </div>
+
+              {(role === "admin" || role === "owner") && (
+                <div className={styles.actionCard}>
+                  <h3>Administration</h3>
+                  <p>Admin panel and user management</p>
+                  <button
+                    className={styles.actionButton}
+                    onClick={() => (window.location.href = "/dashboard/admin")}
+                  >
+                    Admin Panel
+                  </button>
+                </div>
+              )}
+
+              <div className={styles.actionCard}>
+                <h3>Academic</h3>
+                <p>Academic information and management</p>
+                <button
+                  className={styles.actionButton}
+                  onClick={() => (window.location.href = "/dashboard/academic")}
+                >
+                  Academic Section
+                </button>
+              </div>
+
+              <div className={styles.statusInfo}>
+                <div className={styles.statusCard}>
+                  <h3>Account Status</h3>
+                  <div className={styles.statusItem}>
+                    <span>Verification Status:</span>
+                    <span
+                      className={`${styles.statusBadge} ${styles.verified}`}
+                    >
+                      ✅ Verified
+                    </span>
+                  </div>
+                  <div className={styles.statusItem}>
+                    <span>KYC Status:</span>
+                    <span
+                      className={`${styles.statusBadge} ${styles.completed}`}
+                    >
+                      ✅ Completed
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
 };
+
 export default DashBoard;
-
-// import NavBar from "../NavBar/NavBar";
-// import { useBaseUrl } from "../../../BaseUrlContext";
-// import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { throttle } from "lodash";
-// import { useAuth } from "../Login/Auth/AuthContext";
-// import styles from "./Dashboard.module.css";
-// import KycStatusModal from "./KycStatusModal"; // Import the new modal component
-
-// const DashBoard = () => {
-//   const baseUrl = useBaseUrl();
-//   const { token } = useAuth();
-//   const navigate = useNavigate();
-//   const [userDetails, setUserDetails] = useState(null);
-//   const [alert, setAlertType] = useState(null);
-//   const [showKycModal, setShowKycModal] = useState(false);
-
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       if (!token) {
-//         console.warn("Access token missing");
-//         navigate("/login");
-//         return;
-//       }
-//       try {
-//         const response = await fetch(`${baseUrl}/user/me`, {
-//           method: "GET",
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//             "Content-Type": "application/json",
-//           },
-//         });
-
-//         const data = await response.json();
-//         setUserDetails({
-//           kyc_status: data.kyc_status,
-//           verified: data.verified,
-//           role: data.role,
-//         });
-
-//         // Show KYC modal if user is not verified
-//         if (!data.verified) {
-//           setShowKycModal(true);
-//         }
-
-//         if (!data.kyc_status) {
-//           setAlertType("incomplete_registration");
-//         } else if (data.kyc_status && !data.verified) {
-//           setAlertType("pending_registration");
-//         }
-//         if (!response.ok) {
-//           if (response.status === 401) {
-//             throw new Error("Invalid or expired token");
-//           }
-//           throw new Error(`HTTP error! status: ${res}`);
-//         }
-//       } catch (error) {
-//         console.error("Failed to fetch user data:", error);
-//         if (error.message.includes("Invalid or expired token")) {
-//           navigate("/login");
-//         } else {
-//           navigate("/dashboard");
-//         }
-//       }
-//     };
-//     fetchUserData();
-//   }, []);
-
-//   const handleCloseAlert = () => {
-//     setAlertType(null);
-//   };
-
-//   const handleNavigate = () => {
-//     setAlertType(null);
-//     navigate("/register");
-//   };
-
-//   const handleCloseKycModal = () => {
-//     setShowKycModal(false);
-//   };
-
-//   return (
-//     <>
-//       <NavBar />
-//       <div className={styles.dashboard}>
-//         <h1>Welcome to the Dashboard</h1>
-//         {alert === "incomplete_registration" && (
-//           <div className={styles.alert}>
-//             <span className={styles.alertSymbol}>⚠️</span>
-//             <h4> ACTION REQUIRED</h4>
-//             <p>
-//               Opps Looks like you haven't Completed your registration. Please
-//               Complete to Continue
-//             </p>
-//             <button className={styles.completeButton} onClick={handleNavigate}>
-//               Register
-//             </button>
-//             <button className={styles.dismissButton} onClick={handleCloseAlert}>
-//               Close
-//             </button>
-//           </div>
-//         )}
-//       </div>
-
-//       {/* Render KYC Modal if needed */}
-//       {showKycModal && userDetails && (
-//         <KycStatusModal
-//           userDetails={userDetails}
-//           onClose={handleCloseKycModal}
-//         />
-//       )}
-//     </>
-//   );
-// };
-// export default DashBoard;

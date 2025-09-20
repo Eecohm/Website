@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './Register.module.css';
-import NavBar from '../../NavBar/NavBar';
-import { useBaseUrl } from '../../../../BaseUrlContext';
-import { useAuth } from '../Auth/AuthContext';
-import StudentForm from './StudentForm';
-import TeacherForm from './TeacherForm';
-import GuardianForm from './GuardianForm';
-import EmployeeForm from './EmployeeForm';
-import OwnerForm from './OwnerForm';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./Register.module.css";
+import NavBar from "../../NavBar/NavBar";
+import { useBaseUrl } from "../../../../BaseUrlContext";
+import { useAuth } from "../Auth/AuthContext";
+import StudentForm from "./StudentForm";
+import TeacherForm from "./TeacherForm";
+import GuardianForm from "./GuardianForm";
+import EmployeeForm from "./EmployeeForm";
+import OwnerForm from "./OwnerForm";
 
 const Register = () => {
   const baseUrl = useBaseUrl();
@@ -20,25 +20,25 @@ const Register = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       if (!token) {
-        navigate('/login');
+        navigate("/login");
         return;
       }
       try {
-        const response = await fetch(`${baseUrl}/user/user/`, {
-          method: 'GET',
+        const response = await fetch(`${baseUrl}/user/me/`, {
+          method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
-        if (!response.ok) throw new Error('Failed to fetch user data');
+        if (!response.ok) throw new Error("Failed to fetch user data");
         const data = await response.json();
         setRole(data.role.toLowerCase());
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
         setLoading(false);
-        navigate('/login');
+        navigate("/login");
       }
     };
     fetchUserData();
@@ -48,19 +48,19 @@ const Register = () => {
 
   let FormComponent;
   switch (role) {
-    case 'student':
+    case "student":
       FormComponent = StudentForm;
       break;
-    case 'teacher':
+    case "teacher":
       FormComponent = TeacherForm;
       break;
-    case 'guardian':
+    case "guardian":
       FormComponent = GuardianForm;
       break;
-    case 'employee':
+    case "employee":
       FormComponent = EmployeeForm;
       break;
-    case 'owner':
+    case "owner":
       FormComponent = OwnerForm;
       break;
     default:

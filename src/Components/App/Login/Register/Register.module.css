@@ -14,10 +14,10 @@
 
 .registrationForm {
   height: 90vh;
-  width: 85vw;
+  width: 90vw;
   margin-left: 15vw;
-  margin-top: 10vh;
-  background-color: var(--background-color);
+  margin-top: 14vh;
+  /* background-color: var(--background-color); */
   color: var(--text-color);
   display: flex;
   justify-content: center;
@@ -30,9 +30,9 @@
   width: 100%;
   max-width: 1200px;
   padding: var(--section-padding);
-  background-color: #222;
+  /* background-color: #222; */
   border-radius: var(--border-radius);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
 }
 
 .formContainer h2 {
@@ -224,6 +224,25 @@ button:hover {
   color: var(--error-color);
   text-align: center;
   margin-bottom: 20px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.submitButton {
+  background-color: var(--action-button-bg);
+  width: 20%;
+}
+.cancelButton {
+  background-color: var(--error-color);
+  width: 20%;
 }
 
 @media (max-width: 768px) {

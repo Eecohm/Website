@@ -1,0 +1,862 @@
+/* KycDetailView.module.css *//* KycDetailView.module.css */
+
+
+
+.kycDetailContainer {.kycDetailContainer {
+
+  max-width: 900px;  max-width: 900px;
+
+  width: 100%;  width: 100%;
+
+  background: white;  background: white;
+
+  border-radius: 12px;  border-radius: 12px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+  padding: 2rem;  padding: 2rem;
+
+}}
+
+
+
+/* Header buttons *//* Header buttons */
+
+.headerButtons {.headerButtons {
+
+  display: flex;  display: flex;
+
+  justify-content: space-between;  justify-content: space-between;
+
+  align-items: center;  align-items: center;
+
+  margin-bottom: 2rem;  margin-bottom: 2rem;
+
+  gap: 1rem;  gap: 1rem;
+
+  flex-wrap: wrap;  flex-wrap: wrap;
+
+}}
+
+
+
+.backButton {.backButton {
+
+  padding: 0.75rem 1.5rem;  padding: 0.75rem 1.5rem;
+
+  background: #6c757d;  background: #6c757d;
+
+  color: white;  color: white;
+
+  border: none;  border: none;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  cursor: pointer;  cursor: pointer;
+
+  font-size: 1rem;  font-size: 1rem;
+
+  font-weight: 500;  font-weight: 500;
+
+  transition: all 0.2s ease;  transition: all 0.2s ease;
+
+}}
+
+
+
+.backButton:hover {.backButton:hover {
+
+  background: #5a6268;  background: #5a6268;
+
+  transform: translateY(-1px);  transform: translateY(-1px);
+
+}}
+
+
+
+.startKycButton {.startKycButton {
+
+  padding: 0.75rem 1.5rem;  padding: 0.75rem 1.5rem;
+
+  background: #007bff;  background: #007bff;
+
+  color: white;  color: white;
+
+  border: none;  border: none;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  cursor: pointer;  cursor: pointer;
+
+  font-size: 1rem;  font-size: 1rem;
+
+  font-weight: 500;  font-weight: 500;
+
+  transition: all 0.2s ease;  transition: all 0.2s ease;
+
+}}
+
+
+
+.startKycButton:hover {.startKycButton:hover {
+
+  background: #0056b3;  background: #0056b3;
+
+  transform: translateY(-1px);  transform: translateY(-1px);
+
+}}
+
+
+
+.resubmitButton {.resubmitButton {
+
+  padding: 0.75rem 1.5rem;  padding: 0.75rem 1.5rem;
+
+  background: #28a745;  background: #28a745;
+
+  color: white;  color: white;
+
+  border: none;  border: none;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  cursor: pointer;  cursor: pointer;
+
+  font-size: 1rem;  font-size: 1rem;
+
+  font-weight: 500;  font-weight: 500;
+
+  transition: all 0.2s ease;  transition: all 0.2s ease;
+
+}}
+
+
+
+.resubmitButton:hover {.resubmitButton:hover {
+
+  background: #1e7e34;  background: #1e7e34;
+
+  transform: translateY(-1px);  transform: translateY(-1px);
+
+}}
+
+
+
+/* Workflow section *//* Workflow section */
+
+.workflowSection {.workflowSection {
+
+  margin: 2rem 0;  margin: 2rem 0;
+
+  padding: 1.5rem;  padding: 1.5rem;
+
+  background: #f8f9fa;  background: #f8f9fa;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  border: 1px solid #e9ecef;  border: 1px solid #e9ecef;
+
+}}
+
+
+
+.workflowSteps {.workflowSteps {
+
+  display: flex;  display: flex;
+
+  align-items: center;  align-items: center;
+
+  justify-content: space-between;  justify-content: space-between;
+
+  flex-wrap: wrap;  flex-wrap: wrap;
+
+  gap: 1rem;  gap: 1rem;
+
+  margin-top: 1rem;  margin-top: 1rem;
+
+}}
+
+
+
+.workflowStep {.workflowStep {
+
+  display: flex;  display: flex;
+
+  flex-direction: column;  flex-direction: column;
+
+  align-items: center;  align-items: center;
+
+  text-align: center;  text-align: center;
+
+  padding: 1rem;  padding: 1rem;
+
+  background: white;  background: white;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  border: 2px solid #e9ecef;  border: 2px solid #e9ecef;
+
+  min-width: 140px;  min-width: 140px;
+
+  flex: 1;  flex: 1;
+
+  transition: all 0.2s ease;  transition: all 0.2s ease;
+
+}}
+
+
+
+.workflowStep.currentStep {.workflowStep.currentStep {
+
+  border-color: #007bff;  border-color: #007bff;
+
+  background: #f0f8ff;  background: #f0f8ff;
+
+  transform: scale(1.05);  transform: scale(1.05);
+
+}}
+
+
+
+.workflowStep.completed {.workflowStep.completed {
+
+  border-color: #28a745;  border-color: #28a745;
+
+  background: #f0fff0;  background: #f0fff0;
+
+}}
+
+
+
+.stepIcon {.stepIcon {
+
+  font-size: 2rem;  font-size: 2rem;
+
+  margin-bottom: 0.5rem;  margin-bottom: 0.5rem;
+
+}}
+
+
+
+.stepTitle {.stepTitle {
+
+  font-weight: bold;  font-weight: bold;
+
+  font-size: 0.9rem;  font-size: 0.9rem;
+
+  margin-bottom: 0.25rem;  margin-bottom: 0.25rem;
+
+  color: #495057;  color: #495057;
+
+}}
+
+
+
+.stepDescription {.stepDescription {
+
+  font-size: 0.8rem;  font-size: 0.8rem;
+
+  color: #6c757d;  color: #6c757d;
+
+  margin-bottom: 0.5rem;  margin-bottom: 0.5rem;
+
+}}
+
+
+
+.stepStatus {.stepStatus {
+
+  font-size: 0.8rem;  font-size: 0.8rem;
+
+  font-weight: 500;  font-weight: 500;
+
+  padding: 0.25rem 0.5rem;  padding: 0.25rem 0.5rem;
+
+  border-radius: 4px;  border-radius: 4px;
+
+  background: #e9ecef;  background: #e9ecef;
+
+  color: #495057;  color: #495057;
+
+}}
+
+
+
+.workflowArrow {.workflowArrow {
+
+  font-size: 1.5rem;  font-size: 1.5rem;
+
+  color: #6c757d;  color: #6c757d;
+
+  flex-shrink: 0;  flex-shrink: 0;
+
+}}
+
+
+
+/* Status section *//* Status section */
+
+.statusExplanation {.statusExplanation {
+
+  margin: 2rem 0;  margin: 2rem 0;
+
+  padding: 1.5rem;  padding: 1.5rem;
+
+  background: #f8f9fa;  background: #f8f9fa;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  border-left: 4px solid #007bff;  border-left: 4px solid #007bff;
+
+}}
+
+
+
+.statusCard {.statusCard {
+
+  display: flex;  display: flex;
+
+  align-items: flex-start;  align-items: flex-start;
+
+  gap: 1rem;  gap: 1rem;
+
+  padding: 1rem;  padding: 1rem;
+
+  background: white;  background: white;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  border: 1px solid #e9ecef;  border: 1px solid #e9ecef;
+
+  margin-top: 1rem;  margin-top: 1rem;
+
+}}
+
+
+
+.statusIcon {.statusIcon {
+
+  font-size: 2rem;  font-size: 2rem;
+
+  flex-shrink: 0;  flex-shrink: 0;
+
+}}
+
+
+
+.statusText {.statusText {
+
+  flex: 1;  flex: 1;
+
+}}
+
+
+
+.statusText strong {.statusText strong {
+
+  display: block;  display: block;
+
+  margin-bottom: 0.5rem;  margin-bottom: 0.5rem;
+
+  color: #495057;  color: #495057;
+
+  font-size: 1.1rem;  font-size: 1.1rem;
+
+}}
+
+
+
+.statusText p {.statusText p {
+
+  color: #6c757d;  color: #6c757d;
+
+  margin: 0;  margin: 0;
+
+  line-height: 1.5;  line-height: 1.5;
+
+}}
+
+
+
+/* No data message *//* No data message */
+
+.noDataMessage {.noDataMessage {
+
+  text-align: center;  text-align: center;
+
+  padding: 2rem;  padding: 2rem;
+
+  background: #f8f9fa;  background: #f8f9fa;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  border: 1px solid #e9ecef;  border: 1px solid #e9ecef;
+
+  margin: 2rem 0;  margin: 2rem 0;
+
+}}
+
+
+
+.noDataIcon {.noDataIcon {
+
+  font-size: 3rem;  font-size: 3rem;
+
+  margin-bottom: 1rem;  margin-bottom: 1rem;
+
+}}
+
+
+
+.noDataMessage h3 {.noDataMessage h3 {
+
+  color: #495057;  color: #495057;
+
+  margin-bottom: 1rem;  margin-bottom: 1rem;
+
+}}
+
+
+
+.noDataMessage p {.noDataMessage p {
+
+  color: #6c757d;  color: #6c757d;
+
+  margin-bottom: 1.5rem;  margin-bottom: 1.5rem;
+
+  line-height: 1.5;  line-height: 1.5;
+
+}}
+
+
+
+.requirements {.requirements {
+
+  background: white;  background: white;
+
+  padding: 1.5rem;  padding: 1.5rem;
+
+  border-radius: 8px;  border-radius: 8px;
+
+  border: 1px solid #e9ecef;  border: 1px solid #e9ecef;
+
+  margin-top: 1rem;  margin-top: 1rem;
+
+}}
+
+
+
+.requirements h4 {.requirements h4 {
+
+  color: #495057;  color: #495057;
+
+  margin-bottom: 1rem;  margin-bottom: 1rem;
+
+  text-align: left;  text-align: left;
+
+}}
+
+
+
+.requirements ul {.requirements ul {
+
+  text-align: left;  text-align: left;
+
+  color: #6c757d;  color: #6c757d;
+
+  line-height: 1.6;  line-height: 1.6;
+
+}}
+
+
+
+.requirements li {.requirements li {
+
+  margin-bottom: 0.5rem;  margin-bottom: 0.5rem;
+
+}}
+
+
+
+/* Responsive design *//* Responsive design */
+
+@media (max-width: 768px) {@media (max-width: 768px) {
+
+  .kycDetailContainer {  .kycDetailContainer {
+
+    padding: 1rem;    padding: 1rem;
+
+    margin: 1rem;    margin: 1rem;
+
+  }  }
+
+    
+
+  .headerButtons {  .headerButtons {
+
+    flex-direction: column;    flex-direction: column;
+
+    align-items: stretch;    align-items: stretch;
+
+  }  }
+
+    
+
+  .workflowSteps {  .workflowSteps {
+
+    flex-direction: column;    flex-direction: column;
+
+  }  }
+
+    
+
+  .workflowArrow {  .workflowArrow {
+
+    transform: rotate(90deg);    transform: rotate(90deg);
+
+  }  }
+
+    
+
+  .workflowStep {  .workflowStep {
+
+    min-width: auto;    min-width: auto;
+
+    width: 100%;    width: 100%;
+
+  }  }
+
+}}
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.headerButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.backButton {
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.backButton:hover {
+  background: #7f8c8d;
+}
+
+.resubmitButton {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.resubmitButton:hover {
+  background: #2980b9;
+}
+
+.kycDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detailSection {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.detailSection h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.detailRow {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+
+.detailLabel {
+  font-weight: 600;
+  min-width: 150px;
+  color: #34495e;
+}
+
+.detailValue {
+  color: #2c3e50;
+}
+
+.statusValue {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.statusValue.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.statusValue.rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.statusValue.verified {
+  background: #d4edda;
+  color: #155724;
+}
+
+.documentImages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.documentImage {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.documentImage img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.imageLabel {
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  font-weight: 600;
+  text-align: center;
+}
+
+.loadingSpinner {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #7f8c8d;
+}
+
+.errorMessage {
+  color: #e74c3c;
+  padding: 1rem;
+  background: #fadbd8;
+  border-radius: 4px;
+  border-left: 4px solid #e74c3c;
+}
+
+/* Workflow Visualization Styles */
+.workflowSection {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.workflowSection h3 {
+  margin: 0 0 1.5rem 0;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.workflowSteps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.workflowStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  min-width: 150px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.workflowStep.currentStep {
+  border-color: #3498db;
+  background: #ebf3fd;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+.workflowStep.completed {
+  border-color: #27ae60;
+  background: #eafaf1;
+}
+
+.stepIcon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.stepTitle {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+}
+
+.stepDescription {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin-bottom: 0.5rem;
+}
+
+.stepStatus {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: #ecf0f1;
+  color: #2c3e50;
+}
+
+.workflowArrow {
+  font-size: 1.5rem;
+  color: #bdc3c7;
+  font-weight: bold;
+}
+
+.startKycButton {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.startKycButton:hover {
+  background: #229954;
+}
+
+/* Status Explanation Styles */
+.statusExplanation {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.statusExplanation h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+.statusCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #3498db;
+}
+
+.statusIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.statusText strong {
+  color: #2c3e50;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.statusText p {
+  margin: 0;
+  color: #7f8c8d;
+  line-height: 1.5;
+}
+
+/* No Data Message Styles */
+.noDataMessage {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #e9ecef;
+}
+
+.noDataIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.noDataMessage h3 {
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+}
+
+.noDataMessage p {
+  color: #7f8c8d;
+  margin: 0 0 2rem 0;
+  font-size: 1.1rem;
+}
+
+.requirements {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 6px;
+  border-left: 4px solid #3498db;
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.requirements h4 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+.requirements ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.requirements li {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .workflowSteps {
+    flex-direction: column;
+  }
+
+  .workflowArrow {
+    transform: rotate(90deg);
+    margin: 0.5rem 0;
+  }
+
+  .workflowStep {
+    min-width: 200px;
+  }
+}

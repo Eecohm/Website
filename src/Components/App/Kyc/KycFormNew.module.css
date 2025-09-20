@@ -1,0 +1,349 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #f8fafc;
+  /* Account for navbar spacing */
+  padding-top: calc(70px + 2rem);
+  padding-left: calc(300px + 3rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formCard {
+  max-width: 1400px;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  max-height: 85vh;
+}
+
+.header {
+  padding: 1.5rem 2rem 1rem;
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  text-align: center;
+}
+
+.subtitle {
+  margin: 0;
+  color: #94a3b8;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.scrollableContent {
+  max-height: calc(85vh - 160px); /* Adjusted for new form height */
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 1.5rem 2rem; /* Reduced top/bottom padding */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* Reduced from 1.5rem */
+}
+
+.errorMessage {
+  padding: 1rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  color: #fca5a5;
+  font-size: 0.9rem;
+}
+
+.section {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-radius: 16px;
+  padding: 1.25rem; /* Reduced from 1.5rem */
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.sectionTitle {
+  margin: 0 0 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionIcon {
+  color: #3b82f6;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.gridContainerLarge {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Increased from 250px */
+  gap: 1.25rem; /* Slightly increased gap for better spacing */
+}
+
+/* Two-column layout for main form sections */
+.formSectionsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Single column for full-width sections */
+.fullWidthSection {
+  grid-column: 1 / -1;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(55, 65, 81, 0.5);
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.radioLabel:hover {
+  background: rgba(55, 65, 81, 0.7);
+  transform: translateY(-1px);
+}
+
+.radioLabelSelected {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid #3b82f6;
+}
+
+.radioInput {
+  accent-color: #3b82f6;
+  transform: scale(1.2);
+}
+
+.inputGroup {
+  margin-top: 1rem;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  transform: translateY(-1px);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.fileInput {
+  width: 100%;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.fileInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  transform: translateY(-1px);
+}
+
+.fileSuccessMessage {
+  font-size: 0.8rem;
+  color: #10b981;
+  margin: 0.25rem 0 0;
+  font-weight: 500;
+}
+
+.submitContainer {
+  display: flex;
+  justify-content: center;
+  width: 30%;
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  min-width: 200px;
+}
+
+.submitButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+.submitButton:disabled {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+}
+
+.submitButton:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+}
+
+/* Custom Scrollbar */
+.scrollableContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollableContent::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 4px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding-left: 2rem; /* Remove side navbar padding on tablets */
+  }
+
+  .formCard {
+    max-width: 95%;
+  }
+
+  /* Stack two-column layout on tablets */
+  .formSectionsContainer {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    padding-top: calc(60px + 1rem); /* Smaller navbar on mobile */
+    padding-left: 1rem; /* No side navbar on mobile */
+  }
+
+  .formCard {
+    max-width: 100%;
+    max-height: 95vh;
+  }
+
+  .header {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+
+  .scrollableContent {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .gridContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .gridContainerLarge {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stack sections on mobile */
+  .formSectionsContainer {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+    padding-top: calc(60px + 0.5rem);
+    padding-left: 0.5rem;
+  }
+
+  .formCard {
+    border-radius: 1rem;
+  }
+
+  .header {
+    padding: 1rem;
+  }
+
+  .scrollableContent {
+    padding: 1rem;
+  }
+
+  .submitButton {
+    padding: 0.875rem 2rem;
+    min-width: 180px;
+  }
+}
