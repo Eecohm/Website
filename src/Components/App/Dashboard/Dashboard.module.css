@@ -493,6 +493,135 @@ Status Info Section .statusInfo {
   margin-top: 20px;
 }
 
+/* Status Info Styles */
+.statusInfo {
+  margin-top: 2rem;
+}
+
+.statusCard {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.statusCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+.statusItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.statusBadge.completed,
+.statusBadge.verified {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.statusBadge.pending {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.statusBadge.rejected {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.statusBadge.unverified {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  color: white;
+}
+
+/* Waiting Message Styles */
+.waitingMessage {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.waitingIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  animation: spin 3s linear infinite;
+}
+
+.waitingMessage p {
+  margin: 0;
+  color: #e0e7ff;
+  line-height: 1.5;
+}
+
+.waitingSubtext {
+  font-weight: 600;
+  color: #dbeafe;
+}
+
+/* Rejected Message Styles */
+.rejectedMessage {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.rejectedIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  animation: pulse 2s infinite;
+}
+
+.rejectedMessage p {
+  margin: 0;
+  color: #fee2e2;
+  line-height: 1.5;
+}
+
+.rejectedSubtext {
+  font-weight: 600;
+  color: #fecaca;
+}
+
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
 /* Responsive adjustments for alert components */
 @media (max-width: 768px) {
   .alert,

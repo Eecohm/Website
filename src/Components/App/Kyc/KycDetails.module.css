@@ -1,0 +1,280 @@
+/* KYC Details Container */
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailsCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Header Section */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Status Section */
+.statusSection {
+  margin-top: 2rem;
+}
+
+.statusCard {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.statusCard h3 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.statusItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.statusItem span:first-child {
+  font-weight: 500;
+  color: #555;
+}
+
+/* Status Badges */
+.statusBadge {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.verified {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.pending {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+.rejected {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+.unverified {
+  background: linear-gradient(135deg, #9e9e9e, #757575);
+  color: white;
+  box-shadow: 0 4px 15px rgba(158, 158, 158, 0.3);
+}
+
+/* Message Sections */
+.messageSection {
+  margin: 2rem 0;
+}
+
+.waitingMessage {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-left: 4px solid #2196f3;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.waitingIcon {
+  font-size: 1.5rem;
+  animation: spin 2s linear infinite;
+}
+
+.waitingMessage p {
+  margin: 0;
+  color: #1565c0;
+  line-height: 1.6;
+}
+
+.waitingSubtext {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.rejectedMessage {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-left: 4px solid #f44336;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.rejectedIcon {
+  font-size: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.rejectedMessage p {
+  margin: 0;
+  color: #c62828;
+  line-height: 1.6;
+}
+
+.rejectedSubtext {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.successMessage {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-left: 4px solid #4caf50;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.successIcon {
+  font-size: 1.5rem;
+}
+
+.successMessage p {
+  margin: 0;
+  color: #2e7d32;
+  line-height: 1.6;
+}
+
+.infoMessage {
+  background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-left: 4px solid #9c27b0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.infoIcon {
+  font-size: 1.5rem;
+}
+
+.infoMessage p {
+  margin: 0;
+  color: #7b1fa2;
+  line-height: 1.6;
+}
+
+/* Action Section */
+.actionSection {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.actionButton {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.actionButton:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .detailsCard {
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .statusItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .statusBadge {
+    align-self: flex-start;
+  }
+}

@@ -33,7 +33,8 @@ import KycFormNew from "../Components/App/Kyc/KycFormNew";
 import KycFormTest from "../Components/App/Kyc/KycFormTest";
 import DiagnosticKycForm from "../Components/App/Kyc/DiagnosticKycForm";
 import KycStatus from "../Components/App/Kyc/KycStatus ";
-import KycDetailView from "../Components/App/Kyc/KycDetailViewClean";
+import KycDetails from "../Components/App/Kyc/KycDetails";
+import PostLoginOptions from "../Components/App/PostLoginOptions/PostLoginOptions";
 
 const RequireAuth = ({ children }) => {
   const { token, isLoading } = useAuth();
@@ -94,22 +95,32 @@ const PrivateRoutes = () => (
         </RequireAuth>
       }
     />
+
+    {/* Dashboard KYC Details route */}
     <Route
-      path="/kyc/details"
+      path="/dashboard/kyc/details"
       element={
         <RequireAuth>
-          <KycDetailView />
+          <KycDetails />
+        </RequireAuth>
+      }
+    />
+    <Route
+      path="/dashboard/kyc/form"
+      element={
+        <RequireAuth>
+          <KycFormNew />
         </RequireAuth>
       }
     />
 
-    {/* Dashboard main route - requires full verification */}
+    {/* Dashboard main route - allows any logged in user */}
     <Route
       path="/*"
       element={
-        <RequireAuthAndValidation>
+        <RequireAuth>
           <DashBoard />
-        </RequireAuthAndValidation>
+        </RequireAuth>
       }
     />
 

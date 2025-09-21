@@ -65,57 +65,14 @@ const LoginForm = () => {
     }
   }, []);
 
-  // Function to check user verification status and redirect accordingly
+  // Function to redirect to dashboard after login
   const redirectBasedOnVerificationStatus = async (token) => {
     try {
-      console.log("🔍 Checking user verification status...");
-      const response = await fetch(`${baseUrl}/user/me/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        const { verified, kyc_status } = userData;
-
-        console.log("👤 User data:", { verified, kyc_status });
-
-        // Implement the desired flow:
-        // if verified = true -> redirect to dashboard
-        if (verified === true) {
-          console.log("✅ User verified, redirecting to dashboard");
-          navigate("/dashboard");
-          return;
-        }
-
-        // if verified = false -> check kyc_status
-        if (verified === false) {
-          console.log("❌ User not verified, checking KYC status:", kyc_status);
-          switch (kyc_status) {
-            case "pending":
-              // Show KYC form for pending users
-              console.log("⏳ KYC pending, redirecting to form");
-              navigate("/dashboard/kyc/form");
-              break;
-            case "unverified":
-            case "rejected":
-            default:
-              // All other unverified users go to KYC Detail View first (central hub)
-              console.log("📝 Redirecting to KYC details (central hub)");
-              navigate("/dashboard/kyc/details");
-              break;
-          }
-        }
-      } else {
-        // If we can't fetch user data, fallback to dashboard
-        console.log("⚠️ Failed to fetch user data, fallback to dashboard");
-        navigate("/dashboard");
-      }
+      // Always redirect to dashboard after login
+      console.log("🚀 Login successful, redirecting to dashboard");
+      navigate("/dashboard");
     } catch (error) {
-      console.error("❌ Error checking verification status:", error);
+      console.error("❌ Error during redirect:", error);
       // Fallback to dashboard on error
       navigate("/dashboard");
     }
@@ -159,7 +116,7 @@ const LoginForm = () => {
 
         // Check user verification status and redirect accordingly
         console.log(
-          "🚀 About to check verification status with token:",
+          "About to check verification status with token:",
           data.access
         );
         await redirectBasedOnVerificationStatus(data.access);
@@ -260,7 +217,7 @@ const LoginForm = () => {
         // Use AuthContext login method
         login(data);
 
-        // Close modal and redirect
+        // Close modal and redirect to dashboard
         setShowForgotModal(false);
         navigate("/dashboard");
       } else {

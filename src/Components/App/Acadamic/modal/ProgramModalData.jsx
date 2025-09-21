@@ -108,7 +108,7 @@ const ProgramModalData = ({
       );
 
       setEditMode(false);
-      onProgramUpdate(); // Refresh the program list
+      onProgramUpdate();
     } catch (err) {
       console.error("Error updating program:", err);
       alert("Failed to update program. Please try again.");

@@ -1,11 +1,11 @@
 // components/MainDashboard.jsx
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../../App/Login/Auth/AuthContext";
-import KycDetailView from "./KycDetailView ";
+import { useNavigate } from "react-router-dom";
 
 const MainDashboard = () => {
   const { userId, role, kyc_status, verified } = useAuth();
-  const [viewKycDetails, setViewKycDetails] = useState(false);
+  const navigate = useNavigate();
 
   // Sample dashboard data - replace with actual data from your API
   const dashboardData = {
@@ -35,10 +35,6 @@ const MainDashboard = () => {
       { id: 2, message: "New security feature available", type: "security" },
     ],
   };
-
-  if (viewKycDetails) {
-    return <KycDetailView onBack={() => setViewKycDetails(false)} />;
-  }
 
   return (
     <div className="dashboard-main">
@@ -109,9 +105,9 @@ const MainDashboard = () => {
           </div>
           <button
             className="kyc-details-btn"
-            onClick={() => setViewKycDetails(true)}
+            onClick={() => navigate("/dashboard/kyc/form")}
           >
-            View KYC Details
+            Complete KYC Form
           </button>
         </div>
 

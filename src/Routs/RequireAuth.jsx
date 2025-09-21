@@ -22,14 +22,9 @@ const RequireAuth = ({ children }) => {
 
   // If user is verified but KYC is not complete, allow access only to:
   // - Dashboard (which shows KYC verification card)
-  // - KYC routes (form, status, details)
+  // - KYC routes (form, status)
   if (verified && kyc_status !== "verified") {
-    const allowedRoutes = [
-      "/dashboard",
-      "/kyc/form",
-      "/kyc/status",
-      "/kyc/details",
-    ];
+    const allowedRoutes = ["/dashboard", "/kyc/form", "/kyc/status"];
 
     const isAllowedRoute = allowedRoutes.some((route) =>
       location.pathname.startsWith(route)

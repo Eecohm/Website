@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../Login/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useUserVerification } from "../Login/Auth/useUserVerification";
+import { useBaseUrl } from "../../../BaseUrlContext";
 import NavBar from "../NavBar/NavBar";
 import styles from "./KycFormNew.module.css";
 
 const KycFormNew = ({ onSuccess }) => {
   const { userId } = useAuth();
   const navigate = useNavigate();
+  const baseUrl = useBaseUrl();
   const { role } = useUserVerification();
 
   const [formData, setFormData] = useState({
@@ -22,6 +24,9 @@ const KycFormNew = ({ onSuccess }) => {
     selfie: null,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isFormEditable, setIsFormEditable] = useState(true);
   const [error, setError] = useState("");
 
   const roles = [
@@ -32,9 +37,67 @@ const KycFormNew = ({ onSuccess }) => {
     { value: "owner", label: "Owner" },
   ];
 
+  // Fetch existing KYC data when component loads
+  useEffect(() => {
+    const fetchExistingKycData = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/kyc/details/`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (response.ok) {
+          try {
+            const data = await response.json();
+            if (data.kyc_data) {
+              // Populate form with existing data
+              setFormData({
+                fullName: data.kyc_data.fullName || "",
+                dateOfBirth: data.kyc_data.dateOfBirth || "",
+                address: data.kyc_data.address || "",
+                idType: data.kyc_data.idType || "national_id",
+                idNumber: data.kyc_data.idNumber || "",
+                role: data.kyc_data.role || "",
+                idFront: null, // Files will need to be re-uploaded
+                idBack: null,
+                selfie: null,
+              });
+              setIsEditMode(true);
+              setIsFormEditable(false); // Start in view mode for existing data
+            }
+          } catch (parseError) {
+            console.log("Error parsing KYC data response:", parseError);
+          }
+        }
+      } catch (error) {
+        console.log("No existing KYC data found:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchExistingKycData();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditClick = () => {
+    setIsFormEditable(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsFormEditable(false);
+    // Optionally reload the form data from the server
+  };
+
+  const handleSaveClick = async () => {
+    // Save changes without full submission
+    setIsFormEditable(false);
+    // You can add a save API call here if needed
   };
 
   const handleFileChange = (e) => {
@@ -71,11 +134,6 @@ const KycFormNew = ({ onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.role) {
-      setError("Please select your role.");
-      return;
-    }
-
     if (!formData.idFront || !formData.idBack || !formData.selfie) {
       setError("Please upload all required documents.");
       return;
@@ -97,14 +155,44 @@ const KycFormNew = ({ onSuccess }) => {
       }
 
       console.log("Submitting KYC data:", Object.fromEntries(submitData));
-      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        // Redirect based on user role after successful KYC submission
-        redirectBasedOnRole();
+      // Call backend API to submit KYC
+      const response = await fetch(`${baseUrl}/kyc/submit/`, {
+        method: "POST",
+        body: submitData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      // Check if response is ok first
+      if (!response.ok) {
+        // Try to get error message from response if it's JSON
+        let errorMessage = "KYC submission failed";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (parseError) {
+          // If response is not JSON, use status text
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
       }
+
+      // Try to parse successful response as JSON
+      let result = {};
+      try {
+        result = await response.json();
+      } catch (parseError) {
+        console.warn("Response is not valid JSON, assuming success");
+        result = { success: true };
+      }
+
+      // Update auth context with new KYC status
+      console.log("KYC submitted successfully. Status:", result.kyc_status);
+
+      // Redirect back to dashboard with status card display
+      navigate("/dashboard?showKycStatus=true");
     } catch (err) {
       setError(err.message || "Failed to submit KYC. Please try again.");
     } finally {
@@ -116,6 +204,25 @@ const KycFormNew = ({ onSuccess }) => {
   console.log("KycFormNew props:", { onSuccess });
   console.log("KycFormNew state:", { userId, role, isSubmitting, error });
 
+  // Show loading while fetching existing data
+  if (isLoading) {
+    return (
+      <>
+        <NavBar />
+        <div className={styles.container}>
+          <div className={styles.formCard}>
+            <div className={styles.header}>
+              <h1 className={styles.title}>Loading KYC Form...</h1>
+              <p className={styles.subtitle}>
+                Please wait while we load your information
+              </p>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <NavBar />
@@ -123,47 +230,52 @@ const KycFormNew = ({ onSuccess }) => {
         <div className={styles.formCard}>
           {/* Header */}
           <div className={styles.header}>
-            <h1 className={styles.title}>Complete Your KYC Verification</h1>
+            <h1 className={styles.title}>
+              {isEditMode ? "KYC Details" : "Complete Your KYC Verification"}
+            </h1>
             <p className={styles.subtitle}>
-              Please provide your information to verify your identity
+              {isEditMode
+                ? "View and edit your KYC information"
+                : "Please provide your information to verify your identity"}
             </p>
+
+            {/* Edit/Save/Cancel buttons for existing data */}
+            {isEditMode && (
+              <div className={styles.actionButtons}>
+                {!isFormEditable ? (
+                  <button
+                    type="button"
+                    onClick={handleEditClick}
+                    className={styles.editButton}
+                  >
+                    Edit
+                  </button>
+                ) : (
+                  <div className={styles.editActions}>
+                    <button
+                      type="button"
+                      onClick={handleSaveClick}
+                      className={styles.saveButton}
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCancelClick}
+                      className={styles.cancelButton}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Scrollable Form Content */}
           <div className={styles.scrollableContent}>
             <form onSubmit={handleSubmit} className={styles.form}>
               {error && <div className={styles.errorMessage}>{error}</div>}
-
-              {/* Role Selection Section - Full Width */}
-              <div className={`${styles.section} ${styles.fullWidthSection}`}>
-                <h3 className={styles.sectionTitle}>
-                  <span className={styles.sectionIcon}>🎯</span>
-                  Select Your Role
-                </h3>
-
-                <div className={styles.gridContainer}>
-                  {roles.map((role) => (
-                    <label
-                      key={role.value}
-                      className={`${styles.radioLabel} ${
-                        formData.role === role.value
-                          ? styles.radioLabelSelected
-                          : ""
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="role"
-                        value={role.value}
-                        checked={formData.role === role.value}
-                        onChange={handleInputChange}
-                        className={styles.radioInput}
-                      />
-                      {role.label}
-                    </label>
-                  ))}
-                </div>
-              </div>
 
               {/* Two-column layout for Personal Info and Document Upload */}
               <div className={styles.formSectionsContainer}>
@@ -183,6 +295,7 @@ const KycFormNew = ({ onSuccess }) => {
                         value={formData.fullName}
                         onChange={handleInputChange}
                         required
+                        disabled={!isFormEditable}
                         className={styles.input}
                         placeholder="Enter your full name"
                       />
@@ -196,6 +309,7 @@ const KycFormNew = ({ onSuccess }) => {
                         value={formData.dateOfBirth}
                         onChange={handleInputChange}
                         required
+                        disabled={!isFormEditable}
                         className={styles.input}
                       />
                     </div>
@@ -208,6 +322,7 @@ const KycFormNew = ({ onSuccess }) => {
                       value={formData.address}
                       onChange={handleInputChange}
                       required
+                      disabled={!isFormEditable}
                       rows={3}
                       className={styles.textarea}
                       placeholder="Enter your full address"
@@ -222,6 +337,7 @@ const KycFormNew = ({ onSuccess }) => {
                         value={formData.idType}
                         onChange={handleInputChange}
                         required
+                        disabled={!isFormEditable}
                         className={styles.select}
                       >
                         <option value="national_id">National ID</option>
@@ -238,6 +354,7 @@ const KycFormNew = ({ onSuccess }) => {
                         value={formData.idNumber}
                         onChange={handleInputChange}
                         required
+                        disabled={!isFormEditable}
                         className={styles.input}
                         placeholder="Enter your ID number"
                       />
@@ -266,6 +383,7 @@ const KycFormNew = ({ onSuccess }) => {
                           onChange={handleFileChange}
                           accept="image/*"
                           required
+                          disabled={!isFormEditable}
                           className={styles.fileInput}
                         />
                         {formData[field.name] && (
@@ -279,16 +397,22 @@ const KycFormNew = ({ onSuccess }) => {
                 </div>
               </div>
 
-              {/* Submit Button */}
-              <div className={styles.submitContainer}>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={styles.submitButton}
-                >
-                  {isSubmitting ? "Submitting..." : "Submit KYC Application"}
-                </button>
-              </div>
+              {/* Submit Button - only show when form is editable */}
+              {isFormEditable && (
+                <div className={styles.submitContainer}>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={styles.submitButton}
+                  >
+                    {isSubmitting
+                      ? "Submitting..."
+                      : isEditMode
+                      ? "Resubmit KYC Application"
+                      : "Submit KYC Application"}
+                  </button>
+                </div>
+              )}
             </form>
           </div>
         </div>

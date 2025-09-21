@@ -170,7 +170,7 @@ export const useUserVerification = () => {
     // For pending users - show KYC form directly
     if (isPending()) {
       return {
-        text: "Complete KYC Form",
+        text: "View Details",
         path: "/dashboard/kyc/form",
         type: "action",
       };
@@ -179,17 +179,17 @@ export const useUserVerification = () => {
     // For unverified users - show KYC detail view first
     if (needsKyc()) {
       return {
-        text: "View KYC Details",
-        path: "/dashboard/kyc/details",
+        text: "Complete KYC Form",
+        path: "/dashboard/kyc/form",
         type: "action",
       };
     }
 
-    // For rejected users - show KYC detail view first
+    // For rejected users - show KYC form to resubmit
     if (isRejected()) {
       return {
-        text: "View KYC Details",
-        path: "/dashboard/kyc/details",
+        text: "View Details",
+        path: "/dashboard/kyc/form",
         type: "action",
       };
     }

@@ -1,0 +1,166 @@
+/* KYC Status Card Overlay Styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+}
+
+.container {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.95),
+    rgba(51, 65, 85, 0.9)
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: white;
+}
+
+/* Status Section */
+.statusSection {
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.statusApproved {
+  background: linear-gradient(135deg, #22543d, #38a169);
+  color: white;
+}
+
+.statusRejected {
+  background: linear-gradient(135deg, #7f1d1d, #e53e3e);
+  color: white;
+}
+
+.statusPending {
+  background: linear-gradient(135deg, #d69e2e, #ed8936);
+  color: white;
+}
+
+.statusUnverified {
+  background: linear-gradient(135deg, #4a5568, #718096);
+  color: white;
+}
+
+.statusDescription {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Button Container */
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Button Styles - matching the dark theme from PostLoginOptions */
+.primaryButton,
+.secondaryButton,
+.tertiaryButton {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, #22543d, #1a202c);
+  color: white;
+}
+
+.primaryButton:hover {
+  box-shadow: 0 6px 20px rgba(34, 84, 61, 0.4);
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  background: linear-gradient(135deg, #7f1d1d, #450a0a);
+  color: white;
+}
+
+.secondaryButton:hover {
+  box-shadow: 0 6px 20px rgba(127, 29, 29, 0.4);
+  transform: translateY(-2px);
+}
+
+.tertiaryButton {
+  background: linear-gradient(135deg, #1e3a8a, #1e1b4b);
+  color: white;
+}
+
+.tertiaryButton:hover {
+  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 20px;
+    margin: 20px;
+    width: calc(100% - 40px);
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .statusBadge {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  .buttonContainer {
+    gap: 12px;
+  }
+
+  .primaryButton,
+  .secondaryButton,
+  .tertiaryButton {
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+}
