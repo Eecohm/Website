@@ -28,8 +28,8 @@ import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";
 import ProfileRoutes from "./DashBoardRoutes/Profile/ProfileRoutes";
 
-const RequireAuth = ({ children}) => {
-  const { token, isLoading} = useAuth();
+const RequireAuth = ({ children }) => {
+  const { token, isLoading } = useAuth();
 
   const location = useLocation();
 
@@ -108,7 +108,6 @@ const PrivateRoutes = () => (
         </RequireAuth>
       }
     />
-  
     <Route
       path="/academic"
       element={
