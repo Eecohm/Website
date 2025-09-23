@@ -2,18 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import LeadsHeader from './LeadsHeader';
 import TeamLeadCard from './TeamLeadCard';
 import styles from './MeetTheTeamLeads.module.css';
-import img1 from "../../../../assets/F/10.png";
-import img2 from "../../../../assets/F/12.png";
-import img3 from "../../../../assets/F/3.png";
-import img4 from "../../../../assets/F/9.png";
-import img5 from "../../../../assets/F/13.png";
-import img6 from "../../../../assets/F/5.png";
-import img7 from "../../../../assets/F/6.png";
-import img8 from "../../../../assets/F/8.png";
-import img9 from "../../../../assets/F/1.png";
-import img10 from "../../../../assets/F/4.png";
-import img11 from "../../../../assets/F/11.png";
-import img12 from "../../../../assets/F/7.png";
+import img1 from "@/assets/F/10.png";
+import img2 from "@/assets/F/12.png";
+import img3 from "@/assets/F/3.png";
+import img4 from "@/assets/F/9.png";
+import img5 from "@/assets/F/13.png";
+import img6 from "@/assets/F/5.png";
+import img7 from "@/assets/F/6.png";
+import img8 from "@/assets/F/8.png";
+import img9 from "@/assets/F/1.png";
+import img10 from "@/assets/F/4.png";
+import img11 from "@/assets/F/11.png";
+import img12 from "@/assets/F/7.png";
 
 const teamLeads = [
   {

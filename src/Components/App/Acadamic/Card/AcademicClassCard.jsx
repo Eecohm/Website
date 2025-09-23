@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useBaseUrl } from "../../../../BaseUrlContext";
+import { useBaseUrl } from "../../../../Context/BaseUrlContext";
 import { useAuth } from "../../Login/Auth/AuthContext";
 import styles from "./AcademicClassCard.module.css";
 import ModalNotification from "../../../../GlobalComponets/ModalNotification";

@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import styles from "./styles/SubOrgDetails.module.css";
 import axios from "axios";
-import { useBaseUrl } from "../../../BaseUrlContext";
+import { useBaseUrl } from "../../../Context/BaseUrlContext";
 import { useAuth } from "../Login/Auth/AuthContext";
 import ModalNotification from "../../../GlobalComponets/ModalNotification";
 

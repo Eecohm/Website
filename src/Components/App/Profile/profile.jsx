@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useBaseUrl } from "../../../BaseUrlContext";
+import { useBaseUrl } from "../../../Context/BaseUrlContext";
 import { useAuth } from "../Login/Auth/AuthContext";
 import Notification from "../../../GlobalComponets/Notification";
 import { Building2, Users, ArrowLeft, Briefcase } from 'lucide-react';

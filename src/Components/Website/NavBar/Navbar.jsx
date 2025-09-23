@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
-import logo from "../../assets/logo.svg";
+import logo from "@/assets/logo.svg";
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -47,7 +47,7 @@ const Navbar = () => {
         }`}
       >
         <li>
-          <Link to="/" className={styles.Link} onClick={closeMobileMenu}>
+          <Link to="/#hero" className={styles.Link} onClick={closeMobileMenu}>
             Home
           </Link>
         </li>

@@ -8,7 +8,7 @@ import PhotoUpload from "./PhotoUpload";
 import ProgressBar from "./ProgressBar";
 import formConfig from "./formConfig";
 import axios from "axios";
-import { useBaseUrl } from "../../../BaseUrlContext";
+import { useBaseUrl } from "../../../Context/BaseUrlContext";
 import { useAuth } from "../../App/Login/Auth/AuthContext";
 
 const Student = () => {

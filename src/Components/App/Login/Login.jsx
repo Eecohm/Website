@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import { useBaseUrl } from "../../../BaseUrlContext";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "./Auth/AuthContext";
 
 const LoginForm = () => {

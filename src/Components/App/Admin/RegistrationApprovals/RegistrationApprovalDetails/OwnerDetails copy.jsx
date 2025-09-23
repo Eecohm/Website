@@ -1,5 +1,5 @@
 import styles from '../RegistartionApprovals.module.css';
-import { useBaseMediaUrl } from '../../../../../BaseUrlContext';
+import { useBaseMediaUrl } from '../../../../../Context/BaseUrlContext';
 import { useState } from 'react';
 
 const OwnerDetails = ({ details }) => {

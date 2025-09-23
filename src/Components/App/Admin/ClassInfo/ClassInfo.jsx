@@ -1,7 +1,7 @@
 import NavBar from "../../NavBar/NavBar";
 import styles from "./ClassInfo.module.css";
 import { useAuth } from '../../Login/Auth/AuthContext';
-import { useBaseUrl } from "../../../../BaseUrlContext";
+import { useBaseUrl } from "../../../../Context/BaseUrlContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 

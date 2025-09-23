@@ -1,5 +1,5 @@
 import NavBar from "../NavBar/NavBar";
-import { useBaseUrl } from "../../../BaseUrlContext";
+import { useBaseUrl } from "../../../Context/BaseUrlContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { throttle } from "lodash";

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styles from './Testimonial.module.css';
-import pranil from '../../assets/Images/CHOUHAN.png';
-import arpan from '../../assets/Images/arpanksharma.png';
-import sandhya from '../../assets/Images/sandhya.png';
-import sadiksya from '../../assets/Images/sadikshya.png';
+import pranil from '@/assets/Images/CHOUHAN.png';
+import arpan from '@/assets/Images/arpanksharma.png';
+import sandhya from '@/assets/Images/sandhya.png';
+import sadiksya from '@/assets/Images/sadikshya.png';
 
 const testimonialsData = [
   {

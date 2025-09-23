@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
-import UnderConstruction from '../Components/App/UnderConstruction';
+
 
 const AppRoutes = () => (
     <Routes>
@@ -10,11 +10,7 @@ const AppRoutes = () => (
         
         {/* Public Routes */}
         <Route path='/*' element={<PublicRoutes/>} />
-
-        
-
-        {/* Catch-all */}
-        <Route path="*" element={<UnderConstruction />} />
+       
     </Routes>
 )
 

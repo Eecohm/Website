@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Admin.module.css';
 import NavBar from '../NavBar/NavBar';
 import { Link } from 'react-router-dom'
-import { useBaseUrl } from '../../../BaseUrlContext';
+import { useBaseUrl } from '../../../Context/BaseUrlContext';
 
 const Admin = () => {
     const baseUrl = useBaseUrl();

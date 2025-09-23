@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styles from './School.module.css';
-import image_1 from '../../assets/Images/program_1.png';
-import image_2 from '../../assets/Images/program_2.png';
-import image_3 from '../../assets/Images/program_1.png';
-import image_4 from '../../assets/Images/program_3.png';
+import image_1 from '@/assets/Images/program_1.png';
+import image_2 from '@/assets/Images/program_2.png';
+import image_3 from '@/assets/Images/program_1.png';
+import image_4 from '@/assets/Images/program_3.png';
 import MeetTheTeam from './Team/MeetTheTeam';
 import TeamLeadCard from './Team/TeamLead/MeetTheTeamLeads';
 const images = [

@@ -2,14 +2,14 @@ import React, { useRef, useEffect } from 'react';
 import TeamHeader from './TeamHeader';
 import TeamMember from './TeamMember';
 import styles from './MeetTheTeam.module.css';
-import bibek from '../../../assets/Images/bibek.jpg';
-import aalok from '../../../assets/Images/aalok.jpg';
-import nirmal from '../../../assets/Images/nirmal.png';
-import sumanu from '../../../assets/Images/sumanu.png';
-import sumans from '../../../assets/Images/sumans.png';
-import janardhan from '../../../assets/Images/janardhan.png';
-import primila from '../../../assets/Images/pramila.png';
-import pritam from '../../../assets/Images/pritam.png';
+import bibek from '@/assets/Images/bibek.jpg';
+import aalok from '@/assets/Images/aalok.jpg';
+import nirmal from '@/assets/Images/nirmal.png';
+import sumanu from '@/assets/Images/sumanu.png';
+import sumans from '@/assets/Images/sumans.png';
+import janardhan from '@/assets/Images/janardhan.png';
+import primila from '@/assets/Images/pramila.png';
+import pritam from '@/assets/Images/pritam.png';
 
 const teamMembers = [
   {

@@ -2,16 +2,16 @@ import React, { useRef, useEffect, useState } from 'react';
 import styles from './AboutUs.module.css';
 import RoundImage from './RoundImage/RoundImage';
 import SquareBox from './SquareBox/SquareBox';
-import sampleImage from '../../assets/Images/program_3.png';
-import one from '../../assets/pngs/1.png';
-import two from '../../assets/pngs/2.png';
-import three from '../../assets/pngs/3.png';
-import four from '../../assets/pngs/4.png';
-import five from '../../assets/pngs/5.png';
-import six from '../../assets/pngs/6.png';
-import seven from '../../assets/pngs/7.png';
-import eight from '../../assets/pngs/8.png';
-import nine from '../../assets/pngs/9.png';
+import sampleImage from '@/assets/Images/program_3.png';
+import one from '@/assets/pngs/1.png';
+import two from '@/assets/pngs/2.png';
+import three from '@/assets/pngs/3.png';
+import four from '@/assets/pngs/4.png';
+import five from '@/assets/pngs/5.png';
+import six from '@/assets/pngs/6.png';
+import seven from '@/assets/pngs/7.png';
+import eight from '@/assets/pngs/8.png';
+import nine from '@/assets/pngs/9.png';
 
 const AboutUs = () => {
   const titleRef = useRef(null);

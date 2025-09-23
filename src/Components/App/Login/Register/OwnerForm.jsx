@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
-import { useBaseUrl } from '../../../../BaseUrlContext';
+import { useBaseUrl } from '../../../../Context/BaseUrlContext';
 import { useAuth } from '../Auth/AuthContext';
 import PersonalDetailForm from './PersonalDetailForm';
 import AddressDetailForm from './AddressDetailForm';

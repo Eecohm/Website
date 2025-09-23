@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Signup.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useBaseUrl } from '../../../BaseUrlContext';
+import { useBaseUrl } from '@/Context/BaseUrlContext';
 
 const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);

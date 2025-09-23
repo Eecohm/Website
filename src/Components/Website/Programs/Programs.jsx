@@ -1,20 +1,20 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styles from './Programs.module.css';
 import CourseCard from './Course/CourseCard';
-import css from '../../assets/Images/css.png';
-import csimg from '../../assets/Images/cs.png';
-import program_2 from '../../assets/Images/program_2.png';
-import program_3 from '../../assets/Images/program_3.png';
-import hmimgs from '../../assets/Images/hmimgs.png';
-import adhm from '../../assets/Icons/adhm-icon.svg'; 
-import hm from '../../assets/Icons/hm-icon.svg'; 
-import cs from '../../assets/Icons/cs-icon.svg'; 
-import bs from '../../assets/Icons/bs-icon.svg'; 
-import adcs from '../../assets/Icons/adcs-icon.svg'; 
-import dhm from '../../assets/Icons/dhm-icon.svg';
-import dhmi from '../../assets/Images/adhm.jpg';
-import school from '../../assets/Icons/school-icon.svg'; 
-import preschool from '../../assets/Images/preschool.png';
+import css from '@/assets/Images/css.png';
+import csimg from '@/assets/Images/cs.png';
+import program_2 from '@/assets/Images/program_2.png';
+import program_3 from '@/assets/Images/program_3.png';
+import hmimgs from '@/assets/Images/hmimgs.png';
+import adhm from '@/assets/Icons/adhm-icon.svg'; 
+import hm from '@/assets/Icons/hm-icon.svg'; 
+import cs from '@/assets/Icons/cs-icon.svg'; 
+import bs from '@/assets/Icons/bs-icon.svg'; 
+import adcs from '@/assets/Icons/adcs-icon.svg'; 
+import dhm from '@/assets/Icons/dhm-icon.svg';
+import dhmi from '@/assets/Images/adhm.jpg';
+import school from '@/assets/Icons/school-icon.svg'; 
+import preschool from '@/assets/Images/preschool.png';
 
 const Programs = () => {
   const scrollRef = useRef(null);

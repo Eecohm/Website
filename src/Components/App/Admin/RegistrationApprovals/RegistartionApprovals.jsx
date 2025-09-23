@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './RegistartionApprovals.module.css';
 import NavBar from '../../NavBar/NavBar';
-import { useBaseMediaUrl, useBaseUrl } from '../../../../BaseUrlContext';
+import { useBaseMediaUrl, useBaseUrl } from '../../../../Context/BaseUrlContext';
 import { useAuth } from '../../Login/Auth/AuthContext';
 import StudentDetails from './RegistrationApprovalDetails/StudentDetails';
 import TeacherDetails from './RegistrationApprovalDetails/TeacherDetails';
