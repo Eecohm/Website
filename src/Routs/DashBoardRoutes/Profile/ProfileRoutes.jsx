@@ -11,7 +11,7 @@ const ProfileRoutes = () => (
   <>
   <Routes>
     <Route
-      path=""
+      path="/"
       element={
           <Profile />
       }
