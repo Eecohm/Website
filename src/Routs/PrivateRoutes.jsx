@@ -26,6 +26,7 @@ import ProgramData from "../Components/App/Acadamic/Data/ProgramData";
 import FacultyData from "../Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";
+import ProfileRoutes from "./DashBoardRoutes/Profile/ProfileRoutes";
 
 const RequireAuth = ({ children}) => {
   const { token, isLoading} = useAuth();
@@ -100,70 +101,14 @@ const PrivateRoutes = () => (
       }
     />
     <Route
-      path="/profile"
+      path="/profile/*"
       element={
         <RequireAuth>
-          <Profile />
+          <ProfileRoutes />
         </RequireAuth>
       }
     />
-    <Route
-      path="/profile/organization"
-      element={
-        <RequireAuth>
-          <OrganizationForm />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/profile/profile-data"
-      element={
-        <RequireAuth>
-          <OrganizationData />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/profile/sub-organization"
-      element={
-        <RequireAuth>
-          <SubOrganizationData />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/profile/add-sub-organization"
-      element={
-        <RequireAuth>
-          <SubOrganizationForm />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/profile/suborg-details/:id"
-      element={
-        <RequireAuth>
-          <SubOrgDetails />
-        </RequireAuth>
-      }
-    />
-
-    <Route
-      path="/profile/sub-org/:id"
-      element={
-        <RequireAuth>
-          <SubOrganizationData />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/profile/view-image/:type"
-      element={
-        <RequireAuth>
-          <ViewImage />
-        </RequireAuth>
-      }
-    />
+  
     <Route
       path="/academic"
       element={
