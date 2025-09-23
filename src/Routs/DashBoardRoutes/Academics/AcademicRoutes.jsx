@@ -1,5 +1,6 @@
 import AcademicYearCard from "@/Components/App/Acadamic/Card/AcademicYearCard";
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import Acadamic from "@/Components/App/Acadamic/Acadamic";
 import ProgramCard from "@/Components/App/Acadamic/Card/ProgramCard";
 import FacultyCard from "@/Components/App/Acadamic/Card/FacultyCard";
@@ -9,11 +10,12 @@ import ProgramData from "@/Components/App/Acadamic/Data/ProgramData";
 import FacultyData from "@/Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "@/Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "@/Components/App/Acadamic/Data/AcademicClassData ";
+import AcademicYearData from "@/Components/App/Acadamic/Data/AcademicYearData ";
 
 const AcademicRoutes = () => {
   return (
     <Routes>
-      <Route path="" element={<Acadamic />} />
+      <Route path="/" element={<Acadamic />} />
       <Route path="/academic-year" element={<AcademicYearCard />} />
       <Route path="/program" element={<ProgramCard />} />
       <Route path="/faculty" element={<FacultyCard />} />

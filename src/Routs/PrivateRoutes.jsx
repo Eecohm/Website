@@ -21,6 +21,7 @@ import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";
 import AdminRoutes from "./DashBoardRoutes/Admin/AdminRoutes";
 import ProfileRoutes from "./DashBoardRoutes/Profile/ProfileRoutes";
+import AcademicRoutes from "./DashBoardRoutes/Academics/AcademicRoutes";
 
 const RequireAuth = ({ children }) => {
   const { token, isLoading } = useAuth();
@@ -79,90 +80,10 @@ const PrivateRoutes = () => (
       }
     />
     <Route
-      path="/academic"
+      path="/academic/*"
       element={
         <RequireAuth>
-          <Acadamic />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/academic-year"
-      element={
-        <RequireAuth>
-          <AcademicYearCard />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/program"
-      element={
-        <RequireAuth>
-          <ProgramCard />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/faculty"
-      element={
-        <RequireAuth>
-          <FacultyCard />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/grade"
-      element={
-        <RequireAuth>
-          <GradeCard />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/academic-class"
-      element={
-        <RequireAuth>
-          <AcademicClassCard />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/academic-year/academic-data"
-      element={
-        <RequireAuth>
-          <AcademicYearData />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/program/program-data"
-      element={
-        <RequireAuth>
-          <ProgramData />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/faculty/faculty-data"
-      element={
-        <RequireAuth>
-          <FacultyData />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/grade/grade-data"
-      element={
-        <RequireAuth>
-          <GradeData />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/academic/academic-class/academic-data"
-      element={
-        <RequireAuth>
-          <AcademicClassData />
+          <AcademicRoutes />
         </RequireAuth>
       }
     />
