@@ -8,13 +8,6 @@ import StudentTable from "../Components/App/Students/Students";
 import Admin from "../Components/App/Admin/Admin";
 import ClassInfo from "../Components/App/Admin/ClassInfo/ClassInfo";
 import RegistrationApproval from "../Components/App/Admin/RegistrationApprovals/RegistartionApprovals";
-import Profile from "../Components/App/Profile/profile";
-import OrganizationForm from "../Components/App/Profile/OrganizationForm";
-import OrganizationData from "../Components/App/Profile/OrganizationData";
-import SubOrganizationForm from "../Components/App/Profile/SubOrganizationForm";
-import SubOrganizationData from "../Components/App/Profile/SubOrganizationData";
-import SubOrgDetails from "../Components/App/Profile/SubOrgDetails";
-import ViewImage from "../Components/App/Profile/ViewImage";
 import Acadamic from "../Components/App/Acadamic/Acadamic";
 import AcademicYearCard from "../Components/App/Acadamic/Card/AcademicYearCard";
 import ProgramCard from "../Components/App/Acadamic/Card/ProgramCard";
@@ -26,6 +19,7 @@ import ProgramData from "../Components/App/Acadamic/Data/ProgramData";
 import FacultyData from "../Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "../Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "../Components/App/Acadamic/Data/AcademicClassData ";
+import AdminRoutes from "./DashBoardRoutes/Admin/AdminRoutes";
 import ProfileRoutes from "./DashBoardRoutes/Profile/ProfileRoutes";
 
 const RequireAuth = ({ children }) => {
@@ -61,14 +55,6 @@ const PrivateRoutes = () => (
       }
     />
     <Route
-      path="/enter-feedback"
-      element={
-        <RequireAuth>
-          <MonthlyFeedbackForm />
-        </RequireAuth>
-      }
-    />
-    <Route
       path="/students"
       element={
         <RequireAuth>
@@ -77,26 +63,10 @@ const PrivateRoutes = () => (
       }
     />
     <Route
-      path="/admin"
+      path="/admin/*"
       element={
         <RequireAuth>
-          <Admin />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/admin/classinfo"
-      element={
-        <RequireAuth>
-          <ClassInfo />
-        </RequireAuth>
-      }
-    />
-    <Route
-      path="/admin/registrationapproval"
-      element={
-        <RequireAuth>
-          <RegistrationApproval />
+          <AdminRoutes />
         </RequireAuth>
       }
     />
