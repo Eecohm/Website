@@ -8,18 +8,13 @@ const LoginForm = () => {
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
-  
   const [isCheckingSavedLogin, setIsCheckingSavedLogin] = useState(true);
-
   const [showForgotModal, setShowForgotModal] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -28,50 +23,16 @@ const LoginForm = () => {
   const [resetError, setResetError] = useState("");
   const [resetStep, setResetStep] = useState(1);
 
-  // Cookie utility functions
-  const setCookie = (name, value, days = 7) => {
-    const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
-  };
-
-  const getCookie = (name) => {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  };
-
-  const deleteCookie = (name) => {
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;secure;samesite=strict`;
-  };
-
   useEffect(() => {
-    // If user is already authenticated, redirect to dashboard
-    if (isAuthenticated()) {
-      navigate("/dashboard");
-      return;
-    }
-
-    // Check for remembered credentials
-    const savedEmail = getCookie("savedEmail");
-    const savedPassword = getCookie("savedPassword");
-    const savedRememberMe = getCookie("rememberMe") === "true";
-
-    if (savedEmail && savedPassword && savedRememberMe) {
-      setEmail(savedEmail);
-      setPassword(savedPassword);
-      setRememberMe(true);
-      // Auto-login with saved credentials
-      loginUser(savedEmail, savedPassword, true);
-    } else {
-      setIsCheckingSavedLogin(false);
-    }
+    const checkSavedLogin = async () => {
+      if (isAuthenticated()) {
+        navigate("/dashboard");
+      }
+      setIsCheckingSavedLogin(false); 
+    };
+    checkSavedLogin();
   }, []);
+
 
   const loginUser = async (loginEmail, loginPassword, auto = false) => {
     setError("");
@@ -92,22 +53,7 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        
-        // Use AuthContext login method which handles cookie storage
-        login(data);
-        
-        // Handle remember me functionality
-        if (rememberMe) {
-          setCookie("savedEmail", loginEmail, 30); // Remember for 30 days
-          setCookie("savedPassword", loginPassword, 30);
-          setCookie("rememberMe", "true", 30);
-        } else {
-          // Clear remembered credentials
-          deleteCookie("savedEmail");
-          deleteCookie("savedPassword");
-          deleteCookie("rememberMe");
-        }
-        
+        login(data, rememberMe);
         setIsCheckingSavedLogin(false);
         navigate("/dashboard");
         return;
@@ -206,7 +152,7 @@ const LoginForm = () => {
         const data = await res.json();
         
         // Use AuthContext login method
-        login(data);
+        login(data, rememberMe);
         
         // Close modal and redirect
         setShowForgotModal(false);

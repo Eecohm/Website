@@ -1,76 +1,27 @@
+
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
-
+import { setCookie, getCookie, deleteCookie } from "./Auth/Cookies";
+import { attemptTokenRefresh } from "./Auth/TokenRefresh";
+import { clearAuthState as clearAuthUtil } from "./Auth/clearAuthState";
 
 export const AuthContext = createContext();
+
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [verified, setVerified] = useState(false)
   const baseUrl = useBaseUrl();
-
-
-  // Cookie utility functions
-  const setCookie = (name, value, days = 7) => {
-    const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
-  };
-
-  const getCookie = (name) => {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  };
-
-  const deleteCookie = (name) => {
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;secure;samesite=strict`;
-  };
-
-  // Login function - handles both initial login and refresh token data
-  const login = (data) => {
-    // Set all user data in cookies
-    setCookie("accessToken", data.access);
-    // Update state
+  
+  const login = (data, rememberMe = false) => {
     setToken(data.access);
-  };
-
-  // Attempt to refresh token using refresh token cookie
-  const attemptTokenRefresh = async () => {
-    try {
-      const response = await fetch(`${baseUrl}/user/token/refresh/`, {
-        method: "POST",
-        credentials: "include", // This sends the refresh token cookie
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        // Use the same login function to handle all cookie setting and state updates
-        login(data);
-        return true;
-      }
-    } catch (error) {
-      console.error("Token refresh failed:", error);
+    if (rememberMe) {
+      setCookie("accessToken", data.access, 30)
+      setCookie("rememberMe", "true", 30);
+    } else {
+      deleteCookie("accessToken");
+      deleteCookie("rememberMe");
     }
-    
-    clearAuthState();
-    return false;
-  };
-
-  // Clear all authentication state and cookies
-  const clearAuthState = () => {
-    // Clear all cookies
-    deleteCookie("accessToken");
-    deleteCookie("refresh_token");
-    // Clear state
-    setToken(null);
   };
 
   // Logout function
@@ -89,86 +40,64 @@ export const AuthProvider = ({ children }) => {
       // Continue with logout even if API call fails
     }
     // Always clear local state regardless of API success
-    clearAuthState();
+    clearAuthUtil(setToken, setVerified);
   };
 
-  // Check if user is authenticated
-  const isAuthenticated = () => {
-    return !!token;
-  };
+  const isAuthenticated = () => verified;
 
-  // API call wrapper that handles token refresh automatically
-  const authenticatedFetch = async (url, options = {}) => {
-    const token = getCookie("accessToken");
-    
-    // Add token to headers
-    const headers = {
-      ...options.headers,
-      ...(token && { "Authorization": `Bearer ${token}` }),
-    };
+  const validateToken = async (tokenToValidate) => {
+    if (!tokenToValidate) return false;
 
-    let response = await fetch(url, {
-      ...options,
-      headers,
-    });
+    try {
+      const res = await fetch(`${baseUrl}/user/login/`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${tokenToValidate}` },
+      });
 
-    // If token expired, try to refresh and retry
-    if (response.status === 401 && token) {
-      const refreshSuccess = await attemptTokenRefresh();
-      
-      if (refreshSuccess) {
-        const newToken = getCookie("accessToken");
-        const retryHeaders = {
-          ...options.headers,
-          "Authorization": `Bearer ${newToken}`,
-        };
-        
-        response = await fetch(url, {
-          ...options,
-          headers: retryHeaders,
-        });
-      }
+      return res.ok;
+    } catch (err) {
+      console.error("Token validation failed", err);
+      return false;
     }
-
-    return response;
   };
-
   // Check authentication status on mount
-  useEffect(() => {
+   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const savedToken = getCookie("accessToken");
-        
-        if (savedToken) {
-          // Verify token is still valid by making a test request
-          const response = await fetch(`${baseUrl}/user/login/`, {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${savedToken}`,
-            },
-          });
+        let savedToken = token;
 
-          if (response.ok) {
-            // Token is valid, restore user state from cookies
-            setToken(savedToken);
-          } else {
-            // Token is invalid, try to refresh
-            await attemptTokenRefresh();
-          }
-        } else {
-          // No token found, try to refresh from refresh token
-          await attemptTokenRefresh();
+        // 1. Check for persistent cookie if rememberMe is checked
+        const rememberMeFlag = getCookie("rememberMe");
+        if (!savedToken && rememberMeFlag) {
+          savedToken = getCookie("accessToken");
         }
-      } catch (error) {
-        console.error("Error checking auth status:", error);
-        clearAuthState();
+
+        if (savedToken) {
+          const valid = await validateToken(savedToken);
+          if (valid) {
+            setToken(savedToken);
+            setVerified(true);
+          } else if (rememberMeFlag) {
+            // try refresh if backend supports refresh token cookie
+            const refreshed = await attemptTokenRefresh(baseUrl, login, setToken);
+            setVerified(refreshed);
+          } else {
+            // token invalid and no rememberMe → force logout
+            clearAuthUtil(setToken);
+            setVerified(false);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        clearAuthUtil(setToken);
+        setVerified(false);
       } finally {
         setIsLoading(false);
       }
     };
 
     checkAuthStatus();
-  }, [baseUrl]);
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -179,7 +108,6 @@ export const AuthProvider = ({ children }) => {
         logout,
         isAuthenticated,
         attemptTokenRefresh,
-        authenticatedFetch,
       }}
     >
       {children}
