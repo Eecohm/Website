@@ -2,19 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
-import { useAuth } from "./Auth/AuthContext";
+import { useAuth } from "@/Context/AuthContext";
 
 const LoginForm = () => {
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  
   const [isCheckingSavedLogin, setIsCheckingSavedLogin] = useState(true);
 
   const [showForgotModal, setShowForgotModal] = useState(false);

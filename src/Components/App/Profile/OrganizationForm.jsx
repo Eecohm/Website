@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../Login/Auth/AuthContext";
+import { useAuth } from "../../../Context/AuthContext";
 import ModalNotification from "../../../GlobalComponets/ModalNotification";
 import {
   isValidPhone,

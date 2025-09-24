@@ -9,7 +9,7 @@ import ProgressBar from "./ProgressBar";
 import formConfig from "./formConfig";
 import axios from "axios";
 import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../../App/Login/Auth/AuthContext";
+import { useAuth } from "../../../Context/AuthContext";
 
 const Student = () => {
   const [currentPart, setCurrentPart] = useState(1);

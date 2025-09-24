@@ -1,12 +1,13 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { useBaseUrl } from "../../../../Context/BaseUrlContext";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+
 
 export const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const baseUrl = useBaseUrl();
+
 
   // Cookie utility functions
   const setCookie = (name, value, days = 7) => {
@@ -51,10 +52,8 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        
         // Use the same login function to handle all cookie setting and state updates
         login(data);
-        
         return true;
       }
     } catch (error) {
@@ -75,7 +74,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout function
-  // Logout function
   const logout = async () => {
     try {
       // Call logout endpoint to blacklist refresh token
@@ -90,7 +88,6 @@ export const AuthProvider = ({ children }) => {
       console.error("Logout API call failed:", error);
       // Continue with logout even if API call fails
     }
-
     // Always clear local state regardless of API success
     clearAuthState();
   };

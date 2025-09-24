@@ -20,7 +20,7 @@ import {
 import axios from "axios";
 import styles from "./styles/SubOrgForm.module.css";
 import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../Login/Auth/AuthContext";
+import { useAuth } from "../../../Context/AuthContext";
 
 
 const SubOrganizationForm = () => {

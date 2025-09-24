@@ -3,7 +3,7 @@ import { useBaseUrl } from "../../../Context/BaseUrlContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { throttle } from "lodash";
-import { useAuth } from "../Login/Auth/AuthContext";
+import { useAuth } from "../../../Context/AuthContext";
 import styles from "./Dashboard.module.css";
 import { FaHandLizard } from "react-icons/fa";
 import StudentDetails from "../Admin/RegistrationApprovals/RegistrationApprovalDetails/StudentDetails";

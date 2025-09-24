@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "@/Routs/index";
 import { BaseUrlContext, BaseMediaUrlContext } from "@/Context/BaseUrlContext";
-import { AuthProvider } from "@/Components/App/Login/Auth/AuthContext";
+import { AuthProvider } from "@/Context/AuthContext";
 
 const App = () => {
   const baseUrl = 'http://127.0.0.1:8000/api';

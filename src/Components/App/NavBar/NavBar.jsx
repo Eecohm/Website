@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./NavBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuth } from "../../App/Login/Auth/AuthContext";
+import { useAuth } from "../../../Context/AuthContext";
 import {
   faTasks,
   faUserShield,

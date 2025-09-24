@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles/OrgCard.module.css";
 import axios from "axios";
 import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../Login/Auth/AuthContext";
+import { useAuth } from "../../../Context/AuthContext";
 import {
   FiPhone,
   FiSmartphone,
