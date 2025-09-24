@@ -1,3 +1,5 @@
+//this ensures inputs are correct before making api calls
+
 export const validateForm = (formData, isOtpSent) => {
   const errors = {};
   const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;

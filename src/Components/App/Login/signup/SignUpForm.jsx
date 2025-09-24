@@ -1,3 +1,5 @@
+//main stateful comp that manages data,validation,api calls and passes props into signinform
+
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router-dom";
@@ -25,19 +27,24 @@ const SignUpForm = () => {
     confirmPassword: "",
     role: "",
     otp: "",
-  });
-  const [errors, setErrors] = useState({});
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  }); //stores all user input
+  const [errors, setErrors] = useState({}); //stores validation and api errors
+  const [isOtpSent, setIsOtpSent] = useState(false); //tracks if otp is sent
+  const [isLoading, setIsLoading] = useState(false); //used to disable the button and show loading while waiting for api
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
+    //name:email, pw, otp
+    //value:user input
     const { name, value } = e.target;
+
+    //dynamically updates just the field that changed
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "", api: "" }));
   };
 
+  //generic function to handle api calls, success message and error handling
   const handleApi = async (apiCall, successMsg, reset = false) => {
     try {
       const res = await apiCall();
@@ -62,7 +69,7 @@ const SignUpForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); //to let react handle the process without refreshing instead of a html form default reloads.
     if (isLoading) return;
     setIsLoading(true);
 
