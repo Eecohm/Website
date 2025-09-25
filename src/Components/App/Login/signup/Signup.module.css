@@ -24,12 +24,27 @@
   gap: 2rem;
 }
 .header .closeBtn {
-  background: transparent;
-  width: 70px;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  align-self: flex-end;
 }
+
 .header .closeBtn:hover {
-  color: #ff4b5c;
+  background-color: #d11a1a;
+  box-shadow: 0 0 10px #fa2121;
 }
+
 .formGroup {
   margin-bottom: 1.5rem;
 }
