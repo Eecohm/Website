@@ -110,26 +110,6 @@
   font-size: 14px;
 }
 
-.neonButton {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  background: #00adb5;
-  margin-top: 10px;
-}
-
-.neonButton:hover {
-  animation: none;
-  border: 2px solid #00adb5;
-  box-shadow: 0 0 10px #00adb5;
-  background: #008c93;
-}
-
 .forgotPassword {
   display: block;
   margin-top: 10px;
@@ -162,17 +142,16 @@
   max-width: 400px;
   text-align: center;
   border: 2px solid #00adb5;
-  
 }
-.modalBox input{
+.modalBox input {
   border: 2px solid yellow;
 }
-.modalBox button{
+.modalBox button {
   max-width: 120px;
   margin: 10px;
   height: 6vh;
 }
-.modalBox h3{
+.modalBox h3 {
   color: wheat;
   margin: 10px;
 }
@@ -200,4 +179,23 @@
   font-size: 18px;
   color: white;
   background-color: #1c2526;
+}
+
+.neonButton {
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #00adb5;
+  margin-top: 10px;
+}
+
+.neonButton:hover {
+  animation: none;
+  border: 2px solid #00adb5;
+  box-shadow: 0 0 10px #00adb5;
+  background: #008c93;
 }

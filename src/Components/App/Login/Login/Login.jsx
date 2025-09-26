@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
-
+import LoginFormComponent from "./components/LoginFormComponent";
+import PasswordComponent from "./components/PasswordComponent";
+import {
+  loginUser,
+  handleForgotPassword,
+  handleVerifyOtpAndSetPassword,
+} from "./api/loginApi";
 const LoginForm = () => {
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
@@ -28,143 +34,79 @@ const LoginForm = () => {
       if (isAuthenticated()) {
         navigate("/dashboard");
       }
-      setIsCheckingSavedLogin(false); 
+      setIsCheckingSavedLogin(false);
     };
     checkSavedLogin();
   }, []);
+  //loginuser
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (isLoading) return;
 
-  const loginUser = async (loginEmail, loginPassword, auto = false) => {
-    setError("");
-    if (!auto) setIsLoading(true);
-    
-    try {
-      const response = await fetch(`${baseUrl}/user/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // This ensures cookies are sent/received
-        body: JSON.stringify({
-          email: loginEmail,
-          password: loginPassword,
-        }),
-      });
+  //   setError("");
+  //   setIsLoading(true);
 
-      if (response.ok) {
-        const data = await response.json();
-        login(data, rememberMe);
-        setIsCheckingSavedLogin(false);
-        navigate("/dashboard");
-        return;
-      } else if ([401, 403].includes(response.status)) {
-        setError("Invalid credentials");
-        // Clear saved credentials if they're invalid
-        if (auto) {
-          deleteCookie("savedEmail");
-          deleteCookie("savedPassword");
-          deleteCookie("rememberMe");
-          setEmail("");
-          setPassword("");
-          setRememberMe(false);
-        }
-      } else {
-        setError("An error occurred. Please try again.");
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Network error. Please check your connection.");
-    } finally {
-      setIsLoading(false);
-      setIsCheckingSavedLogin(false);
-    }
-  };
+  //   const config = {
+  //     email,
+  //     password,
+  //     auto: false,
+  //     setError,
+  //     setIsLoading,
+  //     login,
+  //     navigate,
+  //     baseUrl,
+  //     rememberMe,
+  //     setIsCheckingSavedLogin,
+  //   };
 
-  const handleSubmit = (e) => {
+  //   loginUser(config);
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLoading) return;
-    
+
     setError("");
     setIsLoading(true);
 
-    loginUser(email, password);
+    try {
+      const data = await loginUser(email, password, baseUrl);
+      login(data, rememberMe);
+      navigate("/dashboard");
+    } catch (error) {
+      setError("Login failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleClose = () => navigate("/");
 
-  const handleForgotPassword = async () => {
-    setResetError("");
-    
-    if (!forgotEmail) {
-      setResetError("Please enter your email");
-      return;
-    }
-
-    try {
-      const res = await fetch(`${baseUrl}/user/forgot-password/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: forgotEmail }),
-      });
-      
-      if (res.ok) {
-        setResetStep(2);
-        setResetError("");
-      } else {
-        const errorData = await res.json();
-        setResetError(errorData.message || "Email not found");
-      }
-    } catch (error) {
-      console.error("Forgot password error:", error);
-      setResetError("Error sending email. Please try again.");
-    }
+  //handle forgot password
+  const handleForgotPasswordWrapper = () => {
+    handleForgotPassword(
+      forgotEmail, // Pass the email
+      baseUrl, // Pass baseUrl
+      setResetError, // Pass state setter
+      setResetStep // Pass state setter
+    );
   };
 
-  const handleVerifyOtpAndSetPassword = async () => {
-    if (!otp || !newPassword || !confirmPassword) {
-      setResetError("Please fill in all fields");
-      return;
-    }
-
-    if (newPassword !== confirmPassword) {
-      setResetError("Passwords don't match");
-      return;
-    }
-
-    if (newPassword.length < 6) {
-      setResetError("Password must be at least 6 characters long");
-      return;
-    }
-
-    try {
-      const res = await fetch(`${baseUrl}/user/otp-verify/`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          email: forgotEmail,
-          otp: otp,
-          new_password: newPassword,
-        }),
-      });
-      
-      if (res.ok) {
-        const data = await res.json();
-        
-        // Use AuthContext login method
-        login(data, rememberMe);
-        
-        // Close modal and redirect
-        setShowForgotModal(false);
-        navigate("/dashboard");
-      } else {
-        const errorData = await res.json();
-        setResetError(errorData.message || "Reset failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Password reset error:", error);
-      setResetError("Server error. Please try again.");
-    }
+  //otp verify and set new password
+  const handleVerifyOtpAndSetPasswordWrapper = () => {
+    handleVerifyOtpAndSetPassword(
+      otp,
+      newPassword,
+      confirmPassword,
+      forgotEmail,
+      baseUrl,
+      setResetError,
+      login,
+      navigate,
+      rememberMe,
+      setShowForgotModal
+    );
   };
 
   const resetForgotPasswordModal = () => {
@@ -176,7 +118,6 @@ const LoginForm = () => {
     setResetError("");
     setResetStep(1);
   };
-
   if (isCheckingSavedLogin) {
     return <div className={styles.loadingScreen}>Checking saved login...</div>;
   }
@@ -188,129 +129,41 @@ const LoginForm = () => {
           ✕
         </button>
         <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
-            <label>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={error ? styles.inputError : styles.neonInput}
-              required
-              disabled={isLoading}
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <label>Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={error ? styles.inputError : styles.neonInput}
-              required
-              disabled={isLoading}
-            />
-          </div>
-          <div className={styles.checkboxGroup}>
-            <label>
-              <input
-                type="checkbox"
-                checked={showPassword}
-                onChange={() => setShowPassword(!showPassword)}
-                disabled={isLoading}
-              />
-              Show Password
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-                disabled={isLoading}
-              />
-              Remember Me
-            </label>
-          </div>
-          {error && <div className={styles.errorMessage}>{error}</div>}
-          <button
-            type="submit"
-            className={`${styles.loginButton} ${styles.neonButton}`}
-            disabled={isLoading}
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </button>
-          <button
-            type="button"
-            className={styles.forgotPassword}
-            onClick={() => setShowForgotModal(true)}
-            disabled={isLoading}
-          >
-            Forgot Password?
-          </button>
-        </form>
+        <LoginFormComponent
+          handleSubmit={handleSubmit}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+          rememberMe={rememberMe}
+          setRememberMe={setRememberMe}
+          isLoading={isLoading}
+          error={error}
+          setShowForgotModal={setShowForgotModal}
+        />
       </div>
-
       {showForgotModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalBox}>
-            <h3>Reset Password</h3>
-            {resetStep === 1 && (
-              <>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={forgotEmail}
-                  onChange={(e) => setForgotEmail(e.target.value)}
-                  className={styles.neonInput}
-                />
-                <button
-                  className={styles.neonButton}
-                  onClick={handleForgotPassword}
-                >
-                  Send OTP
-                </button>
-              </>
-            )}
-            {resetStep === 2 && (
-              <>
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  className={styles.neonInput}
-                />
-                <input
-                  type="password"
-                  placeholder="New Password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className={styles.neonInput}
-                />
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={styles.neonInput}
-                />
-                <button
-                  className={styles.neonButton}
-                  onClick={handleVerifyOtpAndSetPassword}
-                >
-                  Reset Password
-                </button>
-              </>
-            )}
-            {resetError && <p className={styles.errorMessage}>{resetError}</p>}
-            <button
-              className={styles.cancelButton}
-              onClick={resetForgotPasswordModal}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+        <PasswordComponent
+          setShowForgotModal={setShowForgotModal}
+          forgotEmail={forgotEmail}
+          setForgotEmail={setForgotEmail}
+          resetForgotPasswordModal={resetForgotPasswordModal}
+          otp={otp}
+          setOtp={setOtp}
+          newPassword={newPassword}
+          setNewPassword={setNewPassword}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
+          resetError={resetError}
+          handleVerifyOtpAndSetPassword={handleVerifyOtpAndSetPasswordWrapper}
+          resetStep={resetStep}
+          setResetStep={setResetStep}
+          setResetError={setResetError}
+          isLoading={isLoading}
+          handleForgotPassword={handleForgotPasswordWrapper}
+        />
       )}
     </div>
   );
