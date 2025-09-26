@@ -100,7 +100,7 @@ const NavBar = () => {
     { name: "Academic", icon: faBookOpenReader, path: "/dashboard/academic" },
     { name: "Accounts", icon: faWallet, path: "/dashboard/accounts" },
     { name: "Inventory", icon: faBox, path: "/dashboard/inventory" },
-    { name: "Teachers", icon: faChalkboardTeacher, path: "/teachers" },
+    { name: "Teachers", icon: faChalkboardTeacher, path: "dashboard/teachers" },
     { name: "Students", icon: faUsers, path: "/dashboard/students" },
     { name: "Reports", icon: faChartBar, path: "/dashboard/reports" },
   ];

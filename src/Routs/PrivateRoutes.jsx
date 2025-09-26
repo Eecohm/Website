@@ -7,6 +7,10 @@ import StudentTable from "../Components/App/Students/Students";
 import AdminRoutes from "./DashBoardRoutes/Admin/AdminRoutes";
 import ProfileRoutes from "./DashBoardRoutes/Profile/ProfileRoutes";
 import AcademicRoutes from "./DashBoardRoutes/Academics/AcademicRoutes";
+import Accounts from "@/Components/App/Accounts/Accounts";
+import Tasks from "@/Components/App/Tasks/Tasks";
+import Inventory from "@/Components/App/Inventory/Inventory";
+import Teachers from "@/Components/App/Teachers/Teachers";
 
 const RequireAuth = ({ children }) => {
   const { token, isLoading } = useAuth();
@@ -72,7 +76,40 @@ const PrivateRoutes = () => (
         </RequireAuth>
       }
     />
+    <Route
+      path="/accounts/*"
+      element={
+        <RequireAuth>
+          <Accounts />
+        </RequireAuth>
+      }
+    />
+    <Route
+      path="/tasks/*"
+      element={
+        <RequireAuth>
+          <Tasks />
+        </RequireAuth>
+      }
+    />
+    <Route
+      path="/inventory/*"
+      element={
+        <RequireAuth>
+          <Inventory />
+        </RequireAuth>
+      }
+    />
+    <Route
+      path="/teachers/*"
+      element={
+        <RequireAuth>
+          <Teachers />
+        </RequireAuth>
+      }
+    />
   </Routes>
+  
 );
 
 export default PrivateRoutes;
