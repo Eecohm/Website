@@ -17,8 +17,8 @@ export const registerUser = async (baseUrl, formData) => {
     }),
   });
 };
-//tries to create a new user account on the backend
 
+//tries to create a new user account on the backend
 export const verifyOtp = async (baseUrl, formData) => {
   //calls the backend api
   return fetch(`${baseUrl}/user/otp-verify/`, {
@@ -30,4 +30,3 @@ export const verifyOtp = async (baseUrl, formData) => {
     }),
   });
 };
-//tries to verify users identity by checking if the otp is valid

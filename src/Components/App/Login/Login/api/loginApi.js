@@ -12,35 +12,6 @@ export const loginUser = async (email, password, baseUrl) => {
   return response.json(); // ONLY return data
 };
 
-//     if (response.ok) {
-//       const data = await response.json();
-//       login(data, rememberMe);
-//       setIsCheckingSavedLogin(false);
-//       navigate("/dashboard");
-//       return;
-//     } else if ([401, 403].includes(response.status)) {
-//       setError("Invalid credentials");
-//       // Clear saved credentials if they're invalid
-//       if (auto) {
-//         deleteCookie("savedEmail");
-//         deleteCookie("savedPassword");
-//         deleteCookie("rememberMe");
-//         setEmail("");
-//         setPassword("");
-//         setRememberMe(false);
-//       }
-//     } else {
-//       setError("An error occurred. Please try again.");
-//     }
-//   } catch (err) {
-//     console.error("Login error:", err);
-//     setError("Network error. Please check your connection.");
-//   } finally {
-//     setIsLoading(false);
-//     setIsCheckingSavedLogin(false);
-//   }
-// };
-
 export const handleForgotPassword = async (
   forgotEmail,
   baseUrl,

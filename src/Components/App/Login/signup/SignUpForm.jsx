@@ -1,12 +1,14 @@
 //main stateful comp that manages data,validation,api calls and passes props into signinform
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router-dom";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import SignInForm from "./SignInForm";
-import { validateForm } from "./Validator";
-import { registerUser, verifyOtp } from "./api";
+// import { validateForm } from "./Validator";
+// import { registerUser, verifyOtp } from "./api";
+import ValidateModal from "./ValidateModal";
+import { useSignUpHandler } from "./useSignupHandler";
 
 const roleOptions = [
   { value: "", label: "Select a role" },
@@ -27,75 +29,57 @@ const SignUpForm = () => {
     confirmPassword: "",
     role: "",
     otp: "",
-  }); //stores all user input
-  const [errors, setErrors] = useState({}); //stores validation and api errors
-  const [isOtpSent, setIsOtpSent] = useState(false); //tracks if otp is sent
-  const [isLoading, setIsLoading] = useState(false); //used to disable the button and show loading while waiting for api
+  });
+  const [errors, setErrors] = useState({});
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleChange = (e) => {
-    //name:email, pw, otp
-    //value:user input
-    const { name, value } = e.target;
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    type: "",
+    title: "",
+    message: "",
+  });
 
-    //dynamically updates just the field that changed
+  const showModal = (type, title, message) => {
+    setModalConfig({
+      isOpen: true,
+      type,
+      title,
+      message,
+    });
+  };
+
+  const closeModal = () => {
+    const wasSuccess = modalConfig.type === "success" && modalConfig.isOpen;
+    setModalConfig({
+      ...modalConfig,
+      isOpen: false,
+    });
+    if (wasSuccess && isOtpSent) {
+      navigate("/login");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "", api: "" }));
   };
 
-  //generic function to handle api calls, success message and error handling
-  const handleApi = async (apiCall, successMsg, reset = false) => {
-    try {
-      const res = await apiCall();
-      const data = await res.json();
-      if (!res.ok) throw data;
-      if (reset)
-        setFormData({
-          email: "",
-          password: "",
-          confirmPassword: "",
-          role: "",
-          otp: "",
-        });
-      alert(successMsg);
-      return true;
-    } catch (err) {
-      setErrors({
-        api: err?.message || err?.otp || err?.email || "Network error",
-      });
-      return false;
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault(); //to let react handle the process without refreshing instead of a html form default reloads.
-    if (isLoading) return;
-    setIsLoading(true);
-
-    const validationErrors = validateForm(formData, isOtpSent);
-    if (Object.keys(validationErrors).length) {
-      setErrors(validationErrors);
-      setIsLoading(false);
-      return;
-    }
-
-    const success = !isOtpSent
-      ? await handleApi(
-          () => registerUser(baseUrl, formData),
-          "OTP sent to your email!"
-        )
-      : await handleApi(
-          () => verifyOtp(baseUrl, formData),
-          "Registration successful!",
-          true
-        );
-
-    if (success && isOtpSent) navigate("/dashboard");
-    if (!isOtpSent && success) setIsOtpSent(true);
-
-    setIsLoading(false);
-  };
+  const { handleSubmit } = useSignUpHandler({
+    formData,
+    isOtpSent,
+    isLoading,
+    setIsLoading,
+    setIsOtpSent,
+    setFormData,
+    setErrors,
+    showModal,
+    baseUrl,
+  });
 
   return (
     <div className={styles.signUpContainer}>
@@ -111,6 +95,14 @@ const SignUpForm = () => {
         roleOptions={roleOptions}
         isOtpSent={isOtpSent}
         isLoading={isLoading}
+      />
+
+      <ValidateModal
+        isOpen={modalConfig.isOpen}
+        onClose={closeModal}
+        type={modalConfig.type}
+        title={modalConfig.title}
+        message={modalConfig.message}
       />
     </div>
   );
