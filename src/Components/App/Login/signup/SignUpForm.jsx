@@ -1,12 +1,9 @@
 //main stateful comp that manages data,validation,api calls and passes props into signinform
-
 import React, { useState, useCallback } from "react";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router-dom";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import SignInForm from "./SignInForm";
-// import { validateForm } from "./Validator";
-// import { registerUser, verifyOtp } from "./api";
 import ValidateModal from "./ValidateModal";
 import { useSignUpHandler } from "./useSignupHandler";
 
@@ -22,7 +19,6 @@ const roleOptions = [
 const SignUpForm = () => {
   const navigate = useNavigate();
   const baseUrl = useBaseUrl();
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -35,7 +31,6 @@ const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
     type: "",
@@ -58,7 +53,7 @@ const SignUpForm = () => {
       ...modalConfig,
       isOpen: false,
     });
-    if (wasSuccess && isOtpSent) {
+    if (wasSuccess && modalConfig.title === "Registration Successful!") {
       navigate("/login");
     }
   };

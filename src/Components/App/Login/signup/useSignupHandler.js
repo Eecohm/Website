@@ -19,7 +19,6 @@ export const useSignUpHandler = ({
     setIsLoading(true);
 
     const validationErrors = validateForm(formData, isOtpSent);
-
     if (Object.keys(validationErrors).length) {
       const errorMessages = Object.values(validationErrors).join(". ");
       showModal("error", "Please Fix These Issues", errorMessages);
@@ -34,7 +33,7 @@ export const useSignUpHandler = ({
         const response = await registerUser(baseUrl, formData);
         const data = await response.json();
 
-        if (!response.ok) throw data;
+        if (!response.ok) throw { ...data, status: response.status };
 
         showModal(
           "success",
@@ -43,12 +42,16 @@ export const useSignUpHandler = ({
         );
         setIsOtpSent(true);
       } catch (error) {
+        console.log("Debug - Full error:", error);
+
         const errorMessage =
           error?.message ||
           error?.email ||
           error?.error ||
-          (error?.status === 404 ? "Email address not found" : null) ||
-          (error?.status === 422 ? "Invalid email format" : null) ||
+          error?.detail ||
+          (response?.status === 400 ? "Invalid email format" : null) ||
+          (response?.status === 404 ? "Email address not found" : null) ||
+          //   (response?.status === 422 ? "Invalid email format" : null) ||
           "Failed to send OTP. Please check your email address.";
 
         showModal("error", "Failed to Send OTP", errorMessage);
