@@ -16,14 +16,23 @@ export const AuthProvider = ({ children }) => {
   const login = (data, rememberMe = false) => {
     setToken(data.access);
     if (rememberMe) {
-      setCookie("accessToken", data.access, 30)
+      setCookie("accessToken", data.access, 30);
       setCookie("rememberMe", "true", 30);
+      setCookie("verified", data.verified, 30);
+      setCookie("kycStatus", data.kyc_status);
+      setCookie("id", data.user_id, 30);
+      setCookie('role', data.role, 30);
+
     } else {
       deleteCookie("accessToken");
       deleteCookie("rememberMe");
+      deleteCookie("kycStatus");
+      deleteCookie("kycStatus");
+      deleteCookie("id");
+      deleteCookie("role");
+      
     }
   };
-
   // Logout function
   const logout = async () => {
     try {

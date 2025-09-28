@@ -38,31 +38,6 @@ const LoginForm = () => {
     };
     checkSavedLogin();
   }, []);
-  //loginuser
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (isLoading) return;
-
-  //   setError("");
-  //   setIsLoading(true);
-
-  //   const config = {
-  //     email,
-  //     password,
-  //     auto: false,
-  //     setError,
-  //     setIsLoading,
-  //     login,
-  //     navigate,
-  //     baseUrl,
-  //     rememberMe,
-  //     setIsCheckingSavedLogin,
-  //   };
-
-  //   loginUser(config);
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLoading) return;
