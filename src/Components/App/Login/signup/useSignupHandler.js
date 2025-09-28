@@ -68,7 +68,7 @@ export const useSignUpHandler = ({
         showModal(
           "success",
           "Registration Successful!",
-          "Your account has been created successfully. You will be redirected to dashboard."
+          "Your account has been created successfully. You will be redirected to login."
         );
         setFormData({
           email: "",

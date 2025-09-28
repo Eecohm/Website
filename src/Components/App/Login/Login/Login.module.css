@@ -138,7 +138,7 @@
   background-color: #2c3e50;
   padding: 30px;
   border-radius: 10px;
-  width: 90%;
+  width: 95%;
   max-width: 400px;
   text-align: center;
   border: 2px solid #00adb5;
@@ -147,9 +147,10 @@
   border: 2px solid yellow;
 }
 .modalBox button {
-  max-width: 120px;
+  max-width: 150px;
   margin: 10px;
   height: 6vh;
+  padding: auto;;
 }
 .modalBox h3 {
   color: wheat;
@@ -198,4 +199,32 @@
   border: 2px solid #00adb5;
   box-shadow: 0 0 10px #00adb5;
   background: #008c93;
+}
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.showHideButton {
+  position: absolute;
+  right: 5px;
+  margin: 0%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #fff; /* or match neon theme */
+}
+
+.showHideButton button{
+  margin: 0%;
+  margin-bottom: 3px;
+  background:none;
+}
+.showHideButton button:hover{
+  background: none;
+  margin: 0%;
+  
 }
