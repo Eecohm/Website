@@ -22,15 +22,13 @@ export const AuthProvider = ({ children }) => {
       setCookie("kycStatus", data.kyc_status);
       setCookie("id", data.user_id, 30);
       setCookie('role', data.role, 30);
-
     } else {
       deleteCookie("accessToken");
       deleteCookie("rememberMe");
       deleteCookie("kycStatus");
-      deleteCookie("kycStatus");
+      deleteCookie("verified");
       deleteCookie("id");
       deleteCookie("role");
-      
     }
   };
   // Logout function

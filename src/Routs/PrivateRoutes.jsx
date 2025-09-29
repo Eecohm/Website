@@ -11,6 +11,7 @@ import Accounts from "@/Components/App/Accounts/Accounts";
 import Tasks from "@/Components/App/Tasks/Tasks";
 import Inventory from "@/Components/App/Inventory/Inventory";
 import Teachers from "@/Components/App/Teachers/Teachers";
+import UserRoutes from "./UsersRoutes/UserRoutes";
 
 const RequireAuth = ({ children }) => {
   const { token, isLoading } = useAuth();
@@ -105,6 +106,14 @@ const PrivateRoutes = () => (
       element={
         <RequireAuth>
           <Teachers />
+        </RequireAuth>
+      }
+    />
+    <Route
+      path="/users/*"
+      element={
+        <RequireAuth>
+          <UserRoutes />
         </RequireAuth>
       }
     />

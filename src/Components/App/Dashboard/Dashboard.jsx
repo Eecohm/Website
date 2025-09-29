@@ -1,29 +1,15 @@
 import NavBar from "../NavBar/NavBar";
 import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Context/AuthContext";
 import styles from "./Dashboard.module.css";
-import { StatusCheck } from "./utils/StatusCheck";
-
+import { useStatusCheck } from "./utils/StatusCheck";
 
 const DashBoard = () => {
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
-  const { verified } = useAuth()
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!token) {
-        console.warn("Access token missing");
-        navigate("/login");
-        return;
-      }
-    };
-    fetchUserData();
-    StatusCheck();
-  }, []);
+  // run status check automatically
+  useStatusCheck(baseUrl, token);
 
   return (
     <>
@@ -34,4 +20,5 @@ const DashBoard = () => {
     </>
   );
 };
+
 export default DashBoard;
