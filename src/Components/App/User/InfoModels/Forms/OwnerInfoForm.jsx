@@ -1,19 +1,14 @@
 import NavBar from '@/Components/App/NavBar/NavBar';
 import React from 'react';
+import styles from "./FormsStyles.module.css"
 
 const OwnerInfoForm = () => {
   return (
     <>
       <NavBar />
-      <h1
-        style={{
-          color: "white",
-          textAlign: "center",
-          marginTop: "400px", // adjust vertical spacing
-        }}
-      >
-        Owner Info
-      </h1>
+      <div className={styles.mainDiv}>
+
+      </div>
     </>
   );
 };
