@@ -1,11 +1,9 @@
+// utils/StatusCheck.js
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getCookie } from "@/Context/Auth/Cookies";
 
-export const useStatusCheck = (baseUrl, token) => {
-  const navigate = useNavigate();
-
+export const useStatusCheck = (baseUrl, token, onUnverified) => {
   useEffect(() => {
     const checkStatus = async () => {
       if (!token) return;
@@ -22,28 +20,8 @@ export const useStatusCheck = (baseUrl, token) => {
         const data = response.data;
 
         if (!data.verified && data.kyc_status === "unverified") {
-          switch (data.role) {
-            case "student":
-              navigate("/dashboard/users/info/student/form");
-              break;
-            case "guardian":
-              navigate("/dashboard/users/info/guardian/form");
-              break;
-            case "employee":
-              navigate("/dashboard/users/info/employee/form");
-              break;
-            case "admin":
-              navigate("/dashboard/users/info/employee/form");
-              break;
-            case "owner":
-              navigate("/dashboard/users/info/owner/form");
-              break;
-            case "teacher":
-              navigate("/dashboard/users/info/teacher/form");
-              break;
-            default:
-              navigate("/dashboard");
-          }
+          // trigger callback to show modal
+          onUnverified(data.role);
         }
       } catch (error) {
         console.error("Status check failed:", error);
@@ -51,5 +29,5 @@ export const useStatusCheck = (baseUrl, token) => {
     };
 
     checkStatus();
-  }, [baseUrl, token, navigate]);
+  }, [baseUrl, token, onUnverified]);
 };
