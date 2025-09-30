@@ -1,0 +1,46 @@
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 350px;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #e8e8e8;
+}
+
+.required {
+  color: #ff6b6b;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #e8e8e8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.uploadLabel:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.icon {
+  color: #1e3a8a;
+}
+
+.fileName {
+  font-size: 0.85rem;
+}

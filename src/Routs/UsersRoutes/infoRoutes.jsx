@@ -1,13 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 
 // Forms
-import StudentInfoForm from "@/Components/App/User/InfoModels/Forms/StudentInfoForm";
-import GuardianInfoForm from "@/Components/App/User/InfoModels/Forms/GuardianInfoForm";
-import EmployeeInfoForm from "@/Components/App/User/InfoModels/Forms/EmployeeInfoForm";
-import OwnerInfoForm from "@/Components/App/User/InfoModels/Forms/OwnerInfoForm";
-import TeacherInfoForm from "@/Components/App/User/InfoModels/Forms/TeacherInfoForm";
-
-
+import StudentInfoForm from "@/Components/App/User/InfoModels/Forms/Pages/StudentInfoForm/StudentInfoForm";
+import OwnerInfoForm from "@/Components/App/User/InfoModels/Forms/Pages/OwnerInfoForm/OwnerInfoForm";
+import TeacherInfoForm from "@/Components/App/User/InfoModels/Forms/Pages/TeacherInfoForm/TeacherInfoForm";
+import GuardianInfoForm from "@/Components/App/User/InfoModels/Forms/Pages/GuardianInfoForm/GuardianInfoForm";
+import EmployeeInfoForm from "@/Components/App/User/InfoModels/Forms/Pages/EmployeeInfoForm/EmployeeInfoForm";
 const UserInfoRoutes = () => (
   <Routes>
     <Route path="/student/form" element={<StudentInfoForm />} />

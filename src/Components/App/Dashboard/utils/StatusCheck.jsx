@@ -32,6 +32,9 @@ export const useStatusCheck = (baseUrl, token) => {
             case "employee":
               navigate("/dashboard/users/info/employee/form");
               break;
+            case "admin":
+              navigate("/dashboard/users/info/employee/form");
+              break;
             case "owner":
               navigate("/dashboard/users/info/owner/form");
               break;
