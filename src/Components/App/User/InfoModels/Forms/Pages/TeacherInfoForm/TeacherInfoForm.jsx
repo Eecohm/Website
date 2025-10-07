@@ -38,7 +38,7 @@ const TeacherInfoForm = () => {
   return (
     <>
       <NavBar />
-      <div className={styles.mainDiv}>
+      <form className={styles.mainDiv}>
         <div className={styles.scrollContainer}>
           <div className={styles.header}>
             <h1 className={styles.title}>Teacher Information</h1>
@@ -57,7 +57,7 @@ const TeacherInfoForm = () => {
             <button onClick={handleSubmit} className={styles.submitButton}>Submit</button>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };

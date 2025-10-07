@@ -94,3 +94,10 @@
   background: #1e40af;
   box-shadow: 0 6px 16px rgba(30, 58, 138, 0.4);
 }
+
+@media (max-width: 1024px) {
+  .mainDiv {
+    margin: 100px 10px 10px 10px;
+    width: 100vw;
+  }
+}

@@ -53,7 +53,7 @@ const OwnerInfoForm = () => {
   return (
     <>
       <NavBar />
-      <div className={styles.mainDiv}>
+      <form className={styles.mainDiv}>
         <div className={styles.scrollContainer}>
           <div className={styles.header}>
             <h1 className={styles.title}>Owner Information</h1>
@@ -97,7 +97,7 @@ const OwnerInfoForm = () => {
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };

@@ -33,7 +33,7 @@ const GuardianInfoForm = () => {
   return (
     <>
       <NavBar />
-      <div className={styles.mainDiv}>
+      <form className={styles.mainDiv}>
         <div className={styles.scrollContainer}>
           <div className={styles.header}>
             <h1 className={styles.title}>Guardian Information</h1>
@@ -51,7 +51,7 @@ const GuardianInfoForm = () => {
             <button onClick={handleSubmit} className={styles.submitButton}>Submit</button>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };

@@ -40,3 +40,15 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+.inputError {
+  border: 1px solid #ff5555;
+  background-color: rgba(255, 0, 0, 0.05);
+}
+
+.errorText {
+  color: #ff4444;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}
+
