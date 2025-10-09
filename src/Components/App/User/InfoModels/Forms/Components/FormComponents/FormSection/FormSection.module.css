@@ -2,17 +2,21 @@
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 16px;
-  max-width: 800px;
+  border-radius: 0.8rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -23,11 +27,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 0 0 250px;
 }
 .icon {
   color: #2255e2;
- 
 }
 
 .title {
@@ -38,7 +40,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 

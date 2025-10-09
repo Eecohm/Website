@@ -1,11 +1,54 @@
-import React from 'react';
-import { User } from 'lucide-react';
-import FormSection from '../../FormComponents/FormSection/FormSection';
-import GlassInput from '../../FormComponents/GlassInput/GlassInput';
-import GlassSelect from '../../FormComponents/GlassSelect/GlassSelect';
-import GlassFileUpload from '../../FormComponents/GlassFileUpload/GlassFileUpload';
-import  { validateAlphabetOnly } from '@/validators/formInputValidator/TextValidator'
-const PersonalDetailsForm = ({ formData, handleChange, handleFileChange }) => {
+import React, { useState } from "react";
+import { User } from "lucide-react";
+import FormSection from "../../FormComponents/FormSection/FormSection";
+import GlassInput from "../../FormComponents/GlassInput/GlassInput";
+import GlassSelect from "../../FormComponents/GlassSelect/GlassSelect";
+import GlassFileUpload from "../../FormComponents/GlassFileUpload/GlassFileUpload";
+import {
+  validateRequiredName,
+  validateOptionalName,
+} from "@/validators/formInputValidator/TextValidator";
+import { validateDateOfBirth } from "@/validators/formInputValidator/DateValidator";
+const PersonalDetailsForm = ({
+  formData,
+  handleChange,
+  handleFileChange,
+  onValidationChange,
+}) => {
+  const [validFields, setValidFields] = useState(new Set());
+
+  const handleFieldValidation = (fieldName, isValid) => {
+    setValidFields((prev) => {
+      const updated = new Set(prev);
+      if (isValid) {
+        updated.add(fieldName);
+      } else {
+        updated.delete(fieldName);
+      }
+
+      const requiredFields = ["firstName", "lastName", "dateOfBirth", "gender"];
+      const allValid = requiredFields.every((field) => updated.has(field));
+
+      // Call the parent validation callback - but defer it to avoid state update during render
+      if (onValidationChange) {
+        setTimeout(() => {
+          const errors = {};
+          requiredFields.forEach((field) => {
+            if (!updated.has(field)) {
+              errors[field] = `${
+                field.charAt(0).toUpperCase() + field.slice(1)
+              } is required`;
+            }
+          });
+
+          onValidationChange(allValid, errors);
+        }, 0);
+      }
+
+      return updated;
+    });
+  };
+
   return (
     <FormSection title="Personal Details" icon={User}>
       <GlassInput
@@ -15,7 +58,8 @@ const PersonalDetailsForm = ({ formData, handleChange, handleFileChange }) => {
         onChange={handleChange}
         required={true}
         placeholder="First name"
-        validate={validateAlphabetOnly}
+        validate={validateRequiredName}
+        onValidate={handleFieldValidation}
       />
 
       <GlassInput
@@ -24,7 +68,9 @@ const PersonalDetailsForm = ({ formData, handleChange, handleFileChange }) => {
         value={formData.middleName}
         onChange={handleChange}
         placeholder="Middle name"
-        validate={validateAlphabetOnly}
+        required={false}
+        validate={validateOptionalName}
+        onValidate={handleFieldValidation}
       />
 
       <GlassInput
@@ -34,7 +80,8 @@ const PersonalDetailsForm = ({ formData, handleChange, handleFileChange }) => {
         onChange={handleChange}
         required={true}
         placeholder="Last name"
-        validate={validateAlphabetOnly}
+        validate={validateRequiredName}
+        onValidate={handleFieldValidation}
       />
 
       <GlassInput
@@ -44,6 +91,8 @@ const PersonalDetailsForm = ({ formData, handleChange, handleFileChange }) => {
         value={formData.dateOfBirth}
         onChange={handleChange}
         required={true}
+        validate={validateDateOfBirth}
+        onValidate={handleFieldValidation}
       />
 
       <GlassSelect
@@ -51,12 +100,13 @@ const PersonalDetailsForm = ({ formData, handleChange, handleFileChange }) => {
         name="gender"
         value={formData.gender}
         onChange={handleChange}
-        required
+        required={true}
         options={[
-          { value: 'male', label: 'Male' },
-          { value: 'female', label: 'Female' },
-          { value: 'other', label: 'Other' }
+          { value: "male", label: "Male" },
+          { value: "female", label: "Female" },
+          { value: "other", label: "Other" },
         ]}
+        onValidate={handleFieldValidation}
       />
 
       <GlassFileUpload
