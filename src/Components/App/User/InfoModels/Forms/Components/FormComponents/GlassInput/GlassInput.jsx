@@ -10,7 +10,7 @@ const GlassInput = ({
   required = false,
   placeholder,
   disabled = false,
-  validate,
+  validate, //validate name
   onValidate,
 }) => {
   const [error, setError] = useState("");
@@ -22,11 +22,6 @@ const GlassInput = ({
       setError(validationError || "");
 
       if (onValidate) {
-        console.log(
-          `${name} handleBlur - value: "${
-            e.target.value
-          }", validationError: "${validationError}", isValid: ${!validationError}`
-        );
         onValidate(name, !validationError);
       }
     }

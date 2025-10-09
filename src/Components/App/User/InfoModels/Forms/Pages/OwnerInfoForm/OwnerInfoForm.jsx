@@ -72,21 +72,6 @@ const OwnerInfoForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Debug: Check validation state
-    console.log("DEBUG - Form validation check:");
-    console.log("isFormValid:", isFormValid);
-    console.log("Section validations:", sectionValidations);
-
-    // Debug: Check each section
-    Object.entries(sectionValidations).forEach(([sectionName, validation]) => {
-      console.log(
-        `${sectionName}:`,
-        validation.isValid,
-        "errors:",
-        validation.errors
-      );
-    });
-
     if (!isFormValid) {
       alert("Please fix all validation errors before submitting");
       return;

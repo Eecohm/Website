@@ -12,11 +12,6 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
   const [validFields, setValidFields] = useState(new Set());
 
   const handleFieldValidation = (fieldName, isValid) => {
-    console.log(
-      `DEBUG - AddressDetailsForm: ${fieldName} validation:`,
-      isValid
-    );
-
     setValidFields((prev) => {
       const updated = new Set(prev);
       if (isValid) {
@@ -34,12 +29,6 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
       ];
       const allValid = requiredFields.every((field) => updated.has(field));
 
-      console.log(
-        `DEBUG - AddressDetailsForm valid fields:`,
-        Array.from(updated)
-      );
-      console.log(`DEBUG - AddressDetailsForm allValid:`, allValid);
-
       // Call the parent validation callback - defer to avoid state update during render
       if (onValidationChange) {
         setTimeout(() => {
@@ -53,10 +42,6 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
             }
           });
 
-          console.log(`DEBUG - AddressDetailsForm sending to parent:`, {
-            allValid,
-            errors,
-          });
           onValidationChange(allValid, errors);
         }, 0);
       }
