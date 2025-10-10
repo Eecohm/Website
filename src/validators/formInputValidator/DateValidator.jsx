@@ -16,7 +16,16 @@ export const validateDateOfBirth = (dateString) => {
     return "Date of birth cannot be in the future";
   }
 
-  // Check if person is not too old
+  // Check if person is too young (less than 3 years old)
+  const minAge = 3;
+  const maxDate = new Date();
+  maxDate.setFullYear(today.getFullYear() - minAge);
+
+  if (date > maxDate) {
+    return "Person must be at least 3 years old";
+  }
+
+  // Check if person is not too old (more than 120 years old)
   const maxAge = 120;
   const minDate = new Date();
   minDate.setFullYear(today.getFullYear() - maxAge);

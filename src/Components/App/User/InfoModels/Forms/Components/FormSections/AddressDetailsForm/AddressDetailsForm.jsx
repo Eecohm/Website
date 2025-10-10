@@ -1,22 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { MapPin } from "lucide-react";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
 import {
-  validateRequiredName,
   validateRequiredString,
   validateOptionalString,
+  validateRequiredWard,
+  validateRequiredName,
 } from "@/validators/formInputValidator/TextValidator";
+import { getProvincesByCountry } from "@/validators/formInputValidator/provincesData";
+import GlassSelect from "../../FormComponents/GlassSelect/GlassSelect";
 
 const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
   const [validFields, setValidFields] = useState(new Set());
+  const lastErrorsStringRef = useRef("");
+
+  const countryOptions = [{ value: "Nepal", label: "Nepal" }];
+
+  const getProvinceOptions = () => {
+    const provinces = getProvincesByCountry(formData.country);
+    return provinces.map((province) => ({
+      value: province,
+      label: province,
+    }));
+  };
+
+  // Custom handler for country changes
+  const handleCountryChange = (e) => {
+    const { name, value } = e.target;
+
+    // If country changed, clear province
+    if (name === "country" && value !== formData.country) {
+      handleChange({ target: { name: "province", value: "" } });
+    }
+
+    handleChange(e);
+  };
 
   const handleFieldValidation = (fieldName, isValid) => {
-    console.log(
-      `DEBUG - AddressDetailsForm: ${fieldName} validation:`,
-      isValid
-    );
-
     setValidFields((prev) => {
       const updated = new Set(prev);
       if (isValid) {
@@ -34,12 +55,6 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
       ];
       const allValid = requiredFields.every((field) => updated.has(field));
 
-      console.log(
-        `DEBUG - AddressDetailsForm valid fields:`,
-        Array.from(updated)
-      );
-      console.log(`DEBUG - AddressDetailsForm allValid:`, allValid);
-
       // Call the parent validation callback - defer to avoid state update during render
       if (onValidationChange) {
         setTimeout(() => {
@@ -53,11 +68,17 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
             }
           });
 
-          console.log(`DEBUG - AddressDetailsForm sending to parent:`, {
-            allValid,
-            errors,
-          });
-          onValidationChange(allValid, errors);
+          const errorsString = JSON.stringify(errors);
+
+          if (errorsString !== lastErrorsStringRef.current) {
+            console.log("🔄 AddressDetailsForm - Errors changed:", errors);
+            lastErrorsStringRef.current = errorsString;
+            onValidationChange(allValid, errors);
+          } else {
+            console.log(
+              "✅ AddressDetailsForm - Errors unchanged, skipping onValidationChange"
+            );
+          }
         }, 0);
       }
 
@@ -71,20 +92,22 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         label="Country"
         name="country"
         value={formData.country}
-        onChange={handleChange}
+        onChange={handleCountryChange}
         required={true}
-        placeholder="Country"
-        validate={validateRequiredName}
+        placeholder="Search country"
         onValidate={handleFieldValidation}
       />
-      <GlassInput
+      <GlassSelect
         label="Province"
         name="province"
         value={formData.province}
         onChange={handleChange}
         required={true}
-        placeholder="Province"
-        validate={validateRequiredName}
+        options={getProvinceOptions()}
+        placeholder={
+          formData.country ? "Select Province" : "Select Country First"
+        }
+        disabled={formData.country !== "Nepal"}
         onValidate={handleFieldValidation}
       />
       <GlassInput
@@ -94,7 +117,7 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         onChange={handleChange}
         required={true}
         placeholder="Municipality"
-        validate={validateRequiredString}
+        validate={validateRequiredName}
         onValidate={handleFieldValidation}
       />
       <GlassInput
@@ -104,7 +127,7 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         onChange={handleChange}
         required={true}
         placeholder="Ward"
-        validate={validateRequiredString}
+        validate={validateRequiredWard}
         onValidate={handleFieldValidation}
       />
       <GlassInput

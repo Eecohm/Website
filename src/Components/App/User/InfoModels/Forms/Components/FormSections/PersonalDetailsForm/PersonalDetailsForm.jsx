@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { User } from "lucide-react";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
@@ -9,6 +9,7 @@ import {
   validateOptionalName,
 } from "@/validators/formInputValidator/TextValidator";
 import { validateDateOfBirth } from "@/validators/formInputValidator/DateValidator";
+import { validatePhoto } from "@/validators/formInputValidator/validatePhoto";
 const PersonalDetailsForm = ({
   formData,
   handleChange,
@@ -16,6 +17,7 @@ const PersonalDetailsForm = ({
   onValidationChange,
 }) => {
   const [validFields, setValidFields] = useState(new Set());
+  const lastErrorsStringRef = useRef("");
 
   const handleFieldValidation = (fieldName, isValid) => {
     setValidFields((prev) => {
@@ -26,10 +28,16 @@ const PersonalDetailsForm = ({
         updated.delete(fieldName);
       }
 
-      const requiredFields = ["firstName", "lastName", "dateOfBirth", "gender"];
+      const requiredFields = [
+        "firstName",
+        "lastName",
+        "dateOfBirth",
+        "gender",
+        "photo",
+      ];
       const allValid = requiredFields.every((field) => updated.has(field));
 
-      // Call the parent validation callback - but defer it to avoid state update during render
+      // Call the parent validation callback
       if (onValidationChange) {
         setTimeout(() => {
           const errors = {};
@@ -41,7 +49,14 @@ const PersonalDetailsForm = ({
             }
           });
 
-          onValidationChange(allValid, errors);
+          // Convert errors to string for comparison
+          const errorsString = JSON.stringify(errors);
+
+          // Compare with ref value (no state update)
+          if (errorsString !== lastErrorsStringRef.current) {
+            onValidationChange(allValid, errors);
+          } else {
+          }
         }, 0);
       }
 
@@ -114,6 +129,9 @@ const PersonalDetailsForm = ({
         name="photo"
         onChange={handleFileChange}
         accept="image/*"
+        required={true}
+        validate={validatePhoto}
+        onValidate={handleFieldValidation}
       />
     </FormSection>
   );

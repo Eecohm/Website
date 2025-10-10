@@ -56,3 +56,13 @@
   flex: 1;
   min-width: 0;
 }
+.error {
+  display: block;
+  margin-top: 4px;
+  color: #ef4444;
+  font-size: 12px;
+}
+
+.uploadLabelError {
+  border-color: #ef4444;
+}

@@ -8,6 +8,7 @@ import {
   validateURL,
   validateOptionalName,
 } from "@/validators/formInputValidator/TextValidator";
+import { validateOptionalTelephone } from "@/validators/formInputValidator/ContactValidator";
 
 const ContactDetailsForm = ({ formData, handleChange, onValidationChange }) => {
   const [validFields, setValidFields] = useState(new Set());
@@ -54,7 +55,7 @@ const ContactDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         onChange={handleChange}
         required={false}
         placeholder="Telephone (Optional)"
-        validate={validateOptionalPhone}
+        validate={validateOptionalTelephone}
         onValidate={handleFieldValidation}
       />
       <GlassInput
@@ -95,7 +96,7 @@ const ContactDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         onChange={handleChange}
         required={false}
         placeholder="Contact person (Optional)"
-        validate={validateOptionalName}
+        validate={validateOptionalPhone}
         onValidate={handleFieldValidation}
       />
     </FormSection>

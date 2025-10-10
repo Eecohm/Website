@@ -9,37 +9,77 @@ const GlassFileUpload = ({
   accept = "image/*",
   required = false,
   onValidate,
+  validate,
+  ...props
 }) => {
   const [fileName, setFileName] = useState("");
   const [hasFile, setHasFile] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
+
     if (file) {
       setFileName(file.name);
       setHasFile(true);
+
+      // Call parent onChange first
       onChange(e);
 
-      if (onValidate) {
+      // Perform validation if validate function provided
+      if (validate && onValidate) {
+        console.log("✅ Running validation with function:", validate);
+        try {
+          const validationResult = await validate(file);
+          console.log("📊 Validation result:", validationResult);
+          if (validationResult.valid) {
+            console.log("✅ Validation passed - clearing error");
+            setError("");
+            onValidate(name, true);
+          } else {
+            console.log(
+              "❌ Validation failed - setting error:",
+              validationResult.message
+            );
+            setError(validationResult.message);
+            onValidate(name, false);
+          }
+        } catch (err) {
+          console.log("💥 Validation threw error:", err);
+          setError("Validation failed");
+          onValidate(name, false);
+        }
+      } else if (onValidate) {
+        console.log("❌ No validation function provided, skipping validation");
+        // No validation function, just check if file exists
+        setError("");
         onValidate(name, true);
       }
     } else {
+      // No file selected
       setFileName("");
       setHasFile(false);
+      setError("");
 
       if (onValidate) {
-        const isValid = !required;
+        const isValid = !required; // Valid if not required
         onValidate(name, isValid);
       }
     }
   };
 
-  // Initial validation only on mount and when required changes
+  // Initial validation on mount
   useEffect(() => {
-    if (onValidate && required) {
-      onValidate(name, false); // Initially invalid for required file uploads
+    if (onValidate) {
+      // Initially invalid if required and no file
+      onValidate(name, !required);
     }
-  }, [required]); // Remove hasFile and onValidate from dependencies
+  }, [name, required]);
+
+  // ADD THIS NEW useEffect RIGHT HERE:
+  useEffect(() => {
+    console.log("🔧 Error state changed to:", error);
+  }, [error]);
 
   return (
     <div className={styles.uploadContainer}>
@@ -50,10 +90,11 @@ const GlassFileUpload = ({
         <input
           type="file"
           name={name}
-          onChange={handleChange}
+          onChange={handleFileChange}
           accept={accept}
           className={styles.fileInput}
           id={name}
+          {...props}
         />
         <label htmlFor={name} className={styles.uploadLabel}>
           <Upload className={styles.icon} size={18} />
@@ -62,6 +103,7 @@ const GlassFileUpload = ({
           </span>
         </label>
       </div>
+      {error && <div className={styles.error}>{error}</div>}
     </div>
   );
 };

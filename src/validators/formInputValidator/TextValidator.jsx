@@ -58,23 +58,54 @@ export const validateOptionalString = (value) => {
   return validateValidString(value, false);
 };
 
+//for ward validation
+export const validateRequiredWardNo = (value, isRequired) => {
+  if (isRequired && (!value || value.trim() === "")) {
+    return "Ward number is required";
+  }
+
+  //if not required and empty, it's valid
+  if (!value || value.trim() === "") return null;
+
+  //value should be number only
+  const wardNoRegex = /^[0-9]+$/;
+  if (!wardNoRegex.test(value)) {
+    return "Ward number should contain only numbers";
+  }
+};
+
+export const validateRequiredWard = (value) => {
+  return validateRequiredWardNo(value, true);
+};
+
+//for phone number validation
 export const validatePhoneNumber = (value, isRequired = false) => {
   // Check if field is required and empty
   if (isRequired && (!value || value.trim() === "")) {
     return "Phone number is required";
   }
 
-  // If not required and empty, it's valid
+  //if not required and empty, it's valid
   if (!value || value.trim() === "") return null;
 
-  const phoneRegex = /^[0-9+\-\s()]+$/;
-  if (!phoneRegex.test(value)) {
-    return "Please enter a valid phone number";
+  // Remove any spaces, dashes, or other formatting
+  const cleanPhone = value.replace(/[^0-9]/g, "");
+
+  // Check length
+  if (cleanPhone.length < 10) {
+    return "Mobile number must be exactly 10 digits long";
   }
-  if (value.replace(/[^0-9]/g, "").length < 10) {
-    return "Phone number must be at least 10 digits";
+
+  if (cleanPhone.length > 10) {
+    return "Mobile number must be exactly 10 digits long";
   }
-  return null;
+
+  // Check if it starts with 98 or 97
+  if (!cleanPhone.startsWith("98") && !cleanPhone.startsWith("97")) {
+    return "Mobile number must start with 98 or 97";
+  }
+
+  return null; // Valid
 };
 
 // Required phone validator
@@ -97,30 +128,6 @@ export const validateURL = (value) => {
   }
 };
 
-export const validateNagariktaNo = (value, isRequired = false) => {
-  // Check if field is required and empty
-  if (isRequired && (!value || value.trim() === "")) {
-    return "Citizenship number is required";
-  }
-
-  // If not required and empty, it's valid
-  if (!value || value.trim() === "") return null;
-
-  const nagariktaRegex = /^[0-9\-\/]+$/;
-  if (!nagariktaRegex.test(value)) {
-    return "Please enter a valid citizenship number";
-  }
-  if (value.replace(/[^0-9]/g, "").length < 8) {
-    return "Citizenship number must be at least 8 digits";
-  }
-  return null;
-};
-
-// Required citizenship validator
-export const validateRequiredNagarikta = (value) => {
-  return validateNagariktaNo(value, true);
-};
-
 export const validatePANNo = (value, isRequired = false) => {
   // Check if field is required and empty
   if (isRequired && (!value || value.trim() === "")) {
@@ -130,11 +137,14 @@ export const validatePANNo = (value, isRequired = false) => {
   // If not required and empty, it's valid
   if (!value || value.trim() === "") return null;
 
+  // Remove dashes before validation
+  const cleanValue = value.replace(/-/g, "");
+
   const panRegex = /^[0-9]+$/;
-  if (!panRegex.test(value)) {
+  if (!panRegex.test(cleanValue)) {
     return "PAN number should contain only numbers";
   }
-  if (value.length !== 9) {
+  if (cleanValue.length !== 9) {
     return "PAN number must be exactly 9 digits";
   }
   return null;

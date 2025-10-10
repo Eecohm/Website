@@ -3,11 +3,8 @@ import { FileText } from "lucide-react";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
 import GlassFileUpload from "../../FormComponents/GlassFileUpload/GlassFileUpload";
-import {
-  validateRequiredNagarikta,
-  validateRequiredPAN,
-} from "@/validators/formInputValidator/TextValidator";
-
+import { validateRequiredPAN } from "@/validators/formInputValidator/TextValidator";
+import { validateRequiredNagarikta } from "@/validators/formInputValidator/CitizenshipValidator";
 const DocumentDetailsForm = ({
   formData,
   handleChange,
@@ -58,8 +55,6 @@ const DocumentDetailsForm = ({
         onChange={handleChange}
         required={true}
         placeholder="Citizenship No."
-        validate={validateRequiredNagarikta}
-        onValidate={handleFieldValidation}
       />
       <GlassInput
         label="PAN Number"
@@ -77,7 +72,6 @@ const DocumentDetailsForm = ({
         onChange={handleFileChange}
         accept="image/*"
         required={false}
-        // No onValidate for optional file uploads
       />
       <GlassFileUpload
         label="PAN Photo"
@@ -85,7 +79,6 @@ const DocumentDetailsForm = ({
         onChange={handleFileChange}
         accept="image/*"
         required={false}
-        // No onValidate for optional file uploads
       />
     </FormSection>
   );

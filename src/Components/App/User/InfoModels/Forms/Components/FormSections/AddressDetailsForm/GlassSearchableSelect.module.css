@@ -1,0 +1,155 @@
+.selectContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #e8e8e8;
+}
+
+.required {
+  color: #ff6b6b;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 8px 30px 8px 12px; /* Fixed: proper right padding for icon */
+  color: #e8e8e8;
+  font-size: 0.85rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  /* Ensure input is properly contained */
+  position: relative;
+  z-index: 1;
+}
+
+.input::placeholder {
+  color: rgba(232, 232, 232, 0.5);
+}
+
+.input:focus {
+  border-color: rgba(30, 58, 138, 0.6);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+}
+
+.inputError {
+  border-color: #ef4444;
+}
+
+.icon {
+  position: absolute;
+  right: 8px; /* Fixed: moved closer to edge */
+  top: 50%;
+  transform: translateY(-50%); /* Fixed: proper vertical centering */
+  color: white;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 2; /* Ensure icon is above input */
+}
+
+.iconRotated {
+  transform: translateY(-50%) rotate(180deg); /* Fixed: maintain centering while rotating */
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%; /* Fixed: position directly below input */
+  left: 0;
+  right: 0;
+  margin-top: 2px; /* Small gap like native select */
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 9999; /* Fixed: very high z-index to appear above everything */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Stronger shadow for better visibility */
+  /* Ensure dropdown is properly positioned */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.option {
+  padding: 8px 12px;
+  color: #e8e8e8;
+  cursor: pointer;
+  font-size: 0.85rem;
+  background: #1a1a1a;
+  transition: background-color 0.2s ease;
+  /* Ensure options are contained */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.option:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.option:last-child {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.optionSelected {
+  background: rgba(30, 58, 138, 0.3);
+}
+
+.noResults {
+  padding: 12px;
+  color: rgba(232, 232, 232, 0.6);
+  font-size: 0.85rem;
+  text-align: center;
+  font-style: italic;
+  background: #1a1a1a;
+}
+
+.error {
+  display: block;
+  margin-top: 4px;
+  color: #ef4444;
+  font-size: 12px;
+}
+
+/* Fixed scrollbar styling */
+.dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.dropdown::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
