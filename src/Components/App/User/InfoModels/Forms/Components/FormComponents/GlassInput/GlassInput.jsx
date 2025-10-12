@@ -12,14 +12,20 @@ const GlassInput = ({
   disabled = false,
   validate,
   onValidate,
+  error: externalError,
 }) => {
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const hasInitialValidated = useRef(false);
+
+  const [internalError, setInternalError] = useState("");
+
+  // Use external error if provided, otherwise use internal error
+  const displayError = externalError || internalError;
 
   const handleBlur = (e) => {
     if (validate) {
       const validationError = validate(e.target.value);
-      setError(validationError || "");
+      setInternalError(validationError || "");
 
       if (onValidate) {
         console.log(
@@ -72,16 +78,16 @@ const GlassInput = ({
         value={value}
         onChange={(e) => {
           onChange(e);
-          if (error) setError("");
+          if (displayError) setInternalError("");
         }}
         onBlur={handleBlur}
         placeholder={placeholder}
         disabled={disabled}
-        className={`${styles.input} ${error ? styles.inputError : ""}`}
+        className={`${styles.input} ${displayError ? styles.inputError : ""}`}
         required={required}
       />
 
-      {error && <span className={styles.errorText}>{error}</span>}
+      {displayError && <span className={styles.errorText}>{displayError}</span>}
     </div>
   );
 };

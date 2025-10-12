@@ -3,7 +3,6 @@
   margin-left: 300px;
   height: calc(100vh - 100px);
   width: calc(100vw - 300px);
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   overflow: hidden;
 }
 
@@ -47,13 +46,12 @@
 }
 
 .formContainer {
-  display: flex;
-  flex-wrap: wrap;          
-  gap: 16px;
-  max-width: calc(100vw - 300px); 
-  box-sizing: border-box;   
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+  align-items: stretch;
+  gap: 2rem;
+  box-sizing: border-box;
 }
-
 .buttonContainer {
   display: flex;
   gap: 12px;
