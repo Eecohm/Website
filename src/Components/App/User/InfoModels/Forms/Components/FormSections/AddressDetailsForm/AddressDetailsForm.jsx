@@ -95,6 +95,7 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         onChange={handleCountryChange}
         required={true}
         placeholder="Search country"
+        validate={validateRequiredString}
         onValidate={handleFieldValidation}
       />
       <GlassSelect
@@ -108,6 +109,7 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
           formData.country ? "Select Province" : "Select Country First"
         }
         disabled={formData.country !== "Nepal"}
+        validate={validateRequiredString}
         onValidate={handleFieldValidation}
       />
       <GlassInput
@@ -148,8 +150,8 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         onChange={handleChange}
         required={false}
         placeholder="Map URL (Optional)"
-        validate={validateOptionalString}
-        onValidate={handleFieldValidation}
+        // validate={validateOptionalString}
+        // onValidate={handleFieldValidation}
       />
     </FormSection>
   );

@@ -65,7 +65,7 @@ const StudentSpecificForm = ({
   return (
     <FormSection title="Student Details" icon={GraduationCap}>
       <GlassInput
-        label="User ID"
+        label="Imies Code"
         name="userId"
         value={formData.userId}
         placeholder="STU2024001"
