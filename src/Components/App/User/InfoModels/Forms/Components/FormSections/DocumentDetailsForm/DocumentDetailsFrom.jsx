@@ -25,10 +25,8 @@ const DocumentDetailsForm = ({
       const requiredFields = ["nagariktaNo", "panNo"];
       const allValid = requiredFields.every((field) => updated.has(field));
 
-      // Call the parent validation callback - defer to avoid state update during render
       if (onValidationChange) {
         setTimeout(() => {
-          // Create proper errors object - only include invalid fields with error messages
           const errors = {};
           requiredFields.forEach((field) => {
             if (!updated.has(field)) {
@@ -55,6 +53,8 @@ const DocumentDetailsForm = ({
         onChange={handleChange}
         required={true}
         placeholder="Citizenship No."
+        validate={validateRequiredNagarikta}
+        onValidate={handleFieldValidation}
       />
       <GlassInput
         label="PAN Number"

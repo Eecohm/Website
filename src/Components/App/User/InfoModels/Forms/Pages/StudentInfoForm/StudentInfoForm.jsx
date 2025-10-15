@@ -41,6 +41,8 @@ const StudentInfoForm = () => {
     contactDetails: { isValid: false, errors: {} },
     studentDetails: { isValid: false, errors: {} },
   });
+  const [isPersonalDetailsComplete, setIsPersonalDetailsComplete] =
+    useState(false);
   useEffect(() => {
     console.log("🔍 Section Validations:", sectionValidations);
     const allSectionsValid = Object.values(sectionValidations).every(
@@ -107,6 +109,7 @@ const StudentInfoForm = () => {
               onValidationChange={(isValid, errors) =>
                 updateSectionValidation("addressDetails", isValid, errors)
               }
+              isPersonalDetailsComplete={isPersonalDetailsComplete} // Add this prop
             />
             <ContactDetailsForm
               formData={formData}

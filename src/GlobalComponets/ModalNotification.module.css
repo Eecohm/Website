@@ -53,6 +53,14 @@
   line-height: 1.5;
   color: #ddd;
 }
+.pending {
+  border-left: 4px solid #ff9800;
+  color: rgb(213, 213, 110);
+}
+
+.pending .icon {
+  color: #ff9800;
+}
 
 /* Close button */
 .closeBtn {

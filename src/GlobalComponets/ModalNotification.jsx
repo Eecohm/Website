@@ -7,6 +7,7 @@ const icons = {
   warning: "⚠️",
   info: "ℹ️",
   help: "❓",
+  pending: "⏳",
 };
 
 const ModalNotification = ({ type = "info", message, onClose }) => {

@@ -96,7 +96,7 @@ const ContactDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         onChange={handleChange}
         required={false}
         placeholder="Contact person (Optional)"
-        validate={validateOptionalPhone}
+        validate={validateOptionalName}
         onValidate={handleFieldValidation}
       />
     </FormSection>

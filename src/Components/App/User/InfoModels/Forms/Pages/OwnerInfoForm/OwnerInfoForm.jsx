@@ -5,6 +5,10 @@ import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Component
 import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/ContactDetailsForm/ContactDetailsForm";
 import DocumentDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/DocumentDetailsForm/DocumentDetailsFrom";
 import styles from "./OwnerInfoForm.module.css";
+import { submitOwnerInfo } from "@/hooks/ownerInfoApi";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
+import ModalNotification from "@/GlobalComponets/ModalNotification";
 
 const OwnerInfoForm = () => {
   const [formData, setFormData] = useState({
@@ -40,6 +44,12 @@ const OwnerInfoForm = () => {
     contactDetails: { isValid: false, errors: {} },
     documentDetails: { isValid: false, errors: {} },
   });
+
+  const [modalNotification, setModalNotification] = useState(null);
+
+  // API context hooks
+  const baseUrl = useBaseUrl();
+  const { login, setToken } = useAuth();
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
@@ -74,14 +84,46 @@ const OwnerInfoForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    Object.entries(sectionValidations).forEach(([section, data]) => {});
+
     if (!isFormValid) {
-      alert("Please fix all validation errors before submitting");
-      return;
+      setModalNotification({
+        type: "warning",
+        message: "Please fix all validation errors before submitting",
+      });
+      return; // Stop execution here if validation fails
     }
-    alert("✅ Form submitted successfully! All validation passed.");
+
+    // Submit to API
+    try {
+      const result = await submitOwnerInfo(formData, baseUrl, login, setToken);
+
+      if (result.success) {
+        setModalNotification({
+          type: "pending",
+          message:
+            "Application Status: PENDING - Your owner information is being reviewed. You will be notified once verification is complete.",
+        });
+
+        console.log("Submitted data:", result.data);
+      } else {
+        setModalNotification({
+          type: "error",
+          message: `Submission failed: ${result.error}`,
+        });
+
+        console.error("Submission error:", result.error);
+      }
+    } catch (error) {
+      setModalNotification({
+        type: "error",
+        message: "❌ An unexpected error occurred",
+      });
+      console.error("Unexpected error:", error);
+    }
   };
 
   return (
@@ -137,6 +179,13 @@ const OwnerInfoForm = () => {
           </div>
         </div>
       </form>
+      {modalNotification && (
+        <ModalNotification
+          type={modalNotification.type}
+          message={modalNotification.message}
+          onClose={() => setModalNotification(null)}
+        />
+      )}
     </>
   );
 };

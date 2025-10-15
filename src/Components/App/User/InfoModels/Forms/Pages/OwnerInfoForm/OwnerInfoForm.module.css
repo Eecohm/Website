@@ -1,6 +1,6 @@
 .mainDiv {
   margin-top: 7rem;
-  margin-left: 18rem;
+  margin-left: 19rem;
   height: calc(100vh - 100px);
   width: calc(100vw - 300px);
   overflow: hidden;
@@ -103,5 +103,8 @@
   .mainDiv {
     margin: 100px 10px 10px 10px;
     width: 100vw;
+  }
+  .formContainer {
+    grid-template-columns: 1fr;
   }
 }

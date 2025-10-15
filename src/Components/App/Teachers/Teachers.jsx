@@ -46,7 +46,7 @@ const Teachers = () => {
       path: "/dashboard/teachers/reports",
       icon: "📊", // reporting
       description: "Generate reports on teacher activities and workload",
-    }
+    },
   ];
 
   return (

@@ -15,7 +15,13 @@ import {
 } from "react-icons/fi";
 import styles from "./GradeData.module.css";
 
-const GradeDataModule = ({ grades, onClose, token, baseUrl }) => {
+const GradeDataModule = ({
+  grades,
+  onClose,
+  onGradeUpdate,
+  token,
+  baseUrl,
+}) => {
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredGrades, setFilteredGrades] = useState(grades);
@@ -77,15 +83,26 @@ const GradeDataModule = ({ grades, onClose, token, baseUrl }) => {
 
   const handleSave = async () => {
     try {
-      await axios.patch(
+      console.log("Saving grade data:", editData);
+      const response = await axios.patch(
         `${baseUrl}/academics/grades/${selectedGrade.id}/`,
         editData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      console.log("Grade save response:", response.data);
+
+      // Update local state with the response data
+      setSelectedGrade(response.data);
+      setEditData(response.data);
       setEditMode(false);
-      // Refresh the grade list by calling onClose and reopening or using a callback
-      onClose();
+
+      // Call the update callback if provided to refresh the parent list
+      if (onGradeUpdate) {
+        console.log("Calling onGradeUpdate to refresh list");
+        onGradeUpdate();
+      }
+
       alert("Grade updated successfully!");
     } catch (err) {
       console.error("Error updating grade:", err);

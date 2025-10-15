@@ -352,6 +352,7 @@ const GradeCard = () => {
           <GradeDataModule
             grades={grades}
             onClose={() => setShowFacultyDataModule(false)}
+            onGradeUpdate={fetchGrades} // Add callback to refresh grades
             token={token}
             baseUrl={baseUrl}
           />
@@ -384,10 +385,23 @@ const AddGradeModal = ({ onClose, onAdd, programs }) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleSubmit = () => {
-    if (!validateForm()) return;
-    onAdd(data);
+    // ADD THIS DEBUGGING CODE
+    console.log("=== FORM VALIDATION DEBUG ===");
+    console.log("isFormValid:", isFormValid);
+    console.log("sectionValidations:", sectionValidations);
+    Object.entries(sectionValidations).forEach(([section, data]) => {
+      console.log(`${section}:`, data.isValid, data.errors);
+    });
+    console.log("===========================");
+
+    if (!isFormValid) {
+      alert("Please fix all validation errors before submitting");
+      return;
+    }
+    alert("✅ Form submitted successfully! All validation passed.");
   };
 
   return (

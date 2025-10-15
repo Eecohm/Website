@@ -76,8 +76,10 @@ const ProgramModalData = ({
   }, [searchQuery, filters, programs]);
 
   const handleProgramSelect = (program) => {
+    console.log("🔍 Selected program:", program);
     setSelectedProgram(program);
-    setEditData(program);
+    setEditData({ ...program }); // Ensure we create a copy
+    setEditMode(false); // Reset edit mode
   };
 
   const handleBackToList = () => {
@@ -95,22 +97,28 @@ const ProgramModalData = ({
   };
 
   const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    // Convert to number for numeric fields
+    const processedValue = type === "number" ? parseInt(value) || "" : value;
+    setEditData((prev) => ({
+      ...prev,
+      [name]: processedValue,
+    }));
   };
 
   const handleSave = async () => {
     try {
-      await axios.patch(
+      const response = await axios.patch(
         `${baseUrl}/academics/programs/${selectedProgram.id}/`,
         editData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      setSelectedProgram(response.data);
+      setEditData(response.data);
       setEditMode(false);
       onProgramUpdate(); // Refresh the program list
     } catch (err) {
-      console.error("Error updating program:", err);
       alert("Failed to update program. Please try again.");
     }
   };
@@ -147,13 +155,15 @@ const ProgramModalData = ({
   // Get unique values for filter dropdowns
   const affiliatedOptions = [
     ...new Set(programs.map((p) => p.affiliatedTo).filter(Boolean)),
-  ];
+  ].filter((option) => option != null && option !== "");
+
   const durationOptions = [
     ...new Set(programs.map((p) => p.durationMonths).filter(Boolean)),
-  ];
+  ].filter((option) => option != null && option !== "");
+
   const previousProgramOptions = [
     ...new Set(programs.map((p) => p.previousProgramName).filter(Boolean)),
-  ];
+  ].filter((option) => option != null && option !== "");
 
   return (
     <div className={styles.fullScreenModal}>
@@ -192,14 +202,14 @@ const ProgramModalData = ({
                   <label>Affiliated To</label>
                   <select
                     name="affiliatedTo"
-                    value={filters.affiliatedTo}
+                    value={filters.affiliatedTo || ""}
                     onChange={handleFilterChange}
                     className={styles.filterInput}
                   >
                     <option value="">All</option>
                     {affiliatedOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
+                      <option key={index} value={option || ""}>
+                        {option || "Unknown"}
                       </option>
                     ))}
                   </select>
@@ -209,14 +219,14 @@ const ProgramModalData = ({
                   <label>Duration (months)</label>
                   <select
                     name="durationMonths"
-                    value={filters.durationMonths}
+                    value={filters.durationMonths || ""}
                     onChange={handleFilterChange}
                     className={styles.filterInput}
                   >
                     <option value="">All</option>
                     {durationOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
+                      <option key={index} value={option || ""}>
+                        {option || "Unknown"}
                       </option>
                     ))}
                   </select>
@@ -226,14 +236,14 @@ const ProgramModalData = ({
                   <label>Previous Program</label>
                   <select
                     name="previousProgram"
-                    value={filters.previousProgram}
+                    value={filters.previousProgram || ""}
                     onChange={handleFilterChange}
                     className={styles.filterInput}
                   >
                     <option value="">All</option>
                     {previousProgramOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
+                      <option key={index} value={option || ""}>
+                        {option || "Unknown"}
                       </option>
                     ))}
                   </select>

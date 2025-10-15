@@ -2,32 +2,82 @@ import { authenticatedFetch } from "@/Context/Auth/authenticatedFetch";
 import { getCookie } from "@/Context/Auth/Cookies";
 
 export const submitOwnerInfo = async (formData, baseUrl, login, setToken) => {
-  // Get user ID from cookie
-  const userId = getCookie("id");
+  try {
+    const userId = getCookie("id");
+    const token = getCookie("accessToken");
 
-  // Create FormData for file uploads
-  const submitData = new FormData();
+    // Initialize FormData
+    const submitData = new FormData();
 
-  // Add all form fields
-  Object.keys(formData).forEach((key) => {
-    if (formData[key] !== null && formData[key] !== "") {
-      submitData.append(key, formData[key]);
+    // Helper function to safely append fields
+    const appendIfPresent = (key, value) => {
+      if (value !== undefined && value !== null && value !== "")
+        submitData.append(key, value);
+    };
+
+    // --- Required fields ---
+    [
+      "firstName",
+      "lastName",
+      "dateOfBirth",
+      "gender",
+      "country",
+      "province",
+      "municipality",
+      "ward",
+      "tole",
+      "phone",
+      "nagariktaNo",
+      "panNo",
+    ].forEach((field) => appendIfPresent(field, formData[field]));
+
+    // --- Optional fields ---
+    [
+      "middleName",
+      "tellPhone",
+      "alternatePhone",
+      "website",
+      "contactPerson",
+    ].forEach((field) => appendIfPresent(field, formData[field]));
+
+    // --- File fields ---
+    ["photo", "nagariktaPhoto", "panPhoto", "pinPoint"].forEach((fileField) =>
+      appendIfPresent(fileField, formData[fileField])
+    );
+
+    // --- Append user ID ---
+    appendIfPresent("userId", userId);
+
+    console.log("🟢 Sending Owner Info to backend...");
+    for (const [key, value] of submitData.entries()) {
+      console.log(`${key}:`, value);
     }
-  });
 
-  // Add user ID
-  submitData.append("userId", userId);
+    console.log("Token exists:", !!token, "| User ID:", userId);
 
-  // Make authenticated API call
-  return await authenticatedFetch(
-    `${baseUrl}/owner-info/submit/`, // Adjust endpoint as needed
-    {
-      method: "POST",
-      body: submitData,
-      // Don't set Content-Type header for FormData
-    },
-    baseUrl,
-    login,
-    setToken
-  );
+    // --- API Request ---
+    const response = await authenticatedFetch(
+      `${baseUrl}/user/owners/${userId}/`,
+      { method: "PUT", body: submitData },
+      baseUrl,
+      login,
+      setToken
+    );
+
+    // --- Handle response ---
+    const data = await response.json().catch(() => ({}));
+
+    if (response.ok) return { success: true, data };
+
+    return {
+      success: false,
+      error: data.message || `HTTP ${response.status}: ${response.statusText}`,
+    };
+  } catch (error) {
+    console.error("❌ Owner submission error:", error);
+    return {
+      success: false,
+      error: error.message || "Network error occurred",
+    };
+  }
 };
