@@ -87,8 +87,6 @@ const OwnerInfoForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    Object.entries(sectionValidations).forEach(([section, data]) => {});
-
     if (!isFormValid) {
       setModalNotification({
         type: "warning",
@@ -120,7 +118,8 @@ const OwnerInfoForm = () => {
     } catch (error) {
       setModalNotification({
         type: "error",
-        message: "❌ An unexpected error occurred",
+        message:
+          "❌ An unexpected error occurred during submission. Please try again later.",
       });
       console.error("Unexpected error:", error);
     }

@@ -5,6 +5,11 @@ import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Component
 import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/ContactDetailsForm/ContactDetailsForm";
 import StudentSpecificForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/StudentSpecificForm/StudentSpecificForm";
 import styles from "./StudentInfoForm.module.css";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
+import ModalNotification from "@/GlobalComponets/ModalNotification";
+import { submitStudentInfo } from "@/hooks/studentInfoApi";
+
 const StudentInfoForm = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -33,7 +38,6 @@ const StudentInfoForm = () => {
     createdByAdmin: "",
   });
 
-  const [isFormValid, setIsFormValid] = useState(false);
   //validation state for each section
   const [sectionValidations, setSectionValidations] = useState({
     personalDetails: { isValid: false, errors: {} },
@@ -41,14 +45,17 @@ const StudentInfoForm = () => {
     contactDetails: { isValid: false, errors: {} },
     studentDetails: { isValid: false, errors: {} },
   });
-  const [isPersonalDetailsComplete, setIsPersonalDetailsComplete] =
-    useState(false);
+
+  const [modalNotification, setModalNotification] = useState(null);
+
+  const baseUrl = useBaseUrl();
+  const { login, setToken } = useAuth();
+  const [isFormValid, setIsFormValid] = useState(false);
+
   useEffect(() => {
-    console.log("🔍 Section Validations:", sectionValidations);
     const allSectionsValid = Object.values(sectionValidations).every(
       (section) => section.isValid
     );
-    console.log("🎯 All sections valid:", allSectionsValid);
     setIsFormValid(allSectionsValid);
   }, [
     sectionValidations.personalDetails.isValid,
@@ -56,21 +63,12 @@ const StudentInfoForm = () => {
     sectionValidations.contactDetails.isValid,
     sectionValidations.studentDetails.isValid,
   ]);
+
   const updateSectionValidation = (sectionName, isValid, errors = {}) => {
     setSectionValidations((prev) => ({
       ...prev,
       [sectionName]: { isValid, errors },
     }));
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!isFormValid) {
-      alert("Please fix all validation errors before submitting");
-      return;
-    }
-    alert("✅ Student form submitted successfully! All validation passed.");
-    console.log("Student form submitted:", formData);
   };
 
   const handleChange = (e) => {
@@ -82,6 +80,67 @@ const StudentInfoForm = () => {
     const { name, files } = e.target;
     if (files && files[0]) {
       setFormData((prev) => ({ ...prev, [name]: files[0] }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //  DEBUG: Add these lines temporarily
+    console.log("=== SUBMIT DEBUG ===");
+    console.log("isFormValid:", isFormValid);
+    console.log("sectionValidations:", sectionValidations);
+    console.log(
+      "All sections:",
+      Object.entries(sectionValidations).map(
+        ([section, data]) => `${section}: ${data.isValid}`
+      )
+    );
+
+    //  Debug the failing sections
+    console.log(
+      "❌ personalDetails errors:",
+      sectionValidations.personalDetails.errors
+    );
+    console.log(
+      "❌ studentDetails errors:",
+      sectionValidations.studentDetails.errors
+    );
+
+    if (!isFormValid) {
+      setModalNotification({
+        type: "warning",
+        message: "Please fix all validation errors before submitting",
+      });
+      return; // Stop execution here if validation fails
+    }
+
+    try {
+      // Submit to API
+      const result = await submitStudentInfo(
+        formData,
+        baseUrl,
+        login,
+        setToken
+      );
+      if (result.success) {
+        setModalNotification({
+          type: "pending",
+          message:
+            "Application Status: PENDING - Your student information is being reviewed. You will be notified once verification is complete.",
+        });
+      } else {
+        setModalNotification({
+          type: "error",
+          message: `Submission failed: ${result.error}`,
+        });
+      }
+    } catch (error) {
+      setModalNotification({
+        type: "error",
+        message:
+          "❌ An unexpected error occurred during submission. Please try again later.",
+      });
+      console.error("Unexpected error:", error);
     }
   };
 
@@ -109,7 +168,7 @@ const StudentInfoForm = () => {
               onValidationChange={(isValid, errors) =>
                 updateSectionValidation("addressDetails", isValid, errors)
               }
-              isPersonalDetailsComplete={isPersonalDetailsComplete} // Add this prop
+              // isPersonalDetailsComplete={isPersonalDetailsComplete}
             />
             <ContactDetailsForm
               formData={formData}
@@ -136,8 +195,20 @@ const StudentInfoForm = () => {
           </div>
         </div>
       </form>
+
+      {modalNotification && (
+        <ModalNotification
+          type={modalNotification.type}
+          message={modalNotification.message}
+          onClose={() => setModalNotification(null)}
+        />
+      )}
     </>
   );
 };
 
 export default StudentInfoForm;
+
+// //why setisPersonalDetailsComplete is not used? :
+// const [isPersonalDetailsComplete, setIsPersonalDetailsComplete] =
+//   useState(false);
