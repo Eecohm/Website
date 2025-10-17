@@ -9,6 +9,7 @@ import { submitOwnerInfo } from "@/hooks/ownerInfoApi";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
+import SelectUserType from "../SelectUserType/SelectUserType";
 
 const OwnerInfoForm = () => {
   const [formData, setFormData] = useState({
@@ -35,6 +36,7 @@ const OwnerInfoForm = () => {
     panPhoto: null,
     userId: "",
     userEmail: "",
+    self: true,
   });
 
   //validation state for each section
@@ -168,6 +170,8 @@ const OwnerInfoForm = () => {
                 updateSectionValidation("documentDetails", isValid, errors)
               }
             />
+
+            <SelectUserType />
           </div>
 
           <div className={styles.buttonContainer}>
