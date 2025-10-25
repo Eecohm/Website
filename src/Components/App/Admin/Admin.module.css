@@ -27,7 +27,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .subtitle {
@@ -54,8 +54,7 @@
   color: white;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.6),
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
   text-decoration: none;
@@ -68,7 +67,7 @@
 }
 
 .card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -85,10 +84,8 @@
 
 .card:hover {
   transform: translateY(-8px);
-  box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.7),
-    0 5px 15px rgba(79, 195, 247, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
+    0 5px 15px rgba(79, 195, 247, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   border-color: #4fc3f7;
 }
 
@@ -104,16 +101,14 @@
   justify-content: center;
   background: linear-gradient(135deg, #4fc3f7 0%, #0288d1 50%, #01579b 100%);
   border-radius: 50%;
-  box-shadow: 
-    0 4px 15px rgba(79, 195, 247, 0.3),
+  box-shadow: 0 4px 15px rgba(79, 195, 247, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.3s ease;
 }
 
 .card:hover .cardIcon {
   transform: scale(1.1);
-  box-shadow: 
-    0 6px 20px rgba(79, 195, 247, 0.5),
+  box-shadow: 0 6px 20px rgba(79, 195, 247, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
@@ -168,11 +163,20 @@
   padding: 2rem;
   background: linear-gradient(145deg, #1b2735, #141e30);
   border-radius: 16px;
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.6),
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   color: white;
   border: 1px solid #2e4a62;
+}
+
+.userManagementOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--your-background-color);
+  z-index: 10;
 }
 
 .centeredCard h2 {
@@ -238,8 +242,7 @@
   max-width: 600px;
   background: linear-gradient(145deg, #1b2735, #141e30);
   border-radius: 16px;
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.6),
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   color: white;
   border: 1px solid #2e4a62;
@@ -252,8 +255,7 @@
   width: 100%;
   max-width: 600px;
   border-radius: 16px;
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.6),
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   color: #ffffff;
   font-family: "Segoe UI", sans-serif;
@@ -318,12 +320,12 @@
     margin-top: 100px;
     padding: 1.5rem;
   }
-  
+
   .cardGrid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.25rem;
   }
-  
+
   .title {
     font-size: 2.2rem;
   }
@@ -334,15 +336,15 @@
     padding: 1rem;
     margin-top: 100px;
   }
-  
+
   .title {
     font-size: 2rem;
   }
-  
+
   .subtitle {
     font-size: 1rem;
   }
-  
+
   .card {
     padding: 1.5rem;
     flex-direction: column;
@@ -350,22 +352,22 @@
     min-height: auto;
     gap: 1rem;
   }
-  
+
   .cardIcon {
     width: 70px;
     height: 70px;
     font-size: 3rem;
   }
-  
+
   .cardGrid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .cardArrow {
     display: none;
   }
-  
+
   .header {
     margin-bottom: 2rem;
   }
@@ -376,29 +378,29 @@
     padding: 0.75rem;
     margin-top: 100px;
   }
-  
+
   .title {
     font-size: 1.8rem;
   }
-  
+
   .card {
     padding: 1.25rem;
   }
-  
+
   .cardIcon {
     width: 60px;
     height: 60px;
     font-size: 2.5rem;
   }
-  
+
   .cardTitle {
     font-size: 1.2rem;
   }
-  
+
   .cardDescription {
     font-size: 0.9rem;
   }
-  
+
   .cardGrid {
     grid-template-columns: 1fr;
     gap: 0.75rem;
@@ -410,33 +412,33 @@
     padding: 0.5rem;
     margin-top: 100px;
   }
-  
+
   .title {
     font-size: 1.6rem;
   }
-  
+
   .subtitle {
     font-size: 0.9rem;
   }
-  
+
   .card {
     padding: 1rem;
   }
-  
+
   .cardIcon {
     width: 50px;
     height: 50px;
     font-size: 2rem;
   }
-  
+
   .cardTitle {
     font-size: 1.1rem;
   }
-  
+
   .cardDescription {
     font-size: 0.85rem;
   }
-  
+
   .header {
     margin-bottom: 1.5rem;
     padding: 0 0.5rem;

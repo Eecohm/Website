@@ -1,0 +1,385 @@
+.container {
+  margin-left: 300px;
+  margin-top: 100px;
+  padding: 2rem;
+  color: #ffffff;
+  height: calc(100vh - 100px);
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #0f2027 0%, #202443 50%, #2c4464 100%);
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+.container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #4fc3f7, #0288d1);
+  border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(145deg, #0288d1, #01579b);
+}
+
+.topSection {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 7rem;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.backButton {
+  background: linear-gradient(145deg, #1b2735, #141e30);
+  border: 1px solid #2e4a62;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+}
+
+.backButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(79, 195, 247, 0.2);
+  border-color: #4fc3f7;
+  background: linear-gradient(145deg, #1f2d3f, #1a2332);
+}
+
+/* Search Section */
+.searchSection {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.searchInput {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(145deg, #1b2735, #141e30);
+  border: 1px solid #2e4a62;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.searchInput::placeholder {
+  color: #8bb1d4;
+  opacity: 0.8;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(145deg, #1f2d3f, #1a2332);
+}
+
+/* Filters Section */
+.filtersSection {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.filterSelect {
+  padding: 0.75rem 1rem;
+  background: linear-gradient(145deg, #0f2027, #1b2735);
+  border: 1px solid #2e4a62;
+  border-radius: 10px;
+  color: #ffffff;
+  min-width: 160px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2),
+    inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.filterSelect option {
+  background: #1b2735;
+  color: #ffffff;
+  padding: 0.5rem;
+}
+.dateFilterWrapper {
+  gap: 0.5rem;
+}
+
+/* User Grid */
+.userGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* User Card - Restructured */
+.userCard {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #1b2735, #141e30);
+  border: 1px solid #2e4a62;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  height: fit-content;
+}
+
+.userCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: #4fc3f7;
+}
+
+/* Card Header - Image and Name at Top */
+.userCardHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #2e4a62;
+}
+
+/* Details Grid - 2 columns */
+.userDetailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.userCard h3 {
+  color: #4fc3f7;
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.userCard p {
+  margin: 0.5rem 0;
+  color: #b0c7e0;
+  font-size: 0.9rem;
+}
+
+.userCard p strong {
+  color: #ffffff;
+}
+
+/* Status Badges */
+/* User Image - Left Side */
+.userImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #4fc3f7;
+  flex-shrink: 0;
+}
+
+.userImagePlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4fc3f7, #0288d1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* User Content - Right Side */
+.userContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 0.5rem;
+}
+
+.userName {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 1rem 0 0 0;
+  text-align: center;
+}
+
+.userDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  border-left: 2px solid #4fc3f7;
+  transition: all 0.2s ease;
+}
+
+.userDetail:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(2px);
+}
+
+.userLabel {
+  color: #8bb1d4;
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.userValue {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+/* Status Badges - Simplified */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+}
+
+/* Empty State */
+.emptyState {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  color: #888888;
+  font-size: 1.1rem;
+}
+
+.emptyState p {
+  margin: 0;
+}
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #8bb1d4;
+}
+
+.emptyState h3 {
+  color: #4fc3f7;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .userGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .container {
+    margin-left: 0; /* Remove left margin on smaller screens */
+    margin-top: 80px; /* Reduce top margin */
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .userGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .filtersSection {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filterSelect {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .container {
+    margin-left: 0;
+    margin-top: 70px;
+    padding: 1rem;
+  }
+
+  .searchSection {
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin-top: 60px;
+    padding: 0.75rem;
+  }
+
+  .userCard {
+    padding: 1.5rem;
+  }
+
+  .backButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}

@@ -9,9 +9,43 @@ import { submitOwnerInfo } from "@/hooks/ownerInfoApi";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
-import SelectUserType from "../SelectUserType/SelectUserType";
 
 const OwnerInfoForm = () => {
+  const [user, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQueary, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    role: "all",
+    verified: "all",
+    kycStatus: "all",
+    active: "all",
+    createdForm: "",
+    createdTo: "",
+  });
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 9, // 3 cards per row, 3 rows per page
+    total: 0,
+  });
+
+  const fetchUsers = async () => {
+    // API call with search and filters
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    // Trigger fetchUsers with new query
+  };
+
+  const handleFiltersChange = (newFilters) => {
+    setFilters(newFilters);
+    // Trigger fetchUsers with new filters
+  };
+
+  const handleUserAction = (userId, action) => {
+    // Handle user actions (activate/deactivate, view details, etc.)
+  };
+
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
