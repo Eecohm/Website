@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   
   const login = (data, rememberMe = false) => {
     setToken(data.access);
+    setVerified(data.verified);
     if (rememberMe) {
       setCookie("accessToken", data.access, 30);
       setCookie("rememberMe", "true", 30);
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       deleteCookie("role");
     }
   };
-  // Logout function
+ 
   const logout = async () => {
     try {
       // Call logout endpoint to blacklist refresh token
@@ -111,6 +112,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         token,
         isLoading,
+        verified,
         login,
         logout,
         isAuthenticated,

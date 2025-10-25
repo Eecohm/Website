@@ -1,7 +1,13 @@
 import { authenticatedFetch } from "@/Context/Auth/authenticatedFetch";
 import { getCookie } from "@/Context/Auth/Cookies";
 
-export const submitOwnerInfo = async (formData, baseUrl, login, setToken) => {
+export const submitOwnerInfo = async (
+  formData,
+  baseUrl,
+  login,
+  setToken,
+  method = "POST" // default to POST
+) => {
   try {
     const userId = getCookie("id");
     const token = getCookie("accessToken");
@@ -15,7 +21,7 @@ export const submitOwnerInfo = async (formData, baseUrl, login, setToken) => {
         submitData.append(key, value);
     };
 
-    // --- Required fields ---
+    // --- Required fields (excluding user for now) ---
     [
       "firstName",
       "lastName",
@@ -45,7 +51,16 @@ export const submitOwnerInfo = async (formData, baseUrl, login, setToken) => {
       appendIfPresent(fileField, formData[fileField])
     );
 
-    // --- Append user ID ---
+    // --- Append user logic based on method ---
+    if (["PUT", "PATCH"].includes(method.toUpperCase())) {
+      // send the user provided in formData
+      appendIfPresent("user", formData.user);
+    } else {
+      // for POST or others, explicitly send user as null
+      submitData.append("user", "");
+    }
+
+    // --- Append userId (for backend reference) ---
     appendIfPresent("userId", userId);
 
     console.log("🟢 Sending Owner Info to backend...");
@@ -57,12 +72,13 @@ export const submitOwnerInfo = async (formData, baseUrl, login, setToken) => {
 
     // --- API Request ---
     const response = await authenticatedFetch(
-      `${baseUrl}/user/owners/${userId}/`,
-      { method: "PUT", body: submitData },
+      `${baseUrl}/user/owners/`,
+      { method, body: submitData },
       baseUrl,
       login,
       setToken
     );
+    
 
     // --- Handle response ---
     const data = await response.json().catch(() => ({}));
