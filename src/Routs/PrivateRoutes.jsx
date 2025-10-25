@@ -13,7 +13,7 @@ import Inventory from "@/Components/App/Inventory/Inventory";
 import Teachers from "@/Components/App/Teachers/Teachers";
 import UserRoutes from "./UsersRoutes/UserRoutes";
 
-const RequireAuth = ({ children }) => {
+const RequireToken = ({ children }) => {
   const { token, isLoading } = useAuth();
 
   const location = useLocation();
@@ -27,14 +27,47 @@ const RequireAuth = ({ children }) => {
   return children;
 };
 
+
+const RequireAuth = ({ children }) => {
+  const { token, isLoading, verified } = useAuth()
+ 
+  const location = useLocation();
+
+  if (isLoading) {
+    return <div>loading......</div>;
+  }
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  if (!verified) {
+    // redirect unverified users to dashboard
+    console.log(verified);
+    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
+
+
+
+
+
 const PrivateRoutes = () => (
   <Routes>
     <Route
+      path="/users/*"
+      element={
+        <RequireToken>
+          <UserRoutes />
+        </RequireToken>
+      }
+    />
+    <Route
       path="/*"
       element={
-        <RequireAuth>
+        <RequireToken>
           <DashBoard />
-        </RequireAuth>
+        </RequireToken>
       }
     />
     <Route
@@ -109,14 +142,7 @@ const PrivateRoutes = () => (
         </RequireAuth>
       }
     />
-    <Route
-      path="/users/*"
-      element={
-        <RequireAuth>
-          <UserRoutes />
-        </RequireAuth>
-      }
-    />
+    
   </Routes>
   
 );

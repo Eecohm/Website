@@ -10,18 +10,18 @@ export const useStatusCheck = (baseUrl, token, onUnverified) => {
 
       try {
         const id = getCookie("id");
-        const response = await axios.get(`${baseUrl}/user/${id}/`, {
+        const response = await axios.get(`${baseUrl}/user/me/`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
-
         const data = response.data;
-
-        if (!data.verified && data.kyc_status === "unverified") {
+        if (!data.verified) {
           // trigger callback to show modal
-          onUnverified(data.role);
+          console.log(data.id);
+          onUnverified(data.role, data.kyc_status, data.id);
+
         }
       } catch (error) {
         console.error("Status check failed:", error);

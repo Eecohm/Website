@@ -12,6 +12,7 @@ import ModalNotification from "@/GlobalComponets/ModalNotification";
 import SelectUserType from "../SelectUserType/SelectUserType";
 
 const OwnerInfoForm = () => {
+  const [EditDetial, SetEditDetial] =useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
@@ -37,9 +38,10 @@ const OwnerInfoForm = () => {
     userId: "",
     userEmail: "",
     self: false,
+    user: null, // ✅ important field for PUT or PATCH
   });
 
-  //validation state for each section
+  // validation state for each section
   const [sectionValidations, setSectionValidations] = useState({
     personalDetails: { isValid: false, errors: {} },
     addressDetails: { isValid: false, errors: {} },
@@ -49,7 +51,7 @@ const OwnerInfoForm = () => {
 
   const [modalNotification, setModalNotification] = useState(null);
 
-  // User type selection state
+  // user type selection state
   const [userTypeSelection, setUserTypeSelection] = useState({
     type: "not-me", // default selection
     subType: "",
@@ -61,11 +63,11 @@ const OwnerInfoForm = () => {
   const { login, setToken } = useAuth();
   const [isFormValid, setIsFormValid] = useState(false);
 
+  // ✅ validate form when sections change
   useEffect(() => {
     const allSectionsValid = Object.values(sectionValidations).every(
       (section) => section.isValid
     );
-
     setIsFormValid(allSectionsValid);
   }, [
     sectionValidations.personalDetails.isValid,
@@ -81,11 +83,13 @@ const OwnerInfoForm = () => {
     }));
   };
 
+  // ✅ handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // ✅ handle file changes
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     if (files && files[0]) {
@@ -93,32 +97,40 @@ const OwnerInfoForm = () => {
     }
   };
 
-  // Handle user type selection changes
+  // ✅ handle user type (if enabled later)
   const handleUserTypeChange = (selection) => {
     console.log("User type selection changed:", selection);
     setUserTypeSelection(selection);
 
-    // Update form data based on selection
     setFormData((prev) => ({
       ...prev,
       self: selection.type === "self",
     }));
   };
 
+  // ✅ handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isFormValid) {
       setModalNotification({
         type: "warning",
-        message: "Please fix all validation errors before submitting",
+        message: "Please fix all validation errors before submitting.",
       });
-      return; // Stop execution here if validation fails
+      return;
     }
 
-    // Submit to API
     try {
-      const result = await submitOwnerInfo(formData, baseUrl, login, setToken);
+      // Auto-select method based on user existence
+      const method = EditDetial ? "PUT" : "POST";
+
+      const result = await submitOwnerInfo(
+        formData,
+        baseUrl,
+        login,
+        setToken,
+        method
+      );
 
       if (result.success) {
         setModalNotification({
@@ -126,15 +138,13 @@ const OwnerInfoForm = () => {
           message:
             "Application Status: PENDING - Your owner information is being reviewed. You will be notified once verification is complete.",
         });
-
-        console.log("Submitted data:", result.data);
+        console.log("✅ Submitted data:", result.data);
       } else {
         setModalNotification({
           type: "error",
           message: `Submission failed: ${result.error}`,
         });
-
-        console.error("Submission error:", result.error);
+        console.error("❌ Submission error:", result.error);
       }
     } catch (error) {
       setModalNotification({
@@ -149,7 +159,7 @@ const OwnerInfoForm = () => {
   return (
     <>
       <NavBar />
-      <form className={styles.mainDiv}>
+      <form className={styles.mainDiv} onSubmit={handleSubmit}>
         <div className={styles.scrollContainer}>
           <div className={styles.header}>
             <h1 className={styles.title}>Owner Information</h1>
@@ -190,6 +200,7 @@ const OwnerInfoForm = () => {
               }
             />
 
+            {/* Optional user selection */}
             {/* <SelectUserType
               onUserTypeChange={handleUserTypeChange}
               currentSelection={userTypeSelection}
@@ -197,13 +208,16 @@ const OwnerInfoForm = () => {
           </div>
 
           <div className={styles.buttonContainer}>
-            <button className={styles.cancelButton}>Cancel</button>
-            <button onClick={handleSubmit} className={styles.submitButton}>
+            <button type="button" className={styles.cancelButton}>
+              Cancel
+            </button>
+            <button type="submit" className={styles.submitButton}>
               Submit
             </button>
           </div>
         </div>
       </form>
+
       {modalNotification && (
         <ModalNotification
           type={modalNotification.type}

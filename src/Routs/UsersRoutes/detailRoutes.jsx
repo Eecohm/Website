@@ -1,0 +1,30 @@
+import { Routes, Route } from "react-router-dom";
+
+// Forms
+import StudentDetail from "@/Components/App/User/InfoModels/Details/Pages/StudentDetail/StudentDetail";
+import OwnerDetail from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/OwnerDetail";
+import TeacherDetail from "@/Components/App/User/InfoModels/Details/Pages/TeacherDetail/TeacherDetail";
+import GuardianDetial from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/GuardianDetail";
+import EmployeeDetail from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/EmployeeDetail";
+
+const UserDetail = () => (
+  <Routes>
+    {/* Routes with optional :id parameter */}
+    <Route path="/student/detail" element={<StudentDetail />} />
+    <Route path="/student/detail/:id" element={<StudentDetail />} />
+    
+    <Route path="/guardian/detail" element={<GuardianDetial />} />
+    <Route path="/guardian/detail/:id" element={<GuardianDetial />} />
+    
+    <Route path="/employee/detail" element={<EmployeeDetail />} />
+    <Route path="/employee/detail/:id" element={<EmployeeDetail />} />
+    
+    <Route path="/owner/detail" element={<OwnerDetail />} />
+    <Route path="/owner/detail/:id" element={<OwnerDetail />} />
+    
+    <Route path="/teacher/detail" element={<TeacherDetail />} />
+    <Route path="/teacher/detail/:id" element={<TeacherDetail />} />
+  </Routes>
+);
+
+export default UserDetail;

@@ -71,14 +71,14 @@ const DocumentDetailsForm = ({
         name="nagariktaPhoto"
         onChange={handleFileChange}
         accept="image/*"
-        required={false}
+        required={true}
       />
       <GlassFileUpload
         label="PAN Photo"
         name="panPhoto"
         onChange={handleFileChange}
         accept="image/*"
-        required={false}
+        required={true}
       />
     </FormSection>
   );

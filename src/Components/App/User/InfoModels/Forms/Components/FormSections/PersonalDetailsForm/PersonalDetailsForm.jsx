@@ -9,7 +9,8 @@ import {
   validateOptionalName,
 } from "@/validators/formInputValidator/TextValidator";
 import { validateDateOfBirth } from "@/validators/formInputValidator/DateValidator";
-import { validatePhoto } from "@/validators/formInputValidator/validatePhoto";
+import { validatePhoto } from "@/validators/formInputValidator/ValidatePhoto";
+
 const PersonalDetailsForm = ({
   formData,
   handleChange,
