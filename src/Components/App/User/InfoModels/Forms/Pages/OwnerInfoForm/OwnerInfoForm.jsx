@@ -36,7 +36,7 @@ const OwnerInfoForm = () => {
     panPhoto: null,
     userId: "",
     userEmail: "",
-    self: true,
+    self: false,
   });
 
   //validation state for each section
@@ -48,6 +48,13 @@ const OwnerInfoForm = () => {
   });
 
   const [modalNotification, setModalNotification] = useState(null);
+
+  // User type selection state
+  const [userTypeSelection, setUserTypeSelection] = useState({
+    type: "not-me", // default selection
+    subType: "",
+    selectedPerson: null,
+  });
 
   // API context hooks
   const baseUrl = useBaseUrl();
@@ -84,6 +91,18 @@ const OwnerInfoForm = () => {
     if (files && files[0]) {
       setFormData((prev) => ({ ...prev, [name]: files[0] }));
     }
+  };
+
+  // Handle user type selection changes
+  const handleUserTypeChange = (selection) => {
+    console.log("User type selection changed:", selection);
+    setUserTypeSelection(selection);
+
+    // Update form data based on selection
+    setFormData((prev) => ({
+      ...prev,
+      self: selection.type === "self",
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -171,7 +190,10 @@ const OwnerInfoForm = () => {
               }
             />
 
-            <SelectUserType />
+            {/* <SelectUserType
+              onUserTypeChange={handleUserTypeChange}
+              currentSelection={userTypeSelection}
+            /> */}
           </div>
 
           <div className={styles.buttonContainer}>

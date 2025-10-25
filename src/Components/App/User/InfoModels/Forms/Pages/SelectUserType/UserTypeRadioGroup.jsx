@@ -22,7 +22,7 @@ const UserTypeRadioGroup = ({
       <h3>Who is submitting this form?</h3>
 
       {/* Option 1: Self */}
-      {/* <label className={styles.radioOption}>
+      <label className={styles.radioOption}>
         <input
           type="radio"
           name="userType"
@@ -36,7 +36,7 @@ const UserTypeRadioGroup = ({
             I am submitting for myself
           </span>
         </div>
-      </label> */}
+      </label>
 
       {/* Option 2: Not Me */}
       <label className={styles.radioOption}>
