@@ -78,6 +78,9 @@ export const validateRequiredWard = (value) => {
   return validateRequiredWardNo(value, true);
 };
 
+// //for integer validation
+// export const
+
 //for phone number validation
 export const validatePhoneNumber = (value, isRequired = false) => {
   // Check if field is required and empty

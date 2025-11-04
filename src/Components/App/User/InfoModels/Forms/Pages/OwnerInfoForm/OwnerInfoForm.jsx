@@ -37,7 +37,7 @@ const OwnerInfoForm = () => {
     userId: "",
     userEmail: "",
     self: false,
-    user: null, // ✅ important field for PUT or PATCH
+    user: null,
   });
 
   // validation state for each section
@@ -110,6 +110,11 @@ const OwnerInfoForm = () => {
   // ✅ handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 🔧 DEBUG: Log all section validations
+    console.log("🔍 All section validations:", sectionValidations);
+    console.log("🔍 Form data:", formData);
+    console.log("🔍 isFormValid:", isFormValid);
 
     if (!isFormValid) {
       setModalNotification({

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +9,29 @@
 a {
   text-decoration: none;
 }
-body{
-  background-color: black
+:root {
+  --dashboard-gradient: linear-gradient(
+    135deg,
+    #0f1527 0%,
+    #202443 50%,
+    #2c4464 100%
+  );
+}
+
+body {
+  background: var(--dashboard-gradient);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Prevent accidental horizontal scroll from elements using 100vw or fixed widths
+   Some components use 100vw which can cause a horizontal scrollbar when the
+   vertical scrollbar is present. Hiding horizontal overflow prevents the
+   unwanted scrollbar while keeping vertical scrolling intact. If a component
+   needs horizontal scrolling intentionally, it should set overflow-x itself. */
+html,
+body,
+#root {
+  overflow-x: hidden;
 }

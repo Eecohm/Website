@@ -1,0 +1,112 @@
+// src/hooks/EmployeeApi/employeeInfoApi.js
+import { authenticatedFetch } from "@/Context/Auth/authenticatedFetch";
+import { getCookie } from "@/Context/Auth/Cookies";
+
+/**
+ * submitEmployeeInfo
+ * - formDataObj: plain JS object representing your form state (the same object used in EmployeeInfoForm)
+ * - baseUrl: base URL from your BaseUrlContext
+ * - login, setToken: auth helpers from useAuth() (passed through so authenticatedFetch can refresh tokens)
+ * - method: 'POST' (create) or 'PUT'/'PATCH' (update)
+ */
+export const submitEmployeeInfo = async (
+  formDataObj,
+  baseUrl,
+  login,
+  setToken,
+  method = "POST"
+) => {
+  try {
+    // If you previously used cookie id for owner, we intentionally do NOT attach that here.
+    const cookieUserId = getCookie("id"); // optional, only used if you want to send an id for PUT
+    const token = getCookie("accessToken");
+
+    const submitData = new FormData();
+
+    // helper to append only meaningful values
+    const appendIfPresent = (key, value) => {
+      if (value !== undefined && value !== null && value !== "") {
+        submitData.append(key, value);
+      }
+    };
+
+    // Append scalar text fields
+    [
+      "firstName",
+      "middleName",
+      "lastName",
+      "dateOfBirth",
+      "gender",
+      "country",
+      "province",
+      "municipality",
+      "ward",
+      "tole",
+      "pinPoint",
+      "tellPhone",
+      "phone",
+      "alternatePhone",
+      "contactPerson",
+      "nagariktaNo",
+      "panNo",
+      "academicQualification",
+    ].forEach((key) => appendIfPresent(key, formDataObj[key]));
+
+    // --- File fields ---
+    [
+      "photo",
+      "nagariktaPhoto",
+      "panPhoto",
+      "jobApplication",
+      "hiringLetter",
+      "resumeCv",
+    ].forEach((fileKey) => {
+      if (formDataObj[fileKey]) {
+        submitData.append(fileKey, formDataObj[fileKey]);
+      }
+    });
+
+    // --- user / userId handling: follow Owner pattern ---
+    if (["PUT", "PATCH"].includes(method.toUpperCase())) {
+      // updates: allow provided user to be sent
+      appendIfPresent("user", formDataObj.user);
+      appendIfPresent("userId", formDataObj.userId || cookieUserId);
+    } else {
+      // create: explicitly send empty user (owner used submitData.append("user", ""))
+      submitData.append("user", "");
+      // send empty userId so backend knows no id provided; or omit if backend prefers absence
+      submitData.append("userId", "");
+      // We intentionally send an empty userEmail to indicate "disabled" — adjust if backend prefers omission
+      submitData.append("userEmail", "");
+    }
+
+    // debug print
+    console.log("🟢 Employee submission FormData:");
+    for (const [k, v] of submitData.entries()) {
+      console.log(k, v);
+    }
+    console.log("Auth token present:", !!token, "cookieUserId:", cookieUserId);
+
+    // call API (adjust URL path if your backend differs)
+    const endpoint = `${baseUrl}/user/employees/`;
+    const response = await authenticatedFetch(
+      endpoint,
+      { method, body: submitData },
+      baseUrl,
+      login,
+      setToken
+    );
+
+    const data = await response.json().catch(() => ({}));
+    if (response.ok) return { success: true, data };
+    return {
+      success: false,
+      error: data.message || `HTTP ${response.status}: ${response.statusText}`,
+      status: response.status,
+      data,
+    };
+  } catch (err) {
+    console.error("Employee submission error:", err);
+    return { success: false, error: err.message || "Network error" };
+  }
+};

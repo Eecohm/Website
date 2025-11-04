@@ -52,31 +52,54 @@ const ContactDetailsForm = ({ formData, handleChange, onValidationChange }) => {
         label="Telephone"
         name="tellPhone"
         value={formData.tellPhone}
-        onChange={handleChange}
+        onChange={(e) => {
+          // Ensure only digits and limit to 10 characters
+          const raw = e.target.value || "";
+          const clean = raw.replace(/\D/g, "").slice(0, 10);
+          // Normalize event shape expected by parent handler
+          handleChange({ target: { name: e.target.name, value: clean } });
+        }}
         required={false}
         placeholder="Telephone (Optional)"
         validate={validateOptionalTelephone}
         onValidate={handleFieldValidation}
+        type="tel"
+        inputMode="numeric"
+        maxLength={10}
       />
       <GlassInput
         label="Mobile Phone"
         name="phone"
         value={formData.phone}
-        onChange={handleChange}
+        onChange={(e) => {
+          const raw = e.target.value || "";
+          const clean = raw.replace(/\D/g, "").slice(0, 10);
+          handleChange({ target: { name: e.target.name, value: clean } });
+        }}
         required={true}
         placeholder="Mobile"
         validate={validateRequiredPhone}
         onValidate={handleFieldValidation}
+        type="tel"
+        inputMode="numeric"
+        maxLength={10}
       />
       <GlassInput
         label="Alternate Phone"
         name="alternatePhone"
         value={formData.alternatePhone}
-        onChange={handleChange}
+        onChange={(e) => {
+          const raw = e.target.value || "";
+          const clean = raw.replace(/\D/g, "").slice(0, 10);
+          handleChange({ target: { name: e.target.name, value: clean } });
+        }}
         required={false}
         placeholder="Alternate (Optional)"
         validate={validateOptionalPhone}
         onValidate={handleFieldValidation}
+        type="tel"
+        inputMode="numeric"
+        maxLength={10}
       />
       <GlassInput
         label="Website"

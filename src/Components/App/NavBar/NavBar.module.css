@@ -6,16 +6,32 @@
     sans-serif;
 } */
 
+:root {
+  --dashboard-gradient: linear-gradient(
+    135deg,
+    #0f1527 0%,
+    #202443 50%,
+    #2c4464 100%
+  );
+  --sidebar-width: 280px; /* default sidebar width used across layout */
+}
+
 html,
 body {
   height: 100%;
-  overflow: hidden; /* disable page scrollbar */
-  background: #0f172a; /* fallback so no black gaps */
+  /* Allow vertical scrolling on the page; avoid disabling scroll globally */
+  overflow-y: auto;
+  /* Match dashboard background so left column blends when sidebar is hidden */
+  background: var(--dashboard-gradient);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 #root {
   height: 100%;
-  overflow: hidden; /* keeps React app constrained */
+  /* Allow root to scroll vertically so pages like Home can scroll */
+  overflow-y: auto;
 }
 
 .mainNavDiv {
@@ -32,10 +48,19 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 280px; /* keep your sidebar width */
+  width: var(--sidebar-width); /* keep your sidebar width consistent */
+  transform: translateX(-100%);
   min-height: 100vh;
   overflow-y: auto; /* allow scroll if items exceed screen */
-  background: #1e293b;
+  background: var(--dashboard-gradient);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-right: none; /* remove the visible border line */
+  box-shadow: none; /* remove shadow edge to avoid seam */
+  /* Smooth transform for slide-in/out and optimize for GPU */
+  transition: transform 320ms cubic-bezier(0.2, 0, 0, 1), opacity 220ms ease;
+  will-change: transform, opacity;
 }
 
 /* Make sure navItems don’t get cut off */
@@ -55,11 +80,27 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1150;
+  /* Use same gradient as dashboard so the left strip blends visually */
+  background: transparent;
   display: none;
-}
 
+  opacity: 1; /* remove extra dimming so the gradient shows */
+  pointer-events: auto; /* keep click-to-close */
+  transition: background 0.3s ease;
+}
+.backdrop::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--dashboard-gradient);
+  z-index: 1149; /* just below the actual sidebar z-index so it sits visually behind it */
+  /* Smooth any potential visual changes and hint to the browser */
+  transition: transform 320ms cubic-bezier(0.2, 0, 0, 1), opacity 220ms ease;
+  will-change: transform, opacity;
+}
 /* Modal Styling */
 .modalOverlay {
   position: fixed;
@@ -160,7 +201,7 @@ body {
 .topBar {
   position: fixed;
   top: 0;
-  left: 280px;
+  left: var(--sidebar-width);
   right: 0;
   height: 100px;
   background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
@@ -364,17 +405,19 @@ body {
   left: 0;
   height: 100vh;
   width: 280px;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
+  background: var(--dashboard-gradient);
   color: #f9fafb;
   display: flex;
   flex-direction: column;
   padding: 32px 0;
-  box-shadow: 4px 0 15px -3px rgba(0, 0, 0, 0.3),
-    2px 0 6px -1px rgba(0, 0, 0, 0.2);
-  border-right: 1px solid rgba(75, 85, 99, 0.2);
+  box-shadow: none; /* remove shadow to avoid seam */
+  border-right: none; /* remove border to avoid visible divider */
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1200;
   backdrop-filter: blur(20px);
+}
+.navBar.open {
+  transform: translateX(0);
 }
 
 .navBarHeader {
@@ -387,8 +430,8 @@ body {
 }
 
 .navBarLogo {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   background: linear-gradient(135deg, #ffffff 0%, #c2c2c2 100%);
   border-radius: 24px;
   object-fit: contain;
@@ -498,7 +541,9 @@ body {
 }
 
 .navBarToggle {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 12px;
@@ -517,11 +562,20 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .dashboard {
+    margin-left: 0; /* remove left offset when sidebar is off-canvas */
+    width: 100vw; /* use full viewport width */
+    margin-top: 100px; /* leave space for the fixed topBar (topBar height = 100px) */
+    padding: 20px; /* small inner padding for breathing room */
+  }
   .topBar {
     left: 0;
-    padding: 0 20px;
+    padding: 0 16px;
+    height: 88px;
   }
-
+  .schoolName {
+    font-size: 1.4rem;
+  }
   .topBarInfo {
     gap: 16px;
   }
@@ -543,6 +597,16 @@ body {
   }
   .navItems {
     display: flex !important;
+  }
+  .leftAccent {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 60px; /* narrow stripe so it doesn't interfere with layout */
+    height: 100vh;
+    background: var(--dashboard-gradient);
+    z-index: 1150; /* behind your backdrop but above body */
+    pointer-events: none; /* allow clicks to pass through */
   }
 }
 
@@ -740,13 +804,17 @@ body {
 
 /* Large screens */
 @media (min-width: 1440px) {
+  :root {
+    --sidebar-width: 300px;
+  }
+
   .topBar {
-    left: 300px;
+    left: var(--sidebar-width);
     padding: 0 40px;
   }
 
   .navBar {
-    width: 300px;
+    width: var(--sidebar-width);
   }
 
   .navBarHeader {
@@ -822,5 +890,16 @@ body {
   .navBarLogo,
   .topBarLogo {
     transition: none;
+  }
+}
+
+/*
+  Hide the "EECOHM Foundation" text (.
+  schoolName) only when viewport width is between 771px and 883px
+  AND viewport height is between 718px and 728px.
+*/
+@media (min-width: 771px) and (max-width: 883px) and (min-height: 718px) and (max-height: 728px) {
+  .schoolName {
+    display: none !important;
   }
 }

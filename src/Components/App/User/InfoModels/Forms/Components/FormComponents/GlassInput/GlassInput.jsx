@@ -13,6 +13,8 @@ const GlassInput = ({
   validate,
   onValidate,
   error: externalError,
+  // any additional props (e.g., maxLength, inputMode, pattern, onKeyDown)
+  ...rest
 }) => {
   // const [error, setError] = useState("");
   const hasInitialValidated = useRef(false);
@@ -38,11 +40,9 @@ const GlassInput = ({
     }
   };
 
-  // Initial validation only once when component mounts
+  // Initial validation and re-validate when value changes
   useEffect(() => {
-    if (onValidate && !hasInitialValidated.current) {
-      hasInitialValidated.current = true;
-
+    if (onValidate) {
       // Use setTimeout to defer validation until after render is complete
       setTimeout(() => {
         if (validate) {
@@ -57,6 +57,9 @@ const GlassInput = ({
         } else {
           if (required) {
             const isValid = value && value.trim() !== "";
+            console.log(
+              `🔧 GlassInput ${name} - value: "${value}", isValid: ${isValid}`
+            );
             onValidate(name, isValid);
           } else {
             onValidate(name, true);
@@ -64,7 +67,7 @@ const GlassInput = ({
         }
       }, 0);
     }
-  }, []);
+  }, [value, required, name]); // Re-run when value changes
 
   return (
     <div className={styles.inputContainer}>
@@ -85,6 +88,7 @@ const GlassInput = ({
         disabled={disabled}
         className={`${styles.input} ${displayError ? styles.inputError : ""}`}
         required={required}
+        {...rest}
       />
 
       {displayError && <span className={styles.errorText}>{displayError}</span>}

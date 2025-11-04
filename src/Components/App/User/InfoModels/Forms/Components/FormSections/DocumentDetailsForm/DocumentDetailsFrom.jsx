@@ -3,8 +3,7 @@ import { FileText } from "lucide-react";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
 import GlassFileUpload from "../../FormComponents/GlassFileUpload/GlassFileUpload";
-import { validateRequiredPAN } from "@/validators/formInputValidator/TextValidator";
-import { validateRequiredNagarikta } from "@/validators/formInputValidator/CitizenshipValidator";
+import { validatePhoto } from "@/validators/formInputValidator/ValidatePhoto";
 const DocumentDetailsForm = ({
   formData,
   handleChange,
@@ -14,16 +13,38 @@ const DocumentDetailsForm = ({
   const [validFields, setValidFields] = useState(new Set());
 
   const handleFieldValidation = (fieldName, isValid) => {
+    console.log(
+      `🔧 DocumentDetails - Field: ${fieldName}, isValid: ${isValid}`
+    );
+
     setValidFields((prev) => {
       const updated = new Set(prev);
       if (isValid) {
         updated.add(fieldName);
+        console.log(`✅ Added ${fieldName} to validFields`);
       } else {
         updated.delete(fieldName);
+        console.log(`❌ Removed ${fieldName} from validFields`);
       }
 
-      const requiredFields = ["nagariktaNo", "panNo"];
+      console.log(`🔍 Current validFields:`, Array.from(updated));
+
+      const requiredFields = [
+        "nagariktaNo",
+        "panNo",
+        "nagariktaPhoto",
+        "panPhoto",
+      ];
       const allValid = requiredFields.every((field) => updated.has(field));
+
+      console.log(
+        `🔍 Required fields check:`,
+        requiredFields.map((field) => ({
+          field,
+          hasField: updated.has(field),
+          value: formData[field],
+        }))
+      );
 
       if (onValidationChange) {
         setTimeout(() => {
@@ -53,7 +74,7 @@ const DocumentDetailsForm = ({
         onChange={handleChange}
         required={true}
         placeholder="Citizenship No."
-        validate={validateRequiredNagarikta}
+        // validate={validateRequiredNagarikta}
         onValidate={handleFieldValidation}
       />
       <GlassInput
@@ -63,7 +84,7 @@ const DocumentDetailsForm = ({
         onChange={handleChange}
         required={true}
         placeholder="PAN No."
-        validate={validateRequiredPAN}
+        // validate={validateRequiredPAN}
         onValidate={handleFieldValidation}
       />
       <GlassFileUpload
@@ -72,6 +93,8 @@ const DocumentDetailsForm = ({
         onChange={handleFileChange}
         accept="image/*"
         required={true}
+        validate={validatePhoto}
+        onValidate={handleFieldValidation}
       />
       <GlassFileUpload
         label="PAN Photo"
@@ -79,6 +102,8 @@ const DocumentDetailsForm = ({
         onChange={handleFileChange}
         accept="image/*"
         required={true}
+        validate={validatePhoto}
+        onValidate={handleFieldValidation}
       />
     </FormSection>
   );

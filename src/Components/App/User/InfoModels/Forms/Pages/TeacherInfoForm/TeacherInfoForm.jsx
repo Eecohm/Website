@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "@/Components/App/NavBar/NavBar";
 import PersonalDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/PersonalDetailsForm/PersonalDetailsForm";
 import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Components//FormSections/AddressDetailsForm/AddressDetailsForm";
@@ -6,6 +6,8 @@ import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Component
 import DocumentDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/DocumentDetailsForm/DocumentDetailsFrom";
 import TeacherSpecificForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/TeacherSpecificForm/TeacherSpecificForm";
 import styles from "./TeacherInfoForm.module.css";
+import { useAuth } from "@/Context/AuthContext";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
 
 const TeacherInfoForm = () => {
   const [formData, setFormData] = useState({
@@ -42,6 +44,42 @@ const TeacherInfoForm = () => {
     skillCertifications: null,
   });
 
+  const [modalNotification, setModalNotification] = useState(null);
+  const [EditDetail, SetEditDetail] = useState(false);
+
+  const [sectionValidations, setSectionValidations] = useState({
+    personalDetails: { isValid: false, error: {} },
+    addressDetails: { isValid: false, error: {} },
+    contactDetails: { isValid: false, error: {} },
+    documentDetails: { isValid: false, error: {} },
+    teacherDetails: { isValid: false, error: {} },
+  });
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // const {isSubmitting, submitForm} = {};
+  // const baseUrl = useBaseUrl();
+  // const {login, setToken} = useAuth();
+
+  useEffect(() => {
+    const allSectionValid = Object.values(sectionValidations).every(
+      (section) => section.isValid
+    );
+    setIsFormValid(allSectionValid);
+  }, [
+    sectionValidations.personalDetails.isValid,
+    sectionValidations.addressDetails.isValid,
+    sectionValidations.contactDetails.isValid,
+    sectionValidations.documentDetails.isValid,
+    sectionValidations.teacherDetails.isValid,
+  ]);
+
+  const updateSectionValidation = (sectionName, isValid, errors = {}) => {
+    setSectionValidations((prev) => ({
+      ...prev,
+      [sectionName]: { isValid, errors },
+    }));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -55,7 +93,18 @@ const TeacherInfoForm = () => {
   };
 
   const handleSubmit = () => {
-    console.log("Teacher form submitted:", formData);
+    e.preventDefault();
+
+    if (!isFormValid) {
+      setModalNotification({
+        type: "error",
+        message:
+          "Please fill all required fields correctly before submitting the form.",
+      });
+      return;
+    }
+
+    
   };
 
   return (

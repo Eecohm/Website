@@ -21,11 +21,9 @@ const GlassSelect = ({
     }
   };
 
-  // Initial validation only once when component mounts
+  // Initial validation and re-validate when value changes
   useEffect(() => {
-    if (onValidate && !hasInitialValidated.current) {
-      hasInitialValidated.current = true;
-
+    if (onValidate) {
       // Use setTimeout to defer validation until after render is complete
       setTimeout(() => {
         if (required) {
@@ -37,7 +35,7 @@ const GlassSelect = ({
         }
       }, 0);
     }
-  }, []); // Empty dependency array to run only once
+  }, [value, required, name]); // Re-run when value changes
   return (
     <div className={styles.selectContainer}>
       <label className={styles.label}>

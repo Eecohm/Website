@@ -76,7 +76,6 @@ const GlassFileUpload = ({
     }
   }, [name, required]);
 
-  // ADD THIS NEW useEffect RIGHT HERE:
   useEffect(() => {
     console.log("🔧 Error state changed to:", error);
   }, [error]);

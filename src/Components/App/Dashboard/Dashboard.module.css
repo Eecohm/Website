@@ -1,10 +1,13 @@
 /* Dashboard container */
 .dashboard {
-  background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
+  background: var(--dashboard-gradient);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   margin-top: 10vh;
-  margin-left: 15vw;
+  margin-left: var(--sidebar-width, 280px);
   height: 90vh;
-  width: 85vw;
+  width: calc(100vw - var(--sidebar-width, 280px));
   display: flex;
   flex-direction: column; /* Better for stacking content */
   justify-content: center;
@@ -260,6 +263,15 @@
 }
 
 /* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard {
+    margin-left: 0;
+    width: 100vw;
+    margin-top: 88px; /* account for topBar height at this breakpoint */
+    padding: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard {
     margin-left: 0;
