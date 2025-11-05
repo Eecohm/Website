@@ -103,8 +103,6 @@ const TeacherInfoForm = () => {
       });
       return;
     }
-
-    
   };
 
   return (

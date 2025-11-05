@@ -62,7 +62,9 @@ const DashBoard = () => {
 
     if (pendingStatus === "pending" || pendingStatus === "rejected") {
       // Navigate to detail page with user ID
-      navigate(`/dashboard/users/detail/${pendingRole}/detail?id=${pendingUserId}`);
+      navigate(
+        `/dashboard/users/detail/${pendingRole}/detail?id=${pendingUserId}`
+      );
     }
   };
 

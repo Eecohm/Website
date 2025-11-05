@@ -27,10 +27,9 @@ const RequireToken = ({ children }) => {
   return children;
 };
 
-
 const RequireAuth = ({ children }) => {
-  const { token, isLoading, verified } = useAuth()
- 
+  const { token, isLoading, verified } = useAuth();
+
   const location = useLocation();
 
   if (isLoading) {
@@ -47,10 +46,6 @@ const RequireAuth = ({ children }) => {
 
   return children;
 };
-
-
-
-
 
 const PrivateRoutes = () => (
   <Routes>
@@ -142,9 +137,7 @@ const PrivateRoutes = () => (
         </RequireAuth>
       }
     />
-    
   </Routes>
-  
 );
 
 export default PrivateRoutes;

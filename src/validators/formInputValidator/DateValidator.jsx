@@ -25,8 +25,8 @@ export const validateDateOfBirth = (dateString) => {
     return "Person must be at least 2 years old";
   }
 
-  // Check if person is not too old (more than 120 years old)
-  const maxAge = 120;
+  // Check if person is not too old (more than 100 years old)
+  const maxAge = 100;
   const minDate = new Date();
   minDate.setFullYear(today.getFullYear() - maxAge);
 

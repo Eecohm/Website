@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import emailjs from '@emailjs/browser';
-import styles from './ContactUs.module.css';
+import React, { useState } from "react";
+import emailjs from "@emailjs/browser";
+import styles from "./ContactUs.module.css";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
@@ -19,14 +19,14 @@ const ContactForm = () => {
     e.preventDefault();
 
     // EmailJS configuration
-    const serviceID = 'service_qwyckzi';
-    const templateID = 'template_4d0m0c6'; // Notification template
-    const autoReplyTemplateID = 'template_7rl59tg'; // Auto-reply template
-    const publicKey = 'E7PBW2JJQEYniKIBZ';
+    const serviceID = "service_qwyckzi";
+    const templateID = "template_4d0m0c6"; // Notification template
+    const autoReplyTemplateID = "template_7rl59tg"; // Auto-reply template
+    const publicKey = "E7PBW2JJQEYniKIBZ";
 
     // Validate email field
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
-      setError('Please enter a valid email address.');
+      setError("Please enter a valid email address.");
       setTimeout(() => setError(null), 3000);
       return;
     }
@@ -35,7 +35,7 @@ const ContactForm = () => {
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
-      to_email: 'eecohmplustwo@gmail.com',
+      to_email: "eecohmplustwo@gmail.com",
       message: formData.message,
     };
 
@@ -43,29 +43,43 @@ const ContactForm = () => {
     const autoReplyParams = {
       to_name: formData.name,
       to_email: formData.email,
-      reply_subject: 'Thank you for contacting us',
+      reply_subject: "Thank you for contacting us",
     };
 
     // Log params for debugging
-    console.log('Notification Params:', templateParams);
-    console.log('Auto-Reply Params:', autoReplyParams);
+    console.log("Notification Params:", templateParams);
+    console.log("Auto-Reply Params:", autoReplyParams);
 
     // Send the notification email first
-    emailjs.send(serviceID, templateID, templateParams, publicKey)
+    emailjs
+      .send(serviceID, templateID, templateParams, publicKey)
       .then((response) => {
-        console.log('Notification email sent successfully!', response.status, response.text);
+        console.log(
+          "Notification email sent successfully!",
+          response.status,
+          response.text
+        );
         // Then send the auto-reply
-        return emailjs.send(serviceID, autoReplyTemplateID, autoReplyParams, publicKey);
+        return emailjs.send(
+          serviceID,
+          autoReplyTemplateID,
+          autoReplyParams,
+          publicKey
+        );
       })
       .then((response) => {
-        console.log('Auto-reply email sent successfully!', response.status, response.text);
+        console.log(
+          "Auto-reply email sent successfully!",
+          response.status,
+          response.text
+        );
         setSubmitted(true);
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: "", email: "", message: "" });
         setTimeout(() => setSubmitted(false), 3000);
       })
       .catch((err) => {
-        console.error('Failed to send email:', err);
-        setError(`Failed to send your message: ${err.text || 'Unknown error'}`);
+        console.error("Failed to send email:", err);
+        setError(`Failed to send your message: ${err.text || "Unknown error"}`);
         setTimeout(() => setError(null), 3000);
       });
   };
@@ -73,7 +87,10 @@ const ContactForm = () => {
   return (
     <div className={styles.contactFormContainer}>
       {submitted ? (
-        <p className={styles.formSuccess}>Thank you! We've sent you a confirmation email and we'll get back to you soon.</p>
+        <p className={styles.formSuccess}>
+          Thank you! We've sent you a confirmation email and we'll get back to
+          you soon.
+        </p>
       ) : error ? (
         <p className={styles.formError}>{error}</p>
       ) : (

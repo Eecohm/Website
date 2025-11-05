@@ -1,235 +1,42 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../../../Context/AuthContext";
+import React from "react";
 import ModalNotification from "../../../GlobalComponets/ModalNotification";
+import useOrganizationForm from "./useOrganizationForm";
 import {
-  isValidPhone,
-  isValidTelephone,
-} from "../../../validators/formInputValidator/ContactValidator";
-import {
-  isOnlyAlphabets,
-  isValidString,
-} from "../../../validators/formInputValidator/TextValidator";
-import {
-  isJPGFile,
-  isPNGFile,
-  isFileBelow3MB,
-} from "../../../validators/formInputValidator/FileTypeValidator";
-import { ArrowLeft, Building, Phone, FileText, Upload, Check, ChevronRight } from "lucide-react";
+  ArrowLeft,
+  Building,
+  Phone,
+  FileText,
+  Upload,
+  Check,
+  ChevronRight,
+} from "lucide-react";
 import styles from "./styles/OrganizationForm.module.css";
 
 const OrganizationForm = () => {
-  const token = useAuth();
-  const baseUrl = useBaseUrl();
-  const navigate = useNavigate();
-
-  const [currentStep, setCurrentStep] = useState(0);
-  
-  const [formData, setFormData] = useState({
-    orgName: "",
-    orgAddress: "",
-    telPhoneNo: "",
-    phoneNo: "",
-    emailAddress: "",
-    logoUrl: null,
-    panNumber: "",
-    vatNumber: "",
-    panImage: null,
-    registrationImage: null,
-    vatImage: null,
-  });
-
-  const [imageErrors, setImageErrors] = useState({
-    logoUrl: "",
-    panImage: "",
-    registrationImage: "",
-    vatImage: "",
-  });
-
-  const [previewImages, setPreviewImages] = useState({
-    logoUrl: null,
-    panImage: null,
-    registrationImage: null,
-    vatImage: null,
-  });
-
-  const [fieldTouched, setFieldTouched] = useState({});
-  const [fieldValid, setFieldValid] = useState({
-    orgName: true,
-    orgAddress: true,
-    telPhoneNo: true,
-    phoneNo: true,
-  });
-
-  const [showNotification, setShowNotification] = useState(false);
-  const [notificationConfig, setNotificationConfig] = useState({
-    type: "info",
-    message: "",
-    autoClose: true,
-    duration: 3000,
-  });
+  const {
+    currentStep,
+    formData,
+    imageErrors,
+    previewImages,
+    fieldTouched,
+    fieldValid,
+    showNotification,
+    notificationConfig,
+    handleChange,
+    handleImageChange,
+    handleCancel,
+    handleSubmit,
+    handleNotificationClose,
+    nextStep,
+    prevStep,
+  } = useOrganizationForm();
 
   const steps = [
     { title: "Basic Info", icon: Building },
     { title: "Contact", icon: Phone },
     { title: "Legal Details", icon: FileText },
-    { title: "Documents", icon: Upload }
+    { title: "Documents", icon: Upload },
   ];
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    setFieldTouched((prev) => ({ ...prev, [name]: true }));
-
-    const trimmed = value.trim();
-    let valid = true;
-    switch (name) {
-      case "orgName":
-        valid = trimmed.length === 0 || isOnlyAlphabets(trimmed);
-        break;
-      case "orgAddress":
-        valid = trimmed.length === 0 || isValidString(trimmed);
-        break;
-      case "telPhoneNo":
-        valid = trimmed.length === 0 || isValidTelephone(trimmed);
-        break;
-      case "phoneNo":
-        valid = trimmed.length === 0 || isValidPhone(trimmed);
-        break;
-      default:
-        valid = true;
-    }
-    setFieldValid((prev) => ({ ...prev, [name]: valid }));
-  };
-
-  const handleImageChange = (e) => {
-    const { name, files } = e.target;
-    const file = files[0];
-    if (!file) return;
-
-    let validType = true;
-    if (name === "logoUrl") {
-      validType = isPNGFile(file);
-    } else {
-      validType = isJPGFile(file) || isPNGFile(file);
-    }
-
-    const validSize = isFileBelow3MB(file);
-
-    let error = "";
-    if (!validType) {
-      error = name === "logoUrl"
-        ? "Only PNG files allowed for Logo."
-        : "Only JPG, JPEG, or PNG files allowed.";
-    } else if (!validSize) {
-      error = "File must be below 3MB.";
-    }
-
-    setImageErrors((prev) => ({ ...prev, [name]: error }));
-    if (error) return;
-
-    setFormData((prev) => ({ ...prev, [name]: file }));
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewImages((prev) => ({ ...prev, [name]: reader.result }));
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleCancel = () => {
-    navigate("/dashboard/profile");
-  };
-
-  const validateAll = () => {
-    const validations = {
-      orgName: isOnlyAlphabets(formData.orgName.trim()),
-      orgAddress: isValidString(formData.orgAddress.trim()),
-      telPhoneNo: isValidTelephone(formData.telPhoneNo.trim()),
-      phoneNo: isValidPhone(formData.phoneNo.trim()),
-    };
-    setFieldValid(validations);
-
-    const imageValidation = {
-      logoUrl: formData.logoUrl !== null && imageErrors.logoUrl === "",
-      panImage: formData.panImage !== null && imageErrors.panImage === "",
-      registrationImage:
-        formData.registrationImage !== null && imageErrors.registrationImage === "",
-    };
-
-    const allValid =
-      Object.values(validations).every(Boolean) &&
-      Object.values(imageValidation).every(Boolean);
-
-    return allValid;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const allValid = validateAll();
-    if (!allValid) {
-      setNotificationConfig({
-        type: "error",
-        message: "Please correct the errors before submitting.",
-        autoClose: false,
-      });
-      setShowNotification(true);
-      return;
-    }
-
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key === "vatImage" || value) {
-        data.append(key, typeof value === "string" ? value.trim() : value);
-      }
-    });
-
-    try {
-      await axios.post(`${baseUrl}/org/orgs/`, data, {
-        headers: {
-          Authorization: `Bearer ${token.token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setNotificationConfig({
-        type: "success",
-        message: "Organization created successfully!",
-        autoClose: true,
-        duration: 3000,
-      });
-      setShowNotification(true);
-    } catch (error) {
-      setNotificationConfig({
-        type: "error",
-        message: "Failed to create organization. Please try again.",
-        autoClose: false,
-      });
-      setShowNotification(true);
-      console.error("Upload error:", error);
-    }
-  };
-
-  const handleNotificationClose = () => {
-    setShowNotification(false);
-    if (notificationConfig.type === "success") {
-      navigate("/dashboard/profile/profile-data");
-    }
-  };
-
-  const nextStep = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
 
   const renderStepContent = () => {
     switch (currentStep) {
@@ -383,18 +190,12 @@ const OrganizationForm = () => {
                       <Upload className="w-5 h-5" />
                       Choose File
                     </label>
-                    {formData[key] && (
-                      <span className={styles.fileName}>{formData[key].name}</span>
-                    )}
+                    {formData[key] && <span className={styles.fileName}>{formData[key].name}</span>}
                   </div>
                   {imageErrors[key] && <p className={styles.errorMessage}>{imageErrors[key]}</p>}
                   {previewImages[key] && (
                     <div className={styles.imagePreview}>
-                      <img
-                        src={previewImages[key]}
-                        alt={`${label} Preview`}
-                        className={styles.previewImage}
-                      />
+                      <img src={previewImages[key]} alt={`${label} Preview`} className={styles.previewImage} />
                     </div>
                   )}
                 </div>
@@ -424,34 +225,26 @@ const OrganizationForm = () => {
             const IconComponent = step.icon;
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
-            
+
             return (
               <React.Fragment key={index}>
                 <div className={styles.stepItem}>
-                  <div className={`${styles.stepIcon} ${
-                    isCompleted ? styles.completed : 
-                    isActive ? styles.active : 
-                    styles.inactive
-                  }`}>
+                  <div
+                    className={`${styles.stepIcon} ${
+                      isCompleted ? styles.completed : isActive ? styles.active : styles.inactive
+                    }`}
+                  >
                     {isCompleted ? <Check className="w-6 h-6" /> : <IconComponent className="w-6 h-6" />}
                   </div>
                   <div className={styles.stepText}>
-                    <div className={`${styles.stepTitle} ${
-                      isActive ? styles.active : 
-                      isCompleted ? styles.completed : 
-                      styles.inactive
-                    }`}>
+                    <div className={`${styles.stepTitle} ${isActive ? styles.active : isCompleted ? styles.completed : styles.inactive}`}>
                       {step.title}
                     </div>
                     <div className={styles.stepNumber}>Step {index + 1} of {steps.length}</div>
                   </div>
                 </div>
                 {index < steps.length - 1 && (
-                  <ChevronRight 
-                    className={`w-5 h-5 ${styles.chevron} ${
-                      index < currentStep ? styles.passed : styles.upcoming
-                    }`}
-                  />
+                  <ChevronRight className={`w-5 h-5 ${styles.chevron} ${index < currentStep ? styles.passed : styles.upcoming}`} />
                 )}
               </React.Fragment>
             );
@@ -470,43 +263,25 @@ const OrganizationForm = () => {
               </div>
 
               <form onSubmit={handleSubmit} className={styles.form}>
-                <div className={styles.stepContent}>
-                  {renderStepContent()}
-                </div>
+                <div className={styles.stepContent}>{renderStepContent()}</div>
 
                 {/* Navigation Buttons */}
                 <div className={styles.navigationButtons}>
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    disabled={currentStep === 0}
-                    className={`${styles.button} ${styles.buttonPrev}`}
-                  >
+                  <button type="button" onClick={prevStep} disabled={currentStep === 0} className={`${styles.button} ${styles.buttonPrev}`}>
                     Previous
                   </button>
 
                   <div className={styles.buttonGroup}>
-                    <button
-                      type="button"
-                      onClick={handleCancel}
-                      className={`${styles.button} ${styles.buttonCancel}`}
-                    >
+                    <button type="button" onClick={handleCancel} className={`${styles.button} ${styles.buttonCancel}`}>
                       Cancel
                     </button>
-                    
+
                     {currentStep === steps.length - 1 ? (
-                      <button
-                        type="submit"
-                        className={`${styles.button} ${styles.buttonSubmit}`}
-                      >
+                      <button type="submit" className={`${styles.button} ${styles.buttonSubmit}`}>
                         Create Organization
                       </button>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={nextStep}
-                        className={`${styles.button} ${styles.buttonNext}`}
-                      >
+                      <button type="button" onClick={nextStep} className={`${styles.button} ${styles.buttonNext}`}>
                         Next
                       </button>
                     )}
@@ -519,12 +294,7 @@ const OrganizationForm = () => {
       </div>
 
       {/* Modal Notification */}
-      {showNotification && (
-        <ModalNotification
-          {...notificationConfig}
-          onClose={handleNotificationClose}
-        />
-      )}
+      {showNotification && <ModalNotification {...notificationConfig} onClose={handleNotificationClose} />}
     </div>
   );
 };
