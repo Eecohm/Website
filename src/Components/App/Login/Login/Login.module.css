@@ -6,6 +6,10 @@
   width: 100%;
   min-height: 100vh;
   background-color: #1c2526;
+  padding: 20px;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
 }
 
 .homebutton {
@@ -24,6 +28,10 @@
   justify-content: center;
   transition: background-color 0.3s ease;
   align-self: flex-end;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
 }
 
 .homebutton:hover {
@@ -47,6 +55,9 @@
 .loginBox h2 {
   color: #e0e0e0;
   margin-bottom: 20px;
+  font-size: 1.8rem;
+  margin-top: 0;
+  padding-top: 5px;
 }
 
 .inputGroup {
@@ -91,6 +102,8 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .checkboxGroup label {
@@ -98,6 +111,8 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  flex: 1;
+  min-width: 150px;
 }
 
 .checkboxGroup input {
@@ -150,7 +165,7 @@
   max-width: 150px;
   margin: 10px;
   height: 6vh;
-  padding: auto;;
+  padding: auto;
 }
 .modalBox h3 {
   color: wheat;
@@ -218,13 +233,345 @@
   color: #fff; /* or match neon theme */
 }
 
-.showHideButton button{
+.showHideButton button {
   margin: 0%;
   margin-bottom: 3px;
-  background:none;
+  background: none;
 }
-.showHideButton button:hover{
+.showHideButton button:hover {
   background: none;
   margin: 0%;
-  
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loginContainer {
+    padding: 15px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .loginBox {
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .loginBox h2 {
+    font-size: 1.5rem;
+  }
+
+  .neonInput {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .neonButton {
+    padding: 0.8rem;
+    font-size: 14px;
+  }
+
+  .homebutton {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .modalBox {
+    width: 90%;
+    max-width: 350px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 10px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  .loginBox {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 0;
+    width: 100%;
+    max-width: 95vw;
+  }
+
+  .loginBox h2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    margin-top: 0;
+    padding-top: 8px;
+  }
+
+  .inputGroup {
+    margin-bottom: 15px;
+  }
+
+  .inputGroup label {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .neonInput {
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .checkboxGroup {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+
+  .checkboxGroup label {
+    font-size: 11px;
+    flex: 0 1 auto;
+    min-width: auto;
+  }
+
+  .checkboxGroup input {
+    margin-right: 4px;
+  }
+
+  .forgotPassword {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+
+  .neonButton {
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  .homebutton {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    top: 10px;
+    right: 10px;
+    position: absolute;
+  }
+
+  .errorMessage {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+
+  .modalOverlay {
+    padding: 10px;
+  }
+
+  .modalBox {
+    width: 95%;
+    max-width: 90vw;
+    padding: 15px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .modalBox h3 {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    padding-right: 40px;
+  }
+
+  .modalBox button {
+    max-width: 120px;
+    margin: 8px;
+    height: auto;
+    padding: 8px 12px;
+  }
+
+  .cancelButton {
+    margin-top: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    max-width: 90px;
+  }
+
+  .passwordWrapper {
+    position: relative;
+  }
+
+  .showHideButton button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 390px) {
+  .loginContainer {
+    padding: 10px;
+    padding-top: 70px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loginBox {
+    padding: 15px;
+    width: 100%;
+    max-width: 90vw;
+  }
+
+  .loginBox h2 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    margin-top: 0;
+    padding-top: 8px;
+  }
+
+  .inputGroup {
+    margin-bottom: 12px;
+  }
+
+  .inputGroup label {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+
+  .neonInput {
+    padding: 7px;
+    font-size: 13px;
+    margin-bottom: 7px;
+  }
+
+  .checkboxGroup {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .checkboxGroup label {
+    font-size: 10px;
+    flex: 0 1 auto;
+    min-width: auto;
+  }
+
+  .checkboxGroup input {
+    margin-right: 3px;
+  }
+
+  .neonButton {
+    padding: 8px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .homebutton {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+    top: 8px;
+    right: 8px;
+    position: absolute;
+  }
+
+  .modalBox {
+    width: 95%;
+    max-width: 85vw;
+    padding: 12px;
+  }
+
+  .modalBox h3 {
+    font-size: 0.95rem;
+    padding-right: 35px;
+  }
+}
+
+@media (max-width: 360px) {
+  .loginContainer {
+    padding: 8px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loginBox {
+    padding: 15px;
+    width: 100%;
+    max-width: 85vw;
+  }
+
+  .loginBox h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding-top: 8px;
+  }
+
+  .inputGroup {
+    margin-bottom: 10px;
+  }
+
+  .inputGroup label {
+    font-size: 10px;
+  }
+
+  .neonInput {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .checkboxGroup {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .checkboxGroup label {
+    font-size: 9px;
+    flex: 0 1 auto;
+    min-width: auto;
+  }
+
+  .checkboxGroup input {
+    margin-right: 2px;
+  }
+
+  .neonButton {
+    padding: 8px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .homebutton {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  .modalBox {
+    width: 95%;
+    max-width: 80vw;
+    padding: 10px;
+  }
+
+  .modalBox h3 {
+    font-size: 0.9rem;
+    padding-right: 30px;
+  }
 }

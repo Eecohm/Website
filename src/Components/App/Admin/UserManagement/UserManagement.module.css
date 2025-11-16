@@ -1,3 +1,223 @@
+.roundedProfileLarge {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4fc3f7;
+  box-shadow: 0 2px 8px rgba(79, 195, 247, 0.15);
+}
+.profilePlaceholderLarge {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #263859;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  font-weight: 600;
+  border: 3px solid #4fc3f7;
+}
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1.2rem;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  contain: style layout;
+  isolation: isolate;
+}
+
+.viewDetailsBtn {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  white-space: nowrap;
+  background: linear-gradient(145deg, #1f5973, #263859);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 195, 247, 0.15);
+  /* Prevent transition triggers from toggle updates */
+  transition: background 0.2s, box-shadow 0.2s;
+  /* Isolate button from external state changes */
+  contain: style;
+}
+.viewDetailsBtn:hover {
+  background: linear-gradient(145deg, #1f5973);
+  box-shadow: 0 4px 16px rgba(79, 195, 247, 0.25);
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+  contain: style;
+}
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ccc;
+  border-radius: 28px;
+  transition: 0.3s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.toggleSwitch input:checked + .slider {
+  background: #4caf50;
+}
+.toggleSwitch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+.toggleLabel {
+  font-size: 1rem;
+  vertical-align: middle;
+}
+/* UserCard custom styles */
+.userCardNew {
+  display: flex;
+  align-items: flex-start;
+  background: #1b2735;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem 3.8rem;
+  margin-bottom: 1rem;
+  min-width: 420px;
+  max-width: fit-content;
+  grid-template-columns: repeat(2, 1fr); /* Only 2 cards per row */
+}
+
+.profileLeft {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-right: 2rem;
+  contain: layout style;
+}
+
+.roundedProfile {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4fc3f7;
+  box-shadow: 0 2px 8px rgba(79, 195, 247, 0.15);
+}
+
+.profilePlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #263859;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  border: 3px solid #4fc3f7;
+}
+
+.profileRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: left;
+  gap: 0.8rem;
+  contain: layout style;
+}
+.nameRow {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+}
+.nameRowWithVerification {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  contain: style layout;
+}
+.verificationIcon {
+  width: 24px;
+  height: 24px;
+  color: #4caf50;
+  stroke: #4caf50;
+  stroke-width: 3;
+  flex-shrink: 0;
+}
+.pendingIcon {
+  width: 24px;
+  height: 24px;
+  color: #ff9800;
+  stroke: #ff9800;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+.verificationCheckIcon {
+  width: 20px;
+  height: 20px;
+  color: #4caf50;
+  stroke: #4caf50;
+  stroke-width: 3;
+  flex-shrink: 0;
+}
+.statusRow {
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  contain: style layout;
+}
+.iconRow {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  contain: style layout;
+  isolation: isolate;
+}
+.activeStatusText {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  contain: layout style;
+}
+.activeIcon svg,
+.inactiveIcon svg {
+  vertical-align: middle;
+}
 .container {
   margin-left: 300px;
   margin-top: 100px;
@@ -10,6 +230,102 @@
   z-index: 1;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+  .container {
+    margin-left: 0;
+    margin-top: 120px; /* increased to avoid navbar overlap on mid screens */
+    padding: 1.5rem; /* increased padding for better spacing */
+    height: calc(100vh - 120px); /* adjust height */
+    font-size: 16px; /* base font for tablet */
+  }
+  .userCardNew {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 1.2rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #1b2735 60%, #263859 100%);
+    margin-bottom: 1rem;
+  }
+  .filtersSection {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* mobile screens */
+@media (max-width: 600px) {
+  .container {
+    margin-left: 0;
+    margin-top: 4rem; /* increased to avoid cutting content at top */
+    padding: 0.75rem; /* slightly more padding for small screens */
+    height: calc(100vh - 4rem); /* adjust height to account for margin-top */
+    font-size: 14px; /* smaller base font for mobile */
+  }
+  .topSection {
+    display: flex;
+  }
+  .header {
+    text-align: left;
+    padding: 0 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+    margin-top: 0.5rem; /* add small margin for back button */
+  }
+  .header .backButton {
+    padding: 0.6rem 0.5rem;
+  }
+  .searchSection {
+    place-content: center;
+    padding: 0.5rem 0.4rem; /* increased top/bottom padding */
+    font-size: 0.9rem;
+    margin-top: 1rem; /* add margin-top for proper spacing */
+  }
+
+  .createdBy {
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.7rem;
+    color: #8bb1d4;
+    letter-spacing: 0.2px;
+    text-align: left;
+  }
+  .userGrid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    max-width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .userCardNew {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 0.7rem 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+  .profileLeft {
+    margin-right: 1rem;
+  }
+  .profileRight {
+    gap: 0.5rem;
+  }
+  .filtersSection {
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 0.5rem;
+  }
 }
 
 /* Custom Scrollbar */
@@ -33,10 +349,10 @@
 
 .topSection {
   display: flex;
-  justify-content: left;
-  align-items: center;
+  justify-content: space-between; /* place back button left and search on right */
+  align-items: center; /* vertically center both columns */
   margin-bottom: 2rem;
-  gap: 7rem;
+  gap: 2rem; /* reduced gap for cleaner spacing on large screens */
 }
 
 /* Header Section */
@@ -44,7 +360,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0; /* remove extra bottom margin so header lines up with search */
   padding: 0 1rem;
 }
 
@@ -74,7 +390,7 @@
 
 /* Search Section */
 .searchSection {
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   width: 100%;
 }
 
@@ -149,10 +465,12 @@
 /* User Grid */
 .userGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  max-width: 1000px;
+  /* margin: 0 auto; */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* User Card - Restructured */
@@ -166,17 +484,77 @@
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease;
+
+  @media (min-width: 768px) {
+    .searchSection,
+    .filtersSection,
+    .userGrid {
+      max-width: 1100px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+    .topSection {
+      justify-content: center;
+    }
+    .topSection .searchSection {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+
+  /* Ensure the topSection itself is constrained to the same centered width */
+  @media (min-width: 768px) {
+    .topSection {
+      max-width: 1100px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 0.2rem;
+    }
+    .topSection .header {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+    }
+    .topSection .header .backButton {
+      padding: 0.3rem 0.7rem;
+    }
+    .topSection .searchSection {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .filtersSection {
+      max-width: 1100px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+    .userCard {
+      width: 100%;
+    }
+  }
   height: fit-content;
 }
 
 .userCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  border-color: #4fc3f7;
-}
-
-/* Card Header - Image and Name at Top */
-.userCardHeader {
+  grid-template-columns: repeat(2, minmax(360px, 1fr));
+  gap: 3rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -326,6 +704,41 @@
   }
 
   .container {
+    /* Make top area use two columns: back button and search input */
+    .topSection {
+      display: grid;
+      grid-template-columns: auto 1fr; /* back button column + search column */
+      align-items: center;
+      gap: 0.5rem; /* small vertical / horizontal gap */
+      width: 100%;
+      padding: 0 0.5rem;
+      box-sizing: border-box;
+    }
+
+    .topSection .header {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .topSection .searchSection {
+      margin: 0; /* minimal top/bottom gap */
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    /* ensure search input occupies available space but keeps small vertical spacing */
+    .searchInput {
+      width: 100%;
+      max-width: 100%;
+      padding: 0.8rem 0.9rem; /* increased padding for better visibility */
+      margin: 0;
+    }
     margin-left: 0; /* Remove left margin on smaller screens */
     margin-top: 80px; /* Reduce top margin */
     padding: 1.5rem;
@@ -368,6 +781,89 @@
   }
 }
 
+/* Tablet (iPad) specific adjustments: 600px - 1024px
+   - Increase base font size for readability
+   - Make search section wider and clearly visible (not cut off)
+   - Show filters as 2 columns
+   - Show one user card per row */
+@media (min-width: 600px) and (max-width: 1024px) {
+  .container {
+    margin-left: 0;
+    margin-top: 80px;
+    padding: 1.25rem;
+    font-size: 16px; /* slightly larger for tablet */
+  }
+
+  /* Ensure top section items line up and search isn't cut off */
+  .topSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+
+  /* Make the outer search wrapper occupy most of the centered area on tablet */
+  .searchSection {
+    width: calc(100% - 2rem);
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.4rem 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .topSection .searchSection {
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+
+  .topSection .searchInput {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 0.9rem 1rem;
+    margin-top: 0.6rem;
+    box-sizing: border-box;
+  }
+
+  /* Filters: show two filter controls per row */
+  .filtersSection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+    align-items: start;
+  }
+
+  .filterSelect {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Make user grid a single column on tablets for better readability */
+  .userGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  .userCardNew {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+}
+
 @media (max-width: 480px) {
   .container {
     margin-top: 60px;
@@ -381,5 +877,256 @@
   .backButton {
     padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
+  }
+}
+
+/* Loading State */
+
+/* Ensure Search, Filters and Top sections match the User Grid width on larger screens */
+@media (min-width: 768px) {
+  /* Use same max-width as .userGrid so everything lines up centered */
+
+  .topSection,
+  .filtersSection {
+    max-width: 1100px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .userGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Keep search aligned to the right within the constrained width */
+  .topSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .topSection .searchSection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1 1 auto;
+  }
+
+  /* Make filters use full constrained width while preserving inner layout */
+  .filtersSection {
+    width: 100%;
+    padding: 1.2rem;
+  }
+}
+/* Desktop override: restore header flow and ensure Search, Filters and Grid share the same centered width */
+@media (min-width: 1024px) {
+  .topSection,
+  .searchSection,
+  .filtersSection,
+  .userGrid {
+    max-width: 1100px !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .topSection {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 1rem !important;
+    position: static !important;
+  }
+
+  .topSection .header {
+    position: static !important;
+    transform: none !important;
+    z-index: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+  }
+
+  .topSection .searchSection {
+    flex: 1 1 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .searchSection {
+    padding: 0.9rem 0 !important;
+    background: transparent !important;
+  }
+
+  .topSection .searchInput {
+    padding-left: 1rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  .filtersSection {
+    padding: 1.2rem !important;
+  }
+
+  .userGrid {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+.loadingState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  font-size: 1.2rem;
+  color: #00adb5;
+}
+
+.loadingState p {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Error State */
+.errorState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  font-size: 1.1rem;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 10px;
+  border: 2px solid #ff6b6b;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* User Detail View Styles */
+.detailContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.detailCard {
+  display: flex;
+  gap: 3rem;
+  background: #1b2735;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.detailImageSection {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.detailProfileImage {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #4fc3f7;
+  box-shadow: 0 4px 12px rgba(79, 195, 247, 0.25);
+}
+
+.detailProfilePlaceholder {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: #263859;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 600;
+  border: 4px solid #4fc3f7;
+}
+
+.detailInfoSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.detailUserName {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.detailField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailField label {
+  font-size: 0.9rem;
+  color: #8bb1d4;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailField p {
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: rgba(79, 195, 247, 0.1);
+  border-left: 3px solid #4fc3f7;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detailCard {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .detailProfileImage,
+  .detailProfilePlaceholder {
+    width: 150px;
+    height: 150px;
+    font-size: 3rem;
+  }
+
+  .detailUserName {
+    font-size: 1.5rem;
+  }
+
+  .detailField p {
+    font-size: 1rem;
   }
 }

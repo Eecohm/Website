@@ -1,10 +1,71 @@
+/* Grid layout for team lead cards */
+.teamLeadsGridContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+  position: relative;
+}
+
+.teamLeadsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 18px;
+  width: 60vw;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: center;
+}
+
+/* Remove previous row animation */
+.teamLeadsRow {
+  animation: none !important;
+}
+
+/* Interactive hover animation for cards */
+.teamLeadCard {
+  transition: transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.3s;
+}
+.teamLeadCard:hover {
+  transform: translateY(-10px) scale(1.05) rotate(-2deg);
+  box-shadow: 0 8px 24px rgba(128, 0, 0, 0.18);
+  z-index: 2;
+}
+/* Horizontal card row and animation */
+.teamLeadsRowContainer {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.teamLeadsRow {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  animation: slideRow 20s linear infinite;
+}
+
+@keyframes slideRow {
+  0% {
+    transform: translateX(-30%);
+  }
+  100% {
+    transform: translateX(30%);
+  }
+}
 .meetTheTeamLeads {
   padding: 60px 20px;
   min-height: 100vh;
-  background: linear-gradient(135deg, rgba(1, 175, 255, 0.282), rgba(2, 86, 255, 0.291)), 
-          url('../../../../assets/Images/program_6.JPG') no-repeat center center;
-  background-size: cover;
-  background-position: center;
+  /* background: linear-gradient(135deg, #800000 0%, #dfbe00 100%);
+   */
+  background: linear-gradient(#ffd580, #fffbe6);
+
   text-align: center;
   position: relative;
   overflow-y: auto;
@@ -45,7 +106,8 @@
   opacity: 0;
   width: 0;
   margin: 0;
-  transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out, margin 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out,
+    margin 0.3s ease-in-out;
 }
 
 .bgShape {
@@ -68,25 +130,55 @@
   width: 15px;
   height: 15px;
   background: #b30000;
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
   animation: spin 5s infinite linear;
 }
 
 @keyframes twinkle {
-  0% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0.5; transform: scale(1); }
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulseBackground {
-  0% { opacity: 1; }
-  50% { opacity: 0.9; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 768px) {

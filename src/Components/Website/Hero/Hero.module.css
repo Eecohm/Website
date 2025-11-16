@@ -3,12 +3,18 @@
   width: 100%;
   background-size: cover;
   min-height: 100vh;
-  background-image: linear-gradient(rgba(226, 190, 190, 0.5), rgba(156, 28, 28, 0.9)), url('@/assets/Images/Home.jpg');
+  background-image: linear-gradient(
+      rgba(226, 190, 190, 0.5),
+      rgba(156, 28, 28, 0.9)
+    ),
+    url("@/assets/Images/Home.jpg");
   background-position: center;
   color: rgb(250, 250, 250);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 0;
+  padding-top: 10vh;
 }
 
 /* === HERO TEXT === */
@@ -89,10 +95,18 @@
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
-.heroText > h1.animateText { animation-delay: 0.2s; }
-.heroText > h4.animateText { animation-delay: 0.4s; }
-.heroText > p.animateText  { animation-delay: 0.6s; }
-.heroText > button.animateText { animation-delay: 0.8s; }
+.heroText > h1.animateText {
+  animation-delay: 0.2s;
+}
+.heroText > h4.animateText {
+  animation-delay: 0.4s;
+}
+.heroText > p.animateText {
+  animation-delay: 0.6s;
+}
+.heroText > button.animateText {
+  animation-delay: 0.8s;
+}
 
 @keyframes fadeInUp {
   from {

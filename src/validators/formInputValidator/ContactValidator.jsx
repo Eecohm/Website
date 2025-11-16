@@ -11,16 +11,16 @@ export const isValidTelephone = (value, isRequired = false) => {
   // Remove any spaces, dashes, or other formatting
   const cleanPhone = value.replace(/[^0-9]/g, "");
 
-  // Enforce exactly 10 numeric digits (max length 10)
-  if (cleanPhone.length < 10) {
-    return "Telephone number must be exactly 10 digits long";
+  // Accept 1 to 10 numeric digits
+  if (cleanPhone.length === 0) {
+    return isRequired ? "Telephone number is required" : null;
   }
 
   if (cleanPhone.length > 10) {
-    return "Telephone number must be exactly 10 digits long";
+    return "Telephone number must not exceed 10 digits";
   }
 
-  return null; // Valid
+  return null;
 };
 
 // Required telephone validator
@@ -34,7 +34,7 @@ export const validateOptionalTelephone = (value) => {
 };
 
 export const isValidPhone = (phone) => {
-  const pattern = /^(98|97|91)\d{8}$/;
+  const pattern = /^(98|97)\d{8}$/;
   return pattern.test(phone);
 };
 
@@ -60,4 +60,62 @@ export const validateFile = (file, allowPngOnly = false) => {
   }
 
   return { valid: true };
+};
+
+// Validate integer input - no alphabets allowed
+export const isValidInteger = (value, isRequired = false) => {
+  // Check if field is required and empty
+  if (isRequired && (!value || value.trim() === "")) {
+    return "This field is required";
+  }
+
+  // If not required and empty, it's valid
+  if (!value || value.trim() === "") return null;
+
+  // Check if value contains any non-numeric characters (alphabets, special chars, etc.)
+  const hasNonNumeric = /[^0-9\-]/.test(value);
+  if (hasNonNumeric) {
+    return "Only numbers are allowed. Alphabets and special characters are not permitted";
+  }
+
+  // Ensure it's a valid integer (can be negative)
+  const numValue = parseInt(value, 10);
+  if (isNaN(numValue)) {
+    return "Please enter a valid integer";
+  }
+
+  return null; // Valid
+};
+
+// Validate positive integer only (no negative numbers)
+export const isValidPositiveInteger = (value, isRequired = false) => {
+  const error = isValidInteger(value, isRequired);
+  if (error) return error;
+
+  if (!value || value.trim() === "") return null;
+
+  const numValue = parseInt(value, 10);
+  if (numValue < 0) {
+    return "Please enter a positive integer";
+  }
+
+  return null; // Valid
+};
+
+// Validate integer with max length
+export const isValidIntegerWithMaxLength = (
+  value,
+  maxLength,
+  isRequired = false
+) => {
+  const error = isValidInteger(value, isRequired);
+  if (error) return error;
+
+  if (!value || value.trim() === "") return null;
+
+  if (value.length > maxLength) {
+    return `Maximum ${maxLength} digits allowed`;
+  }
+
+  return null; // Valid
 };

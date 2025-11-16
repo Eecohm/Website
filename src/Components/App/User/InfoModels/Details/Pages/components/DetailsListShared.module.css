@@ -1,0 +1,46 @@
+/* DetailsListShared.module.css - Shared Styles for Detail Lists and Section Cards */
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem 0;
+  transition: all 0.2s ease;
+}
+
+.detailItem:hover .detailLabel {
+  color: #cbd5e0;
+}
+
+.detailLabel {
+  font-size: 0.75rem;
+  color: #a0aec0;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 700;
+}
+
+.detailValue {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  word-break: break-word;
+  font-weight: 500;
+}
+
+.detailLink {
+  color: #63b3ed;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.detailLink:hover {
+  color: #4fd1c5;
+  text-decoration: underline;
+}

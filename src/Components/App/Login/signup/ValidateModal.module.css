@@ -181,13 +181,122 @@
   margin-right: 12px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .modalContent {
-    margin: 20px;
     padding: 24px;
+    max-width: 380px;
   }
 
   .modalHeader h3 {
     font-size: 18px;
+  }
+
+  .modalBody p {
+    font-size: 14px;
+  }
+
+  .primaryButton {
+    padding: 10px 28px;
+    font-size: 14px;
+    min-width: 100px;
+  }
+
+  .closeButton {
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    margin: 20px;
+    padding: 20px;
+    max-width: 100%;
+    width: 95%;
+  }
+
+  .modalHeader {
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+  }
+
+  .modalHeader h3 {
+    font-size: 16px;
+  }
+
+  .modalHeader::before {
+    content: "";
+  }
+
+  .modalHeader.success::before {
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+    line-height: 20px;
+    margin-right: 8px;
+  }
+
+  .modalHeader.error::before {
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+    line-height: 20px;
+    margin-right: 8px;
+  }
+
+  .closeButton {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+
+  .modalBody {
+    margin: 16px 0;
+  }
+
+  .modalBody p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .modalFooter {
+    margin-top: 20px;
+  }
+
+  .primaryButton {
+    padding: 10px 20px;
+    font-size: 13px;
+    min-width: 90px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 360px) {
+  .modalContent {
+    padding: 16px;
+    margin: 10px;
+    width: 90%;
+  }
+
+  .modalHeader h3 {
+    font-size: 14px;
+  }
+
+  .closeButton {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+  }
+
+  .modalBody p {
+    font-size: 12px;
+  }
+
+  .primaryButton {
+    padding: 8px 16px;
+    font-size: 12px;
+    min-width: 80px;
+    min-height: 40px;
   }
 }

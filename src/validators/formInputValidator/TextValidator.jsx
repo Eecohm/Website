@@ -78,9 +78,6 @@ export const validateRequiredWard = (value) => {
   return validateRequiredWardNo(value, true);
 };
 
-// //for integer validation
-// export const
-
 //for phone number validation
 export const validatePhoneNumber = (value, isRequired = false) => {
   // Check if field is required and empty
@@ -145,10 +142,7 @@ export const validatePANNo = (value, isRequired = false) => {
 
   const panRegex = /^[0-9]+$/;
   if (!panRegex.test(cleanValue)) {
-    return "PAN number should contain only numbers";
-  }
-  if (cleanValue.length !== 9) {
-    return "PAN number must be exactly 9 digits";
+    return "PAN number can't be a string, it must be an integer only";
   }
   return null;
 };

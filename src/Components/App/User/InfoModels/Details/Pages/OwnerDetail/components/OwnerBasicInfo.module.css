@@ -1,0 +1,205 @@
+/* OwnerBasicInfo.module.css - Owner Photo, Name, and Basic Information */
+
+.idCard {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 25, 40, 0.95) 0%,
+    rgba(30, 40, 65, 0.9) 100%
+  );
+  border: 1.5px solid rgba(99, 179, 237, 0.25);
+  border-radius: 28px;
+  padding: 1.75rem 2rem;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.idCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #63b3ed 0%, #4fd1c5 50%, #9f7aea 100%);
+}
+
+.cardHeader {
+  display: flex;
+  gap: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(99, 179, 237, 0.15);
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+
+.photoSection {
+  flex-shrink: 0;
+}
+
+.photoFrame {
+  width: 160px;
+  height: 200px;
+  border: 2px solid rgba(99, 179, 237, 0.35);
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 20, 35, 0.95),
+    rgba(25, 30, 55, 0.95)
+  );
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.photoFrame:hover {
+  border-color: rgba(99, 179, 237, 0.5);
+  box-shadow: 0 12px 32px rgba(99, 179, 237, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photoPlaceholder {
+  color: rgba(99, 179, 237, 0.3);
+  stroke-width: 1.5;
+}
+
+.basicInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.5px;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #cbd5e0;
+  font-size: 0.95rem;
+  padding: 0.3rem 0;
+  transition: all 0.2s ease;
+}
+
+.infoRow:hover {
+  color: #e2e8f0;
+}
+
+.icon {
+  font-size: 1.3rem;
+  color: #63b3ed;
+  min-width: 28px;
+  text-align: center;
+}
+
+.label {
+  color: #a0aec0;
+  font-weight: 600;
+  min-width: 140px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.value {
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+/* Status Badge */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.statusVerified {
+  background: linear-gradient(
+    135deg,
+    rgba(72, 187, 120, 0.2),
+    rgba(56, 161, 105, 0.15)
+  );
+  border: 1px solid rgba(72, 187, 120, 0.4);
+  color: #68d391;
+}
+
+.statusPending {
+  background: linear-gradient(
+    135deg,
+    rgba(237, 137, 54, 0.2),
+    rgba(214, 122, 45, 0.15)
+  );
+  border: 1px solid rgba(237, 137, 54, 0.4);
+  color: #f6ad55;
+}
+
+.statusUnverified {
+  background: linear-gradient(
+    135deg,
+    rgba(252, 129, 129, 0.2),
+    rgba(226, 82, 82, 0.15)
+  );
+  border: 1px solid rgba(252, 129, 129, 0.4);
+  color: #fc8181;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .idCard {
+    padding: 1.5rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .photoFrame {
+    width: 160px;
+    height: 200px;
+  }
+
+  .basicInfo {
+    width: 100%;
+  }
+
+  .infoRow {
+    justify-content: center;
+  }
+
+  .name {
+    font-size: 1.4rem;
+  }
+}

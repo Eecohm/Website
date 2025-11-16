@@ -26,6 +26,18 @@
   padding: var(--section-padding);
 }
 
+@media (max-width: 1024px) {
+  .registrationForm {
+    width: 100%;
+    margin-left: 0;
+    height: auto;
+    margin-top: 80px;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .formContainer {
   width: 100%;
   max-width: 1200px;
@@ -228,65 +240,250 @@ button:hover {
 
 @media (max-width: 768px) {
   .registrationForm {
-    margin-left: 0;
-    width: 100vw;
-    padding: 10px;
+    height: auto;
+    margin-top: 5vh;
+    padding: 15px;
   }
 
   .formContainer {
     padding: 15px;
   }
 
+  .formContainer h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .formSection h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .formGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  input,
+  select {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  button,
+  .actionButton {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  label {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .registrationForm {
+    height: auto;
+    margin-top: 70px;
+    padding: 10px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .formContainer {
+    padding: 12px;
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .formContainer h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .formSection {
+    margin-bottom: 20px;
+  }
+
+  .formSection h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    padding-bottom: 3px;
+  }
+
   .formGrid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .formGrid div {
+    flex-direction: column;
+  }
+
+  input,
+  select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 3px;
+  }
+
+  button,
+  .actionButton {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    width: 100%;
+    min-height: 44px;
+  }
+
+  label {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+
+  .required {
+    font-size: 0.85rem;
+  }
+
+  .successAlert {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .alertSymbol {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .successText {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+
+  .dismissButton {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    gap: 8px;
   }
 
   .gradeLists,
   .subjectLists {
     flex-direction: column;
   }
+}
 
-  .buttonGroup {
-    flex-direction: column;
+@media (max-width: 390px) {
+  .registrationForm {
+    padding: 8px;
+    margin-top: 70px;
   }
 
-  .actionButton {
+  .formContainer {
+    padding: 10px;
     width: 100%;
   }
 
-  input,
-  select {
-    font-size: 0.9rem;
-  }
-
-  button {
-    font-size: 1rem;
-  }
-
   .formContainer h2 {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
   }
 
   .formSection h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    margin-bottom: 7px;
   }
-}
 
-@media (max-width: 480px) {
-  .formContainer {
-    padding: 10px;
+  .formGrid {
+    gap: 10px;
   }
 
   input,
   select {
-    padding: 8px;
-    font-size: 0.85rem;
+    padding: 7px;
+    font-size: 13px;
   }
 
   button,
   .actionButton {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    width: 100%;
+    min-height: 40px;
+  }
+
+  label {
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+  }
+
+  .required {
+    font-size: 0.8rem;
+  }
+
+  .successAlert {
     padding: 10px;
-    font-size: 0.9rem;
+  }
+
+  .alertSymbol {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+  }
+
+  .successText {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+
+  .dismissButton {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .registrationForm {
+    padding: 8px;
+    margin-top: 70px;
+  }
+
+  .formContainer {
+    padding: 8px;
+    width: 100%;
+  }
+
+  .formContainer h2 {
+    font-size: 1.1rem;
+  }
+
+  .formSection h3 {
+    font-size: 0.95rem;
+  }
+
+  .formGrid {
+    gap: 10px;
+  }
+
+  input,
+  select {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  button,
+  .actionButton {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    width: 100%;
+    min-height: 40px;
+  }
+
+  label {
+    font-size: 0.75rem;
   }
 }
 .successAlert {

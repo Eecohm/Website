@@ -20,6 +20,7 @@ const OrganizationForm = () => {
     previewImages,
     fieldTouched,
     fieldValid,
+    fieldError,
     showNotification,
     notificationConfig,
     handleChange,
@@ -52,14 +53,20 @@ const OrganizationForm = () => {
                   value={formData.orgName}
                   onChange={handleChange}
                   className={`${styles.formInput} ${
-                    fieldTouched.orgName && !fieldValid.orgName ? styles.error : ""
+                    fieldTouched.orgName && !fieldValid.orgName
+                      ? styles.error
+                      : ""
                   }`}
                   placeholder="Enter organization name"
                   required
                 />
-                {fieldTouched.orgName && !fieldValid.orgName && formData.orgName.trim() !== "" && (
-                  <p className={styles.errorMessage}>Only alphabets and spaces allowed.</p>
-                )}
+                {fieldTouched.orgName &&
+                  !fieldValid.orgName &&
+                  formData.orgName.trim() !== "" && (
+                    <p className={styles.errorMessage}>
+                      Only alphabets and spaces allowed.
+                    </p>
+                  )}
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>Organization Address</label>
@@ -68,15 +75,21 @@ const OrganizationForm = () => {
                   value={formData.orgAddress}
                   onChange={handleChange}
                   className={`${styles.formTextarea} ${
-                    fieldTouched.orgAddress && !fieldValid.orgAddress ? styles.error : ""
+                    fieldTouched.orgAddress && !fieldValid.orgAddress
+                      ? styles.error
+                      : ""
                   }`}
                   placeholder="Enter full address"
                   rows="3"
                   required
                 />
-                {fieldTouched.orgAddress && !fieldValid.orgAddress && formData.orgAddress.trim() !== "" && (
-                  <p className={styles.errorMessage}>Only letters, ",", "-", and spaces allowed.</p>
-                )}
+                {fieldTouched.orgAddress &&
+                  !fieldValid.orgAddress &&
+                  formData.orgAddress.trim() !== "" && (
+                    <p className={styles.errorMessage}>
+                      Only letters, ",", "-", and spaces allowed.
+                    </p>
+                  )}
               </div>
             </div>
           </div>
@@ -93,13 +106,17 @@ const OrganizationForm = () => {
                   value={formData.telPhoneNo}
                   onChange={handleChange}
                   className={`${styles.formInput} ${
-                    fieldTouched.telPhoneNo && !fieldValid.telPhoneNo ? styles.error : ""
+                    fieldTouched.telPhoneNo && !fieldValid.telPhoneNo
+                      ? styles.error
+                      : ""
                   }`}
                   placeholder="01-XXXXXXX"
                   required
                 />
                 {fieldTouched.telPhoneNo && !fieldValid.telPhoneNo && (
-                  <p className={styles.errorMessage}>Invalid telephone number.</p>
+                  <p className={styles.errorMessage}>
+                    Invalid telephone number.
+                  </p>
                 )}
               </div>
               <div className={styles.formGroup}>
@@ -110,7 +127,9 @@ const OrganizationForm = () => {
                   value={formData.phoneNo}
                   onChange={handleChange}
                   className={`${styles.formInput} ${
-                    fieldTouched.phoneNo && !fieldValid.phoneNo ? styles.error : ""
+                    fieldTouched.phoneNo && !fieldValid.phoneNo
+                      ? styles.error
+                      : ""
                   }`}
                   placeholder="98XXXXXXXX"
                   required
@@ -145,10 +164,17 @@ const OrganizationForm = () => {
                   name="panNumber"
                   value={formData.panNumber}
                   onChange={handleChange}
-                  className={styles.formInput}
+                  className={`${styles.formInput} ${
+                    fieldTouched.panNumber && fieldError.panNumber
+                      ? styles.error
+                      : ""
+                  }`}
                   placeholder="XXXXXXXXX"
                   required
                 />
+                {fieldTouched.panNumber && fieldError.panNumber && (
+                  <p className={styles.errorMessage}>{fieldError.panNumber}</p>
+                )}
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>VAT Number</label>
@@ -190,12 +216,22 @@ const OrganizationForm = () => {
                       <Upload className="w-5 h-5" />
                       Choose File
                     </label>
-                    {formData[key] && <span className={styles.fileName}>{formData[key].name}</span>}
+                    {formData[key] && (
+                      <span className={styles.fileName}>
+                        {formData[key].name}
+                      </span>
+                    )}
                   </div>
-                  {imageErrors[key] && <p className={styles.errorMessage}>{imageErrors[key]}</p>}
+                  {imageErrors[key] && (
+                    <p className={styles.errorMessage}>{imageErrors[key]}</p>
+                  )}
                   {previewImages[key] && (
                     <div className={styles.imagePreview}>
-                      <img src={previewImages[key]} alt={`${label} Preview`} className={styles.previewImage} />
+                      <img
+                        src={previewImages[key]}
+                        alt={`${label} Preview`}
+                        className={styles.previewImage}
+                      />
                     </div>
                   )}
                 </div>
@@ -231,20 +267,42 @@ const OrganizationForm = () => {
                 <div className={styles.stepItem}>
                   <div
                     className={`${styles.stepIcon} ${
-                      isCompleted ? styles.completed : isActive ? styles.active : styles.inactive
+                      isCompleted
+                        ? styles.completed
+                        : isActive
+                        ? styles.active
+                        : styles.inactive
                     }`}
                   >
-                    {isCompleted ? <Check className="w-6 h-6" /> : <IconComponent className="w-6 h-6" />}
+                    {isCompleted ? (
+                      <Check className="w-6 h-6" />
+                    ) : (
+                      <IconComponent className="w-6 h-6" />
+                    )}
                   </div>
                   <div className={styles.stepText}>
-                    <div className={`${styles.stepTitle} ${isActive ? styles.active : isCompleted ? styles.completed : styles.inactive}`}>
+                    <div
+                      className={`${styles.stepTitle} ${
+                        isActive
+                          ? styles.active
+                          : isCompleted
+                          ? styles.completed
+                          : styles.inactive
+                      }`}
+                    >
                       {step.title}
                     </div>
-                    <div className={styles.stepNumber}>Step {index + 1} of {steps.length}</div>
+                    <div className={styles.stepNumber}>
+                      Step {index + 1} of {steps.length}
+                    </div>
                   </div>
                 </div>
                 {index < steps.length - 1 && (
-                  <ChevronRight className={`w-5 h-5 ${styles.chevron} ${index < currentStep ? styles.passed : styles.upcoming}`} />
+                  <ChevronRight
+                    className={`w-5 h-5 ${styles.chevron} ${
+                      index < currentStep ? styles.passed : styles.upcoming
+                    }`}
+                  />
                 )}
               </React.Fragment>
             );
@@ -259,7 +317,9 @@ const OrganizationForm = () => {
             <div className={styles.formContent}>
               <div className={styles.formHeader}>
                 <h2 className={styles.formTitle}>Organization Details</h2>
-                <p className={styles.formSubtitle}>Create your organization profile</p>
+                <p className={styles.formSubtitle}>
+                  Create your organization profile
+                </p>
               </div>
 
               <form onSubmit={handleSubmit} className={styles.form}>
@@ -267,21 +327,37 @@ const OrganizationForm = () => {
 
                 {/* Navigation Buttons */}
                 <div className={styles.navigationButtons}>
-                  <button type="button" onClick={prevStep} disabled={currentStep === 0} className={`${styles.button} ${styles.buttonPrev}`}>
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    disabled={currentStep === 0}
+                    className={`${styles.button} ${styles.buttonPrev}`}
+                  >
                     Previous
                   </button>
 
                   <div className={styles.buttonGroup}>
-                    <button type="button" onClick={handleCancel} className={`${styles.button} ${styles.buttonCancel}`}>
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      className={`${styles.button} ${styles.buttonCancel}`}
+                    >
                       Cancel
                     </button>
 
                     {currentStep === steps.length - 1 ? (
-                      <button type="submit" className={`${styles.button} ${styles.buttonSubmit}`}>
+                      <button
+                        type="submit"
+                        className={`${styles.button} ${styles.buttonSubmit}`}
+                      >
                         Create Organization
                       </button>
                     ) : (
-                      <button type="button" onClick={nextStep} className={`${styles.button} ${styles.buttonNext}`}>
+                      <button
+                        type="button"
+                        onClick={nextStep}
+                        className={`${styles.button} ${styles.buttonNext}`}
+                      >
                         Next
                       </button>
                     )}
@@ -294,7 +370,12 @@ const OrganizationForm = () => {
       </div>
 
       {/* Modal Notification */}
-      {showNotification && <ModalNotification {...notificationConfig} onClose={handleNotificationClose} />}
+      {showNotification && (
+        <ModalNotification
+          {...notificationConfig}
+          onClose={handleNotificationClose}
+        />
+      )}
     </div>
   );
 };

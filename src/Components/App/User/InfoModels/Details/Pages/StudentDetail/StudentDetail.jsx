@@ -21,10 +21,12 @@ const StudentDetail = () => {
   const fetchStudentData = async () => {
     try {
       // Use ViewSet endpoints: /api/user/students/{id}/ or /api/user/students/me/
-      const endpoint = userId 
-        ? `${baseUrl}/user/students/${userId}/`
-        : `${baseUrl}/user/students/me/`;
-        
+      const endpoint = userId
+        ? `${baseUrl}/api/user/students/${userId}/`
+        : `${baseUrl}/api/user/students/me/`;
+
+      console.log("Fetching student from:", endpoint);
+
       const response = await fetch(endpoint, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -32,11 +34,19 @@ const StudentDetail = () => {
         },
       });
 
-      if (!response.ok) throw new Error("Failed to fetch student data");
+      console.log("Student response status:", response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Student fetch error response:", errorText);
+        throw new Error(`Failed to fetch student data: ${response.statusText}`);
+      }
 
       const data = await response.json();
+      console.log("Student data fetched:", data);
       setStudent(data);
     } catch (err) {
+      console.error("Student fetch error:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -96,7 +106,11 @@ const StudentDetail = () => {
           <div className={styles.photoSection}>
             <div className={styles.photoFrame}>
               {student.photo ? (
-                <img src={student.photo} alt="Student" className={styles.photo} />
+                <img
+                  src={student.photo}
+                  alt="Student"
+                  className={styles.photo}
+                />
               ) : (
                 <span className={styles.photoPlaceholder}>👤</span>
               )}
@@ -139,7 +153,11 @@ const StudentDetail = () => {
             <div className={styles.infoRow}>
               <span className={styles.icon}>✅</span>
               <span className={styles.label}>KYC Status:</span>
-              <span className={`${styles.statusBadge} ${getKycStatusClass(student.kycStatus)}`}>
+              <span
+                className={`${styles.statusBadge} ${getKycStatusClass(
+                  student.kycStatus
+                )}`}
+              >
                 {student.kycStatus || "Unverified"}
               </span>
             </div>
@@ -155,19 +173,27 @@ const StudentDetail = () => {
             <div className={styles.detailsList}>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Phone</span>
-                <span className={styles.detailValue}>{student.phone || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.phone || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Alternate Phone</span>
-                <span className={styles.detailValue}>{student.alternatePhone || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.alternatePhone || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Tell Phone</span>
-                <span className={styles.detailValue}>{student.tellPhone || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.tellPhone || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Contact Person</span>
-                <span className={styles.detailValue}>{student.contactPerson || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.contactPerson || "N/A"}
+                </span>
               </div>
             </div>
           </div>
@@ -180,23 +206,33 @@ const StudentDetail = () => {
             <div className={styles.detailsList}>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Country</span>
-                <span className={styles.detailValue}>{student.country || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.country || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Province</span>
-                <span className={styles.detailValue}>{student.province || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.province || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Municipality</span>
-                <span className={styles.detailValue}>{student.municipality || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.municipality || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Ward</span>
-                <span className={styles.detailValue}>{student.ward || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.ward || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Tole</span>
-                <span className={styles.detailValue}>{student.tole || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {student.tole || "N/A"}
+                </span>
               </div>
               {student.pinPoint && (
                 <div className={styles.detailItem}>

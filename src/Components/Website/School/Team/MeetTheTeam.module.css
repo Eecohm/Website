@@ -1,7 +1,9 @@
 /* Main section container */
 .meetTheTeam {
   padding: 40px 20px;
-  background: linear-gradient(135deg, #fff, #f8e1e1);
+  /* background: linear-gradient(135deg, #fff, #f8e1e1); */
+  background: linear-gradient(#fffbe6, #ffd580);
+
   text-align: center;
   overflow-y: auto; /* Allow vertical scrolling for the section if needed */
 }

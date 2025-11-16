@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './MeetTheTeam.module.css';
+import React from "react";
+import styles from "./MeetTheTeam.module.css";
 
 function TeamHeader() {
   return (

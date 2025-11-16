@@ -1,6 +1,4 @@
-/* General Course Card Styles */
 .courseCard {
-  width: 20vw;
   height: 45vh;
   max-width: 450px;
   max-height: 650px;
@@ -12,6 +10,7 @@
   margin: 0.5rem;
   overflow: hidden;
   transition: all 0.3s ease;
+  animation: cardFadeIn 0.8s ease;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -37,6 +36,18 @@
   -webkit-overflow-scrolling: touch;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.courseCard:not(.expanded) {
+  width: 320px;
+  height: 420px;
+  max-width: 350px;
+  max-height: 650px;
+  min-width: 320px;
+  min-height: 420px;
+  position: static;
+  z-index: 1;
+  flex: 0 0 auto;
 }
 
 /* Hover effect for non-expanded state */
@@ -151,7 +162,7 @@
 .courseKeyFeatures h4,
 .courseTargetedAudience h4 {
   font-size: 1.2rem;
-  color: #FFD700;
+  color: #ffd700;
   margin: 0 0 0.3rem 0;
   font-weight: 600;
   line-height: 1.2;
@@ -193,7 +204,7 @@
 }
 /*add comment */
 .closeCourseButton:hover {
-  background-color: #FFD700;
+  background-color: #ffd700;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 

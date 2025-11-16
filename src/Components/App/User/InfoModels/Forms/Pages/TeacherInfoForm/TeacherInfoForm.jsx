@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NavBar from "@/Components/App/NavBar/NavBar";
 import PersonalDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/PersonalDetailsForm/PersonalDetailsForm";
 import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Components//FormSections/AddressDetailsForm/AddressDetailsForm";
@@ -6,109 +6,26 @@ import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Component
 import DocumentDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/DocumentDetailsForm/DocumentDetailsFrom";
 import TeacherSpecificForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/TeacherSpecificForm/TeacherSpecificForm";
 import styles from "./TeacherInfoForm.module.css";
-import { useAuth } from "@/Context/AuthContext";
-import { useBaseUrl } from "@/Context/BaseUrlContext";
+import ModalNotification from "@/GlobalComponets/ModalNotification";
+import useTeacherForm from "./useTeacherForm";
 
 const TeacherInfoForm = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    dateOfBirth: "",
-    gender: "",
-    photo: null,
-    country: "",
-    province: "",
-    municipality: "",
-    ward: "",
-    tole: "",
-    pinPoint: "",
-    tellPhone: "",
-    phone: "",
-    alternatePhone: "",
-    contactPerson: "",
-    nagariktaNo: "",
-    panNo: "",
-    nagariktaPhoto: null,
-    panPhoto: null,
-    userId: "",
-    userEmail: "",
-    academicQualification: "",
-    jobApplication: null,
-    hiringLetter: null,
-    resumeCv: null,
-    academicClassId: "",
-    academicClassName: "",
-    subjectIds: "",
-    subjectNames: "",
-    skillCertifications: null,
-  });
-
-  const [modalNotification, setModalNotification] = useState(null);
-  const [EditDetail, SetEditDetail] = useState(false);
-
-  const [sectionValidations, setSectionValidations] = useState({
-    personalDetails: { isValid: false, error: {} },
-    addressDetails: { isValid: false, error: {} },
-    contactDetails: { isValid: false, error: {} },
-    documentDetails: { isValid: false, error: {} },
-    teacherDetails: { isValid: false, error: {} },
-  });
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  // const {isSubmitting, submitForm} = {};
-  // const baseUrl = useBaseUrl();
-  // const {login, setToken} = useAuth();
-
-  useEffect(() => {
-    const allSectionValid = Object.values(sectionValidations).every(
-      (section) => section.isValid
-    );
-    setIsFormValid(allSectionValid);
-  }, [
-    sectionValidations.personalDetails.isValid,
-    sectionValidations.addressDetails.isValid,
-    sectionValidations.contactDetails.isValid,
-    sectionValidations.documentDetails.isValid,
-    sectionValidations.teacherDetails.isValid,
-  ]);
-
-  const updateSectionValidation = (sectionName, isValid, errors = {}) => {
-    setSectionValidations((prev) => ({
-      ...prev,
-      [sectionName]: { isValid, errors },
-    }));
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    if (files && files[0]) {
-      setFormData((prev) => ({ ...prev, [name]: files[0] }));
-    }
-  };
-
-  const handleSubmit = () => {
-    e.preventDefault();
-
-    if (!isFormValid) {
-      setModalNotification({
-        type: "error",
-        message:
-          "Please fill all required fields correctly before submitting the form.",
-      });
-      return;
-    }
-  };
+  const {
+    formData,
+    modalNotification,
+    sectionValidations,
+    updateSectionValidation,
+    handleChange,
+    handleFileChange,
+    handleSubmit,
+    isSubmitting,
+    setModalNotification,
+  } = useTeacherForm();
 
   return (
     <>
       <NavBar />
-      <form className={styles.mainDiv}>
+      <form className={styles.mainDiv} onSubmit={handleSubmit}>
         <div className={styles.scrollContainer}>
           <div className={styles.header}>
             <h1 className={styles.title}>Teacher Information</h1>
@@ -119,35 +36,64 @@ const TeacherInfoForm = () => {
               formData={formData}
               handleChange={handleChange}
               handleFileChange={handleFileChange}
+              onValidationChange={(isValid, errors) =>
+                updateSectionValidation("personalDetails", isValid, errors)
+              }
             />
             <AddressDetailsForm
               formData={formData}
               handleChange={handleChange}
+              onValidationChange={(isValid, errors) =>
+                updateSectionValidation("addressDetails", isValid, errors)
+              }
             />
             <ContactDetailsForm
               formData={formData}
               handleChange={handleChange}
+              onValidationChange={(isValid, errors) =>
+                updateSectionValidation("contactDetails", isValid, errors)
+              }
             />
             <DocumentDetailsForm
               formData={formData}
               handleChange={handleChange}
               handleFileChange={handleFileChange}
+              onValidationChange={(isValid, errors) =>
+                updateSectionValidation("documentDetails", isValid, errors)
+              }
             />
             <TeacherSpecificForm
               formData={formData}
               handleChange={handleChange}
               handleFileChange={handleFileChange}
+              onValidationChange={(isValid, errors) =>
+                updateSectionValidation("teacherDetails", isValid, errors)
+              }
             />
           </div>
 
           <div className={styles.buttonContainer}>
-            <button className={styles.cancelButton}>Cancel</button>
-            <button onClick={handleSubmit} className={styles.submitButton}>
-              Submit
+            <button type="button" className={styles.cancelButton}>
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </div>
         </div>
       </form>
+
+      {modalNotification && (
+        <ModalNotification
+          type={modalNotification.type}
+          message={modalNotification.message}
+          onClose={() => setModalNotification(null)}
+        />
+      )}
     </>
   );
 };

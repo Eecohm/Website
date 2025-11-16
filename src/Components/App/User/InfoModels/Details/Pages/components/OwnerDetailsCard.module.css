@@ -1,0 +1,7 @@
+/* OwnerDetailsCard.module.css - Main Details Card Wrapper Component */
+/* Uses shared styles from SectionCard.module.css and DetailsListShared.module.css */
+
+@import "./SectionCard.module.css";
+@import "./DetailsListShared.module.css";
+
+/* No additional card-specific styles needed - uses inherited shared styles */

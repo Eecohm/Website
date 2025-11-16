@@ -20,8 +20,9 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 2rem;
+  margin-bottom: 1rem;
 }
 .header .closeBtn {
   width: 40px;
@@ -37,7 +38,10 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
-  align-self: flex-end;
+  flex-shrink: 0;
+  padding: 0;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 .header .closeBtn:hover {
@@ -113,4 +117,263 @@
 
 .submitBtn:hover {
   background: #006e93;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signUpContainer {
+    padding: 20px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signUpForm {
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .header {
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .header .closeBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+
+  .formGroup label {
+    font-size: 0.85rem;
+  }
+
+  .formGroup input,
+  .formGroup select {
+    padding: 0.65rem;
+    font-size: 16px;
+  }
+
+  .togglePassword {
+    width: 45px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+
+  .submitBtn {
+    padding: 0.65rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .signUpContainer {
+    padding: 10px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .signUpForm {
+    padding: 1rem;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 95vw;
+  }
+
+  .header {
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    justify-content: space-between;
+  }
+
+  .header h2 {
+    font-size: 1.3rem;
+    flex: 1;
+  }
+
+  .header .closeBtn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    min-width: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
+  }
+
+  .formGroup {
+    margin-bottom: 0.8rem;
+  }
+
+  .formGroup label {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .formGroup input,
+  .formGroup select {
+    padding: 0.6rem;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+
+  .togglePassword {
+    width: 40px;
+    height: 26px;
+    font-size: 0.8rem;
+    right: 3px;
+  }
+
+  .error {
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+
+  .submitBtn {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .signUpContainer {
+    padding: 10px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signUpForm {
+    padding: 0.9rem;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 90vw;
+  }
+
+  .header {
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    justify-content: space-between;
+  }
+
+  .header h2 {
+    font-size: 1.1rem;
+    flex: 1;
+  }
+
+  .header .closeBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+    min-width: 30px;
+    min-height: 30px;
+    flex-shrink: 0;
+  }
+
+  .formGroup {
+    margin-bottom: 0.7rem;
+  }
+
+  .formGroup label {
+    font-size: 0.75rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .formGroup input,
+  .formGroup select {
+    padding: 0.55rem;
+    font-size: 13px;
+  }
+
+  .togglePassword {
+    width: 38px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+
+  .error {
+    font-size: 0.7rem;
+    margin-top: 0.15rem;
+  }
+
+  .submitBtn {
+    padding: 0.55rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .signUpContainer {
+    padding: 8px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signUpForm {
+    padding: 0.8rem;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 85vw;
+  }
+
+  .header {
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+    justify-content: space-between;
+  }
+
+  .header h2 {
+    font-size: 1rem;
+    flex: 1;
+  }
+
+  .header .closeBtn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    min-width: 28px;
+    min-height: 28px;
+    flex-shrink: 0;
+  }
+
+  .formGroup {
+    margin-bottom: 0.6rem;
+  }
+
+  .formGroup label {
+    font-size: 0.7rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .formGroup input,
+  .formGroup select {
+    padding: 0.5rem;
+    font-size: 12px;
+  }
+
+  .togglePassword {
+    width: 36px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+
+  .error {
+    font-size: 0.65rem;
+  }
+
+  .submitBtn {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
 }

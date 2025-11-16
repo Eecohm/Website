@@ -1,0 +1,7 @@
+route fixes ...done
+filter in route /admin
+allow user to submit form even on not remember Ma
+edit details should show the users previous dtails that they filled
+ui enhancements
+responvie user cards in smaller screen
+

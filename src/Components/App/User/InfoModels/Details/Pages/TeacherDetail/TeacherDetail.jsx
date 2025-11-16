@@ -22,10 +22,12 @@ const TeacherDetail = () => {
   const fetchTeacherData = async () => {
     try {
       // Use ViewSet endpoints: /api/user/teachers/{id}/ or /api/user/teachers/me/
-      const endpoint = userId 
-        ? `${baseUrl}/user/teachers/${userId}/`
-        : `${baseUrl}/user/teachers/me/`;
-        
+      const endpoint = userId
+        ? `${baseUrl}/api/user/teachers/${userId}/`
+        : `${baseUrl}/api/user/teachers/me/`;
+
+      console.log("Fetching teacher from:", endpoint);
+
       const response = await fetch(endpoint, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,11 +35,19 @@ const TeacherDetail = () => {
         },
       });
 
-      if (!response.ok) throw new Error("Failed to fetch teacher data");
+      console.log("Teacher response status:", response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Teacher fetch error response:", errorText);
+        throw new Error(`Failed to fetch teacher data: ${response.statusText}`);
+      }
 
       const data = await response.json();
+      console.log("Teacher data fetched:", data);
       setTeacher(data);
     } catch (err) {
+      console.error("Teacher fetch error:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -97,7 +107,11 @@ const TeacherDetail = () => {
           <div className={styles.photoSection}>
             <div className={styles.photoFrame}>
               {teacher.photo ? (
-                <img src={teacher.photo} alt="Teacher" className={styles.photo} />
+                <img
+                  src={teacher.photo}
+                  alt="Teacher"
+                  className={styles.photo}
+                />
               ) : (
                 <span className={styles.photoPlaceholder}>👤</span>
               )}
@@ -148,7 +162,11 @@ const TeacherDetail = () => {
             <div className={styles.infoRow}>
               <span className={styles.icon}>✅</span>
               <span className={styles.label}>KYC Status:</span>
-              <span className={`${styles.statusBadge} ${getKycStatusClass(teacher.kycStatus)}`}>
+              <span
+                className={`${styles.statusBadge} ${getKycStatusClass(
+                  teacher.kycStatus
+                )}`}
+              >
                 {teacher.kycStatus || "Unverified"}
               </span>
             </div>
@@ -164,19 +182,27 @@ const TeacherDetail = () => {
             <div className={styles.detailsList}>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Phone</span>
-                <span className={styles.detailValue}>{teacher.phone || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.phone || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Alternate Phone</span>
-                <span className={styles.detailValue}>{teacher.alternatePhone || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.alternatePhone || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Tell Phone</span>
-                <span className={styles.detailValue}>{teacher.tellPhone || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.tellPhone || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Contact Person</span>
-                <span className={styles.detailValue}>{teacher.contactPerson || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.contactPerson || "N/A"}
+                </span>
               </div>
             </div>
           </div>
@@ -189,24 +215,37 @@ const TeacherDetail = () => {
             <div className={styles.detailsList}>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Country</span>
-                <span className={styles.detailValue}>{teacher.country || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.country || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Province</span>
-                <span className={styles.detailValue}>{teacher.province || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.province || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Municipality</span>
-                <span className={styles.detailValue}>{teacher.municipality || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.municipality || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Ward / Tole</span>
-                <span className={styles.detailValue}>{teacher.ward}, {teacher.tole}</span>
+                <span className={styles.detailValue}>
+                  {teacher.ward}, {teacher.tole}
+                </span>
               </div>
               {teacher.pinPoint && (
                 <div className={styles.detailItem}>
                   <span className={styles.detailLabel}>Location</span>
-                  <a href={teacher.pinPoint} target="_blank" rel="noopener noreferrer" className={styles.detailLink}>
+                  <a
+                    href={teacher.pinPoint}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.detailLink}
+                  >
                     View on Map
                   </a>
                 </div>
@@ -222,11 +261,15 @@ const TeacherDetail = () => {
             <div className={styles.detailsList}>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Nagarikta No.</span>
-                <span className={styles.detailValue}>{teacher.nagariktaNo || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.nagariktaNo || "N/A"}
+                </span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>PAN No.</span>
-                <span className={styles.detailValue}>{teacher.panNo || "N/A"}</span>
+                <span className={styles.detailValue}>
+                  {teacher.panNo || "N/A"}
+                </span>
               </div>
             </div>
           </div>
@@ -242,7 +285,12 @@ const TeacherDetail = () => {
               <div className={styles.documentCard}>
                 <div className={styles.documentIcon}>🪪</div>
                 <div className={styles.documentName}>Nagarikta Photo</div>
-                <a href={teacher.nagariktaPhoto} target="_blank" rel="noopener noreferrer" className={styles.documentButton}>
+                <a
+                  href={teacher.nagariktaPhoto}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.documentButton}
+                >
                   View
                 </a>
               </div>
@@ -251,7 +299,12 @@ const TeacherDetail = () => {
               <div className={styles.documentCard}>
                 <div className={styles.documentIcon}>💳</div>
                 <div className={styles.documentName}>PAN Photo</div>
-                <a href={teacher.panPhoto} target="_blank" rel="noopener noreferrer" className={styles.documentButton}>
+                <a
+                  href={teacher.panPhoto}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.documentButton}
+                >
                   View
                 </a>
               </div>
@@ -259,8 +312,15 @@ const TeacherDetail = () => {
             {teacher.academicQualification && (
               <div className={styles.documentCard}>
                 <div className={styles.documentIcon}>🎓</div>
-                <div className={styles.documentName}>Academic Qualification</div>
-                <a href={teacher.academicQualification} target="_blank" rel="noopener noreferrer" className={styles.documentButton}>
+                <div className={styles.documentName}>
+                  Academic Qualification
+                </div>
+                <a
+                  href={teacher.academicQualification}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.documentButton}
+                >
                   View
                 </a>
               </div>
@@ -269,7 +329,12 @@ const TeacherDetail = () => {
               <div className={styles.documentCard}>
                 <div className={styles.documentIcon}>📜</div>
                 <div className={styles.documentName}>Skill Certifications</div>
-                <a href={teacher.skillCertifications} target="_blank" rel="noopener noreferrer" className={styles.documentButton}>
+                <a
+                  href={teacher.skillCertifications}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.documentButton}
+                >
                   View
                 </a>
               </div>
@@ -278,7 +343,12 @@ const TeacherDetail = () => {
               <div className={styles.documentCard}>
                 <div className={styles.documentIcon}>📋</div>
                 <div className={styles.documentName}>Resume/CV</div>
-                <a href={teacher.resumeCv} target="_blank" rel="noopener noreferrer" className={styles.documentButton}>
+                <a
+                  href={teacher.resumeCv}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.documentButton}
+                >
                   View
                 </a>
               </div>
@@ -287,7 +357,12 @@ const TeacherDetail = () => {
               <div className={styles.documentCard}>
                 <div className={styles.documentIcon}>📝</div>
                 <div className={styles.documentName}>Job Application</div>
-                <a href={teacher.jobApplication} target="_blank" rel="noopener noreferrer" className={styles.documentButton}>
+                <a
+                  href={teacher.jobApplication}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.documentButton}
+                >
                   View
                 </a>
               </div>
@@ -296,7 +371,12 @@ const TeacherDetail = () => {
               <div className={styles.documentCard}>
                 <div className={styles.documentIcon}>✉️</div>
                 <div className={styles.documentName}>Hiring Letter</div>
-                <a href={teacher.hiringLetter} target="_blank" rel="noopener noreferrer" className={styles.documentButton}>
+                <a
+                  href={teacher.hiringLetter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.documentButton}
+                >
                   View
                 </a>
               </div>

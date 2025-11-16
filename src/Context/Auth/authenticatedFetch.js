@@ -1,6 +1,15 @@
-import { getCookie } from "./Cookies";
+import { getToken, setSessionToken } from "./Cookies";
 import { attemptTokenRefresh } from "./TokenRefresh";
 
+/**
+ * Authenticated Fetch - Automatically includes auth token in all API requests
+ *
+ * Token Resolution:
+ * - Checks sessionStorage first (active session token)
+ * - Falls back to cookies (persistent token from "Remember Me")
+ *
+ * This ensures requests always have valid credentials regardless of "Remember Me" setting
+ */
 export const authenticatedFetch = async (
   url,
   options = {},
@@ -8,7 +17,8 @@ export const authenticatedFetch = async (
   login,
   setToken
 ) => {
-  const token = getCookie("accessToken");
+  // Get token from sessionStorage or cookies (with priority to sessionStorage)
+  const token = getToken("accessToken");
 
   // Ensure we include credentials (cookies) on all requests by default.
   // Honor caller-provided `credentials` if explicitly set in options.
@@ -24,10 +34,12 @@ export const authenticatedFetch = async (
 
   let response = await fetch(url, { ...fetchOptions, headers });
 
+  // If 401 and we have a token, try to refresh
   if (response.status === 401 && token) {
     const refreshSuccess = await attemptTokenRefresh(baseUrl, login, setToken);
     if (refreshSuccess) {
-      const newToken = getCookie("accessToken");
+      // Get the new token from hybrid storage
+      const newToken = getToken("accessToken");
       const retryHeaders = {
         ...fetchOptions.headers,
         Authorization: `Bearer ${newToken}`,

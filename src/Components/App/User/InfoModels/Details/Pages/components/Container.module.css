@@ -1,0 +1,18 @@
+/* Container.module.css - Main Container and Global Responsive Styles */
+
+.detailContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f1419 0%, #1a202c 50%, #2d3748 100%);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detailContainer {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+}

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useBaseUrl } from "../../../Context/BaseUrlContext";
 import { useAuth } from "../../../Context/AuthContext";
@@ -10,6 +10,7 @@ import {
 import {
   isOnlyAlphabets,
   isValidString,
+  validatePANNo,
 } from "../../../validators/formInputValidator/TextValidator";
 import {
   isJPGFile,
@@ -21,10 +22,11 @@ export default function useOrganizationForm() {
   const token = useAuth();
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [currentStep, setCurrentStep] = useState(0);
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     orgName: "",
     orgAddress: "",
     telPhoneNo: "",
@@ -36,7 +38,9 @@ export default function useOrganizationForm() {
     panImage: null,
     registrationImage: null,
     vatImage: null,
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const [imageErrors, setImageErrors] = useState({
     logoUrl: "",
@@ -59,6 +63,9 @@ export default function useOrganizationForm() {
     telPhoneNo: true,
     phoneNo: true,
   });
+  const [fieldError, setFieldError] = useState({
+    panNumber: "",
+  });
 
   const [showNotification, setShowNotification] = useState(false);
   const [notificationConfig, setNotificationConfig] = useState({
@@ -68,6 +75,43 @@ export default function useOrganizationForm() {
     duration: 3000,
   });
 
+  // Initialize form with owner data if in edit mode
+  useEffect(() => {
+    if (location.state?.isEditMode && location.state?.owner) {
+      const owner = location.state.owner;
+      setFormData((prev) => ({
+        ...prev,
+        orgName: owner.firstName || "",
+        orgAddress: owner.address || "",
+        telPhoneNo: owner.phone || "",
+        phoneNo: owner.alternatePhone || "",
+        emailAddress: owner.userEmail || "",
+        panNumber: owner.panNo || "",
+        vatNumber: owner.nagariktaNo || "",
+      }));
+
+      // Set preview images if they exist
+      if (owner.photo) {
+        setPreviewImages((prev) => ({
+          ...prev,
+          logoUrl: owner.photo,
+        }));
+      }
+      if (owner.nagariktaPhoto) {
+        setPreviewImages((prev) => ({
+          ...prev,
+          registrationImage: owner.nagariktaPhoto,
+        }));
+      }
+      if (owner.panPhoto) {
+        setPreviewImages((prev) => ({
+          ...prev,
+          panImage: owner.panPhoto,
+        }));
+      }
+    }
+  }, [location.state?.isEditMode, location.state?.owner]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -75,6 +119,7 @@ export default function useOrganizationForm() {
 
     const trimmed = value.trim();
     let valid = true;
+    let error = "";
     switch (name) {
       case "orgName":
         valid = trimmed.length === 0 || isOnlyAlphabets(trimmed);
@@ -87,6 +132,11 @@ export default function useOrganizationForm() {
         break;
       case "phoneNo":
         valid = trimmed.length === 0 || isValidPhone(trimmed);
+        break;
+      case "panNumber":
+        error = validatePANNo(trimmed) || "";
+        valid = !error;
+        setFieldError((prev) => ({ ...prev, [name]: error }));
         break;
       default:
         valid = true;
@@ -228,6 +278,7 @@ export default function useOrganizationForm() {
     previewImages,
     fieldTouched,
     fieldValid,
+    fieldError,
     showNotification,
     notificationConfig,
     handleChange,

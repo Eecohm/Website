@@ -11,6 +11,71 @@
   z-index: 1;
 }
 
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+  .container {
+    margin-left: 0;
+    margin-top: 80px;
+    padding: 1.2rem;
+  }
+  .header {
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
+  .cardGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+  .card {
+    padding: 1.2rem;
+    min-height: 100px;
+  }
+}
+
+/* Mobile (≤600px) */
+@media (max-width: 600px) {
+  .container {
+    margin-left: 0;
+    margin-top: 60px;
+    padding: 0.5rem;
+  }
+  .header {
+    margin-bottom: 1rem;
+    padding: 0 0.2rem;
+    text-align: left;
+  }
+  .title {
+    font-size: 1.4rem;
+  }
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  .cardGrid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    max-width: 100%;
+  }
+  .card {
+    padding: 0.7rem;
+    min-height: 80px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+  .cardIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  .cardTitle {
+    font-size: 1rem;
+  }
+  .cardDescription {
+    font-size: 0.8rem;
+  }
+}
+
 /* Header Section */
 .header {
   margin-bottom: 3rem;
@@ -317,13 +382,23 @@
 @media (max-width: 1024px) {
   .container {
     margin-left: 0;
-    margin-top: 100px;
-    padding: 1.5rem;
+    margin-top: 80px;
+    padding: 1.2rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
   }
 
   .cardGrid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 100%;
+  }
+  .card {
+    padding: 1.2rem;
+    min-height: 100px;
   }
 
   .title {
@@ -333,12 +408,14 @@
 
 @media (max-width: 768px) {
   .container {
+    margin-left: 0;
+    margin-top: 60px;
     padding: 1rem;
-    margin-top: 100px;
   }
 
   .title {
     font-size: 2rem;
+    margin-top: 2rem;
   }
 
   .subtitle {
@@ -373,7 +450,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .container {
     padding: 0.75rem;
     margin-top: 100px;

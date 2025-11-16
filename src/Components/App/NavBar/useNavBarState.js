@@ -36,22 +36,44 @@ export default function useNavBarState() {
   // Close sidebar/settings when clicking outside
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (
-        !event.target.closest(`.${styles.navBar}`) &&
-        !event.target.closest(`.${styles.navBarToggle}`) &&
-        !event.target.closest(`.${styles.settingsContainer}`)
+      const target = event.target;
+
+      // Check if click is outside all interactive elements
+      const isClickOutsideSidebar = !target.closest(`.${styles.navBar}`);
+      const isClickOutsideToggle = !target.closest(`.${styles.navBarToggle}`);
+      const isClickOutsideSettings = !target.closest(
+        `.${styles.settingsContainer}`
+      );
+      const isClickOnBackdrop = target.classList.contains(styles.backdrop);
+
+      if (isClickOnBackdrop) {
+        // Backdrop clicked - close everything
+        setIsSidebarOpen(false);
+        setIsSettingsOpen(false);
+      } else if (
+        isClickOutsideSidebar &&
+        isClickOutsideToggle &&
+        isClickOutsideSettings
       ) {
+        // Clicked outside all menus
         setIsSidebarOpen(false);
         setIsSettingsOpen(false);
       }
     };
 
+    const handleTouchOutside = (event) => {
+      // Handle touch events the same way as clicks
+      handleOutsideClick(event);
+    };
+
     if (isSidebarOpen || isSettingsOpen) {
       document.addEventListener("click", handleOutsideClick);
+      document.addEventListener("touchend", handleTouchOutside);
     }
 
     return () => {
       document.removeEventListener("click", handleOutsideClick);
+      document.removeEventListener("touchend", handleTouchOutside);
     };
   }, [isSidebarOpen, isSettingsOpen]);
 
@@ -61,14 +83,10 @@ export default function useNavBarState() {
     setIsSettingsOpen(false);
   }, [location.pathname]);
 
-  const toggleSidebar = useCallback(
-    (event) => {
-      if (event && event.stopPropagation) event.stopPropagation();
-      setIsSidebarOpen((s) => !s);
-      if (isSettingsOpen) setIsSettingsOpen(false);
-    },
-    [isSettingsOpen]
-  );
+  const toggleSidebar = useCallback(() => {
+    setIsSidebarOpen((s) => !s);
+    setIsSettingsOpen(false);
+  }, []);
 
   const toggleSettings = useCallback(
     (event) => {

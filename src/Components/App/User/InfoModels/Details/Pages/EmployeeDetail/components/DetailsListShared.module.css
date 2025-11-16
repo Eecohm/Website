@@ -1,0 +1,45 @@
+.detailLink {
+  color: #63b3ed;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.detailLink:hover {
+  color: #4299e1;
+  border-bottom-color: rgba(99, 179, 237, 0.5);
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.3rem 0;
+  transition: all 0.2s ease;
+}
+
+.detailItem:hover .detailLabel {
+  color: #cbd5e0;
+}
+
+.detailLabel {
+  font-size: 0.7rem;
+  color: #a0aec0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.detailValue {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  word-break: break-word;
+  font-weight: 500;
+}

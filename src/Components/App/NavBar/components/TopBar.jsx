@@ -16,19 +16,42 @@ const TopBar = ({
   settingsItems = [],
   handleSettingsItemClick,
 }) => {
+  const handleToggleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleSidebar();
+  };
+
+  const handleTouchStart = (e) => {
+    // Touch events may have slightly different handling
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleTouchEnd = (e) => {
+    // Trigger click on touch end for better mobile UX
+    handleToggleClick(e);
+  };
+
   return (
     <header className={styles.topBar}>
       <div className={styles.topBarContent}>
         <div className={styles.topBarLeft}>
-          <div
+          <button
             className={styles.navBarToggle}
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleSidebar(e);
-            }}
+            onClick={handleToggleClick}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            type="button"
+            aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isSidebarOpen}
           >
-            <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faBars} />
-          </div>
+            {isSidebarOpen ? (
+              <FontAwesomeIcon icon={faTimes} />
+            ) : (
+              <FontAwesomeIcon icon={faBars} />
+            )}
+          </button>
           <Logo className={styles.topBarLogo} onClick={handleLogoClick} />
         </div>
         <h1 className={styles.schoolName} onClick={handleLogoClick}>

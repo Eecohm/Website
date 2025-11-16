@@ -1,4 +1,4 @@
-// src/hooks/useUserFilters.js
+// src/h.6oks/useUserFilters.js
 import { useState, useMemo } from "react";
 
 export const useUserFilters = (users) => {
@@ -14,30 +14,46 @@ export const useUserFilters = (users) => {
   const filteredUsers = useMemo(() => {
     if (!users || users.length === 0) return [];
 
-    return users.filter((user) => {
+    const result = users.filter((user) => {
       // Search filter
+      const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
       const matchesSearch =
-        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.role.toLowerCase().includes(searchQuery.toLowerCase());
+        fullName.includes(searchQuery.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.phone?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.category?.toLowerCase().includes(searchQuery.toLowerCase());
 
       // Role filter
-      const matchesRole = filters.role === "all" || user.role === filters.role;
+      const matchesRole =
+        filters.role === "all" ||
+        user.category === filters.role ||
+        user.category === `${filters.role}s`;
 
-      // Verification filter
+      // Verification/Status filter - use verified field
       const matchesVerified =
-        filters.verified === "all" || user.verified === filters.verified;
+        filters.verified === "all" ||
+        (filters.verified === "verified" && user.verified) ||
+        (filters.verified === "unverified" && !user.verified);
 
-      // KYC filter
+      // KYC filter - use kycStatus field
       const matchesKyc =
         filters.kycStatus === "all" || user.kycStatus === filters.kycStatus;
 
-      // Active filter
+      // Active filter - use isActive field
+      // const matchesActive =
+      //   filters.active === "all" ||
+      //   (filters.active === "active" && user.isActive) ||
+      //   (filters.active === "inactive" && !user.isActive);
       const matchesActive =
-        filters.active === "all" || user.active === filters.active;
+        filters.active === "all" ||
+        (filters.active === "active" && user.isActive !== false) ||
+        (filters.active === "inactive" && user.isActive === false);
 
-      // Date filter
+      // Date filter - proper date comparison
       const matchesDate =
-        !filters.createdAt || user.createdAt === filters.createdAt;
+        !filters.createdAt ||
+        new Date(user.submittedAt).toDateString() ===
+          new Date(filters.createdAt).toDateString();
 
       return (
         matchesSearch &&
@@ -48,6 +64,20 @@ export const useUserFilters = (users) => {
         matchesDate
       );
     });
+
+    // Debug logging
+    console.log("Filter Debug:", {
+      totalUsers: users.length,
+      filteredCount: result.length,
+      activeFilters: Object.fromEntries(
+        Object.entries(filters).filter(
+          ([key, value]) => value !== "all" && value !== ""
+        )
+      ),
+      searchQuery: searchQuery || "none",
+    });
+
+    return result;
   }, [users, searchQuery, filters]);
 
   return {

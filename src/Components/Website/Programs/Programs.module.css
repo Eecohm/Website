@@ -1,51 +1,46 @@
+/* Centered section with realistic red-to-creamy white blend and animated cards */
 .programs-section {
-  background-color: #f7f7f7;
-  justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-}
-
-.programs::-webkit-scrollbar {
-  display: none;
-}
-.title{
-  font-size: 5vh;
-}
-
-.programs {
-  width: 100vw; /* Container takes full viewport width */
-  overflow-x: auto; /* Enable horizontal scrolling */
-  overflow-y: hidden; /* Prevent vertical scrolling */
-  padding: 1rem 0; /* Single padding declaration */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
-  white-space: nowrap; /* Prevent wrapping */
-  background-color: rgba(223, 190, 0, 0.5);
-  margin-bottom: 5vh;
-}
-
-.programs::-webkit-scrollbar {
-  height: 8px;
-}
-
-.programs::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.programs::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-.programs::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  justify-content: center;
+  background: linear-gradient(#fffbe6, #ffd580);
+  position: relative;
+  padding: 2rem 0;
+  min-height: 60vh;
 }
 
 .course-card-container {
-  width: 160vw; /* Wider than viewport for scrolling content */
   display: flex;
-  gap: 1rem; /* Space between cards */
-  padding: 0 1rem;
+  flex-direction: row;
+  padding-left: 2rem;
+  gap: 2.5rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 2rem;
+  overflow-x: auto;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #bdbdbd transparent;
+  padding-bottom: 1.5rem;
 }
 
-.animate-title {
-  /* Add your animation styles here if needed */
+.programs {
+  width: 100%;
+}
+
+.course-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(128, 0, 0, 0.08);
+  padding: 1.2rem 1.5rem;
+  min-width: 220px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(128, 0, 0, 0.15);
 }

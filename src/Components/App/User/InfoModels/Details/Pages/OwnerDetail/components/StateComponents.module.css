@@ -1,0 +1,45 @@
+/* StateComponents.module.css - Loading and Error States */
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1.5rem;
+}
+
+.spinner {
+  width: 70px;
+  height: 70px;
+  border: 5px solid rgba(99, 179, 237, 0.15);
+  border-top-color: #63b3ed;
+  border-right-color: #4fd1c5;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  box-shadow: 0 0 20px rgba(99, 179, 237, 0.2);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText,
+.errorText {
+  color: #cbd5e0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.errorText {
+  color: #fc8181;
+}
+
+.errorIcon {
+  color: #fc8181;
+  width: 48px;
+  height: 48px;
+}

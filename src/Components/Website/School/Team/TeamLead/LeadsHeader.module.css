@@ -1,52 +1,66 @@
 .leadsHeader {
-    margin-bottom: 50px;
-    position: relative;
-    width: 60vw;
-    z-index: 100;
-    background-color: #fff;
-    padding: 2vh;
-    border-radius: 15px;
+  margin-bottom: 24px;
+  position: relative;
+  width: 50vw;
+  z-index: 100;
+  background: linear-gradient(
+    to bottom,
+    #fff8e1 0%,
+    #ffd580 20%,
+    #ffd580 80%,
+    #ffa500 100%
+  );
+
+  padding: 1.2rem 2vw;
+  border-radius: 15px;
+  min-height: 80px;
+}
+
+.leadsHeader h2 {
+  font-size: 2rem;
+  color: #800000;
+  margin: 0;
+  font-weight: bold;
+  animation: slideIn 1s ease-out;
+}
+
+.leadsHeader p {
+  font-size: 1.1rem;
+  color: #694a10;
+  margin-top: 8px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
   .leadsHeader h2 {
-    font-size: 3rem;
-    color: #800000;
-    margin: 0;
-    font-weight: bold;
-    animation: slideIn 1s ease-out;
+    font-size: 2.2rem;
   }
-  
+
   .leadsHeader p {
-    font-size: 1.3rem;
-    color: #444;
-    margin-top: 10px;
+    font-size: 1.1rem;
   }
-  
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .leadsHeader {
+    width: 100vw;
   }
-  
-  @media (max-width: 768px) {
-    .leadsHeader h2 {
-      font-size: 2.2rem;
-    }
-  
-    .leadsHeader p {
-      font-size: 1.1rem;
-    }
+
+  .leadsHeader h2 {
+    font-size: 1rem;
   }
-  
-  @media (max-width: 480px) {
-    .leadsHeader {
-      width: 100vw;
-    }
-  
-    .leadsHeader h2 {
-      font-size: 1rem;
-    }
-  
-    .leadsHeader p {
-      font-size: 0.5rem;
-    }
+
+  .leadsHeader p {
+    font-size: 0.5rem;
   }
+}

@@ -3,7 +3,21 @@ import styles from "../NavBar.module.css";
 
 const Backdrop = ({ visible, onClose }) => {
   if (!visible) return null;
-  return <div className={styles.backdrop} onClick={onClose} />;
+
+  const handleClose = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onClose();
+  };
+
+  return (
+    <div
+      className={styles.backdrop}
+      onClick={handleClose}
+      onTouchEnd={handleClose}
+      role="presentation"
+    />
+  );
 };
 
 export default Backdrop;
