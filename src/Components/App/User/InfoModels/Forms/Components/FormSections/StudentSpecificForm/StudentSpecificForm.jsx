@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GraduationCap } from "lucide-react";
+import { FiBookOpen } from "react-icons/fi";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
 import GlassFileUpload from "../../FormComponents/GlassFileUpload/GlassFileUpload";
@@ -63,7 +63,7 @@ const StudentSpecificForm = ({
   };
 
   return (
-    <FormSection title="Student Details" icon={GraduationCap}>
+    <FormSection title="Student Details" icon={FiBookOpen}>
       <GlassInput
         label="Imies Code"
         name="userId"
@@ -73,6 +73,7 @@ const StudentSpecificForm = ({
         onChange={handleChange}
         validate={validateUserId}
         onValidate={handleFieldValidation}
+        disabled={true}
       />
 
       <GlassInput
@@ -84,6 +85,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateAcademicClassId}
         onValidate={handleFieldValidation}
+        disabled={true}
       />
       <GlassInput
         label="Academic Class Name"
@@ -94,6 +96,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateAcademicClassName}
         onValidate={handleFieldValidation}
+        disabled={true}
       />
 
       <GlassFileUpload
@@ -104,6 +107,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateIdCardFile}
         onValidate={handleFieldValidation}
+        disabled={true}
       />
       <GlassFileUpload
         label="Transfer Certificate"
@@ -113,6 +117,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateTransferCertificate}
         onValidate={handleFieldValidation}
+        disabled={true}
       />
       <GlassFileUpload
         label="Class 10 Marksheet"
@@ -122,6 +127,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateClass10Marksheet}
         onValidate={handleFieldValidation}
+        disabled={true}
       />
       <GlassInput
         label="Created By Admin"
@@ -132,6 +138,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateCreatedByAdmin}
         onValidate={handleFieldValidation}
+        disabled={true}
       />
     </FormSection>
   );

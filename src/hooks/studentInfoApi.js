@@ -1,7 +1,7 @@
 import { authenticatedFetch } from "@/Context/Auth/authenticatedFetch";
 import { getCookie } from "@/Context/Auth/Cookies";
 
-export const submitStudentInfo = async (formData, baseUrl, login, setToken) => {
+export const submitStudentInfo = async (formData, baseUrl, login, setToken, studentId = null) => {
   try {
     // it retrieves the user id and access token from browser cookies
     const userId = getCookie("id");
@@ -62,10 +62,10 @@ export const submitStudentInfo = async (formData, baseUrl, login, setToken) => {
 
     //api request: This sends the FormData to the backend server using an authenticated fetch function.
     const response = await authenticatedFetch(
-      `${baseUrl}/user/students/`,
+      studentId ? `${baseUrl}/user/students/${studentId}/` : `${baseUrl}/user/students/`,
       {
-        //POST is used to create a new resource, while PUT is used to update an existing resource. In this case, since we are submitting new student information, POST is the appropriate method.
-        method: "POST",
+        // Use PUT for updates, POST for new submissions
+        method: studentId ? "PUT" : "POST",
         body: submitData,
       },
 

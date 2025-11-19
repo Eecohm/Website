@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Phone } from "lucide-react";
+import { FiPhone } from "react-icons/fi";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
 import {
@@ -47,7 +47,7 @@ const ContactDetailsForm = ({ formData, handleChange, onValidationChange }) => {
   };
 
   return (
-    <FormSection title="Contact Details" icon={Phone}>
+    <FormSection title="Contact Details" icon={FiPhone}>
       <GlassInput
         label="Telephone"
         name="tellPhone"

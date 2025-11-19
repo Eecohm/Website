@@ -2,6 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // Changed from useSearchParams
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
+import {
+  FiEdit,
+  FiUser,
+  FiMail,
+  FiCalendar,
+  FiPhone,
+  FiMapPin,
+  FiFileText,
+  FiCreditCard,
+  FiFile,
+  FiClipboard,
+} from "react-icons/fi";
 import styles from "../DetailCard.module.css";
 
 const StudentDetail = () => {
@@ -15,15 +27,18 @@ const StudentDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // If no userId provided, redirect to dashboard
+    if (!userId) {
+      navigate("/dashboard");
+      return;
+    }
     fetchStudentData();
   }, [userId]);
 
   const fetchStudentData = async () => {
     try {
-      // Use ViewSet endpoints: /api/user/students/{id}/ or /api/user/students/me/
-      const endpoint = userId
-        ? `${baseUrl}/api/user/students/${userId}/`
-        : `${baseUrl}/api/user/students/me/`;
+      // Use ViewSet endpoint: /api/user/students/{id}/
+      const endpoint = `${baseUrl}/user/students/${userId}/`;
 
       console.log("Fetching student from:", endpoint);
 
@@ -54,7 +69,10 @@ const StudentDetail = () => {
   };
 
   const handleEdit = () => {
-    navigate("/dashboard/users/info/student/form");
+    // Navigate to form with student data for editing
+    navigate("/dashboard/users/info/student/form", {
+      state: { studentData: student, isEditing: true }
+    });
   };
 
   const getKycStatusClass = (status) => {
@@ -97,7 +115,8 @@ const StudentDetail = () => {
       <div className={styles.header}>
         <h1 className={styles.title}>Student Profile</h1>
         <button onClick={handleEdit} className={styles.editButton}>
-          ✏️ Edit Profile
+          <FiEdit size={16} />
+          Edit Profile
         </button>
       </div>
 
@@ -112,7 +131,7 @@ const StudentDetail = () => {
                   className={styles.photo}
                 />
               ) : (
-                <span className={styles.photoPlaceholder}>👤</span>
+                <FiUser size={48} className={styles.photoPlaceholder} />
               )}
             </div>
           </div>
@@ -123,7 +142,7 @@ const StudentDetail = () => {
             </h2>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>🎓</span>
+              <FiUser className={styles.icon} />
               <span className={styles.label}>Class:</span>
               <span className={styles.value}>
                 {student.academicClassName || "Not Assigned"}
@@ -131,13 +150,13 @@ const StudentDetail = () => {
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>📧</span>
+              <FiMail className={styles.icon} />
               <span className={styles.label}>Email:</span>
               <span className={styles.value}>{student.userEmail || "N/A"}</span>
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>🎂</span>
+              <FiCalendar className={styles.icon} />
               <span className={styles.label}>Date of Birth:</span>
               <span className={styles.value}>
                 {new Date(student.dateOfBirth).toLocaleDateString()}
@@ -167,7 +186,7 @@ const StudentDetail = () => {
         <div className={styles.sectionsGrid}>
           <div className={styles.sectionCard}>
             <div className={styles.sectionHeader}>
-              <span className={styles.sectionIcon}>📞</span>
+              <FiPhone className={styles.sectionIcon} />
               <h3 className={styles.sectionTitle}>Contact Information</h3>
             </div>
             <div className={styles.detailsList}>
@@ -200,7 +219,7 @@ const StudentDetail = () => {
 
           <div className={styles.sectionCard}>
             <div className={styles.sectionHeader}>
-              <span className={styles.sectionIcon}>📍</span>
+              <FiMapPin className={styles.sectionIcon} />
               <h3 className={styles.sectionTitle}>Address</h3>
             </div>
             <div className={styles.detailsList}>
@@ -249,56 +268,58 @@ const StudentDetail = () => {
               )}
             </div>
           </div>
-        </div>
 
-        <div className={styles.sectionCard}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionIcon}>📄</span>
-            <h3 className={styles.sectionTitle}>Documents</h3>
-          </div>
-          <div className={styles.documentsGrid}>
-            {student.idCard && (
-              <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>🪪</div>
-                <div className={styles.documentName}>ID Card</div>
-                <a
-                  href={student.idCard}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.documentButton}
-                >
-                  View
-                </a>
-              </div>
-            )}
-            {student.transferCertificate && (
-              <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>📜</div>
-                <div className={styles.documentName}>Transfer Certificate</div>
-                <a
-                  href={student.transferCertificate}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.documentButton}
-                >
-                  View
-                </a>
-              </div>
-            )}
-            {student.class10Marksheet && (
-              <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>📋</div>
-                <div className={styles.documentName}>Class 10 Marksheet</div>
-                <a
-                  href={student.class10Marksheet}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.documentButton}
-                >
-                  View
-                </a>
-              </div>
-            )}
+          <div className={styles.sectionCard}>
+            <div className={styles.sectionHeader}>
+              <FiFileText className={styles.sectionIcon} />
+              <h3 className={styles.sectionTitle}>Documents</h3>
+            </div>
+            <div className={styles.documentsGrid}>
+              {student.idCard && (
+                <div className={styles.documentCard}>
+                  <FiCreditCard className={styles.documentIcon} />
+                  <div className={styles.documentName}>ID Card</div>
+                  <a
+                    href={student.idCard}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.documentButton}
+                  >
+                    View
+                  </a>
+                </div>
+              )}
+              {student.transferCertificate && (
+                <div className={styles.documentCard}>
+                  <FiFile className={styles.documentIcon} />
+                  <div className={styles.documentName}>
+                    Transfer Certificate
+                  </div>
+                  <a
+                    href={student.transferCertificate}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.documentButton}
+                  >
+                    View
+                  </a>
+                </div>
+              )}
+              {student.class10Marksheet && (
+                <div className={styles.documentCard}>
+                  <FiClipboard className={styles.documentIcon} />
+                  <div className={styles.documentName}>Class 10 Marksheet</div>
+                  <a
+                    href={student.class10Marksheet}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.documentButton}
+                  >
+                    View
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -1,30 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
+import {
+  FiEdit,
+  FiUser,
+  FiMail,
+  FiCalendar,
+  FiPhone,
+  FiMapPin,
+  FiFileText,
+  FiCreditCard,
+  FiFile,
+  FiBookOpen,
+} from "react-icons/fi";
 import styles from "../DetailCard.module.css";
 
 const TeacherDetail = () => {
   const navigate = useNavigate();
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
-  const [searchParams] = useSearchParams();
-  const userId = searchParams.get("id");
+  const { id: userId } = useParams(); // Get id from URL path instead of query
 
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // If no userId provided, redirect to dashboard
+    if (!userId) {
+      navigate("/dashboard");
+      return;
+    }
     fetchTeacherData();
   }, [userId]);
 
   const fetchTeacherData = async () => {
     try {
-      // Use ViewSet endpoints: /api/user/teachers/{id}/ or /api/user/teachers/me/
-      const endpoint = userId
-        ? `${baseUrl}/api/user/teachers/${userId}/`
-        : `${baseUrl}/api/user/teachers/me/`;
+      // Use ViewSet endpoint: /api/user/teachers/{id}/
+      const endpoint = `${baseUrl}/user/teachers/${userId}/`;
 
       console.log("Fetching teacher from:", endpoint);
 
@@ -55,7 +69,10 @@ const TeacherDetail = () => {
   };
 
   const handleEdit = () => {
-    navigate("/dashboard/users/info/teacher/form");
+    // Navigate to form with teacher data for editing
+    navigate("/dashboard/users/info/teacher/form", {
+      state: { teacherData: teacher, isEditing: true },
+    });
   };
 
   const getKycStatusClass = (status) => {
@@ -84,7 +101,7 @@ const TeacherDetail = () => {
     return (
       <div className={styles.detailContainer}>
         <div className={styles.errorContainer}>
-          <span className={styles.icon}>⚠️</span>
+          <FiFileText className={styles.icon} />
           <p className={styles.errorText}>{error}</p>
         </div>
       </div>
@@ -98,7 +115,8 @@ const TeacherDetail = () => {
       <div className={styles.header}>
         <h1 className={styles.title}>Teacher Profile</h1>
         <button onClick={handleEdit} className={styles.editButton}>
-          ✏️ Edit Profile
+          <FiEdit size={16} />
+          Edit Profile
         </button>
       </div>
 
@@ -113,7 +131,7 @@ const TeacherDetail = () => {
                   className={styles.photo}
                 />
               ) : (
-                <span className={styles.photoPlaceholder}>👤</span>
+                <FiUser size={48} className={styles.photoPlaceholder} />
               )}
             </div>
           </div>
@@ -124,7 +142,7 @@ const TeacherDetail = () => {
             </h2>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>🏫</span>
+              <FiBookOpen className={styles.icon} />
               <span className={styles.label}>Primary Class:</span>
               <span className={styles.value}>
                 {teacher.academicClassName || "Not Assigned"}
@@ -132,7 +150,7 @@ const TeacherDetail = () => {
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>📚</span>
+              <FiFileText className={styles.icon} />
               <span className={styles.label}>Subjects:</span>
               <span className={styles.value}>
                 {teacher.subjectNames?.join(", ") || "None"}
@@ -140,13 +158,13 @@ const TeacherDetail = () => {
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>📧</span>
+              <FiMail className={styles.icon} />
               <span className={styles.label}>Email:</span>
               <span className={styles.value}>{teacher.userEmail || "N/A"}</span>
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>🎂</span>
+              <FiCalendar className={styles.icon} />
               <span className={styles.label}>Date of Birth:</span>
               <span className={styles.value}>
                 {new Date(teacher.dateOfBirth).toLocaleDateString()}
@@ -154,13 +172,13 @@ const TeacherDetail = () => {
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>⚧</span>
+              <FiUser className={styles.icon} />
               <span className={styles.label}>Gender:</span>
               <span className={styles.value}>{teacher.gender}</span>
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.icon}>✅</span>
+              <FiCreditCard className={styles.icon} />
               <span className={styles.label}>KYC Status:</span>
               <span
                 className={`${styles.statusBadge} ${getKycStatusClass(
@@ -176,7 +194,7 @@ const TeacherDetail = () => {
         <div className={styles.sectionsGrid}>
           <div className={styles.sectionCard}>
             <div className={styles.sectionHeader}>
-              <span className={styles.sectionIcon}>📞</span>
+              <FiPhone className={styles.sectionIcon} />
               <h3 className={styles.sectionTitle}>Contact Information</h3>
             </div>
             <div className={styles.detailsList}>
@@ -209,7 +227,7 @@ const TeacherDetail = () => {
 
           <div className={styles.sectionCard}>
             <div className={styles.sectionHeader}>
-              <span className={styles.sectionIcon}>📍</span>
+              <FiMapPin className={styles.sectionIcon} />
               <h3 className={styles.sectionTitle}>Address</h3>
             </div>
             <div className={styles.detailsList}>
@@ -255,7 +273,7 @@ const TeacherDetail = () => {
 
           <div className={styles.sectionCard}>
             <div className={styles.sectionHeader}>
-              <span className={styles.sectionIcon}>🆔</span>
+              <FiCreditCard className={styles.sectionIcon} />
               <h3 className={styles.sectionTitle}>Identity Documents</h3>
             </div>
             <div className={styles.detailsList}>
@@ -277,13 +295,15 @@ const TeacherDetail = () => {
 
         <div className={styles.sectionCard}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionIcon}>📄</span>
+            <FiFile className={styles.sectionIcon} />
             <h3 className={styles.sectionTitle}>Documents</h3>
           </div>
           <div className={styles.documentsGrid}>
             {teacher.nagariktaPhoto && (
               <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>🪪</div>
+                <div className={styles.documentIcon}>
+                  <FiCreditCard size={24} />
+                </div>
                 <div className={styles.documentName}>Nagarikta Photo</div>
                 <a
                   href={teacher.nagariktaPhoto}
@@ -297,7 +317,9 @@ const TeacherDetail = () => {
             )}
             {teacher.panPhoto && (
               <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>💳</div>
+                <div className={styles.documentIcon}>
+                  <FiCreditCard size={24} />
+                </div>
                 <div className={styles.documentName}>PAN Photo</div>
                 <a
                   href={teacher.panPhoto}
@@ -311,7 +333,9 @@ const TeacherDetail = () => {
             )}
             {teacher.academicQualification && (
               <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>🎓</div>
+                <div className={styles.documentIcon}>
+                  <FiBookOpen size={24} />
+                </div>
                 <div className={styles.documentName}>
                   Academic Qualification
                 </div>
@@ -327,7 +351,9 @@ const TeacherDetail = () => {
             )}
             {teacher.skillCertifications && (
               <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>📜</div>
+                <div className={styles.documentIcon}>
+                  <FiFileText size={24} />
+                </div>
                 <div className={styles.documentName}>Skill Certifications</div>
                 <a
                   href={teacher.skillCertifications}
@@ -341,7 +367,9 @@ const TeacherDetail = () => {
             )}
             {teacher.resumeCv && (
               <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>📋</div>
+                <div className={styles.documentIcon}>
+                  <FiFile size={24} />
+                </div>
                 <div className={styles.documentName}>Resume/CV</div>
                 <a
                   href={teacher.resumeCv}
@@ -355,7 +383,9 @@ const TeacherDetail = () => {
             )}
             {teacher.jobApplication && (
               <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>📝</div>
+                <div className={styles.documentIcon}>
+                  <FiFileText size={24} />
+                </div>
                 <div className={styles.documentName}>Job Application</div>
                 <a
                   href={teacher.jobApplication}
@@ -369,7 +399,9 @@ const TeacherDetail = () => {
             )}
             {teacher.hiringLetter && (
               <div className={styles.documentCard}>
-                <div className={styles.documentIcon}>✉️</div>
+                <div className={styles.documentIcon}>
+                  <FiMail size={24} />
+                </div>
                 <div className={styles.documentName}>Hiring Letter</div>
                 <a
                   href={teacher.hiringLetter}

@@ -13,7 +13,6 @@ const GlassInput = ({
   validate,
   onValidate,
   error: externalError,
-  // any additional props (e.g., maxLength, inputMode, pattern, onKeyDown)
   ...rest
 }) => {
   // const [error, setError] = useState("");
@@ -78,7 +77,7 @@ const GlassInput = ({
       <input
         type={type}
         name={name}
-        value={value}
+        value={value || ""}
         onChange={(e) => {
           onChange(e);
           if (displayError) setInternalError("");

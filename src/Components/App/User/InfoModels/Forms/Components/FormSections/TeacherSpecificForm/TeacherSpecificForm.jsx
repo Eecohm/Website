@@ -16,6 +16,7 @@ const TeacherSpecificForm = ({
   const lastErrorsStringRef = useRef("");
 
   const handleFieldValidation = (fieldName, isValid) => {
+    console.log(`TeacherSpecificForm: Field ${fieldName} validation:`, isValid);
     setValidFields((prev) => {
       const updated = new Set(prev);
       if (isValid) {
@@ -32,6 +33,9 @@ const TeacherSpecificForm = ({
         "subjectNames",
       ];
       const allValid = requiredFields.every((field) => updated.has(field));
+      console.log(`TeacherSpecificForm: Required fields:`, requiredFields);
+      console.log(`TeacherSpecificForm: Valid fields:`, Array.from(updated));
+      console.log(`TeacherSpecificForm: All valid:`, allValid);
 
       // Call the parent validation callback
       if (onValidationChange) {
@@ -67,9 +71,9 @@ const TeacherSpecificForm = ({
         value={formData.userId || ""}
         onChange={handleChange}
         placeholder="User ID"
-        required={true}
-        validate={validateRequiredString}
-        onValidate={handleFieldValidation}
+        disabled={true} // Disabled since not required for submission
+        // validate={validateRequiredString}
+        // onValidate={handleFieldValidation}
       />
       <GlassInput
         label="User Email"

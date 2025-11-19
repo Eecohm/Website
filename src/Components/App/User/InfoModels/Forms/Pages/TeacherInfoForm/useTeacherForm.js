@@ -48,7 +48,7 @@ export default function useTeacherForm() {
     addressDetails: { isValid: false, errors: {} },
     contactDetails: { isValid: false, errors: {} },
     documentDetails: { isValid: false, errors: {} },
-    teacherDetails: { isValid: false, errors: {} },
+    teacherDetails: { isValid: true, errors: {} }, 
   });
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -58,20 +58,31 @@ export default function useTeacherForm() {
   const { login, setToken } = useAuth();
 
   useEffect(() => {
-    const allSectionsValid = Object.values(sectionValidations).every(
-      (section) => section.isValid
+    // Temporarily exclude teacherDetails from validation since some fields are disabled
+    const requiredSections = [
+      "personalDetails",
+      "addressDetails",
+      "contactDetails",
+      "documentDetails",
+    ];
+    const allSectionsValid = requiredSections.every(
+      (section) => sectionValidations[section]?.isValid
     );
+    console.log("useTeacherForm: Section validations:", sectionValidations);
+    console.log("useTeacherForm: Required sections:", requiredSections);
+    console.log("useTeacherForm: Required sections validity:", requiredSections.map(section => ({ section, isValid: sectionValidations[section]?.isValid })));
+    console.log("useTeacherForm: All sections valid:", allSectionsValid);
     setIsFormValid(allSectionsValid);
   }, [
     sectionValidations.personalDetails.isValid,
     sectionValidations.addressDetails.isValid,
     sectionValidations.contactDetails.isValid,
     sectionValidations.documentDetails.isValid,
-    sectionValidations.teacherDetails.isValid,
   ]);
 
   const updateSectionValidation = useCallback(
     (sectionName, isValid, errors = {}) => {
+      console.log(`useTeacherForm: Updating section ${sectionName} validation:`, isValid, errors);
       setSectionValidations((prev) => ({
         ...prev,
         [sectionName]: { isValid, errors },
@@ -95,6 +106,9 @@ export default function useTeacherForm() {
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
+
+      console.log("useTeacherForm: Submit attempt - isFormValid:", isFormValid);
+      console.log("useTeacherForm: Section validations at submit:", sectionValidations);
 
       if (!isFormValid) {
         setModalNotification({

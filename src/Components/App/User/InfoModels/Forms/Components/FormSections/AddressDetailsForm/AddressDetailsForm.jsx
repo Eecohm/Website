@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { MapPin } from "lucide-react";
+import { FiMapPin } from "react-icons/fi";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
 import {
@@ -73,7 +73,7 @@ const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
   };
 
   return (
-    <FormSection title="Address Details" icon={MapPin}>
+    <FormSection title="Address Details" icon={FiMapPin}>
       <GlassInput
         label="Country"
         name="country"

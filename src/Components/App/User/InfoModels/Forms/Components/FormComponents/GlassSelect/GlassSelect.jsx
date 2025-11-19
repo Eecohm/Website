@@ -43,7 +43,7 @@ const GlassSelect = ({
       </label>
       <select
         name={name}
-        value={value}
+        value={value || ""}
         onChange={handleChange}
         className={styles.select}
       >

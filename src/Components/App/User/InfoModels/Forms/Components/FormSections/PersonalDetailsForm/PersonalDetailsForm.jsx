@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { User } from "lucide-react";
+import { FiUser } from "react-icons/fi";
 import FormSection from "../../FormComponents/FormSection/FormSection";
 import GlassInput from "../../FormComponents/GlassInput/GlassInput";
 import GlassSelect from "../../FormComponents/GlassSelect/GlassSelect";
@@ -35,27 +35,6 @@ const PersonalDetailsForm = ({
         "dateOfBirth",
         "gender",
         "photo",
-        "country",
-        "province",
-        "municipality",
-        "ward",
-        "tole",
-        "phone",
-        "userId",
-        // "nagariktaNo",
-        "panNo",
-        // "nagariktaPhoto",
-        "panPhoto",
-        "userId",
-        "academicQualification",
-        "academicClassId",
-        "academicClassName",
-        "subjectIds",
-        "subjectNames",
-        // "jobApplication",
-        // "hiringLetter",
-        // "resumeCv",
-        // "skillCertifications",
       ];
       const allValid = requiredFields.every((field) => updated.has(field));
 
@@ -87,7 +66,7 @@ const PersonalDetailsForm = ({
   };
 
   return (
-    <FormSection title="Personal Details" icon={User}>
+    <FormSection title="Personal Details" icon={FiUser}>
       <GlassInput
         label="First Name"
         name="firstName"

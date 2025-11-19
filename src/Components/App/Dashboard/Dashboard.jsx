@@ -17,16 +17,46 @@ const DashBoard = () => {
   const [pendingStatus, setPendingStatus] = useState(null);
   const [pendingUserId, setPendingUserId] = useState(null);
   const [modalMessage, setModalMessage] = useState("");
+  const [effectiveStatus, setEffectiveStatus] = useState(null);
 
   // Callback triggered from useStatusCheck hook
-  const handleKycStatus = (role, kyc_status, user_id) => {
+  const handleKycStatus = async (role, kyc_status, user_id) => {
     setPendingRole(role);
     setPendingStatus(kyc_status);
     setPendingUserId(user_id);
 
-    let message = "";
+    // For student role, check if they have an existing record
+    let hasExistingRecord = false;
+    if (role === "student") {
+      try {
+        const studentResponse = await fetch(
+          `${baseUrl}/user/students/${user_id}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        hasExistingRecord = studentResponse.ok;
+      } catch (error) {
+        console.log("Could not check existing student record:", error.message);
+      }
+    }
 
-    switch (kyc_status) {
+    let message = "";
+    let effectiveStatus = kyc_status;
+
+    // If student has existing record, treat as pending for UI purposes
+    if (
+      role === "student" &&
+      hasExistingRecord &&
+      kyc_status === "unverified"
+    ) {
+      effectiveStatus = "pending";
+    }
+
+    switch (effectiveStatus) {
       case "unverified":
         message =
           "You haven't completed your verification yet. Please fill out your KYC form to continue.";
@@ -44,6 +74,7 @@ const DashBoard = () => {
     }
 
     setModalMessage(message);
+    setEffectiveStatus(effectiveStatus);
     setShowModal(true);
   };
 
@@ -53,17 +84,17 @@ const DashBoard = () => {
   const handleCloseModal = () => {
     setShowModal(false);
 
-    if (pendingStatus === "verified") return;
+    if (effectiveStatus === "verified") return;
 
-    if (pendingStatus === "unverified") {
+    if (effectiveStatus === "unverified") {
       navigate(`/dashboard/users/info/${pendingRole}/form`);
       return;
     }
 
-    if (pendingStatus === "pending" || pendingStatus === "rejected") {
+    if (effectiveStatus === "pending" || effectiveStatus === "rejected") {
       // Navigate to detail page with user ID
       navigate(
-        `/dashboard/users/detail/${pendingRole}/detail?id=${pendingUserId}`
+        `/dashboard/users/detail/${pendingRole}/detail/${pendingUserId}`
       );
     }
   };
@@ -78,9 +109,9 @@ const DashBoard = () => {
       {showModal && (
         <ModalNotification
           type={
-            pendingStatus === "rejected"
+            effectiveStatus === "rejected"
               ? "error"
-              : pendingStatus === "pending"
+              : effectiveStatus === "pending"
               ? "info"
               : "warning"
           }
