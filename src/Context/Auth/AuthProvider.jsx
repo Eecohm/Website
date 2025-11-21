@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
-import { verifyToken } from "./verifyToken";
-import { login } from "./login";
-import { logout } from "./logout";
+import { verifyToken } from "@/Context/Auth/verifyToken";
+import { login } from "@/Context/Auth/login";
+import { logout } from "@/Context/Auth/logout";
 
 export const AuthContext = createContext();
 
@@ -41,10 +41,12 @@ const AuthProvider = ({ children }) => {
       value={{
         token,
         isLoading,
-        login: (data, rememberMe) => login(data, rememberMe, setToken, setVerified),
+        login: (data, rememberMe) =>
+          login(data, rememberMe, setToken, setVerified),
         logout: () => logout(baseUrl, setToken, setVerified),
         isAuthenticated,
-        attemptTokenRefresh: (loginFn) => attemptTokenRefresh(baseUrl, loginFn, setToken),
+        attemptTokenRefresh: (loginFn) =>
+          attemptTokenRefresh(baseUrl, loginFn, setToken),
       }}
     >
       {children}

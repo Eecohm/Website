@@ -1,6 +1,6 @@
 import React from "react";
 import { FileText } from "lucide-react";
-import styles from "./OwnerHeader.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerHeader.module.css";
 
 export const OwnerHeader = ({ onEdit }) => (
   <div className={styles.header}>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Signup.module.css";
+import styles from "@/Components/App/Login/signup/Signup.module.css";
 
 const PasswordInput = ({
   name,

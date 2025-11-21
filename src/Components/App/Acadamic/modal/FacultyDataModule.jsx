@@ -10,7 +10,7 @@ import {
   FiBookOpen,
   FiUsers,
 } from "react-icons/fi";
-import styles from "./FacultyData.module.css";
+import styles from "@/Components/App/Acadamic/modal/FacultyData.module.css";
 
 const FacultyDataModule = ({ faculties, onClose, token, baseUrl }) => {
   const [selectedFaculty, setSelectedFaculty] = useState(null);

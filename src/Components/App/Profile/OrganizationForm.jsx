@@ -1,6 +1,6 @@
 import React from "react";
-import ModalNotification from "../../../GlobalComponets/ModalNotification";
-import useOrganizationForm from "./useOrganizationForm";
+import ModalNotification from "@/GlobalComponets/ModalNotification";
+import useOrganizationForm from "@/Components/App/Profile/useOrganizationForm";
 import {
   ArrowLeft,
   Building,

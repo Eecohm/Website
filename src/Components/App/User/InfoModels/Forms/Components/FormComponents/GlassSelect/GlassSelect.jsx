@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import styles from "./GlassSelect.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassSelect/GlassSelect.module.css";
 
 const GlassSelect = ({
   label,

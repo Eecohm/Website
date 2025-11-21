@@ -1,7 +1,7 @@
 import React from "react";
 import { AlertTriangle } from "lucide-react";
-import styles from "./StateComponents.module.css";
-import containerStyles from "./Container.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/StateComponents.module.css";
+import containerStyles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/Container.module.css";
 
 export const LoadingState = () => (
   <div className={containerStyles.detailContainer}>

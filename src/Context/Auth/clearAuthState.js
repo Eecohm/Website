@@ -1,4 +1,4 @@
-import { deleteCookie, deleteSessionToken } from "./Cookies";
+import { deleteCookie, deleteSessionToken } from "@/Context/Auth/Cookies";
 
 /**
  * Clear Auth State - Complete cleanup on logout

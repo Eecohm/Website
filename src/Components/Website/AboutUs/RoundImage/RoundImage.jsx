@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './RoundImage.module.css';
+import React from "react";
+import styles from "@/Components/Website/AboutUs/RoundImage/RoundImage.module.css";
 
 const RoundImage = ({ imageSrc, altText }) => {
   return (

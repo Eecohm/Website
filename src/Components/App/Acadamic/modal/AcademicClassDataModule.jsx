@@ -13,7 +13,7 @@ import {
   FiLayers,
   FiUsers,
 } from "react-icons/fi";
-import styles from "./AcademicClassData.module.css";
+import styles from "@/Components/App/Acadamic/modal/AcademicClassData.module.css";
 
 const AcademicClassDataModule = ({
   academicClasses,

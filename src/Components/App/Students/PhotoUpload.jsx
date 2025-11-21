@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Students.module.css";
+import styles from "@/Components/App/Students/Students.module.css";
 import { FiUpload, FiX } from "react-icons/fi";
 
 const PhotoUpload = ({ photo, photoPreview, onChange, onRemove, error }) => {

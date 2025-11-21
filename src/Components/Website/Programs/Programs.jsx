@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import styles from "./Programs.module.css";
-import CourseCard from "./Course/CourseCard";
-import { courses } from "./coursesData";
+import styles from "@/Components/Website/Programs/Programs.module.css";
+import CourseCard from "@/Components/Website/Programs/Course/CourseCard";
+import { courses } from "@/Components/Website/Programs/coursesData";
 
 const useTitleAnimation = (ref) => {
   useEffect(() => {

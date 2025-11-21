@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './Register.module.css';
+import React from "react";
+import styles from "@/Components/App/Login/Register/Register.module.css";
 
 const AddressDetailForm = ({ formData, setFormData }) => (
   <div className={styles.formSection}>
@@ -9,8 +9,10 @@ const AddressDetailForm = ({ formData, setFormData }) => (
         <label>Country *</label>
         <input
           type="text"
-          value={formData.country || ''}
-          onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+          value={formData.country || ""}
+          onChange={(e) =>
+            setFormData({ ...formData, country: e.target.value })
+          }
           required
         />
       </div>
@@ -18,8 +20,10 @@ const AddressDetailForm = ({ formData, setFormData }) => (
         <label>Province *</label>
         <input
           type="text"
-          value={formData.province || ''}
-          onChange={(e) => setFormData({ ...formData, province: e.target.value })}
+          value={formData.province || ""}
+          onChange={(e) =>
+            setFormData({ ...formData, province: e.target.value })
+          }
           required
         />
       </div>
@@ -27,8 +31,10 @@ const AddressDetailForm = ({ formData, setFormData }) => (
         <label>Municipality *</label>
         <input
           type="text"
-          value={formData.municipality || ''}
-          onChange={(e) => setFormData({ ...formData, municipality: e.target.value })}
+          value={formData.municipality || ""}
+          onChange={(e) =>
+            setFormData({ ...formData, municipality: e.target.value })
+          }
           required
         />
       </div>
@@ -36,7 +42,7 @@ const AddressDetailForm = ({ formData, setFormData }) => (
         <label>Ward *</label>
         <input
           type="text"
-          value={formData.ward || ''}
+          value={formData.ward || ""}
           onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
           required
         />
@@ -45,7 +51,7 @@ const AddressDetailForm = ({ formData, setFormData }) => (
         <label>Tole *</label>
         <input
           type="text"
-          value={formData.tole || ''}
+          value={formData.tole || ""}
           onChange={(e) => setFormData({ ...formData, tole: e.target.value })}
           required
         />

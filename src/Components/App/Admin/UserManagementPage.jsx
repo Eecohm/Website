@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import UserManagement from "./UserManagement/UserManagement";
-import NavBar from "../NavBar/NavBar";
+import UserManagement from "@/Components/App/Admin/UserManagement/UserManagement";
+import NavBar from "@/Components/App/NavBar/NavBar";
 
 const UserManagementPage = () => {
   const navigate = useNavigate();

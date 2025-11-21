@@ -1,7 +1,7 @@
 import React from "react";
 import { FileText, CreditCard, Download } from "lucide-react";
-import sectionStyles from "./SectionCard.module.css";
-import styles from "./OwnerDocumentsSection.module.css";
+import sectionStyles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/SectionCard.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerDocumentsSection.module.css";
 
 export const OwnerDocumentsSection = ({ owner, onViewDocument }) => (
   <div className={sectionStyles.sectionCard}>

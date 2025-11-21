@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import styles from "../Login.module.css";
+import styles from "@/Components/App/Login/Login/Login.module.css";
 
 const PasswordComponent = ({
   forgotEmail,
@@ -77,14 +77,18 @@ const PasswordComponent = ({
                 onChange={(e) => setNewPassword(e.target.value)}
                 className={styles.neonInput}
               />
-               <div className={styles.showHideButton}>
-              <button
-                type="button"
-                onClick={() => setShowNewPassword((prev) => !prev)}
-                aria-label={showNewPassword ? "Hide password" : "Show password"}
-              >
-                <FontAwesomeIcon icon={showNewPassword ? faEye : faEyeSlash} />
-              </button>
+              <div className={styles.showHideButton}>
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword((prev) => !prev)}
+                  aria-label={
+                    showNewPassword ? "Hide password" : "Show password"
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={showNewPassword ? faEye : faEyeSlash}
+                  />
+                </button>
               </div>
             </div>
 
@@ -98,18 +102,17 @@ const PasswordComponent = ({
                 className={styles.neonInput}
               />
               <div className={styles.showHideButton}>
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                
-                aria-label={
-                  showConfirmPassword ? "Hide password" : "Show password"
-                }
-              >
-                <FontAwesomeIcon
-                  icon={showConfirmPassword ? faEye : faEyeSlash}
-                />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  aria-label={
+                    showConfirmPassword ? "Hide password" : "Show password"
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={showConfirmPassword ? faEye : faEyeSlash}
+                  />
+                </button>
               </div>
             </div>
 

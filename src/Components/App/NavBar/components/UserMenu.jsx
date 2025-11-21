@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../NavBar.module.css";
+import styles from "@/Components/App/NavBar/NavBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 

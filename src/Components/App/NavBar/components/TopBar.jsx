@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../NavBar.module.css";
-import Logo from "./Logo";
-import UserMenu from "./UserMenu";
+import styles from "@/Components/App/NavBar/NavBar.module.css";
+import Logo from "@/Components/App/NavBar/components/Logo";
+import UserMenu from "@/Components/App/NavBar/components/UserMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faBars } from "@fortawesome/free-solid-svg-icons";
 

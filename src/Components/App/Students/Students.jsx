@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "../NavBar/NavBar";
-import styles from "./Students.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
+import styles from "@/Components/App/Students/Students.module.css";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import FormSection from "./FormSection";
-import FormField from "./FormField";
-import PhotoUpload from "./PhotoUpload";
-import ProgressBar from "./ProgressBar";
-import formConfig from "./formConfig";
+import FormSection from "@/Components/App/Students/FormSection";
+import FormField from "@/Components/App/Students/FormField";
+import PhotoUpload from "@/Components/App/Students/PhotoUpload";
+import ProgressBar from "@/Components/App/Students/ProgressBar";
+import formConfig from "@/Components/App/Students/formConfig";
 import axios from "axios";
-import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../../../Context/AuthContext";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
 
 const Student = () => {
   const [currentPart, setCurrentPart] = useState(1);

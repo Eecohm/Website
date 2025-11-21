@@ -1,7 +1,7 @@
 import React from "react";
 import { CreditCard } from "lucide-react";
-import sectionStyles from "./SectionCard.module.css";
-import detailListStyles from "./DetailsListShared.module.css";
+import sectionStyles from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/SectionCard.module.css";
+import detailListStyles from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/DetailsListShared.module.css";
 
 export const EmployeeIdentitySection = ({ employee }) => (
   <div className={sectionStyles.sectionCard}>

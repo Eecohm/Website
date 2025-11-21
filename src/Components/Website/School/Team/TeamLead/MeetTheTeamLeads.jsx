@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import LeadsHeader from "./LeadsHeader";
-import TeamLeadsGrid from "./TeamLeadsGrid";
-import { teamLeads } from "./teamLeadsData";
-import styles from "./MeetTheTeamLeads.module.css";
+import LeadsHeader from "@/Components/Website/School/Team/TeamLead/LeadsHeader";
+import TeamLeadsGrid from "@/Components/Website/School/Team/TeamLead/TeamLeadsGrid";
+import { teamLeads } from "@/Components/Website/School/Team/TeamLead/teamLeadsData";
+import styles from "@/Components/Website/School/Team/TeamLead/MeetTheTeamLeads.module.css";
 
 function MeetTheTeamLeads() {
   const [selectedLead, setSelectedLead] = useState(null);

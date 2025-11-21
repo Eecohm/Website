@@ -1,11 +1,11 @@
 import React from "react";
-import { EmployeeBasicInfo } from "./EmployeeBasicInfo";
-import { EmployeeContactSection } from "./EmployeeContactSection";
-import { EmployeeAddressSection } from "./EmployeeAddressSection";
-import { EmployeeIdentitySection } from "./EmployeeIdentitySection";
-import { EmployeeDocumentsSection } from "./EmployeeDocumentsSection";
-import styles from "./EmployeeBasicInfo.module.css";
-import sectionStyles from "./SectionCard.module.css";
+import { EmployeeBasicInfo } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeBasicInfo";
+import { EmployeeContactSection } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeContactSection";
+import { EmployeeAddressSection } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeAddressSection";
+import { EmployeeIdentitySection } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeIdentitySection";
+import { EmployeeDocumentsSection } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeDocumentsSection";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeBasicInfo.module.css";
+import sectionStyles from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/SectionCard.module.css";
 
 export const EmployeeDetailsCard = ({
   employee,

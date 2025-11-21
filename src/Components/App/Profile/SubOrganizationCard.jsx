@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles/Profile.module.css";
-import ModalNotification from "../Common/ModalNotification";
+import styles from "@/Components/App/Profile/styles/Profile.module.css";
+import ModalNotification from "@/GlobalComponets/ModalNotification";
 
 const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
   const navigate = useNavigate();
@@ -242,7 +242,7 @@ const SubOrganizationCard = ({ data, onEdit, onDelete }) => {
         <div className={styles.businessCard}>
           <div className={styles.cardDetails}>
             <h2 className={styles.orgName}>{formData.subOrgName}</h2>
-            
+
             <div className={styles.dataRow}>
               <span>Description:</span>
               <p>{formData.descriptionText}</p>

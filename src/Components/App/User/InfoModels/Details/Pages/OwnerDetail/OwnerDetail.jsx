@@ -1,10 +1,13 @@
 import React from "react";
-import { useOwnerDetail } from "./hooks/useOwnerDetail";
-import { OwnerHeader } from "./components/OwnerHeader";
-import { OwnerDetailsCard } from "./components/OwnerDetailsCard";
-import { ImageModal } from "./components/ImageModal";
-import { LoadingState, ErrorState } from "./components/StateComponents";
-import styles from "./components/Container.module.css";
+import { useOwnerDetail } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/hooks/useOwnerDetail";
+import { OwnerHeader } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerHeader";
+import { OwnerDetailsCard } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerDetailsCard";
+import { ImageModal } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/ImageModal";
+import {
+  LoadingState,
+  ErrorState,
+} from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/StateComponents";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/Container.module.css";
 
 const OwnerDetail = () => {
   const {

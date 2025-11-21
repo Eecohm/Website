@@ -1,11 +1,11 @@
 import React from "react";
-import { GuardianBasicInfo } from "./GuardianBasicInfo";
-import { GuardianContactSection } from "./GuardianContactSection";
-import { GuardianAddressSection } from "./GuardianAddressSection";
-import { GuardianIdentitySection } from "./GuardianIdentitySection";
-import { GuardianDocumentsSection } from "./GuardianDocumentsSection";
-import styles from "./GuardianBasicInfo.module.css";
-import sectionStyles from "./SectionCard.module.css";
+import { GuardianBasicInfo } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianBasicInfo";
+import { GuardianContactSection } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianContactSection";
+import { GuardianAddressSection } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianAddressSection";
+import { GuardianIdentitySection } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianIdentitySection";
+import { GuardianDocumentsSection } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianDocumentsSection";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianBasicInfo.module.css";
+import sectionStyles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/SectionCard.module.css";
 
 export const GuardianDetailsCard = ({
   guardian,

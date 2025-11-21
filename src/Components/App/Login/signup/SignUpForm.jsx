@@ -1,11 +1,11 @@
 //main stateful comp that manages data,validation,api calls and passes props into signinform
 import React, { useState, useCallback } from "react";
-import styles from "./Signup.module.css";
+import styles from "@/Components/App/Login/signup/Signup.module.css";
 import { useNavigate } from "react-router-dom";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
-import SignInForm from "./SignInForm";
-import ValidateModal from "./ValidateModal";
-import { useSignUpHandler } from "./useSignupHandler";
+import SignInForm from "@/Components/App/Login/signup/SignInForm";
+import ValidateModal from "@/Components/App/Login/signup/ValidateModal";
+import { useSignUpHandler } from "@/Components/App/Login/signup/useSignupHandler";
 
 const roleOptions = [
   { value: "", label: "Select a role" },

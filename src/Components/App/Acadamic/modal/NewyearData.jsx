@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./NewyearData.module.css";
+import styles from "@/Components/App/Acadamic/modal/NewyearData.module.css";
 import {
   FiX,
   FiCalendar,

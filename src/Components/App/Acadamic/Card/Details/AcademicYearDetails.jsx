@@ -1,4 +1,4 @@
-import styles from "./AcademicYearDetails.module.css";
+import styles from "@/Components/App/Acadamic/Card/Details/AcademicYearDetails.module.css";
 import {
   FiSettings,
   FiBookOpen,

@@ -1,4 +1,4 @@
-import styles from "./Students.module.css";
+import styles from "@/Components/App/Students/Students.module.css";
 
 const FormSection = ({ icon: Icon, title, children }) => (
   <div className={styles.section}>

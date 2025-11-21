@@ -14,7 +14,7 @@ import {
   FiFile,
   FiClipboard,
 } from "react-icons/fi";
-import styles from "../DetailCard.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/DetailCard.module.css";
 
 const StudentDetail = () => {
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const StudentDetail = () => {
   const handleEdit = () => {
     // Navigate to form with student data for editing
     navigate("/dashboard/users/info/student/form", {
-      state: { studentData: student, isEditing: true }
+      state: { studentData: student, isEditing: true },
     });
   };
 

@@ -18,9 +18,9 @@ import {
   Loader2
 } from "lucide-react";
 import axios from "axios";
-import styles from "./styles/SubOrgForm.module.css";
-import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../../../Context/AuthContext";
+import styles from "@/Components/App/Profile/styles/SubOrgForm.module.css";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
 
 
 const SubOrganizationForm = () => {

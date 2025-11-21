@@ -1,4 +1,4 @@
-import { clearAuthState } from "./clearAuthState";
+import { clearAuthState } from "@/Context/Auth/clearAuthState";
 
 export const logout = async (baseUrl, setToken, setVerified) => {
   try {

@@ -1,4 +1,8 @@
-import { setCookie, deleteCookie, setSessionToken } from "./Cookies";
+import {
+  setCookie,
+  deleteCookie,
+  setSessionToken,
+} from "@/Context/Auth/Cookies";
 
 /**
  * Login handler - Manages token storage based on "Remember Me" setting

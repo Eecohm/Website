@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./Tasks.module.css";
-import NavBar from "../NavBar/NavBar";
+import styles from "@/Components/App/Tasks/Tasks.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
 
 const Tasks = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Tasks = () => {
       path: "/dashboard/tasks/reports",
       icon: "📑", // reporting
       description: "Generate productivity and task performance reports",
-    }
+    },
   ];
 
   return (

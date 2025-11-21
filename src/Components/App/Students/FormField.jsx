@@ -1,4 +1,4 @@
-import styles from "./Students.module.css";
+import styles from "@/Components/App/Students/Students.module.css";
 
 const FormField = ({ label, name, value, onChange, error, type = "text" }) => (
   <div className={styles.fieldGroup}>

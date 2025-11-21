@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Navbar.module.css";
+import styles from "@/Components/Website/NavBar/Navbar.module.css";
 import logo from "@/assets/logo.svg";
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";

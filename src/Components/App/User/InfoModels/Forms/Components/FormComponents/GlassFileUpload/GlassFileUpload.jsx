@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Upload } from "lucide-react";
-import styles from "./GlassFileUpload.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassFileUpload/GlassFileUpload.module.css";
 
 const GlassFileUpload = ({
   label,

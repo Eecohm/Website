@@ -1,11 +1,11 @@
 import React from "react";
-import { OwnerBasicInfo } from "./OwnerBasicInfo";
-import { OwnerContactSection } from "./OwnerContactSection";
-import { OwnerAddressSection } from "./OwnerAddressSection";
-import { OwnerIdentitySection } from "./OwnerIdentitySection";
-import { OwnerDocumentsSection } from "./OwnerDocumentsSection";
-import styles from "./OwnerBasicInfo.module.css";
-import sectionStyles from "./SectionCard.module.css";
+import { OwnerBasicInfo } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerBasicInfo";
+import { OwnerContactSection } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerContactSection";
+import { OwnerAddressSection } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerAddressSection";
+import { OwnerIdentitySection } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerIdentitySection";
+import { OwnerDocumentsSection } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerDocumentsSection";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/OwnerBasicInfo.module.css";
+import sectionStyles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/SectionCard.module.css";
 
 export const OwnerDetailsCard = ({
   owner,

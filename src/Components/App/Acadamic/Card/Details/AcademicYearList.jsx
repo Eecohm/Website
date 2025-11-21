@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./AddAcademicYearModal.module.css";
+import styles from "@/Components/App/Acadamic/Card/Details/AddAcademicYearModal.module.css";
 import {
   FiPlus,
   FiX,

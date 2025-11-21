@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import styles from "./styles/Profile.module.css";
+import styles from "@/Components/App/Profile/styles/Profile.module.css";
 
 const ViewImage = () => {
   const location = useLocation();

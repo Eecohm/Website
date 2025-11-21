@@ -1,8 +1,8 @@
 import React from "react";
 import { BookOpen } from "lucide-react";
-import FormSection from "../../FormComponents/FormSection/FormSection";
-import GlassInput from "../../FormComponents/GlassInput/GlassInput";
-import GlassFileUpload from "../../FormComponents/GlassFileUpload/GlassFileUpload";
+import FormSection from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/FormSection/FormSection";
+import GlassInput from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassInput/GlassInput";
+import GlassFileUpload from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassFileUpload/GlassFileUpload";
 import { validateRequiredString } from "@/validators/formInputValidator/TextValidator";
 import { useState, useRef } from "react";
 

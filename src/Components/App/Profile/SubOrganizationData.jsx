@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles/SubOrg.module.css";
+import styles from "@/Components/App/Profile/styles/SubOrg.module.css";
 import axios from "axios";
-import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../../../Context/AuthContext";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
 
 const SubOrganizationData = () => {
   const navigate = useNavigate();

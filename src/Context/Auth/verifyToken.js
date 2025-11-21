@@ -1,6 +1,6 @@
-import { getToken, setSessionToken } from "./Cookies";
-import { attemptTokenRefresh } from "./TokenRefresh";
-import { clearAuthState } from "./clearAuthState";
+import { getToken, setSessionToken } from "@/Context/Auth/Cookies";
+import { attemptTokenRefresh } from "@/Context/Auth/TokenRefresh";
+import { clearAuthState } from "@/Context/Auth/clearAuthState";
 
 /**
  * Verify Token on App Startup

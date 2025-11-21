@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { FaFacebook, FaPhone, FaEnvelope } from 'react-icons/fa';
-import styles from './MeetTheTeam.module.css';
+import React, { useState } from "react";
+import { FaFacebook, FaPhone, FaEnvelope } from "react-icons/fa";
+import styles from "@/Components/Website/School/Team/MeetTheTeam.module.css";
 
 function TeamMember({ name, role, bio, quote, image, social }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -12,7 +12,11 @@ function TeamMember({ name, role, bio, quote, image, social }) {
 
   return (
     <div className={styles.teamMemberCard} onClick={handleFlip}>
-      <div className={`${styles.cardInner} ${isFlipped ? styles.cardInnerFlipped : ''}`}>
+      <div
+        className={`${styles.cardInner} ${
+          isFlipped ? styles.cardInnerFlipped : ""
+        }`}
+      >
         {/* Front Side */}
         <div className={styles.cardFront}>
           <div className={styles.teamMemberImage}>
@@ -23,10 +27,18 @@ function TeamMember({ name, role, bio, quote, image, social }) {
             <p className={styles.role}>{role}</p>
             <p className={styles.bio}>{bio}</p>
             <div className={styles.socialIcons}>
-              <a href={social.facebook} target="_blank" rel="noopener noreferrer">
+              <a
+                href={social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaFacebook />
               </a>
-              <a href={`mailto:${social.mail}`} target="_blank" rel="noopener noreferrer">
+              <a
+                href={`mailto:${social.mail}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaEnvelope />
               </a>
             </div>

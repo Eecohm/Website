@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './Register.module.css';
-import NavBar from '../../NavBar/NavBar';
-import { useBaseUrl } from '../../../../Context/BaseUrlContext';
-import { useAuth } from '../../../../Context/AuthContext';
-import StudentForm from './StudentForm';
-import TeacherForm from './TeacherForm';
-import GuardianForm from './GuardianForm';
-import EmployeeForm from './EmployeeForm';
-import OwnerForm from './OwnerForm';
+import styles from '@/Components/App/Login/Register/Register.module.css';
+import NavBar from '@/Components/App/NavBar/NavBar';
+import { useBaseUrl } from '@/Context/BaseUrlContext';
+import { useAuth } from '@/Context/AuthContext';
+import StudentForm from '@/Components/App/Login/Register/StudentForm';
+import TeacherForm from '@/Components/App/Login/Register/TeacherForm';
+import GuardianForm from '@/Components/App/Login/Register/GuardianForm';
+import EmployeeForm from '@/Components/App/Login/Register/EmployeeForm';
+import OwnerForm from '@/Components/App/Login/Register/OwnerForm';
 
 const Register = () => {
   const baseUrl = useBaseUrl();

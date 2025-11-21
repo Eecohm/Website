@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import styles from "./MontlyFeedBackEntry.module.css";
-import NavBar from "../../NavBar/NavBar";
+import styles from "@/Components/App/Reports/MontlyFeedBackEntry/MontlyFeedBackEntry.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
 
 const MonthlyFeedbackForm = () => {
   const [classes, setClasses] = useState([]);
@@ -126,9 +126,7 @@ const MonthlyFeedbackForm = () => {
     if (searchTerm.length > 0) {
       const filtered = students.filter(
         (student) =>
-          `${student.firstname} ${student.middlename || ""} ${
-            student.lastname
-          }`
+          `${student.firstname} ${student.middlename || ""} ${student.lastname}`
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
           student.rollno?.toString().includes(searchTerm)
@@ -142,9 +140,11 @@ const MonthlyFeedbackForm = () => {
   };
 
   const selectStudent = (student) => {
-    const fullName = `${student.firstname} ${
-      student.middlename || ""
-    } ${student.lastname}`.replace(/\s+/g, " ").trim();
+    const fullName = `${student.firstname} ${student.middlename || ""} ${
+      student.lastname
+    }`
+      .replace(/\s+/g, " ")
+      .trim();
     setFormData((prev) => ({
       ...prev,
       student: fullName,
@@ -175,8 +175,10 @@ const MonthlyFeedbackForm = () => {
         homework_submission: formData.homework_submission,
         parents_involvement: formData.parents_involvement,
         handwriting: formData.handwriting,
-        maintenance_of_books_and_copies: formData.maintenance_of_books_and_copies,
-        involvement_in_school_activities: formData.involvement_in_school_activities,
+        maintenance_of_books_and_copies:
+          formData.maintenance_of_books_and_copies,
+        involvement_in_school_activities:
+          formData.involvement_in_school_activities,
         special_talents_observed: formData.special_talents_observed,
         leadership_and_initiative: formData.leadership_and_initiative,
         areas_of_improvement: formData.areas_of_improvement,
@@ -236,490 +238,512 @@ const MonthlyFeedbackForm = () => {
 
   return (
     <>
-        <NavBar />
-        <div className={styles.feedbackFormContainer}>
-          <h1 className={styles.formHeading}>Monthly Feedback Form</h1>
+      <NavBar />
+      <div className={styles.feedbackFormContainer}>
+        <h1 className={styles.formHeading}>Monthly Feedback Form</h1>
 
-          <form onSubmit={handleSubmit} className={styles.feedbackForm}>
-            {/* Student Selection Section */}
-            <div className={styles.formSection}>
-              <h2 className={styles.sectionTitle}>Student Information</h2>
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="class_id" className={styles.formLabel}>
-                    Class:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="class_id"
-                    id="class_id"
-                    value={formData.class_id}
-                    onChange={handleClassChange}
-                    required
-                  >
-                    <option value="">Select Class</option>
-                    {classes.map((cls) => (
-                      <option key={cls.id} value={cls.id}>
-                        {cls.grade} - {cls.section}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={`${styles.inputGroup} student-search-group`}>
-                  <label htmlFor="student" className={styles.formLabel}>
-                    Student Name:
-                  </label>
-                  <div className={styles.studentSearchContainer}>
-                    <input
-                      className={styles.formInput}
-                      type="text"
-                      name="student"
-                      id="student"
-                      value={formData.student}
-                      onChange={handleStudentSearch}
-                      placeholder="Search student by name or roll number..."
-                      required
-                      autoComplete="off"
-                      disabled={!formData.class_id} // Disable until class is selected
-                    />
-                    {showStudentDropdown && filteredStudents.length > 0 && (
-                      <div className={styles.studentDropdown}>
-                        {filteredStudents.slice(0, 10).map((student) => (
-                          <div
-                            key={student.id}
-                            className={styles.studentOption}
-                            onClick={() => selectStudent(student)}
-                          >
-                            <div className={styles.studentName}>
-                              {student.firstname} {student.middlename || ""}{" "}
-                              {student.lastname}
-                            </div>
-                            <div className={styles.studentDetails}>
-                              Roll: {student.rollno} | Class: {student.student_class.grade} - {student.student_class.section}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+        <form onSubmit={handleSubmit} className={styles.feedbackForm}>
+          {/* Student Selection Section */}
+          <div className={styles.formSection}>
+            <h2 className={styles.sectionTitle}>Student Information</h2>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="class_id" className={styles.formLabel}>
+                  Class:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="class_id"
+                  id="class_id"
+                  value={formData.class_id}
+                  onChange={handleClassChange}
+                  required
+                >
+                  <option value="">Select Class</option>
+                  {classes.map((cls) => (
+                    <option key={cls.id} value={cls.id}>
+                      {cls.grade} - {cls.section}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="month" className={styles.formLabel}>
-                    Month:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="month"
-                    id="month"
-                    value={formData.month}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Month</option>
-                    {NEPALI_MONTHS.map((month) => (
-                      <option key={month.value} value={month.value}>
-                        {month.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={styles.inputGroup}>
-                  <label htmlFor="year" className={styles.formLabel}>
-                    Year (B.S.):
-                  </label>
+              <div className={`${styles.inputGroup} student-search-group`}>
+                <label htmlFor="student" className={styles.formLabel}>
+                  Student Name:
+                </label>
+                <div className={styles.studentSearchContainer}>
                   <input
                     className={styles.formInput}
-                    type="number"
-                    name="year"
-                    id="year"
-                    value={formData.year}
-                    onChange={handleInputChange}
-                    placeholder="e.g., 2082"
-                    min="2082"
-                    max="2090"
+                    type="text"
+                    name="student"
+                    id="student"
+                    value={formData.student}
+                    onChange={handleStudentSearch}
+                    placeholder="Search student by name or roll number..."
                     required
+                    autoComplete="off"
+                    disabled={!formData.class_id} // Disable until class is selected
                   />
+                  {showStudentDropdown && filteredStudents.length > 0 && (
+                    <div className={styles.studentDropdown}>
+                      {filteredStudents.slice(0, 10).map((student) => (
+                        <div
+                          key={student.id}
+                          className={styles.studentOption}
+                          onClick={() => selectStudent(student)}
+                        >
+                          <div className={styles.studentName}>
+                            {student.firstname} {student.middlename || ""}{" "}
+                            {student.lastname}
+                          </div>
+                          <div className={styles.studentDetails}>
+                            Roll: {student.rollno} | Class:{" "}
+                            {student.student_class.grade} -{" "}
+                            {student.student_class.section}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Grooming & Behaviour Section */}
-            <div className={styles.formSection}>
-              <h2 className={styles.sectionTitle}>Grooming & Behaviour</h2>
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="appearance" className={styles.formLabel}>
-                    Appearance:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="appearance"
-                    id="appearance"
-                    value={formData.appearance}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Rating</option>
-                    {RATING_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={styles.inputGroup}>
-                  <label htmlFor="punctuality" className={styles.formLabel}>
-                    Punctuality:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="punctuality"
-                    id="punctuality"
-                    value={formData.punctuality}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Rating</option>
-                    {RATING_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="month" className={styles.formLabel}>
+                  Month:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="month"
+                  id="month"
+                  value={formData.month}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Month</option>
+                  {NEPALI_MONTHS.map((month) => (
+                    <option key={month.value} value={month.value}>
+                      {month.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label
-                    htmlFor="interaction_with_peers_and_teachers"
-                    className={styles.formLabel}
-                  >
-                    Interaction with Peers & Teachers:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="interaction_with_peers_and_teachers"
-                    id="interaction_with_peers_and_teachers"
-                    value={formData.interaction_with_peers_and_teachers}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Rating</option>
-                    {RATING_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className={styles.inputGroup}>
+                <label htmlFor="year" className={styles.formLabel}>
+                  Year (B.S.):
+                </label>
+                <input
+                  className={styles.formInput}
+                  type="number"
+                  name="year"
+                  id="year"
+                  value={formData.year}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 2082"
+                  min="2082"
+                  max="2090"
+                  required
+                />
+              </div>
+            </div>
+          </div>
 
-                <div className={styles.inputGroup}>
-                  <label
-                    htmlFor="confidence_and_communication"
-                    className={styles.formLabel}
-                  >
-                    Confidence & Communication:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="confidence_and_communication"
-                    id="confidence_and_communication"
-                    value={formData.confidence_and_communication}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Rating</option>
-                    {RATING_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+          {/* Grooming & Behaviour Section */}
+          <div className={styles.formSection}>
+            <h2 className={styles.sectionTitle}>Grooming & Behaviour</h2>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="appearance" className={styles.formLabel}>
+                  Appearance:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="appearance"
+                  id="appearance"
+                  value={formData.appearance}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Rating</option>
+                  {RATING_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label htmlFor="punctuality" className={styles.formLabel}>
+                  Punctuality:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="punctuality"
+                  id="punctuality"
+                  value={formData.punctuality}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Rating</option>
+                  {RATING_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
-            {/* Class Tasks & Participation Section */}
-            <div className={styles.formSection}>
-              <h2 className={styles.sectionTitle}>Class Tasks & Participation</h2>
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="classwork_completion" className={styles.formLabel}>
-                    Classwork Completion:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="classwork_completion"
-                    id="classwork_completion"
-                    value={formData.classwork_completion}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Frequency</option>
-                    {FREQUENCY_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={styles.inputGroup}>
-                  <label
-                    htmlFor="group_work_participation"
-                    className={styles.formLabel}
-                  >
-                    Group Work Participation:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="group_work_participation"
-                    id="group_work_participation"
-                    value={formData.group_work_participation}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Frequency</option>
-                    {FREQUENCY_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="interaction_with_peers_and_teachers"
+                  className={styles.formLabel}
+                >
+                  Interaction with Peers & Teachers:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="interaction_with_peers_and_teachers"
+                  id="interaction_with_peers_and_teachers"
+                  value={formData.interaction_with_peers_and_teachers}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Rating</option>
+                  {RATING_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label
-                    htmlFor="listening_and_following_instructions"
-                    className={styles.formLabel}
-                  >
-                    Listening & Following Instructions:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="listening_and_following_instructions"
-                    id="listening_and_following_instructions"
-                    value={formData.listening_and_following_instructions}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Frequency</option>
-                    {FREQUENCY_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="confidence_and_communication"
+                  className={styles.formLabel}
+                >
+                  Confidence & Communication:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="confidence_and_communication"
+                  id="confidence_and_communication"
+                  value={formData.confidence_and_communication}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Rating</option>
+                  {RATING_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Class Tasks & Participation Section */}
+          <div className={styles.formSection}>
+            <h2 className={styles.sectionTitle}>Class Tasks & Participation</h2>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="classwork_completion"
+                  className={styles.formLabel}
+                >
+                  Classwork Completion:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="classwork_completion"
+                  id="classwork_completion"
+                  value={formData.classwork_completion}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Frequency</option>
+                  {FREQUENCY_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="group_work_participation"
+                  className={styles.formLabel}
+                >
+                  Group Work Participation:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="group_work_participation"
+                  id="group_work_participation"
+                  value={formData.group_work_participation}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Frequency</option>
+                  {FREQUENCY_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
-            {/* Home Task Section */}
-            <div className={styles.formSection}>
-              <h2 className={styles.sectionTitle}>Home Task</h2>
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="homework_submission" className={styles.formLabel}>
-                    Homework Submission:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="homework_submission"
-                    id="homework_submission"
-                    value={formData.homework_submission}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Status</option>
-                    {HOMEWORK_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={styles.checkboxGroup}>
-                  <label className={styles.checkboxLabel}>
-                    <input
-                      type="checkbox"
-                      name="parents_involvement"
-                      checked={formData.parents_involvement}
-                      onChange={handleInputChange}
-                      className={styles.checkboxInput}
-                    />
-                    <span className={styles.checkboxText}>Parents Involvement</span>
-                  </label>
-                </div>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="listening_and_following_instructions"
+                  className={styles.formLabel}
+                >
+                  Listening & Following Instructions:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="listening_and_following_instructions"
+                  id="listening_and_following_instructions"
+                  value={formData.listening_and_following_instructions}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Frequency</option>
+                  {FREQUENCY_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
+          </div>
 
-            {/* Extracurricular & Skills Development Section */}
-            <div className={styles.formSection}>
-              <h2 className={styles.sectionTitle}>Extracurricular & Skills Development</h2>
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="handwriting" className={styles.formLabel}>
-                    Handwriting:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="handwriting"
-                    id="handwriting"
-                    value={formData.handwriting}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Rating</option>
-                    {RATING_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={styles.inputGroup}>
-                  <label
-                    htmlFor="maintenance_of_books_and_copies"
-                    className={styles.formLabel}
-                  >
-                    Maintenance of Books & Copies:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="maintenance_of_books_and_copies"
-                    id="maintenance_of_books_and_copies"
-                    value={formData.maintenance_of_books_and_copies}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Rating</option>
-                    {RATING_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+          {/* Home Task Section */}
+          <div className={styles.formSection}>
+            <h2 className={styles.sectionTitle}>Home Task</h2>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="homework_submission"
+                  className={styles.formLabel}
+                >
+                  Homework Submission:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="homework_submission"
+                  id="homework_submission"
+                  value={formData.homework_submission}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Status</option>
+                  {HOMEWORK_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                  <label
-                    htmlFor="leadership_and_initiative"
-                    className={styles.formLabel}
-                  >
-                    Leadership & Initiative:
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    name="leadership_and_initiative"
-                    id="leadership_and_initiative"
-                    value={formData.leadership_and_initiative}
+              <div className={styles.checkboxGroup}>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    name="parents_involvement"
+                    checked={formData.parents_involvement}
                     onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Level</option>
-                    {LEADERSHIP_CHOICES.map((choice) => (
-                      <option key={choice} value={choice}>
-                        {choice}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={styles.checkboxGroup}>
-                  <label className={styles.checkboxLabel}>
-                    <input
-                      type="checkbox"
-                      name="involvement_in_school_activities"
-                      checked={formData.involvement_in_school_activities}
-                      onChange={handleInputChange}
-                      className={styles.checkboxInput}
-                    />
-                    <span className={styles.checkboxText}>
-                      Involvement in School Activities
-                    </span>
-                  </label>
-                </div>
-              </div>
-
-              <div className={styles.formRow}>
-                <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
-                  <label
-                    htmlFor="special_talents_observed"
-                    className={styles.formLabel}
-                  >
-                    Special Talents Observed:
-                  </label>
-                  <textarea
-                    className={`${styles.formInput} ${styles.formTextarea}`}
-                    name="special_talents_observed"
-                    id="special_talents_observed"
-                    value={formData.special_talents_observed}
-                    onChange={handleInputChange}
-                    rows="3"
-                    placeholder="Describe any special talents or skills observed..."
+                    className={styles.checkboxInput}
                   />
-                </div>
+                  <span className={styles.checkboxText}>
+                    Parents Involvement
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Extracurricular & Skills Development Section */}
+          <div className={styles.formSection}>
+            <h2 className={styles.sectionTitle}>
+              Extracurricular & Skills Development
+            </h2>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="handwriting" className={styles.formLabel}>
+                  Handwriting:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="handwriting"
+                  id="handwriting"
+                  value={formData.handwriting}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Rating</option>
+                  {RATING_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="maintenance_of_books_and_copies"
+                  className={styles.formLabel}
+                >
+                  Maintenance of Books & Copies:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="maintenance_of_books_and_copies"
+                  id="maintenance_of_books_and_copies"
+                  value={formData.maintenance_of_books_and_copies}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Rating</option>
+                  {RATING_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
-            {/* Teacher's Observation & Monthly Summary Section */}
-            <div className={styles.formSection}>
-              <h2 className={styles.sectionTitle}>
-                Teacher's Observation & Monthly Summary
-              </h2>
-              <div className={styles.formRow}>
-                <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
-                  <label htmlFor="areas_of_improvement" className={styles.formLabel}>
-                    Areas of Improvement:
-                  </label>
-                  <textarea
-                    className={`${styles.formInput} ${styles.formTextarea}`}
-                    name="areas_of_improvement"
-                    id="areas_of_improvement"
-                    value={formData.areas_of_improvement}
-                    onChange={handleInputChange}
-                    rows="4"
-                    placeholder="Describe areas where the student can improve..."
-                  />
-                </div>
+            <div className={styles.formRow}>
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="leadership_and_initiative"
+                  className={styles.formLabel}
+                >
+                  Leadership & Initiative:
+                </label>
+                <select
+                  className={styles.formInput}
+                  name="leadership_and_initiative"
+                  id="leadership_and_initiative"
+                  value={formData.leadership_and_initiative}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Level</option>
+                  {LEADERSHIP_CHOICES.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
-                  <label htmlFor="goals_for_next_month" className={styles.formLabel}>
-                    Goals for Next Month:
-                  </label>
-                  <textarea
-                    className={`${styles.formInput} ${styles.formTextarea}`}
-                    name="goals_for_next_month"
-                    id="goals_for_next_month"
-                    value={formData.goals_for_next_month}
+              <div className={styles.checkboxGroup}>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    name="involvement_in_school_activities"
+                    checked={formData.involvement_in_school_activities}
                     onChange={handleInputChange}
-                    rows="4"
-                    placeholder="Set goals and expectations for the next month..."
+                    className={styles.checkboxInput}
                   />
-                </div>
+                  <span className={styles.checkboxText}>
+                    Involvement in School Activities
+                  </span>
+                </label>
               </div>
             </div>
 
-            <button type="submit" className={styles.submitButton} disabled={loading}>
-              {loading ? "Submitting..." : "Submit Monthly Feedback"}
-            </button>
-          </form>
-        </div>
+            <div className={styles.formRow}>
+              <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                <label
+                  htmlFor="special_talents_observed"
+                  className={styles.formLabel}
+                >
+                  Special Talents Observed:
+                </label>
+                <textarea
+                  className={`${styles.formInput} ${styles.formTextarea}`}
+                  name="special_talents_observed"
+                  id="special_talents_observed"
+                  value={formData.special_talents_observed}
+                  onChange={handleInputChange}
+                  rows="3"
+                  placeholder="Describe any special talents or skills observed..."
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Teacher's Observation & Monthly Summary Section */}
+          <div className={styles.formSection}>
+            <h2 className={styles.sectionTitle}>
+              Teacher's Observation & Monthly Summary
+            </h2>
+            <div className={styles.formRow}>
+              <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                <label
+                  htmlFor="areas_of_improvement"
+                  className={styles.formLabel}
+                >
+                  Areas of Improvement:
+                </label>
+                <textarea
+                  className={`${styles.formInput} ${styles.formTextarea}`}
+                  name="areas_of_improvement"
+                  id="areas_of_improvement"
+                  value={formData.areas_of_improvement}
+                  onChange={handleInputChange}
+                  rows="4"
+                  placeholder="Describe areas where the student can improve..."
+                />
+              </div>
+            </div>
+
+            <div className={styles.formRow}>
+              <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                <label
+                  htmlFor="goals_for_next_month"
+                  className={styles.formLabel}
+                >
+                  Goals for Next Month:
+                </label>
+                <textarea
+                  className={`${styles.formInput} ${styles.formTextarea}`}
+                  name="goals_for_next_month"
+                  id="goals_for_next_month"
+                  value={formData.goals_for_next_month}
+                  onChange={handleInputChange}
+                  rows="4"
+                  placeholder="Set goals and expectations for the next month..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className={styles.submitButton}
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Submit Monthly Feedback"}
+          </button>
+        </form>
+      </div>
     </>
   );
 };

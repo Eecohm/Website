@@ -1,4 +1,4 @@
-import styles from "../Academic.module.css";
+import styles from "@/Components/App/Acadamic/Academic.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AcademicClassData = () => {

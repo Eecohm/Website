@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { FaBook, FaLeaf, FaLightbulb } from 'react-icons/fa';
-import styles from './AnimatedCards.module.css';
+import React, { useState } from "react";
+import { FaBook, FaLeaf, FaLightbulb } from "react-icons/fa";
+import styles from "@/Components/Website/Moto/AnimatedCards.module.css";
 
 const AnimatedCards = () => {
   const [clickedCard, setClickedCard] = useState(null);
@@ -13,8 +13,10 @@ const AnimatedCards = () => {
     <div className={styles.cardsContainer}>
       {/* Card 1: Learn */}
       <div
-        className={`${styles.card} ${clickedCard === 'learn' ? styles.clicked : ''}`}
-        onClick={() => handleClick('learn')}
+        className={`${styles.card} ${
+          clickedCard === "learn" ? styles.clicked : ""
+        }`}
+        onClick={() => handleClick("learn")}
       >
         <FaBook className={styles.cardIcon} />
         <h3 className={styles.cardTitle}>LEARN</h3>
@@ -26,8 +28,10 @@ const AnimatedCards = () => {
 
       {/* Card 2: Grow */}
       <div
-        className={`${styles.card} ${clickedCard === 'grow' ? styles.clicked : ''}`}
-        onClick={() => handleClick('grow')}
+        className={`${styles.card} ${
+          clickedCard === "grow" ? styles.clicked : ""
+        }`}
+        onClick={() => handleClick("grow")}
       >
         <FaLeaf className={styles.cardIcon} />
         <h3 className={styles.cardTitle}>GROW</h3>
@@ -39,8 +43,10 @@ const AnimatedCards = () => {
 
       {/* Card 3: Innovate */}
       <div
-        className={`${styles.card} ${clickedCard === 'innovate' ? styles.clicked : ''}`}
-        onClick={() => handleClick('innovate')}
+        className={`${styles.card} ${
+          clickedCard === "innovate" ? styles.clicked : ""
+        }`}
+        onClick={() => handleClick("innovate")}
       >
         <FaLightbulb className={styles.cardIcon} />
         <h3 className={styles.cardTitle}>INNOVATE</h3>

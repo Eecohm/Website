@@ -7,7 +7,7 @@ import {
   isValidPositiveInteger,
   isValidIntegerWithMaxLength,
 } from "@/validators/formInputValidator/ContactValidator";
-import styles from "./IntegerInputExample.module.css"; // Optional CSS module
+import styles from "@/Components/Examples/IntegerInputExample.module.css"; // Optional CSS module
 
 const IntegerInputExample = () => {
   // Example 1: Basic Integer Input (allows any integer, positive or negative)

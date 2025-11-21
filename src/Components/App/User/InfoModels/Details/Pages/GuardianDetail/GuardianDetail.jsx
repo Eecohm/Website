@@ -1,10 +1,13 @@
 import React from "react";
-import { useGuardianDetail } from "./hooks/useGuardianDetail";
-import { GuardianHeader } from "./components/GuardianHeader";
-import { GuardianDetailsCard } from "./components/GuardianDetailsCard";
-import { ImageModal } from "../OwnerDetail/components/ImageModal";
-import { LoadingState, ErrorState } from "./components/StateComponents";
-import styles from "./components/Container.module.css";
+import { useGuardianDetail } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/hooks/useGuardianDetail";
+import { GuardianHeader } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianHeader";
+import { GuardianDetailsCard } from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianDetailsCard";
+import { ImageModal } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/ImageModal";
+import {
+  LoadingState,
+  ErrorState,
+} from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/StateComponents";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/Container.module.css";
 
 const GuardianDetail = () => {
   const {

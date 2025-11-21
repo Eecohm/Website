@@ -5,9 +5,9 @@ import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Component
 import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/ContactDetailsForm/ContactDetailsForm";
 import DocumentDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/DocumentDetailsForm/DocumentDetailsFrom";
 import TeacherSpecificForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/TeacherSpecificForm/TeacherSpecificForm";
-import styles from "./TeacherInfoForm.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Pages/TeacherInfoForm/TeacherInfoForm.module.css";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
-import useTeacherForm from "./useTeacherForm";
+import useTeacherForm from "@/Components/App/User/InfoModels/Forms/Pages/TeacherInfoForm/useTeacherForm";
 
 const TeacherInfoForm = () => {
   const {

@@ -1,10 +1,10 @@
-import React from 'react';
-import styles from './TeamLeadCard.module.css';
+import React from "react";
+import styles from "@/Components/Website/School/Team/TeamLead/TeamLeadCard.module.css";
 
 function TeamLeadCard({ name, role, bio, image, isSelected, onSelect }) {
   return (
     <div
-      className={`${styles.teamLeadCard} ${isSelected ? styles.selected : ''}`}
+      className={`${styles.teamLeadCard} ${isSelected ? styles.selected : ""}`}
       onClick={onSelect}
     >
       <div className={styles.teamLeadImage}>

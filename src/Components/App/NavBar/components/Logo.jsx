@@ -1,6 +1,6 @@
 import React from "react";
-import logoSrc from "../../../../assets/logo.svg";
-import styles from "../NavBar.module.css";
+import logoSrc from "@/assets/logo.svg";
+import styles from "@/Components/App/NavBar/NavBar.module.css";
 
 const Logo = ({ className, onClick, alt = "School Logo" }) => (
   <img

@@ -5,9 +5,9 @@ import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Component
 import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/ContactDetailsForm/ContactDetailsForm";
 import DocumentDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/DocumentDetailsForm/DocumentDetailsFrom";
 import EmployeeSpecificForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/EmployeeSpecificForm/EmployeeSpecificForm";
-import styles from "./EmployeeInfoForm.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Pages/EmployeeInfoForm/EmployeeInfoForm.module.css";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
-import useEmployeeForm from "./useEmployeeForm";
+import useEmployeeForm from "@/Components/App/User/InfoModels/Forms/Pages/EmployeeInfoForm/useEmployeeForm";
 
 const EmployeeInfoForm = () => {
   const {

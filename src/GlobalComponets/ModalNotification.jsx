@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ModalNotification.module.css";
+import styles from "@/GlobalComponets/ModalNotification.module.css";
 
 const icons = {
   success: "✅",

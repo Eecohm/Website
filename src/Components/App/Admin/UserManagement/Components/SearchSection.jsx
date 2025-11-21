@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../UserManagement.module.css";
+import styles from "@/Components/App/Admin/UserManagement/UserManagement.module.css";
 
 const SearchSection = ({ searchQuery, setSearchQuery, onBack }) => {
   return (

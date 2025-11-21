@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../NavBar/NavBar";
-import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../../../Context/AuthContext";
-import styles from "./Dashboard.module.css";
-import { useStatusCheck } from "./utils/StatusCheck";
+import NavBar from "@/Components/App/NavBar/NavBar";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
+import styles from "@/Components/App/Dashboard/Dashboard.module.css";
+import { useStatusCheck } from "@/Components/App/Dashboard/utils/StatusCheck";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
 
 const DashBoard = () => {

@@ -12,7 +12,7 @@ import {
   FiBookOpen,
   FiLayers,
 } from "react-icons/fi";
-import styles from "./ProgramModalData.module.css";
+import styles from "@/Components/App/Acadamic/modal/ProgramModalData.module.css";
 
 const ProgramModalData = ({
   programs,

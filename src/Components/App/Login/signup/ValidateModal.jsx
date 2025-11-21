@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ValidateModal.module.css";
+import styles from "@/Components/App/Login/signup/ValidateModal.module.css";
 
 const ValidateModal = ({ isOpen, onClose, type, message, title }) => {
   if (!isOpen) return null;

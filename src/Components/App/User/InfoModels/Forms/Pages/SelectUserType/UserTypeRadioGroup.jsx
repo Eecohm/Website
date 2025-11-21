@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./SelectUserType.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Pages/SelectUserType/SelectUserType.module.css";
 
 const UserTypeRadioGroup = ({
   selectedUserType,

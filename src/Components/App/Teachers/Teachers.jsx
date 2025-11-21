@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./Teachers.module.css";
-import NavBar from "../NavBar/NavBar";
+import styles from "@/Components/App/Teachers/Teachers.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
 
 const Teachers = () => {
   const navigate = useNavigate();

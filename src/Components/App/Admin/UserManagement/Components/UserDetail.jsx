@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { BaseUrlContext } from "@/Context/BaseUrlContext";
-import { useFetchUserDetail } from "../hooks/useFetchUserDetail";
-import styles from "../UserManagement.module.css";
-import { getInitials } from "../utils/userUtils";
+import { useFetchUserDetail } from "@/Components/App/Admin/UserManagement/hooks/useFetchUserDetail";
+import styles from "@/Components/App/Admin/UserManagement/UserManagement.module.css";
+import { getInitials } from "@/Components/App/Admin/UserManagement/utils/userUtils";
 
 const UserDetail = ({ onBack }) => {
   const baseUrl = useContext(BaseUrlContext);

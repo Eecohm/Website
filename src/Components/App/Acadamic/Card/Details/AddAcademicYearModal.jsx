@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useBaseUrl } from "../../../../BaseUrlContext";
-import { useAuth } from "../../Login/Auth/AuthContext";
-import styles from "./AcademicYearCard.module.css";
-import ModalNotification from "../../../../GlobalComponets/ModalNotification";
-import NavBar from "../../../NavBar/NavBar";
-import NewYearData from "../modal/NewyearData";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
+import styles from "@/Components/App/Acadamic/Card/Details/AcademicYearCard.module.css";
+import ModalNotification from "@/GlobalComponets/ModalNotification";
+import NavBar from "@/Components/App/Card/NavBar/NavBar";
+import NewYearData from "@/Components/App/Acadamic/Cards/modal/NewyearData";
 import { FiPlus } from "react-icons/fi";
 
 // Import the new components

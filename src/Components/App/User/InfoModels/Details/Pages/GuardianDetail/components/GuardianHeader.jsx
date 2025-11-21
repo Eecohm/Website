@@ -1,6 +1,6 @@
 import React from "react";
 import { FileText } from "lucide-react";
-import styles from "./GuardianHeader.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianHeader.module.css";
 
 export const GuardianHeader = ({ onEdit }) => (
   <div className={styles.header}>

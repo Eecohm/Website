@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import styles from "./GlassInput.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassInput/GlassInput.module.css";
 
 const GlassInput = ({
   label,

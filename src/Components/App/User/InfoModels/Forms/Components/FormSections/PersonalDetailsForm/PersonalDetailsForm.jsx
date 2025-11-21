@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { FiUser } from "react-icons/fi";
-import FormSection from "../../FormComponents/FormSection/FormSection";
-import GlassInput from "../../FormComponents/GlassInput/GlassInput";
-import GlassSelect from "../../FormComponents/GlassSelect/GlassSelect";
-import GlassFileUpload from "../../FormComponents/GlassFileUpload/GlassFileUpload";
+import FormSection from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/FormSection/FormSection";
+import GlassInput from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassInput/GlassInput";
+import GlassSelect from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassSelect/GlassSelect";
+import GlassFileUpload from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassFileUpload/GlassFileUpload";
 import {
   validateRequiredName,
   validateOptionalName,

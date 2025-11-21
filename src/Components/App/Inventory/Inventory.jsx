@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./Inventory.module.css";
-import NavBar from "../NavBar/NavBar";
+import styles from "@/Components/App/Inventory/Inventory.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
 
 const Inventory = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Inventory = () => {
       path: "/dashboard/inventory/reports",
       icon: "📊", // report / analytics
       description: "Generate stock and inventory usage reports",
-    }
+    },
   ];
 
   return (

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./Academic.module.css";
-import NavBar from "../NavBar/NavBar";
+import styles from "@Components/App/Acadamic/Academic.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
 
 const Academic = () => {
   const navigate = useNavigate();

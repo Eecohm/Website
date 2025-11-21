@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
 import { FiMapPin } from "react-icons/fi";
-import FormSection from "../../FormComponents/FormSection/FormSection";
-import GlassInput from "../../FormComponents/GlassInput/GlassInput";
+import FormSection from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/FormSection/FormSection";
+import GlassInput from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassInput/GlassInput";
 import {
   validateRequiredString,
   validateRequiredWard,
   validateRequiredName,
 } from "@/validators/formInputValidator/TextValidator";
-import GlassSelect from "../../FormComponents/GlassSelect/GlassSelect";
+import GlassSelect from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassSelect/GlassSelect";
 
 const AddressDetailsForm = ({ formData, handleChange, onValidationChange }) => {
   const [validFields, setValidFields] = useState(new Set());

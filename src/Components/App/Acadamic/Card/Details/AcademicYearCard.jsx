@@ -1,4 +1,4 @@
-import styles from "./AcademicYearList.module.css";
+import styles from "@/Components/App/Acadamic/Card/Details/AcademicYearList.module.css";
 import { FiCalendar, FiCheck, FiEye, FiAlertCircle } from "react-icons/fi";
 
 const AcademicYearList = ({

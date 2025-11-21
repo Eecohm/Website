@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Map, Marker } from "react-map-gl/maplibre";
 import { X, MapPin, Navigation, Shield } from "lucide-react";
 import { canUseGeolocation } from "@/utils/security";
-import styles from "./MapLocationPicker.module.css";
+import styles from "@/Components/MapLocationPicker/MapLocationPicker.module.css";
 
 const MapLocationPicker = ({
   isOpen,

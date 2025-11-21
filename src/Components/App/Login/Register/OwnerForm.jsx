@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Register.module.css";
-import { useBaseUrl } from "../../../../Context/BaseUrlContext";
-import { useAuth } from "../../../../Context/AuthContext";
-import PersonalDetailForm from "./PersonalDetailForm";
-import AddressDetailForm from "./AddressDetailForm";
-import ContactDetailForm from "./ContactDetailForm";
-import DocumentDetailForm from "./DocumentDetailForm";
+import styles from "@/Components/App/Login/Register/Register.module.css";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
+import PersonalDetailForm from "@/Components/App/Login/Register/PersonalDetailForm";
+import AddressDetailForm from "@/Components/App/Login/Register/AddressDetailForm";
+import ContactDetailForm from "@/Components/App/Login/Register/ContactDetailForm";
+import DocumentDetailForm from "@/Components/App/Login/Register/DocumentDetailForm";
 
 const OwnerForm = () => {
   const baseUrl = useBaseUrl();

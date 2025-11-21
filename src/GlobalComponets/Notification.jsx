@@ -1,6 +1,12 @@
 import React from "react";
-import styles from "./Notification.module.css";
-import { XCircle, CheckCircle, AlertTriangle, Info, HelpCircle } from "lucide-react";
+import styles from "@/GlobalComponets/Notification.module.css";
+import {
+  XCircle,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  HelpCircle,
+} from "lucide-react";
 
 const icons = {
   success: <CheckCircle size={20} />,

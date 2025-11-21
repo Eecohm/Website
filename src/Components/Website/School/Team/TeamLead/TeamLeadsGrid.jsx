@@ -1,6 +1,6 @@
 import React from "react";
-import TeamLeadCard from "./TeamLeadCard";
-import styles from "./MeetTheTeamLeads.module.css";
+import TeamLeadCard from "@/Components/Website/School/Team/TeamLead/TeamLeadCard";
+import styles from "@/Components/Website/School/Team/TeamLead/MeetTheTeamLeads.module.css";
 
 const TeamLeadsGrid = ({ teamLeads, selectedLead, handleSelectLead }) => (
   <div className={styles.teamLeadsGridContainer}>

@@ -1,5 +1,5 @@
-import { getToken, setSessionToken } from "./Cookies";
-import { attemptTokenRefresh } from "./TokenRefresh";
+import { getToken, setSessionToken } from "@/Context/Auth/Cookies";
+import { attemptTokenRefresh } from "@/Context/Auth/TokenRefresh";
 
 /**
  * Authenticated Fetch - Automatically includes auth token in all API requests

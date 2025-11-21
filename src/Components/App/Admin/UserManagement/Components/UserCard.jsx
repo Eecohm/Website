@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../UserManagement.module.css";
-import { getInitials } from "../utils/userUtils";
+import styles from "@/Components/App/Admin/UserManagement/UserManagement.module.css";
+import { getInitials } from "@/Components/App/Admin/UserManagement/utils/userUtils";
 import { updateUserStatus } from "@/hooks/userApi";
 
 const UserCard = ({ user, onUserUpdate, baseUrl, login, setToken }) => {

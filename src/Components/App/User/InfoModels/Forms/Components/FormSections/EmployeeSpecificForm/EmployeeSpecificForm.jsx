@@ -1,8 +1,8 @@
-import React from 'react';
-import { Briefcase } from 'lucide-react';
-import FormSection from '../../FormComponents/FormSection/FormSection';
-import GlassInput from '../../FormComponents/GlassInput/GlassInput';
-import GlassFileUpload from '../../FormComponents/GlassFileUpload/GlassFileUpload';
+import React from "react";
+import { Briefcase } from "lucide-react";
+import FormSection from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/FormSection/FormSection";
+import GlassInput from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassInput/GlassInput";
+import GlassFileUpload from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassFileUpload/GlassFileUpload";
 
 const EmployeeSpecificForm = ({ formData, handleChange, handleFileChange }) => (
   <FormSection title="Employee Details" icon={Briefcase}>

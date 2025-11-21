@@ -14,7 +14,7 @@ import {
   FiFile,
   FiBookOpen,
 } from "react-icons/fi";
-import styles from "../DetailCard.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/DetailCard.module.css";
 
 const TeacherDetail = () => {
   const navigate = useNavigate();

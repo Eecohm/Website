@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserTypeRadioGroup from "./UserTypeRadioGroup";
+import UserTypeRadioGroup from "@/Components/App/User/InfoModels/Forms/Pages/SelectUserType/UserTypeRadioGroup";
 
 const SelectUserType = ({ onUserTypeChange, currentSelection }) => {
   const [selectedUserType, setSelectedUserType] = useState("self");

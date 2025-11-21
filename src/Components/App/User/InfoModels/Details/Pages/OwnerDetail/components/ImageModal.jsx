@@ -1,6 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
-import styles from "./ImageModal.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/ImageModal.module.css";
 
 export const ImageModal = ({ show, url, onClose }) => {
   if (!show) return null;

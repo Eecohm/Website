@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
 import { normalizeUserData } from "@/utils/normalizeUserData";
-import styles from "../../GlobalComponents/BasicInfoCard.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/GlobalComponents/BasicInfoCard.module.css";
 
 export const useEmployeeDetail = () => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React from "react";
 import { MapPin } from "lucide-react";
-import sectionStyles from "./SectionCard.module.css";
-import detailListStyles from "./DetailsListShared.module.css";
+import sectionStyles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/SectionCard.module.css";
+import detailListStyles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/DetailsListShared.module.css";
 
 export const GuardianAddressSection = ({ guardian }) => (
   <div className={sectionStyles.sectionCard}>

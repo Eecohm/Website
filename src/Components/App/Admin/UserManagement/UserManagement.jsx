@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import styles from "./UserManagement.module.css";
-import { useUserFilters } from "./hooks/useUserFilter";
-import { useFetchUsers } from "./hooks/useFetchUsers";
+import styles from "@/Components/App/Admin/UserManagement/UserManagement.module.css";
+import { useUserFilters } from "@/Components/App/Admin/UserManagement/hooks/useUserFilter";
+import { useFetchUsers } from "@/Components/App/Admin/UserManagement/hooks/useFetchUsers";
 import { BaseUrlContext } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
-import SearchSection from "./components/SearchSection";
-import UserFilters from "./components/UserFilters";
-import UserGrid from "./components/UserGrid";
+import SearchSection from "@/Components/App/Admin/UserManagement/Components/SearchSection";
+import UserFilters from "@/Components/App/Admin/UserManagement/Components/UserFilters";
+import UserGrid from "@/Components/App/Admin/UserManagement/Components/UserGrid";
 
 const UserManagement = ({ onBack }) => {
   const baseUrl = useContext(BaseUrlContext);

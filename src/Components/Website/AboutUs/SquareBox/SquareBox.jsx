@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './SquareBox.module.css';
+import React from "react";
+import styles from "@/Components/Website/AboutUs/SquareBox/SquareBox.module.css";
 
 const SquareBox = ({ imageSrc, backgroundColor, onClick, id }) => {
   return (

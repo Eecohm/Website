@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Login.module.css";
+import styles from "@/Components/App/Login/Login/Login.module.css";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
-import LoginFormComponent from "./components/LoginFormComponent";
-import PasswordComponent from "./components/PasswordComponent";
+import LoginFormComponent from "@/Components/App/Login/Login/components/LoginFormComponent";
+import PasswordComponent from "@/Components/App/Login/Login/components/PasswordComponent";
 import {
   loginUser,
   handleForgotPassword,
   handleVerifyOtpAndSetPassword,
-} from "./api/loginApi";
+} from "@/Components/App/Login/Login/api/loginApi";
 
 const LoginForm = () => {
   const baseUrl = useBaseUrl();

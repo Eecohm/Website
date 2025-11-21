@@ -1,10 +1,13 @@
 import React from "react";
-import { useEmployeeDetail } from "./hooks/useEmployeeDetail";
-import { EmployeeHeader } from "./components/EmployeeHeader";
-import { EmployeeDetailsCard } from "./components/EmployeeDetailsCard";
-import { ImageModal } from "../OwnerDetail/components/ImageModal";
-import { LoadingState, ErrorState } from "./components/StateComponents";
-import styles from "./components/Container.module.css";
+import { useEmployeeDetail } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/hooks/useEmployeeDetail";
+import { EmployeeHeader } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeHeader";
+import { EmployeeDetailsCard } from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeDetailsCard";
+import { ImageModal } from "@/Components/App/User/InfoModels/Details/Pages/OwnerDetail/components/ImageModal";
+import {
+  LoadingState,
+  ErrorState,
+} from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/StateComponents";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/Container.module.css";
 
 const EmployeeDetail = () => {
   const {

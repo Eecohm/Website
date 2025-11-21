@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Students.module.css";
+import styles from "@/Components/App/Students/Students.module.css";
 
 const ProgressBar = ({ currentPart, currentSection }) => {
   let currentProgress = 0;

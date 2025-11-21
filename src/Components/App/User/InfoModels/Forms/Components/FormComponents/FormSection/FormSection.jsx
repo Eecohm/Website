@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './FormSection.module.css';
+import React from "react";
+import styles from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/FormSection/FormSection.module.css";
 
 const FormSection = ({ title, icon: Icon, children }) => (
   <div className={styles.section}>
@@ -9,9 +9,7 @@ const FormSection = ({ title, icon: Icon, children }) => (
       </div>
       <h3 className={styles.title}>{title}</h3>
     </div>
-    <div className={styles.grid}>
-      {children}
-    </div>
+    <div className={styles.grid}>{children}</div>
   </div>
 );
 

@@ -4,9 +4,9 @@ import PersonalDetailsForm from "@/Components/App/User/InfoModels/Forms/Componen
 import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/AddressDetailsForm/AddressDetailsForm";
 import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/ContactDetailsForm/ContactDetailsForm";
 import StudentSpecificForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/StudentSpecificForm/StudentSpecificForm";
-import styles from "./StudentInfoForm.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Pages/StudentInfoForm/StudentInfoForm.module.css";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
-import useStudentForm from "./useStudentForm";
+import useStudentForm from "@/Components/App/User/InfoModels/Forms/Pages/StudentInfoForm/useStudentForm";
 
 const StudentInfoForm = () => {
   const {

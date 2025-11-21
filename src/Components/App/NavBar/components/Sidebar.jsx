@@ -1,7 +1,8 @@
 import React from "react";
-import styles from "../NavBar.module.css";
-import Logo from "./Logo";
-import NavItem from "./NavItem";
+import styles from "@/Components/App/NavBar/NavBar.module.css";
+
+import Logo from "@/Components/App/NavBar/components/Logo";
+import NavItem from "@/Components/App/NavBar/components/NavItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Sidebar = ({

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Users } from "lucide-react";
-import FormSection from "../../FormComponents/FormSection/FormSection";
-import GlassInput from "../../FormComponents/GlassInput/GlassInput";
+import FormSection from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/FormSection/FormSection";
+import GlassInput from "@/Components/App/User/InfoModels/Forms/Components/FormComponents/GlassInput/GlassInput";
 import { validateRequiredString } from "@/validators/formInputValidator/TextValidator";
 
 const GuardianSpecificForm = ({

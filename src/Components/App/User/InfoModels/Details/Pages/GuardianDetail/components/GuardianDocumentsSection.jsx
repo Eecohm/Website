@@ -1,7 +1,7 @@
 import React from "react";
 import { FileText, CreditCard, Download } from "lucide-react";
-import sectionStyles from "./SectionCard.module.css";
-import styles from "./GuardianDocumentsSection.module.css";
+import sectionStyles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/SectionCard.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/GuardianDetail/components/GuardianDocumentsSection.module.css";
 
 export const GuardianDocumentsSection = ({ guardian, onViewDocument }) => (
   <div className={sectionStyles.sectionCard}>

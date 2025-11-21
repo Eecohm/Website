@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./styles/OrgCard.module.css";
-import useOrganizationData from "./useOrganizationData";
+import styles from "@/Components/App/Profile/styles/OrgCard.module.css";
+import useOrganizationData from "@/Components/App/Profile/useOrganizationData";
 import {
   FiPhone,
   FiSmartphone,

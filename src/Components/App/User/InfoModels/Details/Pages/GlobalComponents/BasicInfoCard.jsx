@@ -7,7 +7,7 @@ import {
   CreditCard,
   Globe,
 } from "lucide-react";
-import styles from "./BasicInfoCard.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/GlobalComponents/BasicInfoCard.module.css";
 
 export const BasicInfoCard = ({
   user,

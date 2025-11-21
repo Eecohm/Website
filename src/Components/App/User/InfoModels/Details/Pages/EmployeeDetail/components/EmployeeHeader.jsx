@@ -1,6 +1,6 @@
 import React from "react";
 import { FileText } from "lucide-react";
-import styles from "./EmployeeHeader.module.css";
+import styles from "@/Components/App/User/InfoModels/Details/Pages/EmployeeDetail/components/EmployeeHeader.module.css";
 
 export const EmployeeHeader = ({ onEdit }) => (
   <div className={styles.header}>

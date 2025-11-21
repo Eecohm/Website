@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../UserManagement.module.css";
-import UserCard from "./UserCard";
+import styles from "@/Components/App/Admin/UserManagement/UserManagement.module.css";
+import UserCard from "@/Components/App/Admin/UserManagement/Components/UserCard";
 
 const UserGrid = ({
   filteredUsers,

@@ -1,5 +1,5 @@
-import { setSessionToken } from "./Cookies";
-import { clearAuthState } from "./clearAuthState";
+import { setSessionToken } from "@/Context/Auth/Cookies";
+import { clearAuthState } from "@/Context/Auth/clearAuthState";
 
 /**
  * Attempt Token Refresh

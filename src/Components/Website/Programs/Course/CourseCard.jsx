@@ -1,17 +1,32 @@
-import React from 'react';
-import styles from './CourseCard.module.css';
+import React from "react";
+import styles from "@/Components/Website/Programs/Course/CourseCard.module.css";
 
-const CourseCard = ({ courseName, description, photo, duration, keyFeatures, targetedAudience, isExpanded, onExpand, onClose, icon }) => {
+const CourseCard = ({
+  courseName,
+  description,
+  photo,
+  duration,
+  keyFeatures,
+  targetedAudience,
+  isExpanded,
+  onExpand,
+  onClose,
+  icon,
+}) => {
   return (
-    <div 
-      className={`${styles.courseCard} ${isExpanded ? styles.expanded : ''}`}
+    <div
+      className={`${styles.courseCard} ${isExpanded ? styles.expanded : ""}`}
       onClick={!isExpanded ? () => onExpand() : undefined}
     >
       <div className={styles.courseImageContainer}>
         <img src={photo} alt={courseName} className={styles.courseImage} />
         {!isExpanded && (
           <div className={styles.iconOverlay}>
-            <img src={icon} alt={`${courseName} icon`} className={styles.courseIcon} />
+            <img
+              src={icon}
+              alt={`${courseName} icon`}
+              className={styles.courseIcon}
+            />
           </div>
         )}
       </div>
@@ -33,8 +48,8 @@ const CourseCard = ({ courseName, description, photo, duration, keyFeatures, tar
         )}
       </div>
       {isExpanded && (
-        <button 
-          className={styles.closeCourseButton} 
+        <button
+          className={styles.closeCourseButton}
           onClick={(e) => {
             e.stopPropagation();
             onClose();

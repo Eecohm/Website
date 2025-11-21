@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./LeadsHeader.module.css";
+import styles from "@/Components/Website/School/Team/TeamLead/LeadsHeader.module.css";
 
 function LeadsHeader() {
   return (

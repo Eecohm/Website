@@ -13,7 +13,7 @@ import {
   FiLayers,
   FiUsers,
 } from "react-icons/fi";
-import styles from "./GradeData.module.css";
+import styles from "@/Components/App/Acadamic/modal/GradeData.module.css";
 
 const GradeDataModule = ({
   grades,

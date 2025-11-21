@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import styles from "./Admin.module.css";
-import NavBar from "../NavBar/NavBar";
-import { academicCards } from "./adminCardData";
+import styles from "@/Components/App/Admin/Admin.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
+import { academicCards } from "@/Components/App/Admin/adminCardData";
 
 const Admin = () => {
   return (

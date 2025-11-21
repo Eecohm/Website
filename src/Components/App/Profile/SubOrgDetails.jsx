@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { 
-  ArrowLeft, 
-  Edit3, 
-  Save, 
-  X, 
-  Upload, 
-  Eye, 
+import {
+  ArrowLeft,
+  Edit3,
+  Save,
+  X,
+  Upload,
+  Eye,
   Building2,
   FileText,
   Camera,
   CheckCircle2,
   AlertCircle,
-  Loader2
+  Loader2,
 } from "lucide-react";
-import styles from "./styles/SubOrgDetails.module.css";
+import styles from "@/Components/App/Profile/styles/SubOrgDetails.module.css";
 import axios from "axios";
-import { useBaseUrl } from "../../../Context/BaseUrlContext";
-import { useAuth } from "../../../Context/AuthContext";
+import { useBaseUrl } from "@/Context/BaseUrlContext";
+import { useAuth } from "@/Context/AuthContext";
 import ModalNotification from "../../../GlobalComponets/ModalNotification";
 
 const SubOrgDetails = () => {
@@ -165,7 +165,9 @@ const SubOrgDetails = () => {
   const renderImage = (field, label, icon = Camera) => {
     const currentValue = formData[field];
     const displaySrc =
-      currentValue instanceof File ? URL.createObjectURL(currentValue) : currentValue || "/default-logo.png";
+      currentValue instanceof File
+        ? URL.createObjectURL(currentValue)
+        : currentValue || "/default-logo.png";
 
     const hasError = errors[field];
     const IconComponent = icon;
@@ -178,13 +180,16 @@ const SubOrgDetails = () => {
         </div>
         <div className={styles.imageUploadContainer}>
           <div className={styles.imagePreview}>
-            <img 
-              src={displaySrc} 
-              alt={label} 
-              className={styles.thumbnail} 
-              onClick={() => setModalImage(displaySrc)} 
+            <img
+              src={displaySrc}
+              alt={label}
+              className={styles.thumbnail}
+              onClick={() => setModalImage(displaySrc)}
             />
-            <div className={styles.imageOverlay} onClick={() => setModalImage(displaySrc)}>
+            <div
+              className={styles.imageOverlay}
+              onClick={() => setModalImage(displaySrc)}
+            >
               <Eye size={20} />
             </div>
           </div>
@@ -212,17 +217,25 @@ const SubOrgDetails = () => {
         {hasError && (
           <div className={styles.errorMessage}>
             <AlertCircle size={14} />
-            <span>{Array.isArray(hasError) ? hasError.join(", ") : hasError}</span>
+            <span>
+              {Array.isArray(hasError) ? hasError.join(", ") : hasError}
+            </span>
           </div>
         )}
       </div>
     );
   };
 
-  const renderFormField = (name, label, type = "text", required = false, icon = null) => {
+  const renderFormField = (
+    name,
+    label,
+    type = "text",
+    required = false,
+    icon = null
+  ) => {
     const hasError = errors[name];
     const IconComponent = icon;
-    
+
     return (
       <div className={styles.formGroup}>
         <label className={styles.fieldLabel}>
@@ -252,7 +265,9 @@ const SubOrgDetails = () => {
         {hasError && (
           <div className={styles.errorMessage}>
             <AlertCircle size={14} />
-            <span>{Array.isArray(hasError) ? hasError.join(", ") : hasError}</span>
+            <span>
+              {Array.isArray(hasError) ? hasError.join(", ") : hasError}
+            </span>
           </div>
         )}
       </div>
@@ -262,10 +277,10 @@ const SubOrgDetails = () => {
   return (
     <div className={styles.wholeDiv}>
       {notification.show && (
-        <ModalNotification 
-          message={notification.message} 
-          type={notification.type} 
-          onClose={handleNotificationClose} 
+        <ModalNotification
+          message={notification.message}
+          type={notification.type}
+          onClose={handleNotificationClose}
         />
       )}
 
@@ -274,7 +289,9 @@ const SubOrgDetails = () => {
         onClick={() => navigate("/dashboard/profile/sub-organization")}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && navigate("/dashboard/profile/sub-organization")}
+        onKeyDown={(e) =>
+          e.key === "Enter" && navigate("/dashboard/profile/sub-organization")
+        }
       >
         <ArrowLeft size={18} />
         <span>Back to Sub-Organizations</span>
@@ -287,7 +304,10 @@ const SubOrgDetails = () => {
             <h1>Sub-Organization Details</h1>
           </div>
           {!editMode && (
-            <button className={styles.editButton} onClick={() => setEditMode(true)}>
+            <button
+              className={styles.editButton}
+              onClick={() => setEditMode(true)}
+            >
               <Edit3 size={18} />
               <span>Edit Details</span>
             </button>
@@ -298,19 +318,28 @@ const SubOrgDetails = () => {
           <div className={styles.cardView}>
             <div className={styles.cardHeader}>
               <div className={styles.logoContainer}>
-                <img 
-                  src={subOrgData.logo || "/default-logo.png"} 
-                  alt={subOrgData.subOrgName || "Organization Logo"} 
+                <img
+                  src={subOrgData.logo || "/default-logo.png"}
+                  alt={subOrgData.subOrgName || "Organization Logo"}
                   className={styles.logo}
-                  onClick={() => setModalImage(subOrgData.logo || "/default-logo.png")}
+                  onClick={() =>
+                    setModalImage(subOrgData.logo || "/default-logo.png")
+                  }
                 />
-                <div className={styles.logoOverlay} onClick={() => setModalImage(subOrgData.logo || "/default-logo.png")}>
+                <div
+                  className={styles.logoOverlay}
+                  onClick={() =>
+                    setModalImage(subOrgData.logo || "/default-logo.png")
+                  }
+                >
                   <Eye size={24} />
                 </div>
               </div>
               <div className={styles.cardInfo}>
                 <h2>{subOrgData.subOrgName}</h2>
-                <p className={styles.description}>{subOrgData.descriptionText}</p>
+                <p className={styles.description}>
+                  {subOrgData.descriptionText}
+                </p>
                 {subOrgData.differentEntity && (
                   <div className={styles.entityBadge}>
                     <CheckCircle2 size={16} />
@@ -333,18 +362,21 @@ const SubOrgDetails = () => {
                     <span>{subOrgData.vatNumber || "Not provided"}</span>
                   </div>
                 </div>
-                
+
                 <div className={styles.documentsSection}>
                   <h4>Documents</h4>
                   <div className={styles.documentGrid}>
                     {subOrgData.panImage && (
                       <div className={styles.documentItem}>
-                        <img 
-                          src={subOrgData.panImage} 
-                          alt="PAN Document" 
-                          onClick={() => setModalImage(subOrgData.panImage)} 
+                        <img
+                          src={subOrgData.panImage}
+                          alt="PAN Document"
+                          onClick={() => setModalImage(subOrgData.panImage)}
                         />
-                        <div className={styles.documentOverlay} onClick={() => setModalImage(subOrgData.panImage)}>
+                        <div
+                          className={styles.documentOverlay}
+                          onClick={() => setModalImage(subOrgData.panImage)}
+                        >
                           <Eye size={16} />
                           <span>PAN Document</span>
                         </div>
@@ -352,12 +384,19 @@ const SubOrgDetails = () => {
                     )}
                     {subOrgData.registrationImage && (
                       <div className={styles.documentItem}>
-                        <img 
-                          src={subOrgData.registrationImage} 
-                          alt="Registration Document" 
-                          onClick={() => setModalImage(subOrgData.registrationImage)} 
+                        <img
+                          src={subOrgData.registrationImage}
+                          alt="Registration Document"
+                          onClick={() =>
+                            setModalImage(subOrgData.registrationImage)
+                          }
                         />
-                        <div className={styles.documentOverlay} onClick={() => setModalImage(subOrgData.registrationImage)}>
+                        <div
+                          className={styles.documentOverlay}
+                          onClick={() =>
+                            setModalImage(subOrgData.registrationImage)
+                          }
+                        >
                           <Eye size={16} />
                           <span>Registration</span>
                         </div>
@@ -365,12 +404,15 @@ const SubOrgDetails = () => {
                     )}
                     {subOrgData.vatImage && (
                       <div className={styles.documentItem}>
-                        <img 
-                          src={subOrgData.vatImage} 
-                          alt="VAT Document" 
-                          onClick={() => setModalImage(subOrgData.vatImage)} 
+                        <img
+                          src={subOrgData.vatImage}
+                          alt="VAT Document"
+                          onClick={() => setModalImage(subOrgData.vatImage)}
                         />
-                        <div className={styles.documentOverlay} onClick={() => setModalImage(subOrgData.vatImage)}>
+                        <div
+                          className={styles.documentOverlay}
+                          onClick={() => setModalImage(subOrgData.vatImage)}
+                        >
                           <Eye size={16} />
                           <span>VAT Document</span>
                         </div>
@@ -386,27 +428,43 @@ const SubOrgDetails = () => {
             <div className={styles.formSection}>
               <h3>Basic Information</h3>
               <div className={styles.formGrid}>
-                {renderFormField("subOrgName", "Sub-Organization Name", "text", true, Building2)}
-                {renderFormField("descriptionText", "Description", "textarea", false, FileText)}
+                {renderFormField(
+                  "subOrgName",
+                  "Sub-Organization Name",
+                  "text",
+                  true,
+                  Building2
+                )}
+                {renderFormField(
+                  "descriptionText",
+                  "Description",
+                  "textarea",
+                  false,
+                  FileText
+                )}
               </div>
             </div>
 
             <div className={styles.formSection}>
               <div className={styles.checkboxGroup}>
                 <label className={styles.checkboxLabel}>
-                  <input 
-                    type="checkbox" 
-                    name="differentEntity" 
-                    checked={formData.differentEntity || false} 
-                    onChange={handleChange} 
-                    className={styles.checkbox} 
+                  <input
+                    type="checkbox"
+                    name="differentEntity"
+                    checked={formData.differentEntity || false}
+                    onChange={handleChange}
+                    className={styles.checkbox}
                   />
                   <div className={styles.checkboxIndicator}>
                     {formData.differentEntity && <CheckCircle2 size={16} />}
                   </div>
                   <div className={styles.checkboxContent}>
-                    <span className={styles.checkboxTitle}>Different Entity</span>
-                    <span className={styles.checkboxDescription}>This sub-organization is a separate legal entity</span>
+                    <span className={styles.checkboxTitle}>
+                      Different Entity
+                    </span>
+                    <span className={styles.checkboxDescription}>
+                      This sub-organization is a separate legal entity
+                    </span>
                   </div>
                 </label>
               </div>
@@ -416,8 +474,20 @@ const SubOrgDetails = () => {
               <div className={styles.formSection}>
                 <h3>Legal Information</h3>
                 <div className={styles.formGrid}>
-                  {renderFormField("panNumber", "PAN Number", "text", false, FileText)}
-                  {renderFormField("vatNumber", "VAT Number", "text", false, FileText)}
+                  {renderFormField(
+                    "panNumber",
+                    "PAN Number",
+                    "text",
+                    false,
+                    FileText
+                  )}
+                  {renderFormField(
+                    "vatNumber",
+                    "VAT Number",
+                    "text",
+                    false,
+                    FileText
+                  )}
                 </div>
               </div>
             )}
@@ -429,7 +499,11 @@ const SubOrgDetails = () => {
                 {formData.differentEntity && (
                   <>
                     {renderImage("panImage", "PAN Document", FileText)}
-                    {renderImage("registrationImage", "Registration Document", FileText)}
+                    {renderImage(
+                      "registrationImage",
+                      "Registration Document",
+                      FileText
+                    )}
                     {renderImage("vatImage", "VAT Document", FileText)}
                   </>
                 )}
@@ -437,17 +511,17 @@ const SubOrgDetails = () => {
             </div>
 
             <div className={styles.formActions}>
-              <button 
-                onClick={handleCancel} 
-                className={styles.cancelButton} 
+              <button
+                onClick={handleCancel}
+                className={styles.cancelButton}
                 disabled={loading}
               >
                 <X size={18} />
                 <span>Cancel</span>
               </button>
-              <button 
-                onClick={handleUpdate} 
-                disabled={loading} 
+              <button
+                onClick={handleUpdate}
+                disabled={loading}
                 className={styles.saveButton}
               >
                 {loading ? (
@@ -470,10 +544,17 @@ const SubOrgDetails = () => {
       {/* Image Modal */}
       {modalImage && (
         <div className={styles.modal} onClick={() => setModalImage(null)}>
-          <button className={styles.closeModal} onClick={() => setModalImage(null)}>
+          <button
+            className={styles.closeModal}
+            onClick={() => setModalImage(null)}
+          >
             <X size={24} />
           </button>
-          <img src={modalImage} alt="Full view" className={styles.modalContent} />
+          <img
+            src={modalImage}
+            alt="Full view"
+            className={styles.modalContent}
+          />
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./Accounts.module.css";
-import NavBar from "../NavBar/NavBar";
+import styles from "@/Components/App/Accounts/Accounts.module.css";
+import NavBar from "@/Components/App/NavBar/NavBar";
 
 const Accounts = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Accounts = () => {
       path: "/dashboard/accounts/vouchers",
       icon: "🧾", // voucher / bill
       description: "Create and manage payment vouchers and receipts",
-    }
+    },
   ];
 
   return (

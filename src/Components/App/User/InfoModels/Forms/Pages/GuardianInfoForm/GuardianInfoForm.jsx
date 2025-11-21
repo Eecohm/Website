@@ -4,9 +4,9 @@ import PersonalDetailsForm from "@/Components/App/User/InfoModels/Forms/Componen
 import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/AddressDetailsForm/AddressDetailsForm";
 import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/ContactDetailsForm/ContactDetailsForm";
 import GuardianSpecificForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/GuardianSpecificForm/GuardianSpecificForm";
-import styles from "./GuardianInfoForm.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Pages/GuardianInfoForm/GuardianInfoForm.module.css";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
-import useGuardianForm from "./useGuardianForm";
+import useGuardianForm from "@/Components/App/User/InfoModels/Forms/Pages/GuardianInfoForm/useGuardianForm";
 
 const GuardianInfoForm = () => {
   const {

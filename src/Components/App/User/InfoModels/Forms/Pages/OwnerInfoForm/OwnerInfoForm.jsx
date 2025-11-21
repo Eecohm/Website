@@ -4,9 +4,9 @@ import PersonalDetailsForm from "@/Components/App/User/InfoModels/Forms/Componen
 import AddressDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/AddressDetailsForm/AddressDetailsForm";
 import ContactDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/ContactDetailsForm/ContactDetailsForm";
 import DocumentDetailsForm from "@/Components/App/User/InfoModels/Forms/Components/FormSections/DocumentDetailsForm/DocumentDetailsFrom";
-import styles from "./OwnerInfoForm.module.css";
+import styles from "@/Components/App/User/InfoModels/Forms/Pages/OwnerInfoForm/OwnerInfoForm.module.css";
 import ModalNotification from "@/GlobalComponets/ModalNotification";
-import useOwnerForm from "./useOwnerForm";
+import useOwnerForm from "@/Components/App/User/InfoModels/Forms/Pages/OwnerInfoForm/useOwnerForm";
 
 const OwnerInfoForm = () => {
   const {

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Register.module.css";
+import styles from "@/Components/App/Login/Register/Register.module.css";
 
 const PersonalDetailForm = ({
   formData,

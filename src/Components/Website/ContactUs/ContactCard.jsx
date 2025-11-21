@@ -1,10 +1,19 @@
-import React from 'react';
-import styles from './ContactUs.module.css';
+import React from "react";
+import styles from "@/Components/Website/ContactUs/ContactUs.module.css";
 
-const ContactCard = ({ icon, title, detail, animationDelay, clickableCard = false, onClick }) => {
+const ContactCard = ({
+  icon,
+  title,
+  detail,
+  animationDelay,
+  clickableCard = false,
+  onClick,
+}) => {
   return (
     <div
-      className={`${styles.contactCard} ${clickableCard ? styles.clickableCard : ''}`}
+      className={`${styles.contactCard} ${
+        clickableCard ? styles.clickableCard : ""
+      }`}
       style={{ animationDelay }}
       onClick={clickableCard ? onClick : null}
     >
