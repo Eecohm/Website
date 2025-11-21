@@ -11,6 +11,7 @@ import FacultyData from "@/Components/App/Acadamic/Data/FacultyData ";
 import GradeData from "@/Components/App/Acadamic/Data/GradeData ";
 import AcademicClassData from "@/Components/App/Acadamic/Data/AcademicClassData ";
 import AcademicYearData from "@/Components/App/Acadamic/Data/AcademicYearData ";
+import AcademicStudents from "@/Components/App/Acadamic/AcademicStudents";
 
 const AcademicRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AcademicRoutes = () => {
       <Route path="/faculty" element={<FacultyCard />} />
       <Route path="/grade" element={<GradeCard />} />
       <Route path="/academic-class" element={<AcademicClassCard />} />
+      <Route path="/students" element={<AcademicStudents />} />
       <Route
         path="/academic-year/academic-data"
         element={<AcademicYearData />}

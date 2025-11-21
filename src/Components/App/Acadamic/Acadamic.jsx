@@ -41,6 +41,12 @@ const Academic = () => {
       icon: "🏫",
       description: "Organize and manage class structures",
     },
+    {
+      title: "Students",
+      path: "/dashboard/academic/students",
+      icon: "👩‍🎓",
+      description: "Manage student information and enrollment",
+    },
   ];
 
   return (
