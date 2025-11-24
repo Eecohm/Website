@@ -32,6 +32,8 @@ const OrganizationForm = () => {
     prevStep,
   } = useOrganizationForm();
 
+  const isPanEmpty = !formData.panNumber || !formData.panNumber.trim();
+
   const steps = [
     { title: "Basic Info", icon: Building },
     { title: "Contact", icon: Phone },
@@ -356,7 +358,10 @@ const OrganizationForm = () => {
                       <button
                         type="button"
                         onClick={nextStep}
-                        className={`${styles.button} ${styles.buttonNext}`}
+                        aria-disabled={isPanEmpty}
+                        className={`${styles.button} ${styles.buttonNext} ${
+                          isPanEmpty ? styles.disabled : ""
+                        }`}
                       >
                         Next
                       </button>

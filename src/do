@@ -1,0 +1,12 @@
+organization:
+profile section/ organization/ allow hyphen after 3 number o23 in telephone can be o23 or just start with -(hyphen)
+don't allow create without pan. without pan next is allowed but create is not allowed.
+
+suborganization:
+basic info ko description ma special character should be allowed as well.
+logo upload: png only.
+
+dont parts:
+orgform
+useorggorm
+suborgform

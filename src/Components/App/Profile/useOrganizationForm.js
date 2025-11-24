@@ -62,6 +62,7 @@ export default function useOrganizationForm() {
     orgAddress: true,
     telPhoneNo: true,
     phoneNo: true,
+    panNumber: false,
   });
   const [fieldError, setFieldError] = useState({
     panNumber: "",
@@ -128,7 +129,12 @@ export default function useOrganizationForm() {
         valid = trimmed.length === 0 || isValidString(trimmed);
         break;
       case "telPhoneNo":
-        valid = trimmed.length === 0 || isValidTelephone(trimmed);
+        const telValid = /^(?:-|\d{3})\d*$/.test(value.trim());
+        setFieldValid((prev) => ({ ...prev, telPhoneNo: telValid }));
+        setFieldError((prev) => ({
+          ...prev,
+          telPhoneNo: telValid ? "" : "Invalid telephone number.",
+        }));
         break;
       case "phoneNo":
         valid = trimmed.length === 0 || isValidPhone(trimmed);
@@ -190,6 +196,9 @@ export default function useOrganizationForm() {
       orgAddress: isValidString(formData.orgAddress.trim()),
       telPhoneNo: isValidTelephone(formData.telPhoneNo.trim()),
       phoneNo: isValidPhone(formData.phoneNo.trim()),
+      panNumber:
+        !!formData.panNumber.trim() &&
+        !validatePANNo(formData.panNumber.trim()),
     };
     setFieldValid(validations);
 
@@ -262,6 +271,17 @@ export default function useOrganizationForm() {
   };
 
   const nextStep = () => {
+    if (!formData.panNumber || !formData.panNumber.trim()) {
+      setFieldTouched((prev) => ({ ...prev, panNumber: true }));
+      setFieldValid((prev) => ({ ...prev, panNumber: false }));
+      setNotificationConfig({
+        type: "error",
+        message: "PAN number is required to proceed.",
+        autoClose: false,
+      });
+      setShowNotification(true);
+      return;
+    }
     if (currentStep < 3) setCurrentStep((s) => s + 1);
   };
 

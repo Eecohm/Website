@@ -1,30 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { 
-  ArrowLeft, 
-  Building2, 
-  FileText, 
-  Check, 
-  Receipt, 
-  Upload, 
-  Eye, 
+import {
+  ArrowLeft,
+  Building2,
+  FileText,
+  Check,
+  Receipt,
+  Upload,
+  Eye,
   X,
   Save,
   AlertCircle,
   CheckCircle,
   User,
   Settings,
-  Loader2
+  Loader2,
 } from "lucide-react";
 import axios from "axios";
 import styles from "@/Components/App/Profile/styles/SubOrgForm.module.css";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
 
-
 const SubOrganizationForm = () => {
-  
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     organization: "",
@@ -39,14 +37,14 @@ const SubOrganizationForm = () => {
     registrationImage: null,
     vatImage: null,
   });
-  
+
   const [fieldTouched, setFieldTouched] = useState({});
   const [fieldValid, setFieldValid] = useState({});
   const [imageErrors, setImageErrors] = useState({});
   const [previewImages, setPreviewImages] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const navigate = useNavigate();
   const baseUrl = useBaseUrl();
   const { token } = useAuth();
@@ -59,7 +57,10 @@ const SubOrganizationForm = () => {
 
   // Validation functions
   const isOnlyAlphabets = (value) => /^[a-zA-Z\s]*$/.test(value);
-  const isValidString = (value) => /^[a-zA-Z0-9\s.,!?-]*$/.test(value);
+  const isValidString = (value) => /^[\p{L}\p{N}\p{P}\p{S}\s]*$/u.test(value);
+  const isTelephoneFlexible = (value) => {
+    return /^(?:-|\d{3})\d*$/.test(value);
+  };
   const isJPGFile = (file) => /\.(jpg|jpeg)$/i.test(file.name);
   const isPNGFile = (file) => /\.png$/i.test(file.name);
   const isFileBelow3MB = (file) => file.size <= 3 * 1024 * 1024;
@@ -82,7 +83,7 @@ const SubOrganizationForm = () => {
     }
 
     setFieldValid((prev) => ({ ...prev, [name]: valid }));
-    
+
     // Auto-progress steps based on completion
     updateProgressStep();
   };
@@ -93,6 +94,12 @@ const SubOrganizationForm = () => {
     if (!file) return;
 
     let validType = isJPGFile(file) || isPNGFile(file);
+    // let validType;
+    if (name === "logoImage") {
+      validType = isPNGFile(file);
+    } else {
+      validType = isJPGFile(file) || isPNGFile(file);
+    }
     let validSize = isFileBelow3MB(file);
     let error = "";
 
@@ -109,21 +116,24 @@ const SubOrganizationForm = () => {
       setPreviewImages((prev) => ({ ...prev, [name]: reader.result }));
     };
     reader.readAsDataURL(file);
-    
+
     // Update progress
     updateProgressStep();
   };
 
   const updateProgressStep = () => {
     // Step 1: Basic Information
-    const hasBasicInfo = formData.subOrgName.trim() && formData.descriptionText.trim();
-    
-    // Step 2: Entity Configuration  
+    const hasBasicInfo =
+      formData.subOrgName.trim() && formData.descriptionText.trim();
+
+    // Step 2: Entity Configuration
     const hasEntityConfig = hasBasicInfo;
-    
+
     // Step 3: Document Upload
-    const hasRequiredDocs = formData.logoImage && 
-      (!formData.differentEntity || (formData.panImage && formData.registrationImage)) &&
+    const hasRequiredDocs =
+      formData.logoImage &&
+      (!formData.differentEntity ||
+        (formData.panImage && formData.registrationImage)) &&
       (!formData.hasVAT || formData.vatImage);
 
     if (hasRequiredDocs) {
@@ -137,19 +147,34 @@ const SubOrganizationForm = () => {
 
   const validateAll = () => {
     const validations = {
-      subOrgName: formData.subOrgName.trim() && isOnlyAlphabets(formData.subOrgName.trim()),
-      descriptionText: formData.descriptionText.trim() && isValidString(formData.descriptionText.trim()),
-      panNumber: !formData.differentEntity || (formData.panNumber.trim() && /^[0-9]+$/.test(formData.panNumber.trim())),
-      vatNumber: !formData.hasVAT || (formData.vatNumber.trim() && /^[0-9]+$/.test(formData.vatNumber.trim())),
+      subOrgName:
+        formData.subOrgName.trim() &&
+        isOnlyAlphabets(formData.subOrgName.trim()),
+      descriptionText:
+        formData.descriptionText.trim() &&
+        isValidString(formData.descriptionText.trim()),
+      panNumber:
+        !formData.differentEntity ||
+        (formData.panNumber.trim() &&
+          isTelephoneFlexible(formData.panNumber.trim())),
+      vatNumber:
+        !formData.hasVAT ||
+        (formData.vatNumber.trim() &&
+          /^[0-9]+$/.test(formData.vatNumber.trim())),
     };
-    
+
     setFieldValid(validations);
 
     const imageValidation = {
       logoImage: formData.logoImage && !imageErrors.logoImage,
-      panImage: !formData.differentEntity || (formData.panImage && !imageErrors.panImage),
-      registrationImage: !formData.differentEntity || (formData.registrationImage && !imageErrors.registrationImage),
-      vatImage: !formData.hasVAT || (formData.vatImage && !imageErrors.vatImage),
+      panImage:
+        !formData.differentEntity ||
+        (formData.panImage && !imageErrors.panImage),
+      registrationImage:
+        !formData.differentEntity ||
+        (formData.registrationImage && !imageErrors.registrationImage),
+      vatImage:
+        !formData.hasVAT || (formData.vatImage && !imageErrors.vatImage),
     };
 
     return (
@@ -163,10 +188,10 @@ const SubOrganizationForm = () => {
     setFieldErrors({});
 
     if (!validateAll()) {
-      setNotification({ 
-        show: true, 
-        message: "Please correct the errors before submitting.", 
-        type: "error" 
+      setNotification({
+        show: true,
+        message: "Please correct the errors before submitting.",
+        type: "error",
       });
       return;
     }
@@ -179,25 +204,30 @@ const SubOrganizationForm = () => {
     formDataToSend.append("hasVAT", formData.hasVAT);
     formDataToSend.append("panNumber", formData.panNumber || "");
     formDataToSend.append("vatNumber", formData.vatNumber || "");
-    
+
     if (formData.logoImage) formDataToSend.append("logo", formData.logoImage);
     if (formData.panImage) formDataToSend.append("panImage", formData.panImage);
-    if (formData.registrationImage) formDataToSend.append("registrationImage", formData.registrationImage);
+    if (formData.registrationImage)
+      formDataToSend.append("registrationImage", formData.registrationImage);
     if (formData.vatImage) formDataToSend.append("vatImage", formData.vatImage);
 
     setIsSubmitting(true);
-    
+
     try {
-      const response = await axios.post(`${baseUrl}/org/suborgs/`, formDataToSend, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      
+      const response = await axios.post(
+        `${baseUrl}/org/suborgs/`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       if (response.status === 200 || response.status === 201) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
         setNotification({
           show: true,
           message: "Sub-Organization created successfully!",
@@ -206,7 +236,7 @@ const SubOrganizationForm = () => {
       }
     } catch (error) {
       console.error("API Error:", error);
-      
+
       if (error.response?.data) {
         setFieldErrors(error.response.data);
         setNotification({
@@ -252,14 +282,17 @@ const SubOrganizationForm = () => {
   };
 
   const getFormStatus = () => {
-    const requiredFieldsComplete = formData.subOrgName && formData.descriptionText;
-    const documentsComplete = formData.logoImage && 
-      (!formData.differentEntity || (formData.panImage && formData.registrationImage)) &&
+    const requiredFieldsComplete =
+      formData.subOrgName && formData.descriptionText;
+    const documentsComplete =
+      formData.logoImage &&
+      (!formData.differentEntity ||
+        (formData.panImage && formData.registrationImage)) &&
       (!formData.hasVAT || formData.vatImage);
 
     return {
       requiredFields: requiredFieldsComplete ? "Complete" : "In Progress",
-      documents: documentsComplete ? "Complete" : "Pending"
+      documents: documentsComplete ? "Complete" : "Pending",
     };
   };
 
@@ -306,52 +339,76 @@ const SubOrganizationForm = () => {
         <div className={styles.sidebarContent}>
           <div className={styles.stepList}>
             <div className={styles.step}>
-              <div className={`${styles.stepNumber} ${
-                getStepStatus(1) === "completed" ? styles.stepNumberCompleted :
-                getStepStatus(1) === "active" ? styles.stepNumberActive :
-                styles.stepNumberInactive
-              }`}>
+              <div
+                className={`${styles.stepNumber} ${
+                  getStepStatus(1) === "completed"
+                    ? styles.stepNumberCompleted
+                    : getStepStatus(1) === "active"
+                    ? styles.stepNumberActive
+                    : styles.stepNumberInactive
+                }`}
+              >
                 {getStepStatus(1) === "completed" ? <Check size={16} /> : "1"}
               </div>
-              <span className={`${styles.stepLabel} ${
-                getStepStatus(1) === "active" ? styles.stepLabelActive :
-                getStepStatus(1) === "completed" ? styles.stepLabelCompleted :
-                styles.stepLabelInactive
-              }`}>
+              <span
+                className={`${styles.stepLabel} ${
+                  getStepStatus(1) === "active"
+                    ? styles.stepLabelActive
+                    : getStepStatus(1) === "completed"
+                    ? styles.stepLabelCompleted
+                    : styles.stepLabelInactive
+                }`}
+              >
                 Basic Information
               </span>
             </div>
-            
+
             <div className={styles.step}>
-              <div className={`${styles.stepNumber} ${
-                getStepStatus(2) === "completed" ? styles.stepNumberCompleted :
-                getStepStatus(2) === "active" ? styles.stepNumberActive :
-                styles.stepNumberInactive
-              }`}>
+              <div
+                className={`${styles.stepNumber} ${
+                  getStepStatus(2) === "completed"
+                    ? styles.stepNumberCompleted
+                    : getStepStatus(2) === "active"
+                    ? styles.stepNumberActive
+                    : styles.stepNumberInactive
+                }`}
+              >
                 {getStepStatus(2) === "completed" ? <Check size={16} /> : "2"}
               </div>
-              <span className={`${styles.stepLabel} ${
-                getStepStatus(2) === "active" ? styles.stepLabelActive :
-                getStepStatus(2) === "completed" ? styles.stepLabelCompleted :
-                styles.stepLabelInactive
-              }`}>
+              <span
+                className={`${styles.stepLabel} ${
+                  getStepStatus(2) === "active"
+                    ? styles.stepLabelActive
+                    : getStepStatus(2) === "completed"
+                    ? styles.stepLabelCompleted
+                    : styles.stepLabelInactive
+                }`}
+              >
                 Entity Configuration
               </span>
             </div>
-            
+
             <div className={styles.step}>
-              <div className={`${styles.stepNumber} ${
-                getStepStatus(3) === "completed" ? styles.stepNumberCompleted :
-                getStepStatus(3) === "active" ? styles.stepNumberActive :
-                styles.stepNumberInactive
-              }`}>
+              <div
+                className={`${styles.stepNumber} ${
+                  getStepStatus(3) === "completed"
+                    ? styles.stepNumberCompleted
+                    : getStepStatus(3) === "active"
+                    ? styles.stepNumberActive
+                    : styles.stepNumberInactive
+                }`}
+              >
                 {getStepStatus(3) === "completed" ? <Check size={16} /> : "3"}
               </div>
-              <span className={`${styles.stepLabel} ${
-                getStepStatus(3) === "active" ? styles.stepLabelActive :
-                getStepStatus(3) === "completed" ? styles.stepLabelCompleted :
-                styles.stepLabelInactive
-              }`}>
+              <span
+                className={`${styles.stepLabel} ${
+                  getStepStatus(3) === "active"
+                    ? styles.stepLabelActive
+                    : getStepStatus(3) === "completed"
+                    ? styles.stepLabelCompleted
+                    : styles.stepLabelInactive
+                }`}
+              >
                 Document Upload
               </span>
             </div>
@@ -362,17 +419,25 @@ const SubOrganizationForm = () => {
             <div>
               <div className={styles.statusItem}>
                 <span className={styles.statusLabel}>Required Fields</span>
-                <span className={`${styles.statusValue} ${
-                  getFormStatus().requiredFields === "Complete" ? styles.statusComplete : styles.statusProgress
-                }`}>
+                <span
+                  className={`${styles.statusValue} ${
+                    getFormStatus().requiredFields === "Complete"
+                      ? styles.statusComplete
+                      : styles.statusProgress
+                  }`}
+                >
                   {getFormStatus().requiredFields}
                 </span>
               </div>
               <div className={styles.statusItem}>
                 <span className={styles.statusLabel}>Documents</span>
-                <span className={`${styles.statusValue} ${
-                  getFormStatus().documents === "Complete" ? styles.statusComplete : styles.statusPending
-                }`}>
+                <span
+                  className={`${styles.statusValue} ${
+                    getFormStatus().documents === "Complete"
+                      ? styles.statusComplete
+                      : styles.statusPending
+                  }`}
+                >
                   {getFormStatus().documents}
                 </span>
               </div>
@@ -386,14 +451,13 @@ const SubOrganizationForm = () => {
         <div className={styles.contentArea}>
           <div className={styles.formContainer}>
             <form onSubmit={handleSubmit} className={styles.form}>
-              
               {/* Basic Information */}
               <div className={styles.section}>
                 <h2 className={styles.sectionHeader}>
                   <User className={styles.sectionIcon} size={20} />
                   <span>Basic Information</span>
                 </h2>
-                
+
                 <div className={styles.formGroup}>
                   <label className={styles.label}>
                     Sub-Organization Name *
@@ -427,16 +491,15 @@ const SubOrganizationForm = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Description *
-                  </label>
+                  <label className={styles.label}>Description *</label>
                   <textarea
                     name="descriptionText"
                     value={formData.descriptionText}
                     onChange={handleChange}
                     rows={4}
                     className={
-                      (fieldTouched.descriptionText && !fieldValid.descriptionText) ||
+                      (fieldTouched.descriptionText &&
+                        !fieldValid.descriptionText) ||
                       fieldErrors.descriptionText
                         ? `${styles.textarea} ${styles.inputError}`
                         : styles.textarea
@@ -444,12 +507,16 @@ const SubOrganizationForm = () => {
                     placeholder="Enter organization description"
                     required
                   />
-                  {fieldTouched.descriptionText && !fieldValid.descriptionText && (
-                    <p className={styles.errorMessage}>
-                      <AlertCircle size={16} />
-                      <span>Only letters, numbers, spaces, and punctuation allowed.</span>
-                    </p>
-                  )}
+                  {fieldTouched.descriptionText &&
+                    !fieldValid.descriptionText && (
+                      <p className={styles.errorMessage}>
+                        <AlertCircle size={16} />
+                        <span>
+                          Only letters, numbers, spaces, and punctuation
+                          allowed.
+                        </span>
+                      </p>
+                    )}
                   {fieldErrors.descriptionText && (
                     <p className={styles.errorMessage}>
                       <AlertCircle size={16} />
@@ -465,7 +532,7 @@ const SubOrganizationForm = () => {
                   <Settings className={styles.sectionIcon} size={20} />
                   <span>Configuration</span>
                 </h2>
-                
+
                 <div className={styles.checkboxGrid}>
                   <label className={styles.checkboxContainer}>
                     <input
@@ -475,7 +542,9 @@ const SubOrganizationForm = () => {
                       onChange={handleChange}
                       className={styles.checkbox}
                     />
-                    <span className={styles.checkboxLabel}>Different Entity</span>
+                    <span className={styles.checkboxLabel}>
+                      Different Entity
+                    </span>
                     <span className={styles.checkboxDescription}>
                       This sub-organization is a separate legal entity
                     </span>
@@ -503,16 +572,15 @@ const SubOrganizationForm = () => {
                   <Upload className={styles.sectionIcon} size={20} />
                   <span>Logo Upload</span>
                 </h2>
-                
+
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Logo Image *
-                  </label>
+                  <label className={styles.label}>Logo Image *</label>
                   <input
                     type="file"
                     name="logoImage"
                     onChange={handleImageChange}
-                    accept="image/*"
+                    // accept="image/*"
+                    accept="image/png"
                     className={styles.fileInput}
                     required
                   />
@@ -556,12 +624,10 @@ const SubOrganizationForm = () => {
                     <Receipt className={styles.sectionIcon} size={20} />
                     <span>Entity Information</span>
                   </h2>
-                  
+
                   <div className={styles.twoColumn}>
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        PAN Number *
-                      </label>
+                      <label className={styles.label}>PAN Number *</label>
                       <input
                         type="text"
                         name="panNumber"
@@ -592,9 +658,7 @@ const SubOrganizationForm = () => {
 
                     {formData.hasVAT && (
                       <div className={styles.formGroup}>
-                        <label className={styles.label}>
-                          VAT Number *
-                        </label>
+                        <label className={styles.label}>VAT Number *</label>
                         <input
                           type="text"
                           name="vatNumber"
@@ -632,7 +696,10 @@ const SubOrganizationForm = () => {
                         (imgType !== "vatImage" || formData.hasVAT) && (
                           <div className={styles.formGroup} key={imgType}>
                             <label className={styles.label}>
-                              {imgType.replace("Image", " Image").replace(/([A-Z])/g, " $1")} *
+                              {imgType
+                                .replace("Image", " Image")
+                                .replace(/([A-Z])/g, " $1")}{" "}
+                              *
                             </label>
                             <input
                               type="file"
@@ -692,7 +759,9 @@ const SubOrganizationForm = () => {
                 </button>
                 <button
                   type="submit"
-                  className={`${styles.saveButton} ${isSubmitting ? styles.buttonDisabled : ''}`}
+                  className={`${styles.saveButton} ${
+                    isSubmitting ? styles.buttonDisabled : ""
+                  }`}
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
