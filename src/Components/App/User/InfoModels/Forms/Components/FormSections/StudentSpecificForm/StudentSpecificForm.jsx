@@ -65,7 +65,7 @@ const StudentSpecificForm = ({
   return (
     <FormSection title="Student Details" icon={FiBookOpen}>
       <GlassInput
-        label="Imies Code"
+        label="EMIS Code"
         name="userId"
         value={formData.userId}
         placeholder="STU2024001"
@@ -73,7 +73,7 @@ const StudentSpecificForm = ({
         onChange={handleChange}
         validate={validateUserId}
         onValidate={handleFieldValidation}
-        disabled={true}
+        disabled={false}
       />
 
       <GlassInput
@@ -85,7 +85,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateAcademicClassId}
         onValidate={handleFieldValidation}
-        disabled={true}
+        disabled={false}
       />
       <GlassInput
         label="Academic Class Name"
@@ -96,7 +96,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateAcademicClassName}
         onValidate={handleFieldValidation}
-        disabled={true}
+        disabled={false}
       />
 
       <GlassFileUpload
@@ -107,7 +107,7 @@ const StudentSpecificForm = ({
         required={true}
         validate={validateIdCardFile}
         onValidate={handleFieldValidation}
-        disabled={true}
+        disabled={false}
       />
       <GlassFileUpload
         label="Transfer Certificate"

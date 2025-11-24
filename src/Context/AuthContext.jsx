@@ -1,7 +1,7 @@
 
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
-import { setCookie, getCookie, deleteCookie } from "./Auth/Cookies";
+import { setCookie, getCookie, deleteCookie, setSessionToken, getSessionToken, deleteSessionToken } from "./Auth/Cookies";
 import { attemptTokenRefresh } from "./Auth/TokenRefresh";
 import { clearAuthState as clearAuthUtil } from "./Auth/clearAuthState";
 
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [verified, setVerified] = useState(false)
   const baseUrl = useBaseUrl();
-  
+
   const login = (data, rememberMe = false) => {
     setToken(data.access);
     setVerified(data.verified);
@@ -24,6 +24,11 @@ export const AuthProvider = ({ children }) => {
       setCookie("id", data.user_id, 30);
       setCookie('role', data.role, 30);
     } else {
+      // Use Session Storage for active session (clears on tab close)
+      setSessionToken("accessToken", data.access);
+      setSessionToken("verified", data.verified);
+
+      // Clear any old persistent cookies to avoid confusion
       deleteCookie("accessToken");
       deleteCookie("rememberMe");
       deleteCookie("kycStatus");
@@ -32,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       deleteCookie("role");
     }
   };
- 
+
   const logout = async () => {
     try {
       // Call logout endpoint to blacklist refresh token
@@ -49,6 +54,10 @@ export const AuthProvider = ({ children }) => {
     }
     // Always clear local state regardless of API success
     clearAuthUtil(setToken, setVerified);
+
+    // Clear Session Storage
+    deleteSessionToken("accessToken");
+    deleteSessionToken("verified");
   };
 
   const isAuthenticated = () => verified;
@@ -69,15 +78,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
   // Check authentication status on mount
-   useEffect(() => {
+  useEffect(() => {
     const checkAuthStatus = async () => {
       try {
         let savedToken = token;
 
         // 1. Check for persistent cookie if rememberMe is checked
         const rememberMeFlag = getCookie("rememberMe");
-        if (!savedToken && rememberMeFlag) {
-          savedToken = getCookie("accessToken");
+
+        // 2. Check Session Storage (Active Session)
+        const sessionToken = getSessionToken("accessToken");
+
+        if (!savedToken) {
+          if (sessionToken) {
+            savedToken = sessionToken;
+          } else if (rememberMeFlag) {
+            savedToken = getCookie("accessToken");
+          }
         }
 
         if (savedToken) {
