@@ -10,23 +10,41 @@ import { Building2, Users, ArrowLeft, Briefcase } from "lucide-react";
 const Profile = () => {
   const navigate = useNavigate();
   const baseUrl = useBaseUrl();
-  const token = useAuth();
+  const auth = useAuth(); // changed: normalize useAuth()
+  const token = auth?.token ?? auth; // get token string
   const [hasOrg, sethasOrg] = useState(false);
   const [notification, setNotification] = useState(null);
 
   // check if org exists
   useEffect(() => {
+    if (!token) return; // don't fetch until we have a token
+
+    let cancelled = false;
     const fetchData = async () => {
       try {
         const response = await axios.get(`${baseUrl}/org/orgs`, {
           headers: {
-            Authorization: `Bearer ${token.token}`,
+            Authorization: `Bearer ${token}`,
+            "Cache-Control": "no-cache", // prevent caching
           },
         });
-        if (response.status === 200) {
+
+        console.log("ORG fetch response:", response.data);
+
+        if (cancelled) return;
+
+        // handle array response or single object
+        if (Array.isArray(response.data)) {
+          sethasOrg(response.data.length > 0);
+        } else if (response.status === 200 && response.data) {
           sethasOrg(true);
+        } else {
+          sethasOrg(false);
         }
       } catch (error) {
+        if (cancelled) return;
+        sethasOrg(false);
+
         if (error.response && error.response.status === 404) {
           setNotification({
             type: "help",
@@ -41,7 +59,10 @@ const Profile = () => {
         }
       }
     };
-    fetchData();
+
+    return () => {
+      cancelled = true;
+    };
   }, [baseUrl, token]);
 
   // handle organization card click

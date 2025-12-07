@@ -388,20 +388,11 @@ const AddGradeModal = ({ onClose, onAdd, programs }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ADD THIS DEBUGGING CODE
-    console.log("=== FORM VALIDATION DEBUG ===");
-    console.log("isFormValid:", isFormValid);
-    console.log("sectionValidations:", sectionValidations);
-    Object.entries(sectionValidations).forEach(([section, data]) => {
-      console.log(`${section}:`, data.isValid, data.errors);
-    });
-    console.log("===========================");
-
-    if (!isFormValid) {
-      alert("Please fix all validation errors before submitting");
+    if (!validateForm()) {
       return;
     }
-    alert("✅ Form submitted successfully! All validation passed.");
+
+    onAdd(data);
   };
 
   return (

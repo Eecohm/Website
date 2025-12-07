@@ -72,160 +72,165 @@ const OrganizationData = () => {
         </div>
       </div>
 
-      {/* Business Card Layout */}
-      <div className={styles.businessCard}>
-        {/* Left Side - Details */}
-        <div className={styles.cardDetails}>
-          <h2 className={styles.orgName}>
-            {formData.orgName || "Organization Name"}
-          </h2>
-
-          {/* Contact Info */}
-          <div className={styles.contactSection}>
-            {formData.telPhoneNo && (
-              <div className={styles.contactItem}>
-                <FiPhone className={styles.contactIcon} />
-                <span>{formData.telPhoneNo}</span>
-              </div>
-            )}
-
-            {formData.phoneNo && (
-              <div className={styles.contactItem}>
-                <FiSmartphone className={styles.contactIcon} />
-                <span>{formData.phoneNo}</span>
-              </div>
-            )}
-
-            {formData.emailAddress && (
-              <div className={styles.contactItem}>
-                <FiMail className={styles.contactIcon} />
-                <span>{formData.emailAddress}</span>
-              </div>
-            )}
-
-            {formData.orgAddress && (
-              <div className={styles.contactItem}>
-                <FiMapPin className={styles.contactIcon} />
-                <span>{formData.orgAddress}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Legal Info */}
-          <div className={styles.legalSection}>
-            {formData.panNumber && (
-              <div className={styles.legalItem}>
-                <FiCreditCard className={styles.legalIcon} />
-                <span>PAN: {formData.panNumber}</span>
-              </div>
-            )}
-
-            {formData.vatNumber && (
-              <div className={styles.legalItem}>
-                <FiFileText className={styles.legalIcon} />
-                <span>VAT: {formData.vatNumber}</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Right Side - Logo */}
-        {formData.logoUrl && (
-          <div className={styles.cardLogo}>
-            <div className={styles.logoContainer}>
-              <img
-                src={formData.logoUrl}
-                alt="Organization Logo"
-                className={styles.logoImage}
-              />
-              <div className={styles.logoOverlay}>
-                <button
-                  className={styles.logoActionBtn}
-                  onClick={() => openModal(formData.logoUrl)}
-                >
-                  <FiZoomIn />
-                </button>
-                <button
-                  className={styles.logoActionBtn}
-                  onClick={() =>
-                    downloadImage(formData.logoUrl, "organization_logo.jpg")
-                  }
-                >
-                  <FiDownload />
-                </button>
+      {/* Business Card Layout and Documents placed side-by-side */}
+      <div className={styles.sideBySide}>
+        <div className={styles.businessCard}>
+          {/* Top - Logo centered */}
+          {formData.logoUrl && (
+            <div className={styles.cardLogo}>
+              <div className={styles.logoContainer}>
+                <img
+                  src={formData.logoUrl}
+                  alt="Organization Logo"
+                  className={styles.logoImage}
+                />
+                <div className={styles.logoOverlay}>
+                  <button
+                    className={styles.logoActionBtn}
+                    onClick={() => openModal(formData.logoUrl)}
+                  >
+                    <FiZoomIn />
+                  </button>
+                  <button
+                    className={styles.logoActionBtn}
+                    onClick={() =>
+                      downloadImage(formData.logoUrl, "organization_logo.jpg")
+                    }
+                  >
+                    <FiDownload />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
 
-      {/* Documents Section */}
-      <div className={styles.documentsSection}>
-        <div className={styles.sectionHeader}>
-          <FiImage className={styles.sectionIcon} />
-          <h3>Legal Documents</h3>
+          {/* Left Side - Details */}
+          <div className={styles.cardDetails}>
+            <h2 className={styles.orgName}>
+              {formData.orgName || "Organization Name"}
+            </h2>
+
+            {/* Contact Info */}
+            <div className={styles.contactSection}>
+              {formData.telPhoneNo && (
+                <div className={styles.contactItem}>
+                  <FiPhone className={styles.contactIcon} />
+                  <span>{formData.telPhoneNo}</span>
+                </div>
+              )}
+
+              {formData.phoneNo && (
+                <div className={styles.contactItem}>
+                  <FiSmartphone className={styles.contactIcon} />
+                  <span>{formData.phoneNo}</span>
+                </div>
+              )}
+
+              {formData.emailAddress && (
+                <div className={styles.contactItem}>
+                  <FiMail className={styles.contactIcon} />
+                  <span>{formData.emailAddress}</span>
+                </div>
+              )}
+
+              {formData.orgAddress && (
+                <div className={styles.contactItem}>
+                  <FiMapPin className={styles.contactIcon} />
+                  <span>{formData.orgAddress}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Legal Info */}
+            <div className={styles.legalSection}>
+              {formData.panNumber && (
+                <div className={styles.legalItem}>
+                  <FiCreditCard className={styles.legalIcon} />
+                  <span>PAN: {formData.panNumber}</span>
+                </div>
+              )}
+
+              {formData.vatNumber && (
+                <div className={styles.legalItem}>
+                  <FiFileText className={styles.legalIcon} />
+                  <span>VAT: {formData.vatNumber}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right Side - Logo */}
+          {/* logo already rendered above */}
         </div>
 
-        <div className={styles.documentsGrid}>
-          {[
-            { key: "panImage", label: "PAN Document", icon: FiCreditCard },
-            {
-              key: "registrationImage",
-              label: "Registration Document",
-              icon: FiFileText,
-            },
-            { key: "vatImage", label: "VAT Document", icon: FiFileText },
-          ].map(({ key, label, icon: Icon }) =>
-            formData[key] ? (
-              <div key={key} className={styles.documentCard}>
-                <div className={styles.documentHeader}>
-                  <Icon className={styles.documentIcon} />
-                  <span className={styles.documentLabel}>{label}</span>
-                </div>
+        {/* Documents Section */}
+        <div className={styles.documentsSection}>
+          <div className={styles.sectionHeader}>
+            <FiImage className={styles.sectionIcon} />
+            <h3>Legal Documents</h3>
+          </div>
 
-                <div className={styles.documentImageContainer}>
-                  <img
-                    src={formData[key]}
-                    alt={label}
-                    className={styles.documentImage}
-                  />
-                  <div className={styles.documentOverlay}>
-                    <button
-                      className={styles.documentBtn}
-                      onClick={() => openModal(formData[key])}
-                      title="View Full Size"
-                    >
-                      <FiEye />
-                    </button>
-                    <button
-                      className={styles.documentBtn}
-                      onClick={() =>
-                        downloadImage(
-                          formData[key],
-                          `${label.replace(/\s+/g, "_")}.jpg`
-                        )
-                      }
-                      title="Download Image"
-                    >
-                      <FiDownload />
-                    </button>
+          <div className={styles.documentsGrid}>
+            {[
+              { key: "panImage", label: "PAN Document", icon: FiCreditCard },
+              {
+                key: "registrationImage",
+                label: "Registration Document",
+                icon: FiFileText,
+              },
+              { key: "vatImage", label: "VAT Document", icon: FiFileText },
+            ].map(({ key, label, icon: Icon }) =>
+              formData[key] ? (
+                <div key={key} className={styles.documentCard}>
+                  <div className={styles.documentHeader}>
+                    <Icon className={styles.documentIcon} />
+                    <span className={styles.documentLabel}>{label}</span>
+                  </div>
+
+                  <div className={styles.documentImageContainer}>
+                    <img
+                      src={formData[key]}
+                      alt={label}
+                      className={styles.documentImage}
+                    />
+                    <div className={styles.documentOverlay}>
+                      <button
+                        className={styles.documentBtn}
+                        onClick={() => openModal(formData[key])}
+                        title="View Full Size"
+                      >
+                        <FiEye />
+                      </button>
+                      <button
+                        className={styles.documentBtn}
+                        onClick={() =>
+                          downloadImage(
+                            formData[key],
+                            `${label.replace(/\s+/g, "_")}.jpg`
+                          )
+                        }
+                        title="Download Image"
+                      >
+                        <FiDownload />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : null
+              ) : null
+            )}
+          </div>
+
+          {![
+            formData.panImage,
+            formData.registrationImage,
+            formData.vatImage,
+          ].some(Boolean) && (
+            <div className={styles.noDocuments}>
+              <FiImage className={styles.noDocumentsIcon} />
+              <p>No documents available</p>
+            </div>
           )}
         </div>
-
-        {![
-          formData.panImage,
-          formData.registrationImage,
-          formData.vatImage,
-        ].some(Boolean) && (
-          <div className={styles.noDocuments}>
-            <FiImage className={styles.noDocumentsIcon} />
-            <p>No documents available</p>
-          </div>
-        )}
       </div>
 
       {/* Image Modal */}

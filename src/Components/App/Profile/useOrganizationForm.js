@@ -19,7 +19,8 @@ import {
 } from "../../../validators/formInputValidator/FileTypeValidator";
 
 export default function useOrganizationForm() {
-  const token = useAuth();
+  const auth = useAuth();
+  const tokenString = auth ? auth.token : null; //normalize
   const baseUrl = useBaseUrl();
   const navigate = useNavigate();
   const location = useLocation();
@@ -129,11 +130,13 @@ export default function useOrganizationForm() {
         valid = trimmed.length === 0 || isValidString(trimmed);
         break;
       case "telPhoneNo":
-        const telValid = /^(?:-|\d{3})\d*$/.test(value.trim());
+        const telValid = /^\d{2,3}-?\d+$/.test(value.trim());
         setFieldValid((prev) => ({ ...prev, telPhoneNo: telValid }));
         setFieldError((prev) => ({
           ...prev,
-          telPhoneNo: telValid ? "" : "Invalid telephone number.",
+          telPhoneNo: telValid
+            ? ""
+            : "Telephone format should be: XX-YYYY... or XXX-YYYY... (dash optional)",
         }));
         break;
       case "phoneNo":
@@ -192,13 +195,19 @@ export default function useOrganizationForm() {
 
   const validateAll = () => {
     const validations = {
-      orgName: isOnlyAlphabets(formData.orgName.trim()),
-      orgAddress: isValidString(formData.orgAddress.trim()),
-      telPhoneNo: isValidTelephone(formData.telPhoneNo.trim()),
-      phoneNo: isValidPhone(formData.phoneNo.trim()),
+      orgName:
+        formData.orgName.trim().length > 0 &&
+        isOnlyAlphabets(formData.orgName.trim()),
+      orgAddress:
+        formData.orgAddress.trim().length > 0 &&
+        isValidString(formData.orgAddress.trim()),
+      telPhoneNo: /^\d{2,3}-?\d+$/.test(formData.telPhoneNo.trim()),
+      phoneNo:
+        formData.phoneNo.trim().length > 0 &&
+        isValidPhone(formData.phoneNo.trim()),
       panNumber:
-        !!formData.panNumber.trim() &&
-        !validatePANNo(formData.panNumber.trim()),
+        formData.panNumber.trim().length > 0 &&
+        !validatePANNo(formData.panNumber.trim()), // FIXED: added !
     };
     setFieldValid(validations);
 
@@ -214,13 +223,22 @@ export default function useOrganizationForm() {
       Object.values(validations).every(Boolean) &&
       Object.values(imageValidation).every(Boolean);
 
+    console.log("Validation Results:", {
+      validations,
+      imageValidation,
+      allValid,
+    }); // DEBUG
     return allValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const allValid = validateAll();
+    console.log("Form Data:", formData);
+    console.log("Image Errors:", imageErrors);
+    console.log("Field Valid:", fieldValid);
+    console.log("All Valid:", allValid);
+
     if (!allValid) {
       setNotificationConfig({
         type: "error",
@@ -241,7 +259,7 @@ export default function useOrganizationForm() {
     try {
       await axios.post(`${baseUrl}/org/orgs/`, data, {
         headers: {
-          Authorization: `Bearer ${token.token}`,
+          Authorization: `Bearer ${tokenString}`,
           "Content-Type": "multipart/form-data",
         },
       });
@@ -271,18 +289,46 @@ export default function useOrganizationForm() {
   };
 
   const nextStep = () => {
-    if (!formData.panNumber || !formData.panNumber.trim()) {
-      setFieldTouched((prev) => ({ ...prev, panNumber: true }));
-      setFieldValid((prev) => ({ ...prev, panNumber: false }));
-      setNotificationConfig({
-        type: "error",
-        message: "PAN number is required to proceed.",
-        autoClose: false,
-      });
-      setShowNotification(true);
-      return;
+    console.log("nextStep called, currentStep:", currentStep);
+
+    // Only validate PAN when moving from Step 1 to Step 2
+    if (currentStep === 2) {
+      const panTrimmed = formData.panNumber.trim();
+
+      if (!panTrimmed) {
+        setFieldTouched((prev) => ({ ...prev, panNumber: true }));
+        setFieldValid((prev) => ({ ...prev, panNumber: false }));
+        setFieldError((prev) => ({
+          ...prev,
+          panNumber: "PAN number is required to proceed.",
+        }));
+        console.log("PAN is empty, blocking next step");
+        return;
+      }
+
+      // Check PAN format
+      const panError = validatePANNo(panTrimmed);
+      if (panError) {
+        setFieldTouched((prev) => ({ ...prev, panNumber: true }));
+        setFieldValid((prev) => ({ ...prev, panNumber: false }));
+        setFieldError((prev) => ({
+          ...prev,
+          panNumber: panError,
+        }));
+        console.log("PAN format invalid:", panError);
+        return;
+      }
+
+      // PAN is valid, clear error
+      setFieldError((prev) => ({ ...prev, panNumber: "" }));
+      setFieldValid((prev) => ({ ...prev, panNumber: true }));
     }
-    if (currentStep < 3) setCurrentStep((s) => s + 1);
+
+    // Proceed to next step if valid (or not Step 1)
+    if (currentStep < 3) {
+      setCurrentStep((s) => s + 1);
+      console.log("Moving to step:", currentStep + 1);
+    }
   };
 
   const prevStep = () => {

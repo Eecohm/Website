@@ -29,10 +29,7 @@ const AcademicStudents = () => {
       <NavBar />
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Academic Students</h1>
-          <p className={styles.subtitle}>
-            Manage student subjects and information
-          </p>
+          <h1 className={styles.title}> Manage student subjects</h1>
         </div>
         <div className={formStyles.formContainer}>
           <form onSubmit={handleSubmit} className={formStyles.form}>

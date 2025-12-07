@@ -3,31 +3,42 @@
 /* Business Card Layout */
 .businessCard {
   display: flex;
-   background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
-  border-radius: 1.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(156, 163, 175, 0.1);
-  margin: 1rem;
+  gap: 1.25rem;
+  align-items: center;
+  background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(156, 163, 175, 0.08);
+  margin: 1rem 0;
   overflow: hidden;
-  min-height: 250px;
+  min-height: 220px;
+  padding: 1rem;
+}
+
+/* Make business card vertical: logo on top, details below */
+.businessCard {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .cardDetails {
-  flex: 1;
-  padding: 2rem;
+  flex: 1 1 auto;
+  padding: 1.25rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .cardLogo {
-  width: 250px;
-  background: rgba(45, 45, 45, 0.3);
+  width: 100%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  border-left: 1px solid rgba(156, 163, 175, 0.1);
+  padding: 1rem 0 0.5rem 0;
+  border-left: none;
+  border-bottom: 1px solid rgba(156, 163, 175, 0.06);
 }
 
 .orgName {
@@ -81,11 +92,11 @@
 
 .logoContainer {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid rgba(156, 163, 175, 0.3);
+  border: 3px solid rgba(156, 163, 175, 0.28);
 }
 
 .logoImage {
@@ -100,7 +111,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-   background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
+  background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,15 +149,22 @@
 /* (All the styles from your original CSS module should remain) */
 .maindiv {
   height: auto;
-  width: 60vw;
-  margin: 0 auto;
-  padding: 0;
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d2d2d 100%);
+  max-width: 1100px;
+  width: 100%;
+  margin: 1.5rem auto;
+  padding: 1.25rem;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 8, 15, 0.6),
+    rgba(12, 14, 20, 0.55)
+  );
   color: #f5f5f5;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow: visible;
   display: flex;
   flex-direction: column;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.45);
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -213,32 +231,36 @@
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(15, 15, 15, 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(156, 163, 175, 0.1);
-  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(45, 65, 95, 0.18);
+  padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-  height: 60px;
+  height: 64px;
 }
 
 .backButton {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, #4b5563, #374151);
-  color: #f5f5f5;
-  border: 1px solid rgba(156, 163, 175, 0.2);
+  padding: 0.5rem 0.9rem;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 40, 70, 0.9),
+    rgba(30, 60, 100, 0.9)
+  );
+  color: #f5f7fb;
+  border: 1px solid rgba(100, 140, 190, 0.12);
   border-radius: 0.5rem;
   cursor: pointer;
-  width: 20%;
-  font-weight: 500;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.16s ease;
+  box-shadow: 0 6px 18px rgba(8, 18, 40, 0.45);
 }
 
 .backButton:hover {
@@ -274,15 +296,15 @@
 
 /* Main Card */
 .card {
-  flex: 1;
-  margin: 1rem;
-  background: rgba(26, 26, 26, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 1.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(156, 163, 175, 0.1);
-  overflow-y: auto;
-  transition: all 0.3s ease;
+  flex: 1 1 auto;
+  margin: 1rem 0;
+  background: rgba(26, 26, 26, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+  border: 1px solid rgba(156, 163, 175, 0.06);
+  overflow: visible;
+  transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
   /* Hide scrollbar */
@@ -304,7 +326,11 @@
   display: flex;
   justify-content: center;
   padding: 1.5rem 1rem 1rem 1rem;
-  background: linear-gradient(135deg, rgba(156, 163, 175, 0.1), rgba(107, 114, 128, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(156, 163, 175, 0.1),
+    rgba(107, 114, 128, 0.1)
+  );
   flex-shrink: 0;
 }
 
@@ -395,6 +421,9 @@
   background: rgba(45, 45, 45, 0.3);
   border-radius: 1rem;
   border: 1px solid rgba(156, 163, 175, 0.1);
+  display: inline-block;
+  vertical-align: top;
+  width: calc(50% - 1rem);
 }
 
 .sectionHeader {
@@ -478,15 +507,88 @@
 .documentsSection {
   margin: 0.75rem;
   padding: 1rem;
-   background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
+  background: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
   border-radius: 1rem;
   border: 1px solid rgba(156, 163, 175, 0.1);
+  display: inline-block;
+  vertical-align: top;
+  width: calc(50% - 1rem);
+}
+
+/* Side-by-side container used on OrganizationData to place business card and documents in one row */
+.sideBySide {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch; /* force equal height */
+  /* prefer two columns on wide screens; allow wrapping on small screens */
+  flex-wrap: nowrap;
+}
+
+/* Make both columns equal width and matching height */
+.sideBySide .businessCard,
+.sideBySide .documentsSection {
+  flex: 1 1 0;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px; /* ensures visual parity */
+}
+
+/* Reduce document visuals so content fits neatly */
+.documentsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.documentCard {
+  background: rgba(26, 26, 26, 0.6);
+  border-radius: 1rem;
+  border: 1px solid rgba(156, 163, 175, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 120px;
+}
+
+.documentImageContainer {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  height: 110px; /* reduced from 120+ to make cards shorter */
+}
+
+.documentImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Responsive: stack vertically on narrower viewports */
+@media (max-width: 900px) {
+  .sideBySide {
+    flex-wrap: wrap;
+  }
+  .sideBySide .businessCard,
+  .sideBySide .documentsSection {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
+    min-height: auto;
+  }
+  .documentImageContainer {
+    height: 100px;
+  }
 }
 
 .documentsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
 }
 
 .documentCard {
@@ -715,11 +817,11 @@
   .maindiv {
     width: 80vw;
   }
-  
+
   .infoGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .documentsGrid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
@@ -729,45 +831,45 @@
   .maindiv {
     width: 95vw;
   }
-  .backButton{
-      width: 50%;
+  .backButton {
+    width: 50%;
   }
   .header {
     padding: 0.5rem 1rem;
     height: 50px;
   }
-  
+
   .headerTitle h1 {
     font-size: 1rem;
   }
-  
+
   .headerIcon {
     font-size: 1.25rem;
   }
-  
+
   .logo {
     width: 60px;
     height: 60px;
   }
-  
+
   .title {
     font-size: 1.25rem;
   }
-  
+
   .infoSection,
   .documentsSection {
     margin: 0.5rem;
     padding: 0.75rem;
   }
-  
+
   .infoItem {
     padding: 0.75rem;
   }
-  
+
   .documentsGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .documentImageContainer {
     height: 100px;
   }
@@ -777,44 +879,44 @@
   .maindiv {
     width: 100vw;
   }
-  
+
   .backButton {
     padding: 0.375rem 0.75rem;
     font-size: 0.8rem;
   }
-  
+
   .logo {
     width: 50px;
     height: 50px;
   }
-  
+
   .title {
     font-size: 1.125rem;
   }
-  
+
   .logoSection {
     padding: 1rem 0.5rem 0.5rem 0.5rem;
   }
-  
+
   .titleSection {
     padding: 0.5rem;
   }
-  
+
   .infoItem {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .infoContent span {
     font-size: 0.875rem;
   }
-  
+
   .documentOverlay {
     opacity: 1;
     background: rgba(0, 0, 0, 0.5);
   }
-  
+
   .documentImageContainer {
     height: 80px;
   }

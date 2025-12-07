@@ -34,6 +34,9 @@ const ProgramModalData = ({
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [programToDelete, setProgramToDelete] = useState(null);
 
+  const [deleteError, setDeleteError] = useState("");
+  const [showDeleteError, setShowDeleteError] = useState(false);
+
   // Filter programs based on search query and filters
   useEffect(() => {
     let filtered = programs;
@@ -127,23 +130,35 @@ const ProgramModalData = ({
     setProgramToDelete(program);
     setShowDeleteConfirm(true);
   };
-
-  const handleDeleteConfirm = async () => {
+  const handleDeleteConfirm = async (programId) => {
+    setDeleteError("");
     try {
-      await axios.delete(
-        `${baseUrl}/academics/programs/${programToDelete.id}/`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      // axios.delete(url, config) - ensure no body is passed accidentally
+      await axios.delete(`${baseUrl}/academics/programs/${programId}/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
+      // refresh list and close modal or update parent
+      onProgramUpdate?.();
+
+      // close any delete modal
       setShowDeleteConfirm(false);
       setProgramToDelete(null);
-      if (selectedProgram && selectedProgram.id === programToDelete.id) {
-        setSelectedProgram(null);
-      }
-      onProgramUpdate(); // Refresh the program list
     } catch (err) {
+      // log full response for debugging
       console.error("Error deleting program:", err);
-      alert("Failed to delete program. Please try again.");
+      console.error("Delete response data:", err.response?.data);
+
+      // Prefer backend message fields
+      const msg =
+        err.response?.data?.error ||
+        err.response?.data?.detail ||
+        (err.response?.data ? JSON.stringify(err.response.data) : err.message);
+
+      // show error in a dedicated modal (close confirm modal)
+      setDeleteError(msg || "Failed to delete program.");
+      setShowDeleteConfirm(false);
+      setShowDeleteError(true);
     }
   };
 
@@ -452,10 +467,17 @@ const ProgramModalData = ({
               Are you sure you want to delete the program "
               {programToDelete.programName}"? This action cannot be undone.
             </p>
+
+            {/* {deleteError && (
+              <div className={styles.deleteError} role="alert">
+                {deleteError}
+              </div>
+            )} */}
+
             <div className={styles.confirmButtons}>
               <button
                 className={styles.confirmDeleteButton}
-                onClick={handleDeleteConfirm}
+                onClick={() => handleDeleteConfirm(programToDelete?.id)}
               >
                 Yes, Delete
               </button>
@@ -464,6 +486,27 @@ const ProgramModalData = ({
                 onClick={handleDeleteCancel}
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showDeleteError && (
+        <div className={styles.confirmOverlay}>
+          <div className={styles.confirmModal}>
+            <h3>Cannot Delete Program</h3>
+            <p>{deleteError}</p>
+            <div className={styles.confirmButtons}>
+              <button
+                className={styles.confirmDeleteButton}
+                onClick={() => {
+                  setShowDeleteError(false);
+                  setDeleteError("");
+                  setProgramToDelete(null);
+                }}
+              >
+                OK
               </button>
             </div>
           </div>

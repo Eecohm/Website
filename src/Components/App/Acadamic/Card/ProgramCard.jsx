@@ -18,6 +18,7 @@ import {
   FiBookOpen,
   FiSettings,
   FiLayers,
+  FiTrash,
 } from "react-icons/fi";
 
 const ProgramCard = () => {
@@ -41,6 +42,10 @@ const ProgramCard = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
+
+  // --- NEW STATE: track deleting id and per-card errors ---
+  const [deletingId, setDeletingId] = useState(null);
+  const [cardErrors, setCardErrors] = useState({}); // { [programId]: "error message" }
 
   // Fetch all programs for the previous program dropdown
   const fetchPreviousPrograms = async () => {
@@ -119,6 +124,51 @@ const ProgramCard = () => {
     }
 
     setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  // --- NEW: handleDelete for a single program (shows backend message per card) ---
+  const handleDelete = async (program) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete the program "${program.programName}"? This action cannot be undone.`
+    );
+    if (!confirmDelete) return;
+
+    setDeletingId(program.id);
+    setCardErrors((prev) => ({ ...prev, [program.id]: "" }));
+    try {
+      await axios.delete(`${baseUrl}/academics/programs/${program.id}/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // remove from list on success
+      setPrograms((prev) => prev.filter((p) => p.id !== program.id));
+      // update previousProgramOptions
+      setPreviousProgramOptions((prev) =>
+        prev.filter((p) => p.id !== program.id)
+      );
+
+      // clear selection if needed
+      if (selectedProgram?.id === program.id) {
+        setSelectedProgram(null);
+        setFormData({
+          programName: "",
+          durationMonths: "",
+          previousProgramId: "",
+          previousProgramName: "",
+          affiliatedTo: "",
+        });
+      }
+      setNotification({ type: "success", message: "Program deleted." });
+    } catch (err) {
+      const msg =
+        err.response?.data?.error ||
+        err.response?.data?.detail ||
+        err.message ||
+        "Failed to delete program.";
+      setCardErrors((prev) => ({ ...prev, [program.id]: msg }));
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   const validateForm = () => {
@@ -287,7 +337,34 @@ const ProgramCard = () => {
                             )}
                           </div>
                         </div>
+
+                        {/* DELETE BUTTON */}
+                        <div className={styles.programActions}>
+                          <button
+                            className={styles.deleteBtn}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(program);
+                            }}
+                            disabled={deletingId === program.id}
+                            aria-disabled={deletingId === program.id}
+                            title="Delete program"
+                          >
+                            <FiTrash />
+                            {deletingId === program.id
+                              ? " Deleting..."
+                              : " Delete"}
+                          </button>
+                        </div>
                       </div>
+
+                      {/* per-card error message from backend */}
+                      {cardErrors[program.id] && (
+                        <div className={styles.cardError} role="alert">
+                          <FiAlertCircle className={styles.errorIcon} />
+                          <span>{cardErrors[program.id]}</span>
+                        </div>
+                      )}
                     </div>
                   ))
                 ) : (

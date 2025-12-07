@@ -103,7 +103,7 @@ const SubOrganizationForm = () => {
     let validSize = isFileBelow3MB(file);
     let error = "";
 
-    if (!validType) error = "Only JPG, JPEG, or PNG allowed.";
+    if (!validType) error = "Only PNG file allowed.";
     else if (!validSize) error = "File must be below 3MB.";
 
     setImageErrors((prev) => ({ ...prev, [name]: error }));

@@ -8,6 +8,7 @@ export default function useOrganizationData() {
   const baseUrl = useBaseUrl();
   const token = useAuth();
   const navigate = useNavigate();
+  const tokenString = token ? token.token : null; //normalize
 
   const [formData, setFormData] = useState({});
   const [modalImage, setModalImage] = useState(null);
@@ -20,7 +21,7 @@ export default function useOrganizationData() {
       try {
         setLoading(true);
         const response = await axios.get(`${baseUrl}/org/orgs`, {
-          headers: { Authorization: `Bearer ${token.token}` },
+          headers: { Authorization: `Bearer ${tokenString}` },
         });
         if (!mounted) return;
         if (response.status === 200) {
@@ -34,13 +35,14 @@ export default function useOrganizationData() {
         if (mounted) setLoading(false);
       }
     };
-
-    fetchData();
+    if (tokenString) {
+      fetchData(); //only fetch when token is avaiabel
+    }
 
     return () => {
       mounted = false;
     };
-  }, [baseUrl, token]);
+  }, [baseUrl, tokenString]); //depend on token string
 
   const openModal = (imgUrl) => setModalImage(imgUrl);
   const closeModal = () => setModalImage(null);

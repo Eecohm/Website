@@ -30,7 +30,15 @@ const Student = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch programs & faculties safely
+    // Only fetch if baseUrl is available
+    if (!baseUrl || !token) {
+      console.log("Waiting for baseUrl and token...");
+      return;
+    }
+
+    console.log("baseurl: ", baseUrl, "token: ", token);
+
+    // Fetch progrram
     axios
       .get(`${baseUrl}/academics/programs/`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -39,10 +47,12 @@ const Student = () => {
         const data = Array.isArray(res.data)
           ? res.data
           : res.data.results || [];
+        console.log("Programs fetched:", data);
         setPrograms(data);
       })
-      .catch((err) => console.error("Error fetching programs", err));
+      .catch((err) => console.error("Error while fetching programs", err));
 
+    //fetch faculties
     axios
       .get(`${baseUrl}/academics/faculties/`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -51,6 +61,7 @@ const Student = () => {
         const data = Array.isArray(res.data)
           ? res.data
           : res.data.results || [];
+        console.log("Faculties fetched:", data);
         setFaculties(data);
       })
       .catch((err) => console.error("Error fetching faculties", err));
@@ -58,12 +69,14 @@ const Student = () => {
 
   const handleProgramChange = (e) => {
     const programId = e.target.value;
+    console.log("Program selected:", programId);
     setFormData((prev) => ({ ...prev, programId }));
 
     // Filter faculties for this program
     const relatedFaculties = faculties.filter(
-      (f) => f.programId === parseInt(programId)
+      (f) => f.program === parseInt(programId)
     );
+    console.log("Filtered faculties:", relatedFaculties);
     setFilteredFaculties(relatedFaculties);
   };
 
@@ -208,7 +221,7 @@ const Student = () => {
                 <option value="">Select Program</option>
                 {programs.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.programName}
+                    {p.name}
                   </option>
                 ))}
               </select>
@@ -228,7 +241,7 @@ const Student = () => {
                 <option value="">Select Faculty</option>
                 {filteredFaculties.map((f) => (
                   <option key={f.id} value={f.id}>
-                    {f.facultyName}
+                    {f.name}
                   </option>
                 ))}
               </select>
