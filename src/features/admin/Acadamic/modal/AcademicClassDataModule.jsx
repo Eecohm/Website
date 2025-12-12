@@ -17,6 +17,7 @@ import styles from "@/features/admin/Acadamic/modal/AcademicClassData.module.css
 
 const AcademicClassDataModule = ({
   academicClasses,
+  academicClass,
   onClose,
   token,
   baseUrl,
@@ -34,6 +35,15 @@ const AcademicClassDataModule = ({
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
   const [faculties, setFaculties] = useState([]);
+
+  // Initialize with passed class - REMOVED to show list first
+  // useEffect(() => {
+  //   if (academicClass) {
+  //       setSelectedClass(academicClass);
+  //       setEditData(academicClass);
+  //       setEditMode(false);
+  //   }
+  // }, [academicClass]);
 
   // Fetch faculties data
   useEffect(() => {
@@ -64,7 +74,7 @@ const AcademicClassDataModule = ({
           c.academicYearName
             ?.toLowerCase()
             .includes(searchQuery.toLowerCase()) ||
-          (c.facultyName || c.programName)
+          c.facultyName
             ?.toLowerCase()
             .includes(searchQuery.toLowerCase())
       );
@@ -88,7 +98,7 @@ const AcademicClassDataModule = ({
     if (filters.facultyName) {
       filtered = filtered.filter(
         (c) =>
-          (c.facultyName || c.programName)?.toLowerCase() ===
+          c.facultyName?.toLowerCase() ===
           filters.facultyName.toLowerCase()
       );
     }
@@ -182,12 +192,12 @@ const AcademicClassDataModule = ({
     faculties.length > 0
       ? faculties.map((f) => f.facultyName || f.name).filter(Boolean)
       : [
-          ...new Set(
-            academicClasses
-              .map((c) => c.facultyName || c.programName)
-              .filter(Boolean)
-          ),
-        ];
+        ...new Set(
+          academicClasses
+            .map((c) => c.facultyName)
+            .filter(Boolean)
+        ),
+      ];
 
   return (
     <div className={styles.fullScreenModal}>
@@ -304,9 +314,7 @@ const AcademicClassDataModule = ({
                         <div className={styles.detailRow}>
                           <span className={styles.detailLabel}>Faculty:</span>
                           <span className={styles.detailValue}>
-                            {academicClass.facultyName ||
-                              academicClass.programName ||
-                              "Not set"}
+                            {academicClass.facultyName || "Not set"}
                           </span>
                         </div>
                       </div>
@@ -403,8 +411,8 @@ const AcademicClassDataModule = ({
                   </label>
                   {editMode ? (
                     <select
-                      name="facultyName"
-                      value={editData.facultyName || editData.programId || ""}
+                      name="facultyId"
+                      value={editData.facultyId || ""}
                       onChange={handleEditChange}
                       className={styles.editInput}
                     >
@@ -417,9 +425,7 @@ const AcademicClassDataModule = ({
                     </select>
                   ) : (
                     <div className={styles.detailValue}>
-                      {selectedClass.facultyName ||
-                        selectedClass.programName ||
-                        "Not set"}
+                      {selectedClass.facultyName || "Not set"}
                     </div>
                   )}
                 </div>

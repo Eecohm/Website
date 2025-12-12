@@ -14,6 +14,13 @@ const NewYearData = ({ year, onClose, allYears = [] }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredYears, setFilteredYears] = useState(allYears);
 
+  // Initialize with passed year if available - REMOVED to show list first
+  // useEffect(() => {
+  //   if (year) {
+  //     setSelectedYear(year);
+  //   }
+  // }, [year]);
+
   // Filter years based on search query
   useEffect(() => {
     if (searchQuery) {
@@ -185,8 +192,8 @@ const NewYearData = ({ year, onClose, allYears = [] }) => {
                     {selectedYear.is_current || selectedYear.isCurrent
                       ? "Current Year"
                       : selectedYear.is_activate || selectedYear.isActive
-                      ? "Active"
-                      : "Inactive"}
+                        ? "Active"
+                        : "Inactive"}
                   </div>
                 </div>
 

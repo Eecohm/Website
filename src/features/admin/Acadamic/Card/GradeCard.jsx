@@ -16,6 +16,7 @@ import {
   FiBookOpen,
   FiCheck,
   FiUsers,
+  FiLayers,
 } from "react-icons/fi";
 
 const GradeCard = () => {
@@ -108,6 +109,7 @@ const GradeCard = () => {
       const payload = {
         gradeName: formData.gradeName,
         programId: formData.programId,
+        previousGradeId: formData.previousGradeId || null,
       };
 
       const res = await axios.patch(
@@ -139,6 +141,7 @@ const GradeCard = () => {
       const payload = {
         gradeName: newData.gradeName,
         programId: newData.programId,
+        previousGradeId: newData.previousGradeId || null,
       };
 
       const res = await axios.post(`${baseUrl}/academics/grades/`, payload, {
@@ -155,11 +158,12 @@ const GradeCard = () => {
       setFormData(res.data);
     } catch (err) {
       console.error(err);
-      if (err.response && err.response.status === 400) {
+      if (err.response && err.response.data) {
+        // Improve error handling to show backend message directly
+        const msg = err.response.data.error || err.response.data.detail || Object.values(err.response.data)[0];
         setNotification({
           type: "error",
-          message:
-            "Grade with this name already exists. Please use a different name.",
+          message: Array.isArray(msg) ? msg[0] : msg,
         });
       } else {
         setNotification({
@@ -174,168 +178,198 @@ const GradeCard = () => {
     <>
       <NavBar />
       <div className={styles.container}>
-        <div className={styles.wholeDiv}>
-          {/* Left Panel */}
-          <div className={styles.leftPanel}>
-            <div className={styles.panelHeader}>
-              <div className={styles.panelTitle}>
-                <FiBookOpen className={styles.panelIcon} />
-                <h3>Grades</h3>
+        {!showFacultyDataModule ? (
+          <div className={styles.wholeDiv}>
+            {/* Left Panel */}
+            <div className={styles.leftPanel}>
+              <div className={styles.panelHeader}>
+                <div className={styles.panelTitle}>
+                  <FiBookOpen className={styles.panelIcon} />
+                  <h3>Grades</h3>
+                </div>
+
+                <button
+                  className={styles.viewDetailsButton}
+                  onClick={() => setShowFacultyDataModule(true)}
+                >
+                  View Details
+                </button>
               </div>
 
-              <button
-                className={styles.viewDetailsButton}
-                onClick={() => setShowFacultyDataModule(true)}
-              >
-                View Details
-              </button>
-            </div>
+              <div className={styles.searchContainer}>
+                <FiSearch className={styles.searchIcon} />
+                <input
+                  type="text"
+                  placeholder="Search grades..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className={styles.searchInput}
+                />
+              </div>
 
-            <div className={styles.searchContainer}>
-              <FiSearch className={styles.searchIcon} />
-              <input
-                type="text"
-                placeholder="Search grades..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-            </div>
-
-            <div className={styles.gradeList}>
-              {grades.length ? (
-                <>
-                  {grades.slice(0, 3).map((grade) => (
-                    <div
-                      key={grade.id}
-                      className={`${styles.gradeItem} ${
-                        selectedGrade?.id === grade.id ? styles.active : ""
-                      }`}
-                      onClick={() => handleSelectGrade(grade)}
-                    >
-                      <div className={styles.gradeItemContent}>
-                        <FiBookOpen className={styles.gradeIcon} />
-                        <div className={styles.gradeDetails}>
-                          <span className={styles.gradeName}>
-                            {grade.gradeName}
-                          </span>
-                          <div className={styles.gradeBadges}>
-                            <span className={styles.badge}>
-                              {grade.programName || "No Program"}
+              <div className={styles.gradeList}>
+                {grades.length ? (
+                  <>
+                    {grades.slice(0, 3).map((grade) => (
+                      <div
+                        key={grade.id}
+                        className={`${styles.gradeItem} ${selectedGrade?.id === grade.id ? styles.active : ""
+                          }`}
+                        onClick={() => handleSelectGrade(grade)}
+                      >
+                        <div className={styles.gradeItemContent}>
+                          <FiBookOpen className={styles.gradeIcon} />
+                          <div className={styles.gradeDetails}>
+                            <span className={styles.gradeName}>
+                              {grade.gradeName}
                             </span>
+                            <div className={styles.gradeBadges}>
+                              <span className={styles.badge}>
+                                {grade.programName || "No Program"}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
+                    ))}
+                  </>
+                ) : (
+                  <div className={styles.noData}>
+                    <FiAlertCircle className={styles.noDataIcon} />
+                    <span>No grades found</span>
+                  </div>
+                )}
+              </div>
+
+              <button
+                className={`${styles.addBtn} ${!grades.length ? styles.highlightBtn : ""
+                  }`}
+                onClick={() => setAddModalOpen(true)}
+              >
+                <FiPlus className={styles.btnIcon} />
+                Add New Grade
+              </button>
+            </div>
+
+            {/* Right Panel */}
+            <div className={styles.rightPanel}>
+              {selectedGrade ? (
+                <div className={styles.detailsCard}>
+                  <div className={styles.cardHeader}>
+                    <FiBookOpen className={styles.cardIcon} />
+                    <h2>Grade Details</h2>
+                  </div>
+
+                  <div className={styles.formGrid}>
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiBookOpen className={styles.fieldIcon} />
+                        Grade Name
+                      </label>
+                      <input
+                        type="text"
+                        name="gradeName"
+                        value={formData.gradeName || ""}
+                        onChange={handleChange}
+                        className={`${styles.textInput} ${errors.gradeName ? styles.inputError : ""
+                          }`}
+                        placeholder="Enter grade name"
+                      />
+                      {errors.gradeName && (
+                        <div className={styles.error}>
+                          <FiAlertCircle className={styles.errorIcon} />
+                          {errors.gradeName}
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </>
+
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiBookOpen className={styles.fieldIcon} />
+                        Program
+                      </label>
+                      <select
+                        name="programId"
+                        value={formData.programId || ""}
+                        onChange={handleChange}
+                        className={`${styles.selectInput} ${errors.programId ? styles.inputError : ""
+                          }`}
+                      >
+                        <option value="">Select a program</option>
+                        {programs.map((program) => (
+                          <option key={program.id} value={program.id}>
+                            {program.programName}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.programId && (
+                        <div className={styles.error}>
+                          <FiAlertCircle className={styles.errorIcon} />
+                          {errors.programId}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiLayers className={styles.fieldIcon} />
+                        Previous Grade
+                      </label>
+                      <select
+                        name="previousGradeId"
+                        value={formData.previousGradeId || ""}
+                        onChange={handleChange}
+                        className={styles.selectInput}
+                      >
+                        <option value="">None (Start Grade)</option>
+                        {grades
+                          .filter((g) => g.id !== formData.id)
+                          .map((g) => (
+                            <option key={g.id} value={g.id}>
+                              {g.gradeName}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className={styles.actionButtons}>
+                    <button
+                      className={styles.saveBtn}
+                      onClick={handleSave}
+                      disabled={loading}
+                    >
+                      <FiSave className={styles.btnIcon} />
+                      {loading ? "Saving..." : "Save Changes"}
+                    </button>
+                  </div>
+                </div>
               ) : (
-                <div className={styles.noData}>
-                  <FiAlertCircle className={styles.noDataIcon} />
-                  <span>No grades found</span>
+                <div className={styles.noSelection}>
+                  <FiBookOpen className={styles.noSelectionIcon} />
+                  <h3>Select a Grade</h3>
+                  <p>Choose a grade from the list to view and edit its details</p>
                 </div>
               )}
             </div>
-
-            <button
-              className={`${styles.addBtn} ${
-                !grades.length ? styles.highlightBtn : ""
-              }`}
-              onClick={() => setAddModalOpen(true)}
-            >
-              <FiPlus className={styles.btnIcon} />
-              Add New Grade
-            </button>
           </div>
-
-          {/* Right Panel */}
-          <div className={styles.rightPanel}>
-            {selectedGrade ? (
-              <div className={styles.detailsCard}>
-                <div className={styles.cardHeader}>
-                  <FiBookOpen className={styles.cardIcon} />
-                  <h2>Grade Details</h2>
-                </div>
-
-                <div className={styles.formGrid}>
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiBookOpen className={styles.fieldIcon} />
-                      Grade Name
-                    </label>
-                    <input
-                      type="text"
-                      name="gradeName"
-                      value={formData.gradeName || ""}
-                      onChange={handleChange}
-                      className={`${styles.textInput} ${
-                        errors.gradeName ? styles.inputError : ""
-                      }`}
-                      placeholder="Enter grade name"
-                    />
-                    {errors.gradeName && (
-                      <div className={styles.error}>
-                        <FiAlertCircle className={styles.errorIcon} />
-                        {errors.gradeName}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiBookOpen className={styles.fieldIcon} />
-                      Program
-                    </label>
-                    <select
-                      name="programId"
-                      value={formData.programId || ""}
-                      onChange={handleChange}
-                      className={`${styles.selectInput} ${
-                        errors.programId ? styles.inputError : ""
-                      }`}
-                    >
-                      <option value="">Select a program</option>
-                      {programs.map((program) => (
-                        <option key={program.id} value={program.id}>
-                          {program.programName}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.programId && (
-                      <div className={styles.error}>
-                        <FiAlertCircle className={styles.errorIcon} />
-                        {errors.programId}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.actionButtons}>
-                  <button
-                    className={styles.saveBtn}
-                    onClick={handleSave}
-                    disabled={loading}
-                  >
-                    <FiSave className={styles.btnIcon} />
-                    {loading ? "Saving..." : "Save Changes"}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className={styles.noSelection}>
-                <FiBookOpen className={styles.noSelectionIcon} />
-                <h3>Select a Grade</h3>
-                <p>Choose a grade from the list to view and edit its details</p>
-              </div>
-            )}
-          </div>
-        </div>
+        ) : (
+          <GradeDataModule
+            grades={grades}
+            grade={selectedGrade}
+            onClose={() => setShowFacultyDataModule(false)}
+            onGradeUpdate={fetchGrades}
+            token={token}
+            baseUrl={baseUrl}
+          />
+        )}
 
         {addModalOpen && (
           <AddGradeModal
             onClose={() => setAddModalOpen(false)}
             onAdd={handleAdd}
             programs={programs}
+            grades={grades}
           />
         )}
 
@@ -348,24 +382,17 @@ const GradeCard = () => {
         )}
 
         {/* Add this modal rendering section */}
-        {showFacultyDataModule && (
-          <GradeDataModule
-            grades={grades}
-            onClose={() => setShowFacultyDataModule(false)}
-            onGradeUpdate={fetchGrades} // Add callback to refresh grades
-            token={token}
-            baseUrl={baseUrl}
-          />
-        )}
+
       </div>
     </>
   );
 };
 
-const AddGradeModal = ({ onClose, onAdd, programs }) => {
+const AddGradeModal = ({ onClose, onAdd, programs, grades }) => {
   const [data, setData] = useState({
     gradeName: "",
     programId: "",
+    previousGradeId: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -385,23 +412,12 @@ const AddGradeModal = ({ onClose, onAdd, programs }) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // ADD THIS DEBUGGING CODE
-    console.log("=== FORM VALIDATION DEBUG ===");
-    console.log("isFormValid:", isFormValid);
-    console.log("sectionValidations:", sectionValidations);
-    Object.entries(sectionValidations).forEach(([section, data]) => {
-      console.log(`${section}:`, data.isValid, data.errors);
-    });
-    console.log("===========================");
-
-    if (!isFormValid) {
-      alert("Please fix all validation errors before submitting");
-      return;
+    if (validateForm()) {
+      onAdd(data);
     }
-    alert("✅ Form submitted successfully! All validation passed.");
   };
 
   return (
@@ -426,9 +442,8 @@ const AddGradeModal = ({ onClose, onAdd, programs }) => {
               name="gradeName"
               value={data.gradeName}
               onChange={handleChange}
-              className={`${styles.textInput} ${
-                errors.gradeName ? styles.inputError : ""
-              }`}
+              className={`${styles.textInput} ${errors.gradeName ? styles.inputError : ""
+                }`}
               placeholder="Enter grade name"
             />
             {errors.gradeName && (
@@ -448,9 +463,8 @@ const AddGradeModal = ({ onClose, onAdd, programs }) => {
               name="programId"
               value={data.programId}
               onChange={handleChange}
-              className={`${styles.selectInput} ${
-                errors.programId ? styles.inputError : ""
-              }`}
+              className={`${styles.selectInput} ${errors.programId ? styles.inputError : ""
+                }`}
             >
               <option value="">Select a program</option>
               {programs.map((program) => (
@@ -465,6 +479,26 @@ const AddGradeModal = ({ onClose, onAdd, programs }) => {
                 {errors.programId}
               </div>
             )}
+          </div>
+
+          <div className={styles.fieldGroup}>
+            <label>
+              <FiBookOpen className={styles.fieldIcon} />
+              Previous Grade
+            </label>
+            <select
+              name="previousGradeId"
+              value={data.previousGradeId}
+              onChange={handleChange}
+              className={styles.selectInput}
+            >
+              <option value="">None (Start Grade)</option>
+              {grades.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.gradeName}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 

@@ -17,12 +17,23 @@ import styles from "@/features/admin/Acadamic/modal/ProgramModalData.module.css"
 
 const ProgramModalData = ({
   programs,
+  program,
   onClose,
   onProgramUpdate,
   token,
   baseUrl,
 }) => {
   const [selectedProgram, setSelectedProgram] = useState(null);
+
+  // Initialize with passed program if available - REMOVED to show list first
+  // useEffect(() => {
+  //   if (program) {
+  //     console.log("Setting initial program:", program);
+  //     setSelectedProgram(program);
+  //     setEditData({ ...program });
+  //     setEditMode(false);
+  //   }
+  // }, [program]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPrograms, setFilteredPrograms] = useState(programs);
   const [filters, setFilters] = useState({

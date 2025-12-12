@@ -12,11 +12,13 @@ import {
   FiBookOpen,
   FiLayers,
   FiUsers,
+  FiPlus,
 } from "react-icons/fi";
 import styles from "@/features/admin/Acadamic/modal/GradeData.module.css";
 
 const GradeDataModule = ({
   grades,
+  grade,
   onClose,
   onGradeUpdate,
   token,
@@ -32,6 +34,26 @@ const GradeDataModule = ({
   const [editData, setEditData] = useState({});
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [gradeToDelete, setGradeToDelete] = useState(null);
+  const [programs, setPrograms] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newGrade, setNewGrade] = useState({ gradeName: "", programId: "" });
+
+  const fetchPrograms = async () => {
+    try {
+      console.log("Fetching programs...");
+      const res = await axios.get(`${baseUrl}/academics/programs/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("Programs fetched:", res.data);
+      setPrograms(res.data);
+    } catch (err) {
+      console.error("Error fetching programs:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPrograms();
+  }, []);
 
   // Filter grades based on search query and filters
   useEffect(() => {
@@ -84,9 +106,13 @@ const GradeDataModule = ({
   const handleSave = async () => {
     try {
       console.log("Saving grade data:", editData);
+      const payload = {
+        ...editData,
+        previousGradeId: editData.previousGradeId || null,
+      };
       const response = await axios.patch(
         `${baseUrl}/academics/grades/${selectedGrade.id}/`,
-        editData,
+        payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -106,7 +132,8 @@ const GradeDataModule = ({
       alert("Grade updated successfully!");
     } catch (err) {
       console.error("Error updating grade:", err);
-      alert("Failed to update grade. Please try again.");
+      const msg = err.response?.data?.error || err.response?.data?.detail || "Failed to update grade.";
+      alert(msg);
     }
   };
 
@@ -130,7 +157,8 @@ const GradeDataModule = ({
       alert("Grade deleted successfully!");
     } catch (err) {
       console.error("Error deleting grade:", err);
-      alert("Failed to delete grade. Please try again.");
+      const msg = err.response?.data?.error || "Failed to delete grade. It might have related entities.";
+      alert(msg); // Show strict warning
     }
   };
 
@@ -138,6 +166,36 @@ const GradeDataModule = ({
     setShowDeleteConfirm(false);
     setGradeToDelete(null);
   };
+
+  const handleAddGrade = async (e) => {
+    e.preventDefault();
+    console.log("Submitting new grade:", newGrade);
+    try {
+      if (!newGrade.programId) {
+        alert("Please select a program.");
+        return;
+      }
+      const payload = {
+        gradeName: newGrade.gradeName,
+        programId: newGrade.programId,
+        previousGradeId: newGrade.previousGradeId || null,
+      };
+
+      await axios.post(`${baseUrl}/academics/grades/`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      alert("Grade added successfully!");
+      setShowAddModal(false);
+      setNewGrade({ gradeName: "", programId: "", previousGradeId: "" });
+      if (onGradeUpdate) onGradeUpdate();
+    } catch (err) {
+      console.error("Error adding grade:", err);
+      const msg = err.response?.data?.error || "Failed to add grade.";
+      alert(msg);
+    }
+  };
+
 
   // Get unique values for filter dropdowns
   const programOptions = [
@@ -173,6 +231,14 @@ const GradeDataModule = ({
                     className={styles.searchInput}
                   />
                 </div>
+                <button
+                  className={styles.saveButton}
+                  style={{ marginLeft: "1rem", height: "42px" }}
+                  onClick={() => setShowAddModal(true)}
+                >
+                  <FiPlus className={styles.btnIcon} />
+                  Add Grade
+                </button>
               </div>
 
               {/* Filter Section */}
@@ -313,6 +379,34 @@ const GradeDataModule = ({
 
                 <div className={styles.detailGroup}>
                   <label className={styles.detailLabel}>
+                    <FiLayers className={styles.fieldIcon} />
+                    Previous Grade
+                  </label>
+                  {editMode ? (
+                    <select
+                      name="previousGradeId"
+                      value={editData.previousGradeId || ""}
+                      onChange={handleEditChange}
+                      className={styles.editInput}
+                    >
+                      <option value="">None (Start Grade)</option>
+                      {grades
+                        .filter((g) => g.id !== selectedGrade.id)
+                        .map((g) => (
+                          <option key={g.id} value={g.id}>
+                            {g.gradeName}
+                          </option>
+                        ))}
+                    </select>
+                  ) : (
+                    <div className={styles.detailValue}>
+                      {selectedGrade.previousGradeName || "None (Start Grade)"}
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.detailGroup}>
+                  <label className={styles.detailLabel}>
                     <FiCheck className={styles.fieldIcon} />
                     Status
                   </label>
@@ -362,6 +456,75 @@ const GradeDataModule = ({
           </div>
         )}
       </div>
+
+      {/* Add Grade Modal */}
+      {showAddModal && (
+        <div className={styles.confirmOverlay}>
+          <div className={styles.detailsCard} style={{ width: "400px", zIndex: 2001 }}>
+            <div className={styles.cardHeader}>
+              <h2>Add New Grade</h2>
+              <button className={styles.closeButton} onClick={() => setShowAddModal(false)}>
+                <FiX />
+              </button>
+            </div>
+            <form onSubmit={handleAddGrade}>
+              <div className={styles.detailGroup}>
+                <label className={styles.detailLabel}>Grade Name</label>
+                <input
+                  type="text"
+                  required
+                  className={styles.editInput}
+                  value={newGrade.gradeName}
+                  onChange={(e) =>
+                    setNewGrade({ ...newGrade, gradeName: e.target.value })
+                  }
+                  placeholder="e.g. Grade 1"
+                />
+              </div>
+              <div className={styles.detailGroup} style={{ marginTop: "1rem" }}>
+                <label className={styles.detailLabel}>Program</label>
+                <select
+                  required
+                  className={styles.editInput}
+                  value={newGrade.programId}
+                  onChange={(e) =>
+                    setNewGrade({ ...newGrade, programId: e.target.value })
+                  }
+                >
+                  <option value="">Select Program</option>
+                  {programs.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.programName || p.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.detailGroup} style={{ marginTop: "1rem" }}>
+                <label className={styles.detailLabel}>Previous Grade</label>
+                <select
+                  className={styles.editInput}
+                  value={newGrade.previousGradeId || ""}
+                  onChange={(e) =>
+                    setNewGrade({ ...newGrade, previousGradeId: e.target.value })
+                  }
+                >
+                  <option value="">None (Start Grade)</option>
+                  {grades.map((g) => (
+                    <option key={g.id} value={g.id}>
+                      {g.gradeName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.headerActions} style={{ marginTop: "2rem", justifyContent: "flex-end" }}>
+                <button type="submit" className={styles.saveButton}>
+                  Add Grade
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (

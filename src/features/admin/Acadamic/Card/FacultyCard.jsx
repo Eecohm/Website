@@ -174,163 +174,169 @@ const FacultyCard = () => {
     <>
       <NavBar />
       <div className={styles.container}>
-        <div className={styles.wholeDiv}>
-          {/* Left Panel */}
-          <div className={styles.leftPanel}>
-            <div className={styles.panelHeader}>
-              <div className={styles.panelTitle}>
-                <FiUsers className={styles.panelIcon} />
-                <h3>Faculties</h3>
+        {!showFacultyDataModule ? (
+          <div className={styles.wholeDiv}>
+            {/* Left Panel */}
+            <div className={styles.leftPanel}>
+              <div className={styles.panelHeader}>
+                <div className={styles.panelTitle}>
+                  <FiUsers className={styles.panelIcon} />
+                  <h3>Faculties</h3>
+                </div>
+                <button
+                  className={styles.viewDetailsButton}
+                  onClick={() => setShowFacultyDataModule(true)}
+                >
+                  View Details
+                </button>
               </div>
-              <button
-                className={styles.viewDetailsButton}
-                onClick={() => setShowFacultyDataModule(true)}
-              >
-                View Details
-              </button>
-            </div>
 
-            <div className={styles.searchContainer}>
-              <FiSearch className={styles.searchIcon} />
-              <input
-                type="text"
-                placeholder="Search faculties..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-            </div>
+              <div className={styles.searchContainer}>
+                <FiSearch className={styles.searchIcon} />
+                <input
+                  type="text"
+                  placeholder="Search faculties..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className={styles.searchInput}
+                />
+              </div>
 
-            <div className={styles.facultyList}>
-              {faculties.length ? (
-                <>
-                  {faculties.slice(0, 3).map((faculty) => (
-                    <div
-                      key={faculty.id}
-                      className={`${styles.facultyItem} ${
-                        selectedFaculty?.id === faculty.id ? styles.active : ""
-                      }`}
-                      onClick={() => handleSelectFaculty(faculty)}
-                    >
-                      <div className={styles.facultyItemContent}>
-                        <FiBookOpen className={styles.facultyIcon} />
-                        <div className={styles.facultyDetails}>
-                          <span className={styles.facultyName}>
-                            {faculty.facultyName}
-                          </span>
-                          <div className={styles.facultyBadges}>
-                            <span className={styles.badge}>
-                              {faculty.programName || "No Program"}
+              <div className={styles.facultyList}>
+                {faculties.length ? (
+                  <>
+                    {faculties.slice(0, 3).map((faculty) => (
+                      <div
+                        key={faculty.id}
+                        className={`${styles.facultyItem} ${selectedFaculty?.id === faculty.id ? styles.active : ""
+                          }`}
+                        onClick={() => handleSelectFaculty(faculty)}
+                      >
+                        <div className={styles.facultyItemContent}>
+                          <FiBookOpen className={styles.facultyIcon} />
+                          <div className={styles.facultyDetails}>
+                            <span className={styles.facultyName}>
+                              {faculty.facultyName}
                             </span>
+                            <div className={styles.facultyBadges}>
+                              <span className={styles.badge}>
+                                {faculty.programName || "No Program"}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
+                    ))}
+                  </>
+                ) : (
+                  <div className={styles.noData}>
+                    <FiAlertCircle className={styles.noDataIcon} />
+                    <span>No faculties found</span>
+                  </div>
+                )}
+              </div>
+
+              <button
+                className={`${styles.addBtn} ${!faculties.length ? styles.highlightBtn : ""
+                  }`}
+                onClick={() => setAddModalOpen(true)}
+              >
+                <FiPlus className={styles.btnIcon} />
+                Add New Faculty
+              </button>
+            </div>
+
+            {/* Right Panel */}
+            <div className={styles.rightPanel}>
+              {selectedFaculty ? (
+                <div className={styles.detailsCard}>
+                  <div className={styles.cardHeader}>
+                    <FiSettings className={styles.cardIcon} />
+                    <h2>Faculty Details</h2>
+                  </div>
+
+                  <div className={styles.formGrid}>
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiBookOpen className={styles.fieldIcon} />
+                        Faculty Name
+                      </label>
+                      <input
+                        type="text"
+                        name="facultyName"
+                        value={formData.facultyName || ""}
+                        onChange={handleChange}
+                        className={`${styles.textInput} ${errors.facultyName ? styles.inputError : ""
+                          }`}
+                        placeholder="Enter faculty name"
+                      />
+                      {errors.facultyName && (
+                        <div className={styles.error}>
+                          <FiAlertCircle className={styles.errorIcon} />
+                          {errors.facultyName}
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </>
+
+                    <div className={styles.fieldGroup}>
+                      <label>
+                        <FiBookOpen className={styles.fieldIcon} />
+                        Program
+                      </label>
+                      <select
+                        name="programId"
+                        value={formData.programId || ""}
+                        onChange={handleChange}
+                        className={`${styles.selectInput} ${errors.programId ? styles.inputError : ""
+                          }`}
+                      >
+                        <option value="">Select a program</option>
+                        {programs.map((program) => (
+                          <option key={program.id} value={program.id}>
+                            {program.programName}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.programId && (
+                        <div className={styles.error}>
+                          <FiAlertCircle className={styles.errorIcon} />
+                          {errors.programId}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.actionButtons}>
+                    <button
+                      className={styles.saveBtn}
+                      onClick={handleSave}
+                      disabled={loading}
+                    >
+                      <FiSave className={styles.btnIcon} />
+                      {loading ? "Saving..." : "Save Changes"}
+                    </button>
+                  </div>
+                </div>
               ) : (
-                <div className={styles.noData}>
-                  <FiAlertCircle className={styles.noDataIcon} />
-                  <span>No faculties found</span>
+                <div className={styles.noSelection}>
+                  <FiUsers className={styles.noSelectionIcon} />
+                  <h3>Select a Faculty</h3>
+                  <p>
+                    Choose a faculty from the list to view and edit its details
+                  </p>
                 </div>
               )}
             </div>
-
-            <button
-              className={`${styles.addBtn} ${
-                !faculties.length ? styles.highlightBtn : ""
-              }`}
-              onClick={() => setAddModalOpen(true)}
-            >
-              <FiPlus className={styles.btnIcon} />
-              Add New Faculty
-            </button>
           </div>
-
-          {/* Right Panel */}
-          <div className={styles.rightPanel}>
-            {selectedFaculty ? (
-              <div className={styles.detailsCard}>
-                <div className={styles.cardHeader}>
-                  <FiSettings className={styles.cardIcon} />
-                  <h2>Faculty Details</h2>
-                </div>
-
-                <div className={styles.formGrid}>
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiBookOpen className={styles.fieldIcon} />
-                      Faculty Name
-                    </label>
-                    <input
-                      type="text"
-                      name="facultyName"
-                      value={formData.facultyName || ""}
-                      onChange={handleChange}
-                      className={`${styles.textInput} ${
-                        errors.facultyName ? styles.inputError : ""
-                      }`}
-                      placeholder="Enter faculty name"
-                    />
-                    {errors.facultyName && (
-                      <div className={styles.error}>
-                        <FiAlertCircle className={styles.errorIcon} />
-                        {errors.facultyName}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className={styles.fieldGroup}>
-                    <label>
-                      <FiBookOpen className={styles.fieldIcon} />
-                      Program
-                    </label>
-                    <select
-                      name="programId"
-                      value={formData.programId || ""}
-                      onChange={handleChange}
-                      className={`${styles.selectInput} ${
-                        errors.programId ? styles.inputError : ""
-                      }`}
-                    >
-                      <option value="">Select a program</option>
-                      {programs.map((program) => (
-                        <option key={program.id} value={program.id}>
-                          {program.programName}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.programId && (
-                      <div className={styles.error}>
-                        <FiAlertCircle className={styles.errorIcon} />
-                        {errors.programId}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.actionButtons}>
-                  <button
-                    className={styles.saveBtn}
-                    onClick={handleSave}
-                    disabled={loading}
-                  >
-                    <FiSave className={styles.btnIcon} />
-                    {loading ? "Saving..." : "Save Changes"}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className={styles.noSelection}>
-                <FiUsers className={styles.noSelectionIcon} />
-                <h3>Select a Faculty</h3>
-                <p>
-                  Choose a faculty from the list to view and edit its details
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
+        ) : (
+          <FacultyDataModule
+            faculties={faculties}
+            faculty={selectedFaculty}
+            onClose={() => setShowFacultyDataModule(false)}
+            token={token}
+            baseUrl={baseUrl}
+          />
+        )}
 
         {addModalOpen && (
           <AddFacultyModal
@@ -348,14 +354,7 @@ const FacultyCard = () => {
           />
         )}
 
-        {showFacultyDataModule && (
-          <FacultyDataModule
-            faculties={faculties}
-            onClose={() => setShowFacultyDataModule(false)}
-            token={token}
-            baseUrl={baseUrl}
-          />
-        )}
+
       </div>
     </>
   );
@@ -412,9 +411,8 @@ const AddFacultyModal = ({ onClose, onAdd, programs }) => {
               name="facultyName"
               value={data.facultyName}
               onChange={handleChange}
-              className={`${styles.textInput} ${
-                errors.facultyName ? styles.inputError : ""
-              }`}
+              className={`${styles.textInput} ${errors.facultyName ? styles.inputError : ""
+                }`}
               placeholder="Enter faculty name"
             />
             {errors.facultyName && (
@@ -434,9 +432,8 @@ const AddFacultyModal = ({ onClose, onAdd, programs }) => {
               name="programId"
               value={data.programId}
               onChange={handleChange}
-              className={`${styles.selectInput} ${
-                errors.programId ? styles.inputError : ""
-              }`}
+              className={`${styles.selectInput} ${errors.programId ? styles.inputError : ""
+                }`}
             >
               <option value="">Select a program</option>
               {programs.map((program) => (

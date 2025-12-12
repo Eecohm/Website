@@ -12,7 +12,7 @@ import {
 } from "react-icons/fi";
 import styles from "@/features/admin/Acadamic/modal/FacultyData.module.css";
 
-const FacultyDataModule = ({ faculties, onClose, token, baseUrl }) => {
+const FacultyDataModule = ({ faculties, faculty, onClose, token, baseUrl }) => {
   const [selectedFaculty, setSelectedFaculty] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredFaculties, setFilteredFaculties] = useState(faculties);
@@ -25,6 +25,15 @@ const FacultyDataModule = ({ faculties, onClose, token, baseUrl }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [facultyToDelete, setFacultyToDelete] = useState(null);
   const [programs, setPrograms] = useState([]);
+
+  // Initialize with passed faculty - REMOVED to show list first
+  // useEffect(() => {
+  //   if (faculty) {
+  //       setSelectedFaculty(faculty);
+  //       setEditData({ ...faculty });
+  //       setEditMode(false);
+  //   }
+  // }, [faculty]);
 
   // Fetch programs for dropdown
   const fetchPrograms = async () => {
