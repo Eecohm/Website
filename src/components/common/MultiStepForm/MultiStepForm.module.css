@@ -1,0 +1,258 @@
+.multiStepContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 600px;
+    /* Ensure decent height */
+    max-width: 900px;
+    margin: 0 auto;
+
+    /* Theme Colors & Glass Effect */
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    color: var(--text-primary);
+
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.header {
+    padding: 2rem 2.5rem;
+    /* background: rgba(0,0,0,0.2); Darker header */
+    /* OR keep it unified */
+    background: transparent;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.progressBarContainer {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    transition: width 0.4s ease;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Line connecting steps */
+.stepper::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+    transform: translateY(-50%);
+}
+
+.stepItem {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 90px;
+}
+
+.stepIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--background-dark);
+    /* Dark circle background */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.stepLabel {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+/* Active State */
+.stepItem.active .stepIcon {
+    border-color: var(--primary-blue);
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-blue);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.stepItem.active .stepLabel {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+/* Completed State */
+.stepItem.completed .stepIcon {
+    background: var(--success-green);
+    border-color: var(--success-green);
+    color: white;
+}
+
+.stepItem.completed .stepLabel {
+    color: var(--success-green);
+}
+
+.stepContent {
+    flex: 1;
+    padding: 2.5rem;
+    overflow-y: auto;
+    /* Scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.stepContent::-webkit-scrollbar {
+    width: 6px;
+}
+
+.stepContent::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.stepContent::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.footer {
+    padding: 1.5rem 2.5rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: flex-end;
+    /* Group buttons to the right */
+    align-items: center;
+    gap: 1.5rem;
+    /* Add specific gap between buttons */
+}
+
+
+.prevButton {
+    padding: 0.75rem 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.prevButton:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.prevButton:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.nextButton {
+    padding: 0.75rem 2rem;
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.nextButton:hover:not(:disabled) {
+    background: var(--primary-blue-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+}
+
+.nextButton:disabled {
+    background: #4b5563;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+.submitButton {
+    padding: 0.75rem 2.5rem;
+    background: var(--success-green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+.submitButton:hover:not(:disabled) {
+    background: var(--success-green-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+.submitButton:disabled {
+    background: #4b5563;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .header {
+        padding: 1.5rem 1rem;
+    }
+
+    .stepLabel {
+        display: none;
+    }
+
+    .stepContent {
+        padding: 1.5rem 1rem;
+    }
+
+    .footer {
+        padding: 1rem;
+    }
+}

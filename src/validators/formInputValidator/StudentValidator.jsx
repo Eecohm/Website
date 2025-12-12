@@ -1,18 +1,18 @@
-//for user id validation
+//for user id validation (EMIS Code)
 export const validateUserId = (userId) => {
   if (!userId || userId.trim() === "") {
-    return "User ID is required";
+    return "Use ID (EMIS Code) is required";
   }
 
-  //id format
-  const userIdPattern = /^STU\d{4}[A-Z0-9]{3}$/;
-  if (!userIdPattern.test(userId.toUpperCase())) {
-    return "User ID must follow the pattern STUYYYYXXX (e.g., STU2024001)";
+  // numeric format only
+  const userIdPattern = /^\d+$/;
+  if (!userIdPattern.test(userId)) {
+    return "EMIS Code must contain only numbers";
   }
 
   //length
-  if (userId.length < 6 || userId.length > 15) {
-    return "User ID must be between 6-15 characters long";
+  if (userId.length < 1 || userId.length > 20) {
+    return "EMIS Code must be between 1-20 digits long";
   }
   return null; //valid
 };

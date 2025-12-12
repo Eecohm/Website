@@ -48,9 +48,8 @@ const StudentSpecificForm = ({
           const errors = {};
           requiredFields.forEach((field) => {
             if (!updated.has(field)) {
-              errors[field] = `${
-                field.charAt(0).toUpperCase() + field.slice(1)
-              } is required`;
+              errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)
+                } is required`;
             }
           });
 
@@ -68,9 +67,15 @@ const StudentSpecificForm = ({
         label="EMIS Code"
         name="userId"
         value={formData.userId}
-        placeholder="STU2024001"
+        placeholder="Enter numeric EMIS Code"
         required={true}
-        onChange={handleChange}
+        onChange={(e) => {
+          const value = e.target.value;
+          // Allow only numbers
+          if (value === "" || /^\d+$/.test(value)) {
+            handleChange(e);
+          }
+        }}
         validate={validateUserId}
         onValidate={handleFieldValidation}
         disabled={false}

@@ -11,6 +11,7 @@ import {
   FiSave,
   FiBookOpen,
   FiLayers,
+  FiAlertTriangle,
 } from "react-icons/fi";
 import styles from "@/features/admin/Acadamic/modal/ProgramModalData.module.css";
 
@@ -72,7 +73,47 @@ const ProgramModalData = ({
       );
     }
 
-    setFilteredPrograms(filtered);
+    // Sort programs according to hierarchy (Logical Order: Previous -> Next)
+    // We build the full hierarchy from 'programs' prop to determine the correct order
+    const hierarchySort = (listToSort) => {
+      // 1. Build graph
+      const graph = new Map();
+      programs.forEach(p => graph.set(p.id, { ...p, children: [] }));
+      const roots = [];
+
+      // 2. Link nodes
+      programs.forEach(p => {
+        if (p.previousProgramId && graph.has(p.previousProgramId)) {
+          graph.get(p.previousProgramId).children.push(graph.get(p.id));
+        } else {
+          roots.push(graph.get(p.id));
+        }
+      });
+
+      // 3. FLatten to ordered list
+      const orderedIds = [];
+      const traverse = (nodes) => {
+        // Sort siblings by name
+        nodes.sort((a, b) => (a.programName || "").localeCompare(b.programName || ""));
+        nodes.forEach(node => {
+          orderedIds.push(node.id);
+          traverse(node.children);
+        });
+      };
+      traverse(roots);
+
+      // 4. Create rank map
+      const rankMap = new Map(orderedIds.map((id, index) => [id, index]));
+
+      // 5. Sort the target list
+      return [...listToSort].sort((a, b) => {
+        const rankA = rankMap.has(a.id) ? rankMap.get(a.id) : 999999;
+        const rankB = rankMap.has(b.id) ? rankMap.get(b.id) : 999999;
+        return rankA - rankB;
+      });
+    };
+
+    setFilteredPrograms(hierarchySort(filtered));
   }, [searchQuery, filters, programs]);
 
   const handleProgramSelect = (program) => {
@@ -404,13 +445,27 @@ const ProgramModalData = ({
                     Previous Program
                   </label>
                   {editMode ? (
-                    <input
-                      type="text"
-                      name="previousProgramName"
-                      value={editData.previousProgramName || ""}
-                      onChange={handleEditChange}
+                    <select
+                      name="previousProgramId"
+                      value={editData.previousProgramId || ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setEditData(prev => ({
+                          ...prev,
+                          previousProgramId: val ? parseInt(val) : null
+                        }));
+                      }}
                       className={styles.editInput}
-                    />
+                    >
+                      <option value="">None (Top Level)</option>
+                      {programs
+                        .filter(p => p.id !== selectedProgram?.id) // Prevent self-reference
+                        .map(p => (
+                          <option key={p.id} value={p.id}>
+                            {p.programName}
+                          </option>
+                        ))}
+                    </select>
                   ) : (
                     <div className={styles.detailValue}>
                       {selectedProgram.previousProgramName || "None"}
@@ -444,27 +499,99 @@ const ProgramModalData = ({
       </div>
 
       {/* Delete Confirmation Modal */}
-      {showDeleteConfirm && (
+      {showDeleteConfirm && programToDelete && (
         <div className={styles.confirmOverlay}>
           <div className={styles.confirmModal}>
             <h3>Confirm Deletion</h3>
-            <p>
-              Are you sure you want to delete the program "
-              {programToDelete.programName}"? This action cannot be undone.
-            </p>
+
+            {(programToDelete.nextProgramDetails?.count > 0 ||
+              programToDelete.facultyDetails?.count > 0 ||
+              programToDelete.gradeDetails?.count > 0 ||
+              programToDelete.classDetails?.count > 0) ? (
+              <div className={styles.warningContent}>
+                <div style={{ color: "#ef4444", marginBottom: "1rem", fontWeight: "bold" }}>
+                  <FiAlertTriangle style={{ marginRight: "0.5rem", verticalAlign: "middle" }} />
+                  Warning: Dependencies Detected
+                </div>
+                <p style={{ marginBottom: "1rem" }}>
+                  This program cannot be safely deleted because it is related to the following entities:
+                </p>
+                <ul style={{ textAlign: "left", marginBottom: "1.5rem", paddingLeft: "1.5rem", color: "#e5e7eb" }}>
+                  {programToDelete.nextProgramDetails?.count > 0 && (
+                    <li style={{ marginBottom: "0.5rem" }}>
+                      Is a <strong>Previous Program</strong> for {programToDelete.nextProgramDetails.count} program(s):
+                      <div style={{ fontSize: "0.85em", color: "#9ca3af", marginTop: "0.2rem" }}>
+                        {programToDelete.nextProgramDetails.names.join(", ")}
+                        {programToDelete.nextProgramDetails.count > 5 && "..."}
+                      </div>
+                    </li>
+                  )}
+                  {programToDelete.facultyDetails?.count > 0 && (
+                    <li style={{ marginBottom: "0.5rem" }}>
+                      Has {programToDelete.facultyDetails.count} <strong>Faculty</strong> members:
+                      <div style={{ fontSize: "0.85em", color: "#9ca3af", marginTop: "0.2rem" }}>
+                        {programToDelete.facultyDetails.names.join(", ")}
+                        {programToDelete.facultyDetails.count > 5 && "..."}
+                      </div>
+                    </li>
+                  )}
+                  {programToDelete.gradeDetails?.count > 0 && (
+                    <li style={{ marginBottom: "0.5rem" }}>
+                      Has {programToDelete.gradeDetails.count} <strong>Grades</strong>:
+                      <div style={{ fontSize: "0.85em", color: "#9ca3af", marginTop: "0.2rem" }}>
+                        {programToDelete.gradeDetails.names.join(", ")}
+                        {programToDelete.gradeDetails.count > 5 && "..."}
+                      </div>
+                    </li>
+                  )}
+                  {programToDelete.classDetails?.count > 0 && (
+                    <li style={{ marginBottom: "0.5rem" }}>
+                      Has {programToDelete.classDetails.count} <strong>Classes</strong>:
+                      <div style={{ fontSize: "0.85em", color: "#9ca3af", marginTop: "0.2rem" }}>
+                        {programToDelete.classDetails.names.join(", ")}
+                        {programToDelete.classDetails.count > 5 && "..."}
+                      </div>
+                    </li>
+                  )}
+                </ul>
+                <p style={{ fontSize: "0.9em", color: "#9ca3af" }}>
+                  Please remove these associations before deleting the program.
+                </p>
+              </div>
+            ) : (
+              <p>
+                Are you sure you want to delete the program "
+                {programToDelete.programName}"? This action cannot be undone.
+              </p>
+            )}
+
             <div className={styles.confirmButtons}>
-              <button
-                className={styles.confirmDeleteButton}
-                onClick={handleDeleteConfirm}
-              >
-                Yes, Delete
-              </button>
-              <button
-                className={styles.cancelDeleteButton}
-                onClick={handleDeleteCancel}
-              >
-                Cancel
-              </button>
+              {/* Disable delete if there are hard dependencies (Faculty, Grade, Class) */
+                (programToDelete.facultyDetails?.count > 0 || programToDelete.gradeDetails?.count > 0 || programToDelete.classDetails?.count > 0) ? (
+                  <button
+                    className={styles.cancelDeleteButton}
+                    onClick={handleDeleteCancel}
+                    style={{ width: "100%" }}
+                  >
+                    Okay, I understand
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className={styles.confirmDeleteButton}
+                      onClick={handleDeleteConfirm}
+                    >
+                      {programToDelete.nextProgramDetails?.count > 0 ? "Delete Anyway" : "Yes, Delete"}
+                    </button>
+                    <button
+                      className={styles.cancelDeleteButton}
+                      onClick={handleDeleteCancel}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                )
+              }
             </div>
           </div>
         </div>

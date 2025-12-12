@@ -1,4 +1,34 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+:root {
+  /* Colors */
+  --dashboard-gradient: linear-gradient(135deg, #0f1527 0%, #202443 50%, #2c4464 100%);
+  --background-dark: #0f1527;
+  --glass-bg: rgba(31, 41, 55, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+
+  --primary-blue: #3b82f6;
+  --primary-blue-hover: #2563eb;
+  --success-green: #10b981;
+  --success-green-hover: #059669;
+  --text-primary: #f3f4f6;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+
+  --sidebar-width: 280px;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Layout */
+  --topbar-height: 100px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,29 +39,42 @@
 a {
   text-decoration: none;
 }
-:root {
-  --dashboard-gradient: linear-gradient(
-    135deg,
-    #0f1527 0%,
-    #202443 50%,
-    #2c4464 100%
-  );
-}
 
 body {
   background: var(--dashboard-gradient);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  color: var(--text-primary);
+  min-height: 100vh;
 }
 
-/* Prevent accidental horizontal scroll from elements using 100vw or fixed widths
-   Some components use 100vw which can cause a horizontal scrollbar when the
-   vertical scrollbar is present. Hiding horizontal overflow prevents the
-   unwanted scrollbar while keeping vertical scrolling intact. If a component
-   needs horizontal scrolling intentionally, it should set overflow-x itself. */
 html,
 body,
 #root {
   overflow-x: hidden;
+}
+
+/* Layout Utility for pages with fixed sidebar */
+.main-content-with-sidebar {
+  padding: 2rem;
+  padding-top: calc(var(--topbar-height) + 2rem);
+  min-height: 100vh;
+  width: 100%;
+  margin-left: 0;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+@media (min-width: 1025px) {
+  .main-content-with-sidebar {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+  }
+}
+
+@media (max-width: 600px) {
+  .main-content-with-sidebar {
+    padding: 1rem;
+    padding-top: calc(var(--topbar-height) + 1rem);
+  }
 }

@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import { FaUser, FaMapMarkerAlt, FaPhone, FaFileAlt } from "react-icons/fa";
 import NavBar from "@/features/admin/NavBar/NavBar";
 import PersonalDetailsForm from "@/features/admin/User/InfoModels/Forms/Components/FormSections/PersonalDetailsForm/PersonalDetailsForm";
 import AddressDetailsForm from "@/features/admin/User/InfoModels/Forms/Components/FormSections/AddressDetailsForm/AddressDetailsForm";
@@ -7,85 +8,112 @@ import DocumentDetailsForm from "@/features/admin/User/InfoModels/Forms/Componen
 import styles from "@/features/admin/User/InfoModels/Forms/Pages/OwnerInfoForm/OwnerInfoForm.module.css";
 import ModalNotification from "@/components/common/ModalNotification";
 import useOwnerForm from "@/features/admin/User/InfoModels/Forms/Pages/OwnerInfoForm/useOwnerForm";
+import MultiStepForm from "@/components/common/MultiStepForm/MultiStepForm";
 
 const OwnerInfoForm = () => {
   const {
-    editDetail,
-    setEditDetail,
     formData,
-    setFormData,
     sectionValidations,
     updateSectionValidation,
     handleChange,
     handleFileChange,
-    handleUserTypeChange,
     handleSubmit,
     modalNotification,
     setModalNotification,
-    isFormValid,
   } = useOwnerForm();
 
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const steps = [
+    { key: "personal", label: "Personal", icon: <FaUser /> },
+    { key: "address", label: "Address", icon: <FaMapMarkerAlt /> },
+    { key: "contact", label: "Contact", icon: <FaPhone /> },
+    { key: "documents", label: "Documents", icon: <FaFileAlt /> },
+  ];
+
+  const getCurrentStepValidation = () => {
+    switch (currentStep) {
+      case 0:
+        return sectionValidations.personalDetails.isValid;
+      case 1:
+        return sectionValidations.addressDetails.isValid;
+      case 2:
+        return sectionValidations.contactDetails.isValid;
+      case 3:
+        return sectionValidations.documentDetails.isValid;
+      default:
+        return false;
+    }
+  };
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <PersonalDetailsForm
+            formData={formData}
+            handleChange={handleChange}
+            handleFileChange={handleFileChange}
+            onValidationChange={(isValid, errors) =>
+              updateSectionValidation("personalDetails", isValid, errors)
+            }
+          />
+        );
+      case 1:
+        return (
+          <AddressDetailsForm
+            formData={formData}
+            handleChange={handleChange}
+            onValidationChange={(isValid, errors) =>
+              updateSectionValidation("addressDetails", isValid, errors)
+            }
+          />
+        );
+      case 2:
+        return (
+          <ContactDetailsForm
+            formData={formData}
+            handleChange={handleChange}
+            onValidationChange={(isValid, errors) =>
+              updateSectionValidation("contactDetails", isValid, errors)
+            }
+          />
+        );
+      case 3:
+        return (
+          <DocumentDetailsForm
+            formData={formData}
+            handleChange={handleChange}
+            handleFileChange={handleFileChange}
+            onValidationChange={(isValid, errors) =>
+              updateSectionValidation("documentDetails", isValid, errors)
+            }
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
+  // ...
   return (
     <>
       <NavBar />
-      <form className={styles.mainDiv} onSubmit={handleSubmit}>
-        <div className={styles.scrollContainer}>
-          <div className={styles.header}>
-            <h1 className={styles.title}>Owner Information</h1>
-          </div>
-
-          <div className={styles.formContainer}>
-            <PersonalDetailsForm
-              formData={formData}
-              handleChange={handleChange}
-              handleFileChange={handleFileChange}
-              onValidationChange={(isValid, errors) =>
-                updateSectionValidation("personalDetails", isValid, errors)
-              }
-            />
-
-            <AddressDetailsForm
-              formData={formData}
-              handleChange={handleChange}
-              onValidationChange={(isValid, errors) =>
-                updateSectionValidation("addressDetails", isValid, errors)
-              }
-            />
-
-            <ContactDetailsForm
-              formData={formData}
-              handleChange={handleChange}
-              onValidationChange={(isValid, errors) =>
-                updateSectionValidation("contactDetails", isValid, errors)
-              }
-            />
-
-            <DocumentDetailsForm
-              formData={formData}
-              handleChange={handleChange}
-              handleFileChange={handleFileChange}
-              onValidationChange={(isValid, errors) =>
-                updateSectionValidation("documentDetails", isValid, errors)
-              }
-            />
-
-            {/* Optional user selection */}
-            {/* <SelectUserType
-              onUserTypeChange={handleUserTypeChange}
-              currentSelection={userTypeSelection}
-            /> */}
-          </div>
-
-          <div className={styles.buttonContainer}>
-            <button type="button" className={styles.cancelButton}>
-              Cancel
-            </button>
-            <button type="submit" className={styles.submitButton}>
-              Submit
-            </button>
-          </div>
-        </div>
-      </form>
+      <div className="main-content-with-sidebar">
+        <MultiStepForm
+          steps={steps}
+          currentStep={currentStep}
+          onStepChange={setCurrentStep}
+          onNext={() => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))}
+          onPrev={() => setCurrentStep((prev) => Math.max(prev - 1, 0))}
+          onSubmit={handleSubmit}
+          isSubmitting={false}
+          title="Owner Registration"
+          isStepValid={getCurrentStepValidation()}
+        >
+          {renderStepContent()}
+        </MultiStepForm>
+      </div>
 
       {modalNotification && (
         <ModalNotification

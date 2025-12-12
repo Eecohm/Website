@@ -199,6 +199,96 @@
   border: 1px solid rgba(251, 191, 36, 0.2);
 }
 
-.noDataIcon {
-  font-size: 1.1rem;
+/* Existing styles... */
+
+/* Layout Containers */
+.wholeDiv {
+  display: flex;
+  gap: 1.5rem;
+  height: 100%;
+  align-items: flex-start;
+}
+
+.leftColumn {
+  flex: 0 0 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.yearListContainer {
+  /* Ensure list takes available space inside column */
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  height: calc(100vh - 250px);
+  /* Fixed height minus topbar/padding */
+}
+
+/* Ensure right panel takes remaining space */
+.rightPanel {
+  flex: 1;
+  min-width: 0;
+  /* Prevent flex overflow */
+}
+
+.addButtonContainer {
+  width: 100%;
+}
+
+.addBtn {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px dashed rgba(59, 130, 246, 0.4);
+  border-radius: 0.75rem;
+  color: #60a5fa;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.addBtn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+}
+
+.highlightBtn {
+  background: #3b82f6;
+  color: white;
+  border-style: solid;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .wholeDiv {
+    flex-direction: column;
+  }
+
+  .leftColumn {
+    flex: none;
+    width: 100%;
+  }
 }

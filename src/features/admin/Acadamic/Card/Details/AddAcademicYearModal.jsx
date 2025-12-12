@@ -180,33 +180,38 @@ const AcademicYearCard = () => {
     <>
       {/* Add NavBar component */}
       <NavBar />
-      <div className={styles.container}>
+      <NavBar />
+      <div
+        className="main-content-with-sidebar"
+        style={{ padding: 0, paddingTop: "var(--topbar-height)" }}
+      >
         <div className={styles.wholeDiv}>
           {/* Left Panel */}
-          <AcademicYearList
-            academicYears={academicYears}
-            selectedYear={selectedYear}
-            onSelectYear={handleSelectYear}
-            searchQuery={searchQuery}
-            onSearchChange={handleSearchChange}
-            onViewDetails={() => {
-              if (selectedYear) {
-                setDetailsModalOpen(true);
-              }
-            }}
-          />
+          <div className={styles.leftColumn}>
+            <AcademicYearList
+              academicYears={academicYears}
+              selectedYear={selectedYear}
+              onSelectYear={handleSelectYear}
+              searchQuery={searchQuery}
+              onSearchChange={handleSearchChange}
+              onViewDetails={() => {
+                if (selectedYear) {
+                  setDetailsModalOpen(true);
+                }
+              }}
+            />
 
-          {/* Add Button Container */}
-          <div className={styles.addButtonContainer}>
-            <button
-              className={`${styles.addBtn} ${
-                !academicYears.length ? styles.highlightBtn : ""
-              }`}
-              onClick={() => setAddModalOpen(true)}
-            >
-              <FiPlus className={styles.btnIcon} />
-              Add New Year
-            </button>
+            {/* Add Button Container moved inside left column for better layout? Or keep as is */}
+            <div className={styles.addButtonContainer}>
+              <button
+                className={`${styles.addBtn} ${!academicYears.length ? styles.highlightBtn : ""
+                  }`}
+                onClick={() => setAddModalOpen(true)}
+              >
+                <FiPlus className={styles.btnIcon} />
+                Add New Year
+              </button>
+            </div>
           </div>
 
           {/* Right Panel */}
@@ -228,6 +233,7 @@ const AcademicYearCard = () => {
             onAdd={handleAdd}
           />
         )}
+// ...
 
         {detailsModalOpen && (
           <NewYearData
