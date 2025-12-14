@@ -70,15 +70,25 @@ export const submitOwnerInfo = async (
 
     console.log("Token exists:", !!token, "| User ID:", userId);
 
+    // --- Determine API endpoint based on method ---
+    let endpoint = `${baseUrl}/user/owners/`;
+    if (["PUT", "PATCH"].includes(method.toUpperCase()) && formData.userId) {
+      // For edit mode, use the specific user's endpoint
+      endpoint = `${baseUrl}/user/owners/${formData.userId}/`;
+      console.log("🔄 Edit mode - using endpoint:", endpoint);
+    } else {
+      console.log("➕ Create mode - using endpoint:", endpoint);
+    }
+
     // --- API Request ---
     const response = await authenticatedFetch(
-      `${baseUrl}/user/owners/`,
+      endpoint,
       { method, body: submitData },
       baseUrl,
       login,
       setToken
     );
-    
+
 
     // --- Handle response ---
     const data = await response.json().catch(() => ({}));

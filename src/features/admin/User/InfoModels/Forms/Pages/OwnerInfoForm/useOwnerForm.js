@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { submitOwnerInfo } from "@/hooks/ownerInfoApi";
 import { useBaseUrl } from "@/Context/BaseUrlContext";
 import { useAuth } from "@/Context/AuthContext";
@@ -33,6 +34,7 @@ const initialFormData = {
 };
 
 export default function useOwnerForm() {
+  const location = useLocation();
   const [editDetail, setEditDetail] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
 
@@ -55,6 +57,63 @@ export default function useOwnerForm() {
   const { login, setToken } = useAuth();
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [existingPhotos, setExistingPhotos] = useState({
+    photo: null,
+    nagariktaPhoto: null,
+    panPhoto: null,
+  });
+
+  // Populate form data when in edit mode
+  useEffect(() => {
+    if (location.state?.isEditMode && location.state?.owner) {
+      const ownerData = location.state.owner;
+      console.log("📝 Edit mode detected, populating form with:", ownerData);
+
+      setEditDetail(true);
+      setFormData({
+        firstName: ownerData.firstName || "",
+        middleName: ownerData.middleName || "",
+        lastName: ownerData.lastName || "",
+        dateOfBirth: ownerData.dateOfBirth || "",
+        gender: ownerData.gender || "",
+        photo: null, // Keep as null, will show existing photo in preview
+        country: ownerData.country || "",
+        province: ownerData.province || "",
+        municipality: ownerData.municipality || "",
+        ward: ownerData.ward || "",
+        tole: ownerData.tole || "",
+        pinPoint: ownerData.pinPoint || "",
+        tellPhone: ownerData.tellPhone || "",
+        phone: ownerData.phone || "",
+        alternatePhone: ownerData.alternatePhone || "",
+        website: ownerData.website || "",
+        contactPerson: ownerData.contactPerson || "",
+        nagariktaNo: ownerData.nagariktaNo || "",
+        panNo: ownerData.panNo || "",
+        nagariktaPhoto: null, // Keep as null, will show existing photo in preview
+        panPhoto: null, // Keep as null, will show existing photo in preview
+        userId: ownerData.userId || ownerData.id || "",
+        userEmail: ownerData.userEmail || "",
+        self: false,
+        user: null,
+      });
+
+      // Set all sections as valid initially for edit mode
+      setSectionValidations({
+        personalDetails: { isValid: true, errors: {} },
+        addressDetails: { isValid: true, errors: {} },
+        contactDetails: { isValid: true, errors: {} },
+        documentDetails: { isValid: true, errors: {} },
+      });
+
+      // Store existing photo URLs for preview
+      setExistingPhotos({
+        photo: ownerData.photo || null,
+        nagariktaPhoto: ownerData.nagariktaPhoto || null,
+        panPhoto: ownerData.panPhoto || null,
+      });
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const allSectionsValid = Object.values(sectionValidations).every(
@@ -172,5 +231,6 @@ export default function useOwnerForm() {
     modalNotification,
     setModalNotification,
     isFormValid,
+    existingPhotos,
   };
 }

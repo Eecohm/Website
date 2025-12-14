@@ -12,6 +12,7 @@ import GradeData from "@/features/admin/Acadamic/Data/GradeData ";
 import AcademicClassData from "@/features/admin/Acadamic/Data/AcademicClassData ";
 import AcademicYearData from "@/features/admin/Acadamic/Data/AcademicYearData ";
 import AcademicStudents from "@/features/admin/Acadamic/AcademicStudents";
+import ClassDetail from "@/features/admin/Acadamic/ClassDetail/ClassDetail";
 
 const AcademicRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AcademicRoutes = () => {
       <Route path="/faculty" element={<FacultyCard />} />
       <Route path="/grade" element={<GradeCard />} />
       <Route path="/academic-class" element={<AcademicClassCard />} />
+      <Route path="/academic-class/:id" element={<ClassDetail />} />
       <Route path="/students" element={<AcademicStudents />} />
       <Route
         path="/academic-year/academic-data"

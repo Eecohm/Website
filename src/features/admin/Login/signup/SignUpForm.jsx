@@ -9,10 +9,10 @@ import { useSignUpHandler } from "@/features/admin/Login/signup/useSignupHandler
 
 const roleOptions = [
   { value: "", label: "Select a role" },
-  { value: "student", label: "Student" },
-  { value: "teacher", label: "Teacher" },
+  { value: "student", label: "Student", disabled: true },
+  { value: "teacher", label: "Teacher", disabled: true },
   { value: "employee", label: "Employee" },
-  { value: "guardian", label: "Guardian" },
+  { value: "guardian", label: "Guardian", disabled: true },
   { value: "owner", label: "Owner" },
 ];
 

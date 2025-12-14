@@ -20,6 +20,7 @@ const OwnerInfoForm = () => {
     handleSubmit,
     modalNotification,
     setModalNotification,
+    existingPhotos,
   } = useOwnerForm();
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -54,6 +55,7 @@ const OwnerInfoForm = () => {
             formData={formData}
             handleChange={handleChange}
             handleFileChange={handleFileChange}
+            existingPhoto={existingPhotos.photo}
             onValidationChange={(isValid, errors) =>
               updateSectionValidation("personalDetails", isValid, errors)
             }
@@ -85,6 +87,8 @@ const OwnerInfoForm = () => {
             formData={formData}
             handleChange={handleChange}
             handleFileChange={handleFileChange}
+            existingNagariktaPhoto={existingPhotos.nagariktaPhoto}
+            existingPanPhoto={existingPhotos.panPhoto}
             onValidationChange={(isValid, errors) =>
               updateSectionValidation("documentDetails", isValid, errors)
             }

@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import styles from "@/features/admin/Admin/UserManagement/UserManagement.module.css";
 import { getInitials } from "@/features/admin/Admin/UserManagement/utils/userUtils";
 import { updateUserStatus } from "@/hooks/userApi";
+import { useAuth } from "@/Context/AuthContext";
 
 const UserCard = ({ user, onUserUpdate, baseUrl, login, setToken }) => {
   const [active, setActive] = useState(user.isActive ?? true);
   const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
+  const { token } = useAuth(); // Get token from context
 
   const handleImageError = (e) => {
     e.target.style.display = "none";
@@ -23,6 +25,7 @@ const UserCard = ({ user, onUserUpdate, baseUrl, login, setToken }) => {
   let statusText, statusColor;
   switch (statusRaw) {
     case "approved":
+    case "verified":
       statusText = "Verified";
       statusColor = "#4caf50";
       break;
@@ -31,8 +34,12 @@ const UserCard = ({ user, onUserUpdate, baseUrl, login, setToken }) => {
       statusColor = "#ff9800";
       break;
     case "rejected":
-      statusText = "Unverified";
+      statusText = "Rejected";
       statusColor = "#f44336";
+      break;
+    case "unverified":
+      statusText = "Unverified";
+      statusColor = "#ffeb3b"; // Yellow
       break;
     default:
       statusText = statusRaw.charAt(0).toUpperCase() + statusRaw.slice(1);
@@ -64,6 +71,49 @@ const UserCard = ({ user, onUserUpdate, baseUrl, login, setToken }) => {
       }
     } catch (err) {
       console.error("Error updating user status:", err);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleKycAction = async (newStatus) => {
+    if (isUpdating) return;
+    setIsUpdating(true);
+    try {
+      const response = await fetch(`${baseUrl}/user/user/`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          verified: newStatus,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update status to ${newStatus}`);
+      }
+
+      // Update local state via parent handler
+      // Map backend status to frontend expectations if needed
+      let finalStatus = newStatus;
+      if (newStatus === 'verified') finalStatus = 'approved'; // if frontend uses 'approved'
+
+      // Actually the backend stores 'verified', 'rejected', etc. 
+      // The frontend switch case handles 'approved' and 'verified'.
+      // Let's pass the status we sent.
+
+      if (newStatus === 'verified') {
+        onUserUpdate(user.id, { kycStatus: 'verified', status: 'verified' });
+      } else {
+        onUserUpdate(user.id, { kycStatus: newStatus, status: newStatus });
+      }
+
+    } catch (error) {
+      console.error("KYC Action Error:", error);
+      alert(error.message);
     } finally {
       setIsUpdating(false);
     }
@@ -128,7 +178,7 @@ const UserCard = ({ user, onUserUpdate, baseUrl, login, setToken }) => {
             </svg>
           )}
           {statusText}
-          {statusRaw === "approved" && (
+          {(statusRaw === "approved" || statusRaw === "verified") && (
             <svg
               className={styles.verificationCheckIcon}
               viewBox="0 0 24 24"
@@ -156,9 +206,46 @@ const UserCard = ({ user, onUserUpdate, baseUrl, login, setToken }) => {
         </div>
         <div className={styles.cardActions}>
           <button className={styles.viewDetailsBtn} onClick={handleViewDetails}>
-            View Details ➔
+            View Details
           </button>
         </div>
+
+        {/* Quick Action Buttons */}
+        <div className={styles.kycActionButtons}>
+          {!(statusRaw === 'approved' || statusRaw === 'verified') && (
+            <button
+              title="Verify"
+              onClick={() => handleKycAction('verified')}
+              disabled={isUpdating}
+              className={styles.iconButton}
+            >
+              <span>✓</span> Verify
+            </button>
+          )}
+
+          {!(statusRaw === 'unverified' || statusRaw === 'pending') && (
+            <button
+              title="Unverify"
+              onClick={() => handleKycAction('unverified')}
+              disabled={isUpdating}
+              className={styles.iconButton}
+            >
+              <span>?</span> Unverify
+            </button>
+          )}
+
+          {statusRaw !== 'rejected' && (
+            <button
+              title="Reject"
+              onClick={() => handleKycAction('rejected')}
+              disabled={isUpdating}
+              className={styles.iconButton}
+            >
+              <span>✕</span> Reject
+            </button>
+          )}
+        </div>
+
       </div>
     </div>
   );

@@ -10,11 +10,29 @@ const GlassFileUpload = ({
   required = false,
   onValidate,
   validate,
+  existingFileUrl = null, // URL of existing file in edit mode
   ...props
 }) => {
   const [fileName, setFileName] = useState("");
   const [hasFile, setHasFile] = useState(false);
   const [error, setError] = useState("");
+  const [previewUrl, setPreviewUrl] = useState(existingFileUrl);
+
+  // Update preview when existingFileUrl changes
+  useEffect(() => {
+    if (existingFileUrl) {
+      setPreviewUrl(existingFileUrl);
+      setHasFile(true);
+      // Extract filename from URL
+      const urlFileName = existingFileUrl.split('/').pop();
+      setFileName(urlFileName || "Existing file");
+
+      // If there's an existing file, mark as valid
+      if (onValidate) {
+        onValidate(name, true);
+      }
+    }
+  }, [existingFileUrl, name, onValidate]);
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
@@ -22,6 +40,12 @@ const GlassFileUpload = ({
     if (file) {
       setFileName(file.name);
       setHasFile(true);
+
+      // Create preview URL for the new file
+      if (previewUrl && previewUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(previewUrl); // Clean up old blob URL
+      }
+      setPreviewUrl(URL.createObjectURL(file));
 
       // Call parent onChange first
       onChange(e);
@@ -60,9 +84,10 @@ const GlassFileUpload = ({
       setFileName("");
       setHasFile(false);
       setError("");
+      setPreviewUrl(existingFileUrl); // Revert to existing file if any
 
       if (onValidate) {
-        const isValid = !required; // Valid if not required
+        const isValid = !required || !!existingFileUrl; // Valid if not required or has existing file
         onValidate(name, isValid);
       }
     }
@@ -101,6 +126,15 @@ const GlassFileUpload = ({
             {fileName || "Choose file..."}
           </span>
         </label>
+        {previewUrl && accept.includes('image') && (
+          <div className={styles.previewContainer}>
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className={styles.previewImage}
+            />
+          </div>
+        )}
       </div>
       {error && <div className={styles.error}>{error}</div>}
     </div>

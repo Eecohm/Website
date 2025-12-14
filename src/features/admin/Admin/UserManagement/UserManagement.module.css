@@ -6,6 +6,7 @@
   border: 3px solid #4fc3f7;
   box-shadow: 0 2px 8px rgba(79, 195, 247, 0.15);
 }
+
 .profilePlaceholderLarge {
   width: 120px;
   height: 120px;
@@ -19,6 +20,7 @@
   font-weight: 600;
   border: 3px solid #4fc3f7;
 }
+
 .cardActions {
   display: flex;
   justify-content: flex-end;
@@ -49,6 +51,7 @@
   /* Isolate button from external state changes */
   contain: style;
 }
+
 .viewDetailsBtn:hover {
   background: linear-gradient(145deg, #1f5973);
   box-shadow: 0 4px 16px rgba(79, 195, 247, 0.25);
@@ -61,11 +64,13 @@
   height: 28px;
   contain: style;
 }
+
 .toggleSwitch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -77,6 +82,7 @@
   border-radius: 28px;
   transition: 0.3s;
 }
+
 .slider:before {
   position: absolute;
   content: "";
@@ -89,158 +95,252 @@
   transition: 0.3s;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-.toggleSwitch input:checked + .slider {
+
+.toggleSwitch input:checked+.slider {
   background: #4caf50;
 }
-.toggleSwitch input:checked + .slider:before {
+
+.toggleSwitch input:checked+.slider:before {
   transform: translateX(20px);
 }
+
 .toggleLabel {
   font-size: 1rem;
   vertical-align: middle;
 }
-/* UserCard custom styles */
+
+/* UserCard custom styles - Business/ID Card Design */
 .userCardNew {
   display: flex;
-  align-items: flex-start;
-  background: #1b2735;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 1.5rem 3.8rem;
-  margin-bottom: 1rem;
-  min-width: 420px;
-  max-width: fit-content;
-  grid-template-columns: repeat(2, 1fr); /* Only 2 cards per row */
+  align-items: center;
+  background: rgba(30, 41, 59, 0.7);
+  /* dark glass */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* subtle border */
+  border-left: 5px solid #0ea5e9;
+  /* Colored accent bar on left like many ID cards */
+  border-radius: 12px;
+  /* Slightly tighter radius for card feel */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.userCardNew:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  background: rgba(30, 41, 59, 0.9);
+}
+
+.userCardNew::before {
+  display: none;
+  /* Remove top border, using left border accent instead */
 }
 
 .profileLeft {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-shrink: 0;
   margin-right: 2rem;
-  contain: layout style;
+  position: relative;
 }
 
-.roundedProfile {
-  width: 85px;
-  height: 85px;
-  border-radius: 50%;
+/* Larger, more prominent image */
+.roundedProfileLarge {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  /* Soft square/squircle looks more like business photo */
   object-fit: cover;
-  border: 3px solid #4fc3f7;
-  box-shadow: 0 2px 8px rgba(79, 195, 247, 0.15);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+  background-color: #1e293b;
 }
 
-.profilePlaceholder {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #263859;
-  color: #fff;
+.userCardNew:hover .roundedProfileLarge {
+  transform: scale(1.02);
+}
+
+.profilePlaceholderLarge {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #334155, #1e293b);
+  color: #94a3b8;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  font-weight: 600;
-  border: 3px solid #4fc3f7;
+  font-size: 3.5rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: none;
 }
 
 .profileRight {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  text-align: left;
-  gap: 0.8rem;
-  contain: layout style;
+  gap: 0.5rem;
+  /* tighter spacing */
+  min-width: 0;
+  justify-content: center;
 }
-.nameRow {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #fff;
-}
+
 .nameRowWithVerification {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  white-space: nowrap;
-  contain: style layout;
-}
-.verificationIcon {
-  width: 24px;
-  height: 24px;
-  color: #4caf50;
-  stroke: #4caf50;
-  stroke-width: 3;
-  flex-shrink: 0;
-}
-.pendingIcon {
-  width: 24px;
-  height: 24px;
-  color: #ff9800;
-  stroke: #ff9800;
-  stroke-width: 2;
-  flex-shrink: 0;
-}
-.verificationCheckIcon {
-  width: 20px;
-  height: 20px;
-  color: #4caf50;
-  stroke: #4caf50;
-  stroke-width: 3;
-  flex-shrink: 0;
-}
-.statusRow {
-  font-size: 1rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  contain: style layout;
-}
-.iconRow {
-  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  contain: style layout;
-  isolation: isolate;
+  margin-bottom: 0px;
 }
+
+.nameRowWithVerification span {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Status as a small badge near name or below */
+.statusRow {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  /* More angular, like a tag */
+  background: rgba(255, 255, 255, 0.05);
+  width: fit-content;
+  gap: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.2rem;
+}
+
+.iconRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: fit-content;
+  background: transparent;
+  padding: 0;
+}
+
 .activeStatusText {
-  font-size: 0.95rem;
+  color: #94a3b8;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: #fff;
-  contain: layout style;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
-.activeIcon svg,
-.inactiveIcon svg {
-  vertical-align: middle;
+
+.cardActions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+  width: 100%;
 }
+
+/* Smaller, more elegant View Details Button */
+.viewDetailsBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.8rem;
+  background: transparent;
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.viewDetailsBtn:hover {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+/* Toggle Switch refinement */
+.toggleSwitch {
+  width: 36px;
+  height: 20px;
+}
+
+.slider {
+  background-color: #475569;
+}
+
+.slider::before {
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggleSwitch input:checked+.slider {
+  background-color: #0ea5e9;
+  /* Sky blue */
+}
+
+.toggleSwitch input:checked+.slider::before {
+  transform: translateX(16px);
+}
+
+/* UserGrid layout */
 .container {
   margin-left: 300px;
   margin-top: 100px;
   padding: 2rem;
-  color: #ffffff;
+  color: #f1f5f9;
   height: calc(100vh - 100px);
   box-sizing: border-box;
-  background: linear-gradient(135deg, #0f2027 0%, #202443 50%, #2c4464 100%);
-  position: relative;
-  z-index: 1;
+  background-color: #0f172a;
+  /* Solid dark background for contrast */
   overflow-y: auto;
-  overflow-x: hidden;
+}
+
+.userGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+  gap: 1.5rem;
+  margin: 0 auto;
+  max-width: 1600px;
 }
 
 /* Tablet (≤1024px) */
 @media (max-width: 1024px) {
   .container {
     margin-left: 0;
-    margin-top: 120px; /* increased to avoid navbar overlap on mid screens */
-    padding: 1.5rem; /* increased padding for better spacing */
-    height: calc(100vh - 120px); /* adjust height */
-    font-size: 16px; /* base font for tablet */
+    margin-top: 120px;
+    /* increased to avoid navbar overlap on mid screens */
+    padding: 1.5rem;
+    /* increased padding for better spacing */
+    height: calc(100vh - 120px);
+    /* adjust height */
+    font-size: 16px;
+    /* base font for tablet */
   }
+
   .userCardNew {
     min-width: 0;
     width: 100%;
@@ -254,6 +354,7 @@
     background: linear-gradient(135deg, #1b2735 60%, #263859 100%);
     margin-bottom: 1rem;
   }
+
   .filtersSection {
     flex-direction: column;
     gap: 1rem;
@@ -265,30 +366,41 @@
 @media (max-width: 600px) {
   .container {
     margin-left: 0;
-    margin-top: 4rem; /* increased to avoid cutting content at top */
-    padding: 0.75rem; /* slightly more padding for small screens */
-    height: calc(100vh - 4rem); /* adjust height to account for margin-top */
-    font-size: 14px; /* smaller base font for mobile */
+    margin-top: 4rem;
+    /* increased to avoid cutting content at top */
+    padding: 0.75rem;
+    /* slightly more padding for small screens */
+    height: calc(100vh - 4rem);
+    /* adjust height to account for margin-top */
+    font-size: 14px;
+    /* smaller base font for mobile */
   }
+
   .topSection {
     display: flex;
   }
+
   .header {
     text-align: left;
     padding: 0 0.5rem;
     width: 100%;
     box-sizing: border-box;
     overflow-wrap: anywhere;
-    margin-top: 0.5rem; /* add small margin for back button */
+    margin-top: 0.5rem;
+    /* add small margin for back button */
   }
+
   .header .backButton {
     padding: 0.6rem 0.5rem;
   }
+
   .searchSection {
     place-content: center;
-    padding: 0.5rem 0.4rem; /* increased top/bottom padding */
+    padding: 0.5rem 0.4rem;
+    /* increased top/bottom padding */
     font-size: 0.9rem;
-    margin-top: 1rem; /* add margin-top for proper spacing */
+    margin-top: 1rem;
+    /* add margin-top for proper spacing */
   }
 
   .createdBy {
@@ -299,6 +411,7 @@
     letter-spacing: 0.2px;
     text-align: left;
   }
+
   .userGrid {
     grid-template-columns: 1fr;
     gap: 0.7rem;
@@ -306,6 +419,7 @@
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
+
   .userCardNew {
     min-width: 0;
     width: 100%;
@@ -315,12 +429,15 @@
     align-items: flex-start;
     gap: 0.7rem;
   }
+
   .profileLeft {
     margin-right: 1rem;
   }
+
   .profileRight {
     gap: 0.5rem;
   }
+
   .filtersSection {
     flex-direction: column;
     gap: 0.7rem;
@@ -349,10 +466,13 @@
 
 .topSection {
   display: flex;
-  justify-content: space-between; /* place back button left and search on right */
-  align-items: center; /* vertically center both columns */
+  justify-content: space-between;
+  /* place back button left and search on right */
+  align-items: center;
+  /* vertically center both columns */
   margin-bottom: 2rem;
-  gap: 2rem; /* reduced gap for cleaner spacing on large screens */
+  gap: 2rem;
+  /* reduced gap for cleaner spacing on large screens */
 }
 
 /* Header Section */
@@ -360,7 +480,8 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  margin-bottom: 0; /* remove extra bottom margin so header lines up with search */
+  margin-bottom: 0;
+  /* remove extra bottom margin so header lines up with search */
   padding: 0 1rem;
 }
 
@@ -458,6 +579,7 @@
   color: #ffffff;
   padding: 0.5rem;
 }
+
 .dateFilterWrapper {
   gap: 0.5rem;
 }
@@ -486,6 +608,7 @@
   transition: all 0.2s ease;
 
   @media (min-width: 768px) {
+
     .searchSection,
     .filtersSection,
     .userGrid {
@@ -495,9 +618,11 @@
       margin-right: auto;
       box-sizing: border-box;
     }
+
     .topSection {
       justify-content: center;
     }
+
     .topSection .searchSection {
       justify-self: end;
       display: flex;
@@ -520,20 +645,24 @@
       gap: 1rem;
       padding: 0 0.2rem;
     }
+
     .topSection .header {
       flex: 0 0 auto;
       display: flex;
       align-items: center;
     }
+
     .topSection .header .backButton {
       padding: 0.3rem 0.7rem;
     }
+
     .topSection .searchSection {
       flex: 1 1 auto;
       display: flex;
       align-items: center;
       justify-content: flex-end;
     }
+
     .filtersSection {
       max-width: 1100px;
       width: 100%;
@@ -541,10 +670,12 @@
       margin-right: auto;
       box-sizing: border-box;
     }
+
     .userCard {
       width: 100%;
     }
   }
+
   height: fit-content;
 }
 
@@ -686,6 +817,7 @@
 .emptyState p {
   margin: 0;
 }
+
 .emptyState {
   text-align: center;
   padding: 4rem 2rem;
@@ -704,12 +836,15 @@
   }
 
   .container {
+
     /* Make top area use two columns: back button and search input */
     .topSection {
       display: grid;
-      grid-template-columns: auto 1fr; /* back button column + search column */
+      grid-template-columns: auto 1fr;
+      /* back button column + search column */
       align-items: center;
-      gap: 0.5rem; /* small vertical / horizontal gap */
+      gap: 0.5rem;
+      /* small vertical / horizontal gap */
       width: 100%;
       padding: 0 0.5rem;
       box-sizing: border-box;
@@ -725,7 +860,8 @@
     }
 
     .topSection .searchSection {
-      margin: 0; /* minimal top/bottom gap */
+      margin: 0;
+      /* minimal top/bottom gap */
       width: 100%;
       display: flex;
       align-items: center;
@@ -736,11 +872,15 @@
     .searchInput {
       width: 100%;
       max-width: 100%;
-      padding: 0.8rem 0.9rem; /* increased padding for better visibility */
+      padding: 0.8rem 0.9rem;
+      /* increased padding for better visibility */
       margin: 0;
     }
-    margin-left: 0; /* Remove left margin on smaller screens */
-    margin-top: 80px; /* Reduce top margin */
+
+    margin-left: 0;
+    /* Remove left margin on smaller screens */
+    margin-top: 80px;
+    /* Reduce top margin */
     padding: 1.5rem;
   }
 }
@@ -791,7 +931,8 @@
     margin-left: 0;
     margin-top: 80px;
     padding: 1.25rem;
-    font-size: 16px; /* slightly larger for tablet */
+    font-size: 16px;
+    /* slightly larger for tablet */
   }
 
   /* Ensure top section items line up and search isn't cut off */
@@ -896,6 +1037,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
   .userGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -927,8 +1069,10 @@
     padding: 1.2rem;
   }
 }
+
 /* Desktop override: restore header flow and ensure Search, Filters and Grid share the same centered width */
 @media (min-width: 1024px) {
+
   .topSection,
   .searchSection,
   .filtersSection,
@@ -987,6 +1131,7 @@
     padding-bottom: 0 !important;
   }
 }
+
 .loadingState {
   display: flex;
   justify-content: center;
@@ -1014,10 +1159,12 @@
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -1129,4 +1276,108 @@
   .detailField p {
     font-size: 1rem;
   }
+}
+
+/* KYC Action Buttons - Segmented Toggle Style */
+.kycActionButtons {
+  margin-top: 15px;
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+  border-radius: 12px;
+  width: fit-content;
+  align-self: flex-start;
+  /* Align to the left (start of flex container) */
+  margin-left: auto;
+  /* Push to random/center if needed, or keeping centered logic from before? */
+  margin-right: auto;
+  /* keeping it centered based on previous flex layout of profileRight */
+  border: 1px solid #2e4a62;
+}
+
+.iconButton {
+  /* removed fixed width/height for text support */
+  min-width: 36px;
+  height: 36px;
+  padding: 0 1rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #8bb1d4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.iconButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.iconButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Button specific hover overrides */
+.iconButton:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Specific colors for actions */
+.iconButton[title="Verify"]:hover {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+.iconButton[title="Unverify"]:hover {
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.1);
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
+}
+
+.iconButton[title="Reject"]:hover {
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.1);
+  box-shadow: 0 0 8px rgba(244, 67, 54, 0.4);
+}
+
+/* Active States */
+.iconButton.activeVerify {
+  background: rgba(40, 167, 69, 0.2);
+  color: #4caf50;
+  box-shadow: 0 0 0 1px #4caf50;
+}
+
+.iconButton.activeVerify:hover {
+  background: rgba(40, 167, 69, 0.3);
+}
+
+.iconButton.activeUnverify {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  box-shadow: 0 0 0 1px #ffc107;
+}
+
+.iconButton.activeUnverify:hover {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.iconButton.activeReject {
+  background: rgba(220, 53, 69, 0.2);
+  color: #f44336;
+  box-shadow: 0 0 0 1px #f44336;
+}
+
+.iconButton.activeReject:hover {
+  background: rgba(220, 53, 69, 0.3);
 }

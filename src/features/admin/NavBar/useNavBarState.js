@@ -6,7 +6,7 @@ import styles from "./NavBar.module.css";
 export default function useNavBarState() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout, verified } = useAuth();
+  const { logout, verified, role } = useAuth();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -116,7 +116,7 @@ export default function useNavBarState() {
   }, [logout, navigate]);
 
   // nav and settings items are static; keep them here so NavBar can stay presentational
-  const navItems = [
+  const allNavItems = [
     { name: "Tasks", icon: "tasks", path: "/dashboard/tasks" },
     { name: "Admin", icon: "admin", path: "/dashboard/admin" },
     { name: "Academic", icon: "academic", path: "/dashboard/academic" },
@@ -126,6 +126,19 @@ export default function useNavBarState() {
     { name: "Students", icon: "students", path: "/dashboard/students" },
     { name: "Reports", icon: "reports", path: "/dashboard/reports" },
   ];
+
+  // Filter nav items based on role
+  // Only Admin and Owner can see the "Admin" tab
+  const getNavItems = useCallback(() => {
+    return allNavItems.filter(item => {
+      if (item.name === "Admin") {
+        return role === 'admin' || role === 'owner';
+      }
+      return true;
+    });
+  }, [role, verified]);
+
+  const navItems = getNavItems();
 
   const settingsItems = [
     { name: "Profile", path: "/dashboard/profile" },

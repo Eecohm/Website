@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   FiX,
@@ -23,6 +24,7 @@ const AcademicClassDataModule = ({
   baseUrl,
 }) => {
   const [selectedClass, setSelectedClass] = useState(null);
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredClasses, setFilteredClasses] = useState(academicClasses);
   const [filters, setFilters] = useState({
@@ -293,7 +295,10 @@ const AcademicClassDataModule = ({
                     <div
                       key={academicClass.id}
                       className={styles.classCard}
-                      onClick={() => handleClassSelect(academicClass)}
+                      onClick={() => {
+                        onClose(); // Close modal
+                        navigate(`/dashboard/academic/academic-class/${academicClass.id}`);
+                      }}
                     >
                       <div className={styles.cardHeader}>
                         <FiBookOpen className={styles.cardIcon} />

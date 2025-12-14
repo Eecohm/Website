@@ -9,6 +9,8 @@ const DocumentDetailsForm = ({
   handleChange,
   handleFileChange,
   onValidationChange,
+  existingNagariktaPhoto = null,
+  existingPanPhoto = null,
 }) => {
   const [validFields, setValidFields] = useState(new Set());
 
@@ -51,9 +53,8 @@ const DocumentDetailsForm = ({
           const errors = {};
           requiredFields.forEach((field) => {
             if (!updated.has(field)) {
-              errors[field] = `${
-                field.charAt(0).toUpperCase() + field.slice(1)
-              } is required`;
+              errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)
+                } is required`;
             }
           });
 
@@ -95,6 +96,7 @@ const DocumentDetailsForm = ({
         required={true}
         validate={validatePhoto}
         onValidate={handleFieldValidation}
+        existingFileUrl={existingNagariktaPhoto}
       />
       <GlassFileUpload
         label="PAN Photo"
@@ -104,6 +106,7 @@ const DocumentDetailsForm = ({
         required={true}
         validate={validatePhoto}
         onValidate={handleFieldValidation}
+        existingFileUrl={existingPanPhoto}
       />
     </FormSection>
   );

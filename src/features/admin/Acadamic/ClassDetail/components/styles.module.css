@@ -1,0 +1,185 @@
+.container {
+    color: #f1f5f9;
+    
+}
+
+.container h2 {
+    color: #4fc3f7;
+    margin-bottom: 1.5rem;
+}
+
+.addSection,
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.input {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    flex: 1;
+    max-width: 300px;
+}
+
+.btnPrimary {
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.btnPrimary:hover {
+    background: #0284c7;
+}
+
+.list {
+    display: grid;
+    gap: 1rem;
+}
+
+.itemCard {
+    background: #0f172a;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemCard h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #e2e8f0;
+}
+
+.teacherInfo {
+    margin-top: 0.5rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btnSmall {
+    background: transparent;
+    border: 1px solid #334155;
+    color: #0ea5e9;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 1rem;
+}
+
+.btnDelete {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+}
+
+.table th {
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* Grid for Routine */
+.headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.dayColumn {
+    background: #0f172a;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    padding: 1rem;
+}
+
+.dayTitle {
+    margin-top: 0;
+    color: #4fc3f7;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 0.5rem;
+}
+
+.slots {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.slotCard {
+    background: #1e293b;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.slotTime {
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.slotSubject {
+    font-weight: 600;
+    margin-top: 0.2rem;
+}
+
+.emptySlot {
+    color: #64748b;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.attendanceSection {
+    margin-top: 3rem;
+    padding: 1rem;
+    background: #0f172a;
+    border-radius: 8px;
+}
+
+.attendanceBar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}

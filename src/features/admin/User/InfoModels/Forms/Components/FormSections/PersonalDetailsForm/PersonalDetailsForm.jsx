@@ -16,6 +16,7 @@ const PersonalDetailsForm = ({
   handleChange,
   handleFileChange,
   onValidationChange,
+  existingPhoto = null,
 }) => {
   const [validFields, setValidFields] = useState(new Set());
   const lastErrorsStringRef = useRef("");
@@ -44,9 +45,8 @@ const PersonalDetailsForm = ({
           const errors = {};
           requiredFields.forEach((field) => {
             if (!updated.has(field)) {
-              errors[field] = `${
-                field.charAt(0).toUpperCase() + field.slice(1)
-              } is required`;
+              errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)
+                } is required`;
             }
           });
 
@@ -133,6 +133,7 @@ const PersonalDetailsForm = ({
         required={true}
         validate={validatePhoto}
         onValidate={handleFieldValidation}
+        existingFileUrl={existingPhoto}
       />
     </FormSection>
   );

@@ -122,7 +122,18 @@ const SubOrgDetails = () => {
     } catch (err) {
       if (err.response?.data) {
         setErrors(err.response.data);
-        console.error("Validation errors:", err.response.data);
+        // Extract meaningful message from backend response
+        const backendMessage = err.response.data.detail ||
+          err.response.data.message ||
+          err.response.data.non_field_errors?.[0];
+
+        if (backendMessage) {
+          setNotification({
+            show: true,
+            message: backendMessage,
+            type: "error",
+          });
+        }
       } else {
         console.error("Update error:", err);
         setNotification({

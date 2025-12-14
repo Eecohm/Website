@@ -38,22 +38,24 @@ const NavBar = () => {
     setShowLogoutModal,
     setShowVerifyModal,
     location,
+    navItems: rawNavItems,
   } = useNavBarState();
 
-  const navItems = [
-    { name: "Tasks", icon: faTasks, path: "/dashboard/tasks" },
-    { name: "Admin", icon: faUserShield, path: "/dashboard/admin" },
-    { name: "Academic", icon: faBookOpenReader, path: "/dashboard/academic" },
-    { name: "Accounts", icon: faWallet, path: "/dashboard/accounts" },
-    { name: "Inventory", icon: faBox, path: "/dashboard/inventory" },
-    {
-      name: "Teachers",
-      icon: faChalkboardTeacher,
-      path: "/dashboard/teachers",
-    },
-    { name: "Students", icon: faUsers, path: "/dashboard/students" },
-    { name: "Reports", icon: faChartBar, path: "/dashboard/reports" },
-  ];
+  const iconMap = {
+    tasks: faTasks,
+    admin: faUserShield,
+    academic: faBookOpenReader,
+    accounts: faWallet,
+    inventory: faBox,
+    teachers: faChalkboardTeacher,
+    students: faUsers,
+    reports: faChartBar,
+  };
+
+  const navItems = rawNavItems.map((item) => ({
+    ...item,
+    icon: iconMap[item.icon] || faTasks, // Fallback if icon not found
+  }));
 
   const settingsItems = [
     { name: "Profile", path: "/dashboard/profile" },

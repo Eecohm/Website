@@ -123,7 +123,58 @@
     background-color: #0056b3;
 }
 
-.loading, .error, .noResults {
+.actionButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.iconButton {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.iconButton:hover {
+    transform: scale(1.1);
+}
+
+.verifyAction {
+    background-color: #28a745;
+}
+
+.verifyAction:hover {
+    background-color: #218838;
+}
+
+.unverifyAction {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.unverifyAction:hover {
+    background-color: #e0a800;
+}
+
+.rejectAction {
+    background-color: #dc3545;
+}
+
+.rejectAction:hover {
+    background-color: #c82333;
+}
+
+.loading,
+.error,
+.noResults {
     color: #fff;
     text-align: center;
     font-size: 16px;

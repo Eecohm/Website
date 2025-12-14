@@ -40,11 +40,16 @@ export const useFetchUsers = (baseUrl) => {
         const endpoints = await indexResponse.json();
 
         // Fetch from each endpoint and combine data
-        const usersByCategory = {};
-        const allUsers = [];
+        const uniqueUsersMap = new Map();
         let userId = 1;
 
         for (const [category, url] of Object.entries(endpoints)) {
+          // Skip the generic 'users' or 'all' endpoint if it just duplicates the specific ones, 
+          // OR skip specific ones if 'users' has everything. 
+          // Assuming backend structure: /user/ returns keys like 'teachers': '.../teachers/', 'students': '...'. 
+          // If there is an 'all' or 'users' key that aggregates, that might be the cause. 
+          // Without knowing exact backend response, deduplication is safest.
+
           try {
             const categoryResponse = await authenticatedFetch(
               url,
@@ -61,60 +66,79 @@ export const useFetchUsers = (baseUrl) => {
                 : categoryData.data || categoryData.results || [];
 
               // Map each user and add category info
-              const mappedUsers = categoryUsers.map((user) => ({
-                id: userId++,
-                dbId: user.id || user.pk || userId - 1,
-                firstName: user.firstName || "",
-                middleName: user.middleName || "",
-                lastName: user.lastName || "",
-                email: user.userEmail || user.email || "",
-                phone:
-                  user.phone || user.tellPhone || user.alternatePhone || "",
-                // status: "approved",
-                status: user.status || user.kycStatus || "pending",
-                photo: user.photo || "",
-                category: category.replace(/s$/, ""), // singular form
-                gender: user.gender || "",
-                country: user.country || "",
-                province: user.province || "",
-                municipality: user.municipality || "",
-                ward: user.ward || "",
-                tole: user.tole || "",
-                pinPoint: user.pinPoint || "",
-                alternatePhone: user.alternatePhone || "",
-                contactPerson: user.contactPerson || "",
-                nagariktaNo: user.nagariktaNo || "",
-                panNo: user.panNo || "",
-                nagariktaPhoto: user.nagariktaPhoto || "",
-                panPhoto: user.panPhoto || "",
-                academicQualification: user.academicQualification || "",
-                jobApplication: user.jobApplication || "",
-                hiringLetter: user.hiringLetter || "",
-                resumeCv: user.resumeCv || "",
-                category: category.replace(/s$/, ""), // singular form
-                kycStatus: user.kycStatus || user.status || "pending",
-                // verified: user.verified || user.status === "approved",
-                verified:
-                  user.verified ||
-                  user.status === "approved" ||
-                  user.kycStatus === "approved",
-                isActive: user.isActive ?? true,
-                submittedAt:
-                  user.createdAt ||
-                  user.submittedAt ||
-                  new Date().toISOString(),
-              }));
-              console.log("raw user data:", categoryData);
+              // Map each user and add category info
+              categoryUsers.forEach((user) => {
+                const dbId = user.id || user.pk;
+                const normalizedCategory = category.replace(/s$/, ""); // singular form
 
-              allUsers.push(...mappedUsers);
+                const mappedUser = {
+                  id: userId++, // This might need handling if we overwrite, but usually unique ID for grid is fine.
+                  dbId: dbId || userId - 1,
+                  firstName: user.firstName || "",
+                  middleName: user.middleName || "",
+                  lastName: user.lastName || "",
+                  email: user.userEmail || user.email || "",
+                  phone: user.phone || user.tellPhone || user.alternatePhone || "",
+                  status: user.status || user.kycStatus || "pending",
+                  photo: user.photo || "",
+                  category: normalizedCategory,
+                  gender: user.gender || "",
+                  country: user.country || "",
+                  province: user.province || "",
+                  municipality: user.municipality || "",
+                  ward: user.ward || "",
+                  tole: user.tole || "",
+                  pinPoint: user.pinPoint || "",
+                  alternatePhone: user.alternatePhone || "",
+                  contactPerson: user.contactPerson || "",
+                  nagariktaNo: user.nagariktaNo || "",
+                  panNo: user.panNo || "",
+                  nagariktaPhoto: user.nagariktaPhoto || "",
+                  panPhoto: user.panPhoto || "",
+                  academicQualification: user.academicQualification || "",
+                  jobApplication: user.jobApplication || "",
+                  hiringLetter: user.hiringLetter || "",
+                  resumeCv: user.resumeCv || "",
+                  kycStatus: user.kycStatus || user.status || "pending",
+                  verified: user.verified || user.status === "approved" || user.kycStatus === "approved",
+                  isActive: user.isActive ?? true,
+                  submittedAt: user.createdAt || user.submittedAt || new Date().toISOString(),
+                };
+
+                if (!uniqueUsersMap.has(dbId)) {
+                  uniqueUsersMap.set(dbId, mappedUser);
+                } else {
+                  // User exists. Check if we should upgrade the category.
+                  const existingUser = uniqueUsersMap.get(dbId);
+                  const genericCategories = ['user', 'users'];
+
+                  const isExistingGeneric = genericCategories.includes(existingUser.category.toLowerCase());
+                  const isNewGeneric = genericCategories.includes(normalizedCategory.toLowerCase());
+
+                  // If existing is generic and new is specific, overwrite.
+                  if (isExistingGeneric && !isNewGeneric) {
+                    // We keep the old 'id' (grid key) to maintain order/integrity if desired, 
+                    // or just overwrite entirely. Let's overwrite but maybe keep id? 
+                    // Actually, a new ID is fine, or keeping old ID is fine. 
+                    // Let's replace the data but keep the key.
+                    // Note: mappedUser has a new 'id' generated. 
+
+                    uniqueUsersMap.set(dbId, mappedUser);
+                    console.log(`Upgrading user ${dbId} from ${existingUser.category} to ${normalizedCategory}`);
+                  }
+                }
+              });
+
+              // Log for debug
+              console.log(`Fetched ${categoryUsers.length} from ${category}`);
             }
           } catch (err) {
             console.warn(`Error fetching ${category}:`, err);
-            // Continue fetching other categories even if one fails
           }
         }
 
-        console.log("Combined user list:", allUsers);
+        const allUsers = Array.from(uniqueUsersMap.values());
+        console.log("Combined unique user list:", allUsers);
         setUsers(allUsers);
       } catch (err) {
         console.error("Error fetching users:", err);

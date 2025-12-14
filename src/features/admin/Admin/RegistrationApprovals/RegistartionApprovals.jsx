@@ -111,8 +111,8 @@ const RegistrationApproval = () => {
     }
   };
 
-  const handleVerify = async () => {
-    if (!selectedUser) return;
+  const handleStatusChange = async (user, status) => {
+    if (!user) return;
 
     try {
       const response = await fetch(`${baseUrl}/user/user/`, {
@@ -122,44 +122,54 @@ const RegistrationApproval = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: selectedUser.email,
-          verified: "verified",
+          email: user.email,
+          verified: status,
         }),
       });
+
       if (!response.ok) {
-        throw new Error(`Failed to verify user: ${response.status}`);
+        throw new Error(`Failed to update status to ${status}: ${response.status}`);
       }
-      setUsers(users.filter((user) => user.email !== selectedUser.email));
-      handleCloseModal();
+
+      // If viewing details modal, close it
+      if (selectedUser && selectedUser.email === user.email) {
+        handleCloseModal();
+      }
+
+      // Update the list - remove if filtered view, or just update logic if we had a full list
+      // Since we are fetching only unverified users by default on this page load:
+      // If we verify/reject, they should disappear from the "unverified" list.
+      // If we set to "unverified" (from unverified??), they stay.
+      // But if we are re-using this for a full list later, we might want to just update.
+      // For now, assuming the goal is to process the list, removing them is correct behavior
+      // UNLESS we set them to 'unverified' which keeps them in the list.
+
+      if (status === 'unverified' || status === 'pending') {
+        // If setting TO unverified/pending, and we are showing unverified list, 
+        // we might want to keep them or refresh. 
+        // Simplest is to refresh or just update local state if we had a comprehensive list.
+        // Given current implementation `users` state depends on initial fetch which is `?verified=unverified`.
+        // If we are setting TO unverified, they effectively "stay" or "re-enter" pending.
+        // But if we act on an item in the list, it's already there. 
+        // So no visual change if it stays unverified.
+        // BUT if we click "unverified" on a pending user, it's redundant but fine.
+      } else {
+        // Verified or Rejected -> Remove from "unverified" list
+        setUsers(users.filter((u) => u.email !== user.email));
+      }
+
     } catch (err) {
       setDetailsError(err.message);
+      // If triggered from card (no modal), might want to show a global error or toast.
+      // For now, setting detailsError works if modal is open, but if not?
+      // Maybe reuse `error` state but that replaces the whole list view with error.
+      console.error(err);
+      alert(`Error: ${err.message}`); // Fallback for quick feedback
     }
   };
 
-  const handleReject = async () => {
-    if (!selectedUser) return;
-
-    try {
-      const response = await fetch(`${baseUrl}/user/user/`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: selectedUser.email,
-          verified: "rejected",
-        }),
-      });
-      if (!response.ok) {
-        throw new Error(`Failed to reject user: ${response.status}`);
-      }
-      setUsers(users.filter((user) => user.email !== selectedUser.email));
-      handleCloseModal();
-    } catch (err) {
-      setDetailsError(err.message);
-    }
-  };
+  const handleVerify = () => handleStatusChange(selectedUser, 'verified');
+  const handleReject = () => handleStatusChange(selectedUser, 'rejected');
 
   const handleCloseModal = () => {
     setSelectedUser(null);
@@ -247,6 +257,38 @@ const RegistrationApproval = () => {
                   >
                     View Details
                   </button>
+                  <div className={styles.actionButtons}>
+                    <button
+                      className={`${styles.iconButton} ${styles.verifyAction}`}
+                      title="Verify User"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleStatusChange(user, 'verified');
+                      }}
+                    >
+                      ✓
+                    </button>
+                    <button
+                      className={`${styles.iconButton} ${styles.unverifyAction}`}
+                      title="Set to Unverified"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleStatusChange(user, 'unverified');
+                      }}
+                    >
+                      ?
+                    </button>
+                    <button
+                      className={`${styles.iconButton} ${styles.rejectAction}`}
+                      title="Reject User"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleStatusChange(user, 'rejected');
+                      }}
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
