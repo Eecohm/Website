@@ -27,6 +27,9 @@
 
   /* Layout */
   --topbar-height: 100px;
+
+  --sidebar-width: 280px; /* default sidebar width used across layout */
+  
 }
 
 * {
