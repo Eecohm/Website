@@ -22,8 +22,8 @@ const ClassDetail = () => {
                     </button>
                     <h1>Class Detail Management</h1>
                 </div>
-
-                <div className={styles.tabs}>
+        
+                {/* <div className={styles.tabs}>
                     <button
                         className={`${styles.tab} ${activeTab === 'teachers' ? styles.active : ''}`}
                         onClick={() => setActiveTab('teachers')}
@@ -42,14 +42,14 @@ const ClassDetail = () => {
                     >
                         Students
                     </button>
-                </div>
+                </div> */}
 
-                <div className={styles.tabContent}>
+                {/* <div className={styles.tabContent}>
                     {activeTab === 'teachers' && <TeachersSubjectsManagement classId={id} />}
                     {activeTab === 'routine' && <RoutineManagement classId={id} />}
                     {activeTab === 'students' && <StudentManagement classId={id} />}
-                </div>
-            </div>
+                </div> */}
+            </div> 
         </div>
     );
 };
